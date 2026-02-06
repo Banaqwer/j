@@ -273,19 +273,24 @@ class GannAnalyzer:
         result = self._compute_angle_levels(high, low, "high_low")
 
         # Check for congestion (Rule d from PDF 5)
-        # Buy entry = 1X4 (15°) resistance (from low); Sell entry = 1X4 (15°) support (from high)
-        # If sell entry >= buy entry, it's an entry error -> recalculate from midpoint
-        buy_1x4 = None
-        sell_1x4 = None
+        # The PDF uses the 15° angle for both buy and sell entries:
+        #   - Buy entry = 15° resistance from low (labeled "1X4" in up-move)
+        #   - Sell entry = 15° support from high (labeled "4X1" in the PDF's
+        #     down-move convention, but uses the same 0.083333 degree factor)
+        # In our code both use label "1X4" since we apply consistent degree
+        # factors. If the 15° sell price >= 15° buy price, it's congestion
+        # and we recalculate from the midpoint.
+        buy_15deg = None
+        sell_15deg = None
         for r in result.resistances:
             if r.label == "1X4":
-                buy_1x4 = r.price
+                buy_15deg = r.price
         for s in result.supports:
             if s.label == "1X4":
-                sell_1x4 = s.price
+                sell_15deg = s.price
 
-        if buy_1x4 is not None and sell_1x4 is not None:
-            if sell_1x4 >= buy_1x4 or abs(buy_1x4 - sell_1x4) < min_diff:
+        if buy_15deg is not None and sell_15deg is not None:
+            if sell_15deg >= buy_15deg or abs(buy_15deg - sell_15deg) < min_diff:
                 # Congestion detected -> recalculate from midpoint (Rule d, e, f)
                 midpoint = (high + low) / 2.0
                 result = self._compute_angle_levels(midpoint, midpoint, "midpoint")
@@ -293,9 +298,11 @@ class GannAnalyzer:
                 result.low = low
                 result.has_congestion = True
 
-        # Determine entry prices
-        # In non-congestion: buy at 1X4 resistance, sell at 4X1 support
-        # In congestion (midpoint): buy at 1X4 resistance, sell at 4X1 support
+        # Determine entry prices after potential midpoint recalculation.
+        # After congestion recalculation, buy/sell entries come from the
+        # new midpoint-based levels (where high=low=midpoint, so
+        # resistance=support labels are symmetric). Buy = 1X4 resistance,
+        # sell = 4X1 support (strong preliminary level per PDF 5 trend rules).
         for r in result.resistances:
             if r.label == "1X4":
                 result.buy_entry = r.price
