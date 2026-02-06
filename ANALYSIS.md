@@ -288,4 +288,129 @@ This runs the complete demonstration with examples from the PDF documents.
 
 ---
 
-*This analysis and algorithm were synthesized from seven W.D. Gann PDF documents, extracting and merging all quantifiable mathematical techniques and strategic principles into a unified, executable trading analysis system.*
+## Tunnel Thru the Air — Decryption Results
+
+The `tunnel_decoder.py` module performs systematic decryption of the novel using the techniques described in all companion PDFs (especially PDF 1 "20 Years of Studying Gann").
+
+### Decoded Elements
+
+#### 1. Dates (85 extracted)
+- **Robert Gordon's birth:** June 9, 1906
+- **Narrative span:** 1906 to 1932
+- **40 exact dates** and 45 approximate dates
+- Key narrative dates cluster around January-June 1927, matching the cotton campaign Gann described
+
+#### 2. Inventions (7 decoded)
+Each invention represents a different aspect of Gann's trading system:
+
+| Invention | Mentions | Vibration | Line Span | Decoded Role |
+|-----------|----------|-----------|-----------|-------------|
+| Marie the Angel of Mercy | 24 | 6 | 6,158 lines | The complete trading system / airship |
+| Tunnel Machine | 14 | 5 | 1,906 lines | Market analysis / cycle detection apparatus |
+| Pocket Radio | 6 | 6 | 2,093 lines | Communication / real-time data feed |
+| Radium Ray | 4 | 4 | 40 lines | Scanning / screening tool |
+| Water Bicycle | 2 | 2 | 20 lines | Early prototype / foundational concept |
+| Silent Muffler | 1 | 1 | 0 lines | Risk management / noise reduction |
+| Tele-Talk | 0* | — | — | Distant communication |
+
+#### 3. Time Cycles (13 matching Gann numbers)
+Intervals between narrative dates reveal encoded cycle lengths:
+
+| Cycle Length | Occurrences | Gann Number Match | Vibration |
+|-------------|-------------|-------------------|-----------|
+| ~30 days | 9× | 30 (1/12 of 360°) | 3 |
+| ~123 days | 6× | 120 (trine, 1/3 of 360°) | 6 |
+| ~61 days | 6× | 60 (sextile, 1/6 of 360°) | 7 |
+| ~9 days | 6× | 7 (week cycle) | 9 |
+| ~36 days | 3× | 36 (144/4 subdivision) | 9 |
+| ~365 days | 2× | 365 (solar year) | 5 |
+| ~89 days | 2× | 90 (square, 1/4 of 360°) | 8 |
+| ~46 days | 2× | 45 (1/8 of 360°) | 1 |
+| ~50 days | 2× | 49 (7² completion) | 5 |
+| ~182 days | 1× | 180 (opposition) | 2 |
+| ~228 days | 1× | 225 (5/8 of 360°) | 3 |
+
+#### 4. Robert Gordon's Trades
+The novel encodes specific cotton, wheat, and corn trades at actual historical prices, validating the Gann angle and Square of 9 calculations from PDFs 4 and 5.
+
+#### 5. Cities (14 referenced)
+Each city has encoded geographical significance (longitude/latitude noted per PDF 1's instructions).
+
+#### 6. Key Principles
+Six core principles extracted directly from the novel text:
+1. Cycle theory — past cycles predict future events
+2. History repeats itself (Ecclesiastes 1:9)
+3. There is no new thing under the sun
+4. Know the cause to predict the effect
+5. Wheel within a wheel — cycles within cycles (Ezekiel)
+6. Time is the great factor that proves all things
+
+### Running the Decoder
+
+```bash
+python tunnel_decoder.py
+```
+
+---
+
+## Backtesting Engine
+
+The `backtest_engine.py` module makes the entire algorithm backtestable by running the unified Gann signal generator bar-by-bar against historical OHLC price data.
+
+### Features
+
+- **Bar-by-bar simulation:** Processes each bar sequentially, generating signals from the Gann algorithm
+- **Full trade management:** Entry, exit, stop loss, targets, partial exits, trailing stops
+- **Risk management:** Position sizing (max 10% risk), minimum 2.5:1 reward-to-risk ratio, position value caps
+- **Multiple exit types:** Target hit, stop loss, trailing stop, timeout (72-bar max), partial profit booking
+- **Performance metrics:** Win rate, PnL, profit factor, max drawdown, Sharpe ratio, consecutive streaks
+- **CSV import/export:** Load any OHLC CSV file, export trade logs and equity curves
+
+### Quick Start
+
+```python
+from backtest_engine import GannBacktester, BacktestConfig
+
+# Configure
+config = BacktestConfig(
+    initial_capital=100000.0,
+    max_risk_pct=10.0,        # Max 10% risk per trade
+    min_reward_risk=2.5,      # Min 2.5:1 reward-to-risk
+    min_confidence=0.25,      # Min signal confidence
+    lookback_bars=10,         # Bars for volatility calc
+    max_hold_bars=72,         # Max bars to hold (Rule of 72)
+    use_trailing_stop=True,   # Trail stop after partial exit
+    partial_exit_pct=0.5,     # Book 50% at first target
+)
+
+# Run backtest
+bt = GannBacktester(config)
+result = bt.run("your_data.csv")  # CSV: date,open,high,low,close
+
+# View results
+result.print_summary()
+result.print_trades()
+result.export_csv("output.csv")
+```
+
+### Data Format
+
+CSV file with columns: `date`, `open`, `high`, `low`, `close`, `volume` (volume optional)
+
+```csv
+date,open,high,low,close,volume
+2024-01-02,5000.00,5050.00,4980.00,5030.00,250000
+2024-01-03,5030.00,5070.00,5010.00,5055.00,280000
+```
+
+### Running the Demo
+
+```bash
+python backtest_engine.py
+```
+
+This generates 252 bars of sample data, runs a full backtest, and exports results.
+
+---
+
+*This analysis, algorithm, Tunnel decryption, and backtesting engine were synthesized from seven W.D. Gann PDF documents, extracting and merging all quantifiable mathematical techniques and strategic principles into a unified, executable, and backtestable trading analysis system.*

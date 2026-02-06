@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 *.pyo
+sample_data.csv
+backtest_results*.csv
