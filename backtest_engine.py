@@ -40,7 +40,7 @@ import csv
 import math
 import os
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Optional, Dict, Tuple
 
 from gann_trading_algorithm import GannAnalyzer, TradingSignal
@@ -171,7 +171,7 @@ class BacktestResult:
         gross_profit = sum(wins) if wins else 0.0
         gross_loss = abs(sum(losses)) if losses else 0.0
         self.profit_factor = (
-            gross_profit / gross_loss if gross_loss > 0 else float('inf')
+            gross_profit / gross_loss if gross_loss > 0 else 0.0
         )
 
         # Equity curve and drawdown
@@ -709,7 +709,7 @@ def generate_sample_data(
     for i in range(num_bars):
         # Skip weekends
         while dt.weekday() >= 5:
-            dt = dt.replace(day=dt.day + 1) if dt.day < 28 else dt
+            dt += timedelta(days=1)
 
         # Cycle components (simulating Gann cycles)
         cycle_30 = math.sin(2 * math.pi * i / 30) * 0.003
@@ -743,7 +743,6 @@ def generate_sample_data(
         ))
 
         # Next trading day
-        from datetime import timedelta
         dt += timedelta(days=1)
         while dt.weekday() >= 5:
             dt += timedelta(days=1)

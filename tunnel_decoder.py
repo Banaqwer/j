@@ -218,7 +218,7 @@ class TunnelDecoder:
         ----------
         tunnel_text : str, optional
             Full text of "Tunnel Thru the Air". If not provided,
-            attempts to load from tunnel_extracted.txt.
+            the lines list is empty and load_from_file() must be called.
         """
         if tunnel_text is None:
             self._lines: List[str] = []
