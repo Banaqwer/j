@@ -10,13 +10,13 @@ starting capital on both Bitcoin and Ethereum over the last 5 years
 (Feb 2021 – Feb 2026).
 
 Three scenarios are tested:
-  1. $500 on Bitcoin only (compounding)
-  2. $500 on Ethereum only (compounding)
-  3. $500 split portfolio ($250 BTC + $250 ETH, compounding)
+  1. $500 on Bitcoin only (fixed sizing)
+  2. $500 on Ethereum only (fixed sizing)
+  3. $500 split portfolio ($250 BTC + $250 ETH, fixed sizing)
 
-Uses compounding equity (not fixed sizing) to simulate realistic live trading
-where profits are reinvested. Risk is set conservatively at 1.5% per trade
-to protect the small $500 account.
+Uses fixed position sizing — risk is calculated from the initial $500 base,
+not from growing equity. This prevents unrealistic exponential growth and
+simulates what a real small-account trader would experience.
 
 Run:
     python live_trader_500.py
@@ -157,7 +157,7 @@ def generate_daily_bars(monthly_closes, start_year, start_month, years,
     return bars
 
 
-def run_backtest(bars, asset_name, starting_capital, risk_pct=1.5,
+def run_backtest(bars, starting_capital, risk_pct=1.5,
                  use_fixed_sizing=True):
     """Run the Gann algorithm backtest on given bars.
 
@@ -236,7 +236,7 @@ def main():
     # ═══════════════════════════════════════════════════════════════════════
     print_header("SCENARIO 1: $500 on BITCOIN (BTC/USD)")
 
-    btc_result = run_backtest(btc_bars, "BTC", STARTING_CAPITAL)
+    btc_result = run_backtest(btc_bars, STARTING_CAPITAL)
 
     btc_final = btc_result.final_equity
     btc_profit = btc_final - STARTING_CAPITAL
@@ -291,7 +291,7 @@ def main():
     # ═══════════════════════════════════════════════════════════════════════
     print_header("SCENARIO 2: $500 on ETHEREUM (ETH/USD)")
 
-    eth_result = run_backtest(eth_bars, "ETH", STARTING_CAPITAL)
+    eth_result = run_backtest(eth_bars, STARTING_CAPITAL)
 
     eth_final = eth_result.final_equity
     eth_profit = eth_final - STARTING_CAPITAL
@@ -344,8 +344,8 @@ def main():
     # ═══════════════════════════════════════════════════════════════════════
     print_header("SCENARIO 3: $500 SPLIT PORTFOLIO ($250 BTC + $250 ETH)")
 
-    btc_split = run_backtest(btc_bars, "BTC", 250.0)
-    eth_split = run_backtest(eth_bars, "ETH", 250.0)
+    btc_split = run_backtest(btc_bars, 250.0)
+    eth_split = run_backtest(eth_bars, 250.0)
 
     split_btc_final = btc_split.final_equity
     split_eth_final = eth_split.final_equity
