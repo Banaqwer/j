@@ -33,7 +33,7 @@ By extracting 85 dates from the novel and measuring the intervals between them, 
 | **~90 days** | 2× | 1/4 of 360° (square) | Quarterly turning points |
 | **~45 days** | 2× | 1/8 of 360° | Half-quarter cycle |
 | **~49 days** | 2× | 7² (seven squared) | Completion cycle — 7 weeks |
-| **~180 days** | 1× | 1/2 of 360° (opposition) | Semi-annual pivot (mirrors PDF 4's SAP) |
+| **~180 days** | 1× | 1/2 of 360° (opposition) | Semi-annual pivot (mirrors the Semi-Annual Pivot calculation from the companion PDFs) |
 | **~225 days** | 1× | 5/8 of 360° | Golden section proximity |
 | **~18 days** | 1× | 144÷8 | Subdivision of the master 144 cycle |
 
@@ -95,18 +95,18 @@ The following Tunnel revelations are **already implemented** in the algorithm:
 
 | Tunnel Revelation | How It's Applied in the Algorithm | Code Location |
 |-------------------|----------------------------------|---------------|
-| **Time cycles predict turning points** | `detect_cycles()` finds repeating pivot intervals and projects the next pivot date forward | `gann_trading_algorithm.py` line 756 |
-| **Cycles repeat with ~10% inversions** | Cycle detection includes the "~10% inversion rate" caveat in projections | `gann_trading_algorithm.py` line 816 |
-| **Wheel within a wheel (cycles within cycles)** | The backtester stacks multiple analysis layers — Gann angles + SQ9 + vibration + dynamic levels — so nested cycles are captured at different timeframes | `backtest_engine.py` signal generation loop |
-| **Number vibrations govern prices** | `number_vibration()` and `digit_reduction()` analyze whether a price has vibration 9 (change number) | `gann_trading_algorithm.py` line 572 |
-| **144 is the master cycle number** | `gann_144_levels()` calculates support/resistance at 144-unit intervals and subdivisions (18, 36, 54, 72) | `gann_trading_algorithm.py` line 632 |
-| **3-6-9 pattern in the 360° circle** | The SQ9 calculation uses 45° increments (360/8) which naturally produce the 3-6-9 vibration pattern | `gann_trading_algorithm.py` line 376 |
-| **Price-Time Squaring (P = T²)** | `price_time_square()` calculates time windows from √Range and price windows from (√price ± offset)² | `gann_trading_algorithm.py` line 678 |
+| **Time cycles predict turning points** | `detect_cycles()` finds repeating pivot intervals and projects the next pivot date forward | `gann_trading_algorithm.py` → `GannAnalyzer.detect_cycles()` |
+| **Cycles repeat with ~10% inversions** | Cycle detection includes the "~10% inversion rate" caveat in projections | `gann_trading_algorithm.py` → `GannAnalyzer.detect_cycles()` |
+| **Wheel within a wheel (cycles within cycles)** | The backtester stacks multiple analysis layers — Gann angles + SQ9 + vibration + dynamic levels — so nested cycles are captured at different timeframes | `backtest_engine.py` → `GannBacktester.run()` |
+| **Number vibrations govern prices** | `number_vibration()` and `digit_reduction()` analyze whether a price has vibration 9 (change number) | `gann_trading_algorithm.py` → `GannAnalyzer.number_vibration()` |
+| **144 is the master cycle number** | `gann_144_levels()` calculates support/resistance at 144-unit intervals and subdivisions (18, 36, 54, 72) | `gann_trading_algorithm.py` → `GannAnalyzer.gann_144_levels()` |
+| **3-6-9 pattern in the 360° circle** | The SQ9 calculation uses 45° increments (360/8) which naturally produce the 3-6-9 vibration pattern | `gann_trading_algorithm.py` → `GannAnalyzer.square_of_nine_levels()` |
+| **Price-Time Squaring (P = T²)** | `price_time_square()` calculates time windows from √Range and price windows from (√price ± offset)² | `gann_trading_algorithm.py` → `GannAnalyzer.price_time_square()` |
 | **Square root of price as foundation** | All Gann angle and SQ9 formulas are built on √price operations | Throughout `gann_trading_algorithm.py` |
-| **Small stop losses, max 10% risk** | Position sizing caps at 10% of account; minimum 2.5:1 reward-to-risk enforced | `gann_trading_algorithm.py` line 1068 |
-| **Semi-Annual Pivot from January/July** | `semi_annual_pivot()` calculates 6-month directional bias from OHLC of Jan/Jul 1st–14th | `gann_trading_algorithm.py` line 828 |
-| **Volatility makes static methods dynamic** | `dynamic_gann_levels()` uses daily volatility to project expected range, then applies Gann angles to the projected range | `gann_trading_algorithm.py` line 460 |
-| **SQ9 vs SQ12 based on annual volatility** | `choose_dynamic_square()` selects Square of 9 (annual vol < 40%) or Square of 12 (annual vol > 40%) | `gann_trading_algorithm.py` line 547 |
+| **Small stop losses, max 10% risk** | Position sizing caps at 10% of account; minimum 2.5:1 reward-to-risk enforced | `gann_trading_algorithm.py` → `GannAnalyzer.generate_signal()` |
+| **Semi-Annual Pivot from January/July** | `semi_annual_pivot()` calculates 6-month directional bias from OHLC of Jan/Jul 1st–14th | `gann_trading_algorithm.py` → `GannAnalyzer.semi_annual_pivot()` |
+| **Volatility makes static methods dynamic** | `dynamic_gann_levels()` uses daily volatility to project expected range, then applies Gann angles to the projected range | `gann_trading_algorithm.py` → `GannAnalyzer.dynamic_gann_levels()` |
+| **SQ9 vs SQ12 based on annual volatility** | `choose_dynamic_square()` selects Square of 9 (annual vol < 40%) or Square of 12 (12² = 144 levels, annual vol > 40%) | `gann_trading_algorithm.py` → `GannAnalyzer.choose_dynamic_square()` |
 
 ### 2.2 How Tunnel Cycles Feed the Backtester
 
@@ -199,7 +199,7 @@ For each degree d in {0°, 45°, 90°, 135°, 180°, 225°, 270°, 315°, 360°}
 5. Apply Gann angles to the expected range
 ```
 
-**Square selection:** If annual volatility (= daily_vol × √365) > 40% → use Square of 12 (144 levels), else → use Square of 9 (81 levels).
+**Square selection:** If annual volatility (= daily_vol × √365) > 40% → use Square of 12 (12² = 144 levels), else → use Square of 9 (9² = 81 levels).
 
 ---
 
@@ -331,10 +331,11 @@ The backtester takes the algorithm and runs it systematically:
 ```
 FOR each bar in historical OHLC data:
     IF we have an open position:
-        Check stop loss → exit if hit
-        Check trailing stop → exit if hit
-        Check target → partial exit (50%) at first target, then trail stop to breakeven
-        Check timeout → exit after 72 bars maximum
+        Check stop loss → exit entire position if hit
+        Check trailing stop → exit remaining position if hit
+        Check target → partial exit (50%) at first target, trail stop to breakeven for remaining 50%
+                        remaining 50% exits at stop (breakeven), trailing stop, next target, or 72-bar timeout
+        Check timeout → exit remaining position after 72 bars maximum
     
     IF no position AND enough history bars:
         Generate unified signal (all 9 components)
