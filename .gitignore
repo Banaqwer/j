@@ -5,3 +5,5 @@ sample_data.csv
 backtest_results*.csv
 gold_data.csv
 gold_backtest*.csv
+eurusd_data.csv
+eurusd_backtest*.csv
