@@ -43,7 +43,7 @@ def generate_eth_data():
     """
     Generate ~1,830 daily ETH/USD bars from Jan 2021 to Jan 2026.
 
-    Uses 61 real monthly close prices with daily interpolation.
+    Uses 65 real monthly close prices with daily interpolation.
     Mean-reversion correction ensures monthly endpoints match real prices.
     Daily volatility ~4% (higher than BTC's ~3.5%).
     """
@@ -318,11 +318,11 @@ def run_ethereum_backtest():
     print(f"    • 144 × 8 = $1,152 — acted as 2022 bottom support")
 
     # ── 9. Export CSVs ───────────────────────────────────────────────────
-    export_path = os.path.join(base_dir, "eth_backtest")
+    export_path = os.path.join(base_dir, "eth_backtest.csv")
     result.export_csv(export_path)
 
-    print(f"\n  Exported: {export_path}_trades.csv")
-    print(f"  Exported: {export_path}_equity.csv")
+    print(f"\n  Exported: eth_backtest_trades.csv")
+    print(f"  Exported: eth_backtest_equity.csv")
 
     # ── 10. Final assessment ─────────────────────────────────────────────
     print(f"\n{'═' * 78}")
