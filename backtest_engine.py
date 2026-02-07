@@ -531,9 +531,15 @@ class GannBacktester:
                 prices_history = [bars[j].close for j in range(i - lookback, i)]
                 current_bar = bar
 
+                # Use the lookback-period high/low (swing range) for
+                # Gann angle calculations so angles span a meaningful
+                # price range rather than a single bar's narrow range.
+                lookback_high = max(bars[j].high for j in range(i - lookback, i + 1))
+                lookback_low = min(bars[j].low for j in range(i - lookback, i + 1))
+
                 signal = self.analyzer.generate_signal(
-                    high=current_bar.high,
-                    low=current_bar.low,
+                    high=lookback_high,
+                    low=lookback_low,
                     current_price=current_bar.close,
                     prices_history=prices_history,
                     account_size=capital,
@@ -596,6 +602,9 @@ class GannBacktester:
                             targets=[chosen_target] + [
                                 t for t in all_targets
                                 if t != chosen_target
+                                and risk > 0
+                                and abs(t - entry_price) / risk
+                                    >= self.config.min_reward_risk
                             ][:2],
                             quantity=round(quantity, 4),
                             entry_bar_idx=i,
