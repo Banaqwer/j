@@ -17,7 +17,7 @@ Usage:
     python backtest_gold.py
 
 This will:
-  1. Generate ~1,260 daily gold bars (Feb 2021 – Feb 2026)
+  1. Generate ~1,310 daily gold bars (Feb 2021 – Feb 2026)
   2. Run the Gann algorithm backtester
   3. Print full results and trade log
   4. Export CSV files (gold_data.csv, gold_backtest_trades.csv, gold_backtest_equity.csv)

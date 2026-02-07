@@ -351,6 +351,15 @@ class GannBacktester:
         self.config = config or BacktestConfig()
         self.analyzer = GannAnalyzer()
 
+    @staticmethod
+    def _meets_min_rr(
+        target: float, entry: float, risk: float, min_rr: float
+    ) -> bool:
+        """Check if a target meets the minimum reward-to-risk ratio."""
+        if risk <= 0:
+            return False
+        return abs(target - entry) / risk >= min_rr
+
     def load_csv(self, filepath: str) -> List[Bar]:
         """
         Load OHLCV data from a CSV file.
@@ -570,8 +579,10 @@ class GannBacktester:
                         all_targets.sort(reverse=True)
 
                     for tgt in all_targets:
-                        reward = abs(tgt - signal.entry_price)
-                        if risk > 0 and reward / risk >= self.config.min_reward_risk:
+                        if self._meets_min_rr(
+                            tgt, signal.entry_price, risk,
+                            self.config.min_reward_risk,
+                        ):
                             chosen_target = tgt
                             break
 
@@ -602,9 +613,10 @@ class GannBacktester:
                             targets=[chosen_target] + [
                                 t for t in all_targets
                                 if t != chosen_target
-                                and risk > 0
-                                and abs(t - entry_price) / risk
-                                    >= self.config.min_reward_risk
+                                and self._meets_min_rr(
+                                    t, entry_price, risk,
+                                    self.config.min_reward_risk,
+                                )
                             ][:2],
                             quantity=round(quantity, 4),
                             entry_bar_idx=i,
