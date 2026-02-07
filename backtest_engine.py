@@ -75,6 +75,10 @@ class BacktestConfig:
     # Slippage and commission (per trade, as fraction of price)
     slippage_pct: float = 0.001        # 0.1% slippage
     commission_per_trade: float = 0.0  # Flat commission
+    use_fixed_sizing: bool = False     # When True, position sizing uses
+    #   initial_capital instead of compounding equity. Useful for highly
+    #   volatile assets (e.g. crypto) where compounding leads to
+    #   unrealistic exponential growth.
 
 
 # ---------------------------------------------------------------------------
@@ -595,12 +599,17 @@ class GannBacktester:
                             entry_price *= (1 - self.config.slippage_pct)
 
                         # Calculate position size
-                        max_risk_amount = capital * self.config.max_risk_pct / 100.0
+                        sizing_base = (
+                            self.config.initial_capital
+                            if self.config.use_fixed_sizing
+                            else capital
+                        )
+                        max_risk_amount = sizing_base * self.config.max_risk_pct / 100.0
                         quantity = max_risk_amount / risk if risk > 0 else 0
                         quantity = max(1.0, quantity)
 
                         # Cap position value to max_position_pct of capital
-                        max_pos_value = capital * self.config.max_position_pct / 100.0
+                        max_pos_value = sizing_base * self.config.max_position_pct / 100.0
                         if quantity * entry_price > max_pos_value and entry_price > 0:
                             quantity = max_pos_value / entry_price
 
