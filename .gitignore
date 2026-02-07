@@ -11,3 +11,5 @@ wheat_data.csv
 wheat_backtest*.csv
 btc_data.csv
 btc_backtest*.csv
+eth_data.csv
+eth_backtest*.csv
