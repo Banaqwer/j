@@ -13,3 +13,5 @@ btc_data.csv
 btc_backtest*.csv
 eth_data.csv
 eth_backtest*.csv
+silver_data.csv
+silver_backtest*.csv
