@@ -15,7 +15,7 @@ EUR/USD price history for the 3-year period.
 Because the Gann algorithm's Square of 9 and angle calculations use
 sqrt(price), which only produces meaningful support/resistance levels
 for prices in the hundreds or thousands, EUR/USD prices are scaled by
-10 000 (converting to pip-units, e.g. 1.0850 -> 10850) before being
+10,000 (converting to pip-units, e.g. 1.0850 -> 10850) before being
 fed to the algorithm.  Results are displayed in standard forex
 notation.
 
@@ -211,12 +211,12 @@ def generate_eurusd_daily_data(
 
 
 def _to_pip_scale(bars: List[Bar]) -> List[Bar]:
-    """Scale EUR/USD bars by 10 000 so the Gann algorithm operates in pips.
+    """Scale EUR/USD bars by 10,000 so the Gann algorithm operates in pips.
 
     The Gann Square of 9 and angle calculations use sqrt(price),
     which only produces meaningful support/resistance levels for
     prices in the hundreds or thousands.  Multiplying forex prices
-    by 10 000 converts them to a pip-denominated scale (e.g.
+    by 10,000 converts them to a pip-denominated scale (e.g.
     1.0850 -> 10850) where the math works correctly.
     """
     return [
@@ -280,7 +280,7 @@ def main():
 
     # Scale to pip units for the Gann algorithm
     bars = _to_pip_scale(bars_raw)
-    print("   Scaled to pip-units (x10 000) for Gann algorithm")
+    print("   Scaled to pip-units (x10,000) for Gann algorithm")
 
     # -- 2. Configure backtester -------------------------------------------
     print("\n2. Configuring backtester for EUR/USD...")
@@ -487,7 +487,7 @@ def main():
     print(f"        ECB, Investing.com, Exchange-Rates.org, and OFX.")
     print(f"        Daily bars are interpolated with realistic volatility")
     print(f"        between monthly anchors.  Prices are scaled to pip-units")
-    print(f"        (x10 000) for the Gann algorithm, then converted back.")
+    print(f"        (x10,000) for the Gann algorithm, then converted back.")
     print(f"\n  For exact results, replace eurusd_data.csv with real daily")
     print(f"  OHLC data from your broker or data provider and re-run:")
     print(f"  >>> bt = GannBacktester(config)")
