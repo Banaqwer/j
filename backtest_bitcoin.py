@@ -23,7 +23,7 @@ Usage:
     python backtest_bitcoin.py
 
 This will:
-  1. Generate ~1,826 daily BTC bars (Feb 2021 – Feb 2026)
+  1. Generate ~1,833 daily BTC bars (Feb 2021 – Feb 2026)
   2. Run the Gann algorithm backtester
   3. Print full results and trade log
   4. Export CSV files (btc_data.csv, btc_backtest_trades.csv, btc_backtest_equity.csv)
