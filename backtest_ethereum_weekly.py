@@ -19,7 +19,7 @@ Key Ethereum price history captured:
   - Jun 2022: ~$1,000 (crypto winter, Luna/3AC collapse)
   - Sep 2022: ~$1,328 (The Merge — ETH transitions to Proof of Stake)
   - Mar 2024: ~$4,080 (ETH ETF anticipation rally)
-  - Aug 2025: ~$4,952 (new all-time high)
+  - Aug 24, 2025: ~$4,952 (new all-time high)
   - Feb 2026: ~$2,057 (current price — correction from ATH)
 
 ETH trades 24/7/365 — no weekend skipping needed.
@@ -648,7 +648,7 @@ def main():
         print(f"    Sell entry: ${gann_levels.sell_entry:>10,.2f}")
     print(f"    Congestion: {gann_levels.has_congestion}")
 
-    # Volatility analysis
+    # Volatility analysis — calculate_daily_volatility returns a percentage
     recent_closes = [b.close for b in bars[-15:]]
     daily_vol = analyzer.calculate_daily_volatility(recent_closes)
     annual_vol = daily_vol * math.sqrt(365)  # 365 for crypto (24/7 market)
