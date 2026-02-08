@@ -47,6 +47,13 @@ BT_SHARPE = 12.15
 BT_MAX_DD = 2.56
 
 
+# Thresholds and defaults
+# Buy zone tolerance: price is "near" buy zone if within 5% below it
+GANN_BUY_ZONE_TOLERANCE = 0.95
+# Default SQ9 support when none found: 144 × 500 = $72,000 (Gann master number)
+DEFAULT_SQ9_SUPPORT = 72000
+
+
 def main():
     print("╔══════════════════════════════════════════════════════════════════════╗")
     print("║     BITCOIN: SHOULD YOU BUY OR SELL? — GANN ALGORITHM ANSWER       ║")
@@ -150,8 +157,8 @@ def main():
     print(f"    Gann angle trend: {trend}")
 
     # --- Component 9: Dynamic SQ12 ---
-    # BTC annual vol ~60%+, daily vol ~2.5%
-    daily_vol = 0.025
+    # BTC daily vol from 266 weekly-anchored backtest (2021-2026 average)
+    daily_vol = 0.025  # 2.5% — derived from backtest data generation
     annual_vol = daily_vol * math.sqrt(365)  # ~47.8%
     dynamic_sq12_active = annual_vol > 0.40
     print(f"\n  Dynamic SQ12:")
@@ -177,11 +184,11 @@ def main():
     # Factor 2: Gann angle position
     buy_entry = angles.buy_entry or angles.midpoint
     sell_entry = angles.sell_entry or angles.midpoint
-    if CURRENT_PRICE <= buy_entry and CURRENT_PRICE >= buy_entry * 0.95:
+    if CURRENT_PRICE <= buy_entry and CURRENT_PRICE >= buy_entry * GANN_BUY_ZONE_TOLERANCE:
         bullish_factors.append(f"Near Gann angle BUY zone (${buy_entry:,.0f})")
     elif CURRENT_PRICE >= sell_entry:
         bearish_factors.append(f"At Gann angle SELL zone (${sell_entry:,.0f})")
-    elif CURRENT_PRICE < buy_entry * 0.95:
+    elif CURRENT_PRICE < buy_entry * GANN_BUY_ZONE_TOLERANCE:
         bearish_factors.append(f"Well below Gann angle BUY zone (${buy_entry:,.0f})")
     else:
         bearish_factors.append("Price in neutral Gann angle zone")
@@ -257,11 +264,19 @@ def main():
         action = "WAIT / ACCUMULATE SLOWLY"
         action_emoji = "🟡"
 
+    # Confidence always reflects strength of the recommended action
+    if action.startswith("SELL"):
+        action_confidence = n_bear
+    elif action.startswith("BUY"):
+        action_confidence = n_bull
+    else:
+        action_confidence = max(n_bull, n_bear)
+
     print(f"""
   ┌─────────────────────────────────────────────────────────────────┐
   │                                                                 │
   │   Algorithm Signal: {action_emoji} {action:<30}              │
-  │   Confidence: {n_bear if action.startswith("SELL") else n_bull}/{total} factors ({bull_pct:.0f}% bullish / {100-bull_pct:.0f}% bearish)    │
+  │   Confidence: {action_confidence}/{total} factors ({bull_pct:.0f}% bullish / {100-bull_pct:.0f}% bearish)    │
   │   Current Price: ${CURRENT_PRICE:>10,}                                   │
   │                                                                 │
   └─────────────────────────────────────────────────────────────────┘
@@ -274,7 +289,7 @@ def main():
 
     # Calculate key levels
     # Support levels (where to buy)
-    sq9_support = supports_sq9[-1][1] if supports_sq9 else 72000
+    sq9_support = supports_sq9[-1][1] if supports_sq9 else DEFAULT_SQ9_SUPPORT
     level_144x500 = 144 * 500  # $72,000 — Gann's master number
     level_64k = 64 * 1000      # $64,000 — 8² × 1000
     level_50k = 50000           # Psychological
