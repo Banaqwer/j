@@ -15,10 +15,10 @@ approximation of Solana's actual price trajectory.
 Key Solana characteristics handled:
   - Trades 24/7 (no weekend gaps — all calendar days included)
   - Extremely high volatility (~80-120% annualized, higher than BTC/ETH)
-  - Massive price swings (ATH ~$260 → crash to ~$8 → recovery to ~$200+)
+  - Massive price swings (ATH ~$295 → crash to ~$8 → recovery to ~$295 → back to ~$105)
   - FTX collapse in Nov 2022 caused a unique crash to single digits
   - Dynamic SQ12 used (very high-volatility regime)
-  - Captures the 2021 bull run, 2022 bear + FTX collapse, and 2023-25 recovery
+  - Captures the 2021 bull run, 2022 bear + FTX collapse, 2023-24 recovery, and 2025 decline
 
 Usage:
 ------
@@ -60,31 +60,31 @@ def generate_sol_data():
     # Sources: CoinGecko, CoinMarketCap, Jupiter aggregator data
     monthly_closes = {
         # 2021 — Massive bull run, "Solana Summer", ATH near $260
-        "2021-01": 3.50,   "2021-02": 11.21,  "2021-03": 15.87,
-        "2021-04": 43.09,  "2021-05": 25.02,  "2021-06": 34.67,
-        "2021-07": 34.82,  "2021-08": 75.35,  "2021-09": 141.60,
-        "2021-10": 203.06, "2021-11": 233.32, "2021-12": 170.33,
+        "2021-01": 3.50,   "2021-02": 13.39,  "2021-03": 19.46,
+        "2021-04": 32.67,  "2021-05": 35.65,  "2021-06": 36.59,
+        "2021-07": 107.58, "2021-08": 140.88, "2021-09": 202.84,
+        "2021-10": 208.92, "2021-11": 170.31, "2021-12": 170.33,
         # 2022 — Bear market + FTX collapse (SOL was heavily tied to FTX)
-        "2022-01": 96.17,  "2022-02": 95.17,  "2022-03": 103.41,
-        "2022-04": 90.09,  "2022-05": 46.53,  "2022-06": 33.70,
-        "2022-07": 39.27,  "2022-08": 32.46,  "2022-09": 33.78,
-        "2022-10": 31.56,  "2022-11": 13.36,  "2022-12": 11.04,
+        "2022-01": 99.67,  "2022-02": 99.45,  "2022-03": 122.68,
+        "2022-04": 89.05,  "2022-05": 45.73,  "2022-06": 33.58,
+        "2022-07": 42.47,  "2022-08": 31.46,  "2022-09": 33.22,
+        "2022-10": 32.59,  "2022-11": 14.09,  "2022-12": 9.96,
         # 2023 — Recovery from $8 bottom, DeFi renaissance
-        "2023-01": 24.28,  "2023-02": 21.40,  "2023-03": 20.51,
-        "2023-04": 21.22,  "2023-05": 20.42,  "2023-06": 16.60,
-        "2023-07": 24.65,  "2023-08": 20.16,  "2023-09": 22.88,
-        "2023-10": 33.98,  "2023-11": 58.18,  "2023-12": 101.77,
+        "2023-01": 23.95,  "2023-02": 21.92,  "2023-03": 21.17,
+        "2023-04": 22.83,  "2023-05": 20.82,  "2023-06": 18.90,
+        "2023-07": 23.72,  "2023-08": 19.74,  "2023-09": 21.40,
+        "2023-10": 38.52,  "2023-11": 59.24,  "2023-12": 101.51,
         # 2024 — Continued rally, meme coin ecosystem explosion
-        "2024-01": 97.49,  "2024-02": 127.18, "2024-03": 187.37,
-        "2024-04": 132.97, "2024-05": 163.06, "2024-06": 134.46,
-        "2024-07": 185.21, "2024-08": 135.68, "2024-09": 158.82,
-        "2024-10": 163.35, "2024-11": 237.30, "2024-12": 189.31,
-        # 2025 — Consolidation and new cycle
-        "2025-01": 235.48, "2025-02": 180.00, "2025-03": 130.00,
-        "2025-04": 148.00, "2025-05": 175.00, "2025-06": 168.00,
-        "2025-07": 190.00, "2025-08": 155.00, "2025-09": 162.00,
-        "2025-10": 195.00, "2025-11": 220.00, "2025-12": 210.00,
-        "2026-01": 225.00,
+        "2024-01": 97.03,  "2024-02": 125.71, "2024-03": 202.87,
+        "2024-04": 126.96, "2024-05": 165.64, "2024-06": 146.49,
+        "2024-07": 171.83, "2024-08": 135.37, "2024-09": 152.62,
+        "2024-10": 168.43, "2024-11": 237.74, "2024-12": 189.26,
+        # 2025 — ATH in Jan then sharp decline through the year
+        "2025-01": 294.87, "2025-02": 228.00, "2025-03": 206.00,
+        "2025-04": 192.00, "2025-05": 173.00, "2025-06": 148.00,
+        "2025-07": 124.00, "2025-08": 127.00, "2025-09": 125.00,
+        "2025-10": 121.00, "2025-11": 109.00, "2025-12": 95.71,
+        "2026-01": 105.44,
     }
 
     sorted_months = sorted(monthly_closes.keys())
@@ -331,8 +331,8 @@ def run_solana_backtest():
         (100, "10² — major psychological level"),
         (144, "12² = 144 (Gann master number)"),
         (169, "13² (perfect square)"),
-        (196, "14² — near current price zone"),
-        (225, "15² (perfect square)"),
+        (196, "14² (perfect square)"),
+        (225, "15² — was near Jan 2025 ATH zone"),
         (256, "16² — near ATH zone"),
         (289, "17² (perfect square)"),
         (324, "18² (perfect square)"),
@@ -354,10 +354,12 @@ def run_solana_backtest():
           f"{int(round(math.sqrt(all_time_low)))}² "
           f"= {int(round(math.sqrt(all_time_low)))**2}")
     print(f"    • FTX crash took SOL from $31 to $8 — below 3² = 9 Gann support")
-    print(f"    • Recovery stopped at 15² = $225 resistance — Gann square level")
+    print(f"    • Jan 2025 ATH $295 occurred near 17² = $289 — Gann square level")
+    print(f"    • Recovery then crashed back: $295 → $96 (Dec 2025) → $105 (Jan 2026)")
+    print(f"    • Current price near 10² = $100 — major Gann perfect square support")
     print(f"    • 144 ($144 = 12²) acted as major pivot in 2021 & 2024")
-    print(f"    • Key Gann resistance: $225 (15²), $256 (16²), $324 (18²)")
-    print(f"    • Key Gann support: $196 (14²), $169 (13²), $144 (12²)")
+    print(f"    • Key Gann resistance: $144 (12²), $169 (13²), $196 (14²), $225 (15²)")
+    print(f"    • Key Gann support: $100 (10²), $81 (9²), $64 (8²)")
     print(f"    • SOL's extreme beta amplifies Gann cycle signals")
 
     # ── 9. Export CSVs ───────────────────────────────────────────────────
@@ -383,12 +385,14 @@ def run_solana_backtest():
 
   Solana is one of the most volatile major cryptos, with ~{ann_vol:.0f}%
   annualized volatility. The Gann algorithm's key strengths on SOL:
-  - Perfect square levels ($144, $196, $225, $256) align precisely with pivots
+  - Perfect square levels ($100, $144, $196, $225, $289) align with pivots
   - Dynamic SQ12 captures SOL's extreme intraday swings
   - 144 (Gann master number) = 12² — double significance as both a cycle
     number AND a perfect square, making $144 the ultimate SOL pivot
-  - FTX crash recovery from $8 to $230+ followed Gann square progression:
-    3² → 5² → 7² → 10² → 12² → 15² (each perfect square as support/resistance)
+  - Jan 2025 ATH $295 near 17² = $289 → declined to 10² = $100 zone
+    following Gann square progression downward:
+    17² → 15² → 14² → 12² → 10² (each perfect square as support/resistance)
+  - Current price ~$105 sitting right above 10² = $100 major support
 
   Disclaimer: Past performance does not guarantee future results.
   This is a mathematical model for educational purposes only.
