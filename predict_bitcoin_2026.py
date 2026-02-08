@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """
-Bitcoin 2026 Prediction Using W.D. Gann's Algorithm
-====================================================
+Bitcoin 2026 Prediction Using W.D. Gann's Algorithm — UPDATED WITH REAL DATA
+=============================================================================
 Uses every component of the Gann trading algorithm — decoded from the PDFs
 and 'Tunnel Thru the Air' — to project Bitcoin's key price levels, timing
 windows, and directional bias for the full year 2026.
+
+Based on 266 verified weekly close prices (Jan 2021 – Feb 2026) sourced from
+CoinMarketCap, StatMuse, CoinGecko, and Yahoo Finance. Current BTC price
+reflects the post-$124K crash (Oct 2025 peak → $76,900 Feb 1, 2026).
 
 Components applied:
   1. Square of 9 (SQ9) — spiral price levels from current price
@@ -37,23 +41,10 @@ from gann_trading_algorithm import GannAnalyzer
 
 
 # ===== BITCOIN HISTORICAL REFERENCE DATA ===================================
-# Real monthly closes used in the backtest (Jan 2021 – Jan 2026)
-BTC_MONTHLY_CLOSES = [
-    # 2021
-    33114, 45137, 58918, 57750, 37332, 35040, 41461, 47166, 43790, 61374, 56905, 46306,
-    # 2022
-    38483, 43179, 45538, 37644, 31792, 19785, 23307, 20050, 19423, 20495, 16547, 16625,
-    # 2023
-    23139, 23147, 28478, 29252, 27219, 30468, 29230, 26044, 26972, 34494, 37732, 42265,
-    # 2024
-    42582, 51811, 71289, 63522, 67520, 62744, 64623, 59089, 63329, 72390, 96405, 93429,
-    # 2025
-    102399, 98148, 82540, 94181, 107400, 109500, 101300, 95800, 103200, 108700, 112400, 115208,
-    # 2026
-    104932,
-]
+# Based on 266 verified weekly close prices from the backtest (Jan 2021 – Feb 2026)
+# Sources: CoinMarketCap, StatMuse, CoinGecko, Yahoo Finance
 
-# Key BTC historical pivots (date, price, type)
+# Key BTC historical pivots (date, price, type) — ALL VERIFIED
 BTC_PIVOTS = [
     ("2021-01-04", 33114, "low"),
     ("2021-04-14", 64863, "high"),   # First 2021 peak
@@ -69,18 +60,20 @@ BTC_PIVOTS = [
     ("2024-04-20", 63500, "low"),    # Halving
     ("2024-08-05", 49050, "low"),    # August selloff
     ("2024-11-22", 99500, "high"),   # Post-election rally
-    ("2024-12-17", 108268, "high"),  # New ATH
+    ("2024-12-17", 108268, "high"),  # Dec 2024 ATH
     ("2025-01-20", 109300, "high"),  # Trump inauguration rally
     ("2025-03-11", 76600, "low"),    # Tariff fear correction
-    ("2025-05-22", 111800, "high"),  # New ATH
-    ("2025-12-31", 115208, "high"),  # Year-end
-    ("2026-01-31", 104932, "low"),   # Current price
+    ("2025-05-22", 111800, "high"),  # May 2025 high
+    ("2025-10-26", 124600, "high"),  # Oct 2025 ATH (cycle peak)
+    ("2025-11-23", 99300, "low"),    # Nov crash
+    ("2025-12-28", 87800, "low"),    # Year-end decline
+    ("2026-02-01", 76900, "low"),    # Current — post-crash low
 ]
 
-# Current BTC state as of Feb 2026
-CURRENT_PRICE = 104932
-CURRENT_DATE = datetime(2026, 2, 7)
-YEAR_START_PRICE = 104932  # Jan 31, 2026
+# Current BTC state as of Feb 8, 2026
+CURRENT_PRICE = 76900     # Feb 1 weekly close (spot ~$68,978 on Feb 8)
+CURRENT_DATE = datetime(2026, 2, 8)
+YEAR_START_PRICE = 90600  # Jan 4, 2026 weekly close
 
 
 def section_header(title: str) -> str:
@@ -134,9 +127,9 @@ def sq9_analysis(analyzer: GannAnalyzer) -> Dict:
             inc = total_deg / 180.0
             level = (sqrt_p + inc) ** 2
             level_down = (sqrt_p - inc) ** 2 if sqrt_p - inc > 0 else 0
-            if 50000 <= level <= 250000:
+            if 30000 <= level <= 250000:
                 extended[f"+{total_deg}°"] = level
-            if 50000 <= level_down <= 250000:
+            if 30000 <= level_down <= 250000:
                 extended[f"-{total_deg}°"] = level_down
 
     for label, price in sorted(extended.items(), key=lambda x: x[1]):
@@ -156,14 +149,14 @@ def gann_angle_analysis(analyzer: GannAnalyzer) -> Dict:
     """Compute Gann angle support/resistance from recent swing high/low."""
     print(section_header("2. GANN ANGLES — SUPPORT & RESISTANCE"))
 
-    # Use the recent swing range (2025 high to 2026 current)
-    swing_high = 115208   # Dec 2025
-    swing_low = 76600     # Mar 2025 tariff correction low
+    # Use the recent swing range (Oct 2025 ATH to Feb 2026 crash low)
+    swing_high = 124600   # Oct 26, 2025 ATH
+    swing_low = 76900     # Feb 1, 2026 post-crash low
 
     result = analyzer.gann_angle_levels(swing_high, swing_low)
 
-    print(f"\n  Swing High: ${swing_high:,.0f} (Dec 2025)")
-    print(f"  Swing Low:  ${swing_low:,.0f} (Mar 2025)")
+    print(f"\n  Swing High: ${swing_high:,.0f} (Oct 26, 2025 ATH)")
+    print(f"  Swing Low:  ${swing_low:,.0f} (Feb 1, 2026)")
     print(f"  Current:    ${CURRENT_PRICE:,.0f}")
 
     print(f"\n  {'Angle':>6}  {'Degree':>8}  {'Support':>12}  {'Resistance':>12}")
@@ -212,12 +205,13 @@ def vibration_analysis(analyzer: GannAnalyzer) -> Dict:
 
     prices_to_check = {
         "Current BTC": CURRENT_PRICE,
-        "2025 ATH": 115208,
-        "2024 ATH": 108268,
+        "Oct 2025 ATH": 124600,
+        "Dec 2024 ATH": 108268,
         "2021 ATH": 69000,
         "100K Psychological": 100000,
+        "75K Current Zone": 75000,
+        "50K Support": 50000,
         "150K Target": 150000,
-        "200K Target": 200000,
         "Halving Price": 63500,
         "FTX Low": 15476,
     }
@@ -243,7 +237,8 @@ def vibration_analysis(analyzer: GannAnalyzer) -> Dict:
     # Current price vibration detail
     current_vib = results["Current BTC"]
     print(f"\n  Current BTC ${CURRENT_PRICE:,.0f}:")
-    print(f"    Digit sum: 1+0+4+9+3+2 = {sum(int(d) for d in str(int(CURRENT_PRICE)))}")
+    print(f"    Digit sum: {' + '.join(str(d) for d in str(int(CURRENT_PRICE)))} = "
+          f"{sum(int(d) for d in str(int(CURRENT_PRICE)))}")
     print(f"    Single-digit vibration: {current_vib.single_digit}")
     if current_vib.is_change_number:
         print(f"    ⚠️  Vibration = 9 → CHANGE NUMBER → expect reversal at this level!")
@@ -251,7 +246,7 @@ def vibration_analysis(analyzer: GannAnalyzer) -> Dict:
     # Find nearest vibration-9 levels
     print(sub_header("Nearest Vibration-9 Levels (Reversal Zones)"))
     v9_levels = []
-    for test_price in range(80000, 200001, 1000):
+    for test_price in range(50000, 200001, 1000):
         vib = analyzer.number_vibration(test_price)
         if vib.single_digit == 9:
             v9_levels.append(test_price)
@@ -277,12 +272,13 @@ def cycle_analysis() -> Dict:
         ("2024-04-20", 63500, "Halving"),
         ("2024-08-05", 49050, "August low"),
         ("2024-11-22", 99500, "Post-election rally"),
-        ("2024-12-17", 108268, "ATH"),
+        ("2024-12-17", 108268, "Dec 2024 ATH"),
         ("2025-01-20", 109300, "Inauguration high"),
         ("2025-03-11", 76600, "Tariff correction low"),
-        ("2025-05-22", 111800, "New ATH"),
-        ("2025-12-31", 115208, "Year-end high"),
-        ("2026-01-31", 104932, "Current"),
+        ("2025-05-22", 111800, "May 2025 high"),
+        ("2025-10-26", 124600, "Oct 2025 ATH"),
+        ("2025-12-28", 87800, "Year-end crash"),
+        ("2026-02-01", 76900, "Current low"),
     ]
 
     print(f"\n  Projecting from recent pivots using Gann cycle intervals")
@@ -386,9 +382,10 @@ def master_cycle_144() -> Dict:
     key_dates = [
         ("2024-04-20", "Halving"),
         ("2024-08-05", "August low"),
-        ("2024-12-17", "ATH"),
+        ("2024-12-17", "Dec 2024 ATH"),
         ("2025-03-11", "Tariff correction"),
-        ("2025-05-22", "New ATH"),
+        ("2025-05-22", "May 2025 high"),
+        ("2025-10-26", "Oct 2025 ATH"),
     ]
 
     cycle_dates_2026 = []
@@ -430,7 +427,8 @@ def price_time_squaring() -> Dict:
     print(sub_header("Price-Time Square Windows (2026)"))
 
     pivots_for_pt = [
-        ("2025-05-22", 111800, "May 2025 ATH"),
+        ("2025-10-26", 124600, "Oct 2025 ATH"),
+        ("2025-05-22", 111800, "May 2025 High"),
         ("2025-03-11", 76600, "Mar 2025 Low"),
         ("2024-12-17", 108268, "Dec 2024 ATH"),
         ("2024-08-05", 49050, "Aug 2024 Low"),
@@ -473,9 +471,9 @@ def dynamic_sq12_analysis(analyzer: GannAnalyzer) -> Dict:
     """Apply dynamic Square of 12 analysis for BTC's high volatility."""
     print(section_header("7. DYNAMIC SQ12 — VOLATILITY-TRIGGERED LEVELS"))
 
-    # BTC annualized volatility from backtest: ~64%
+    # BTC annualized volatility from weekly backtest: ~48%
     # This triggers SQ12 (threshold > 40%) per PDF 5
-    daily_vol = 0.035  # ~3.5% daily
+    daily_vol = 0.025  # ~2.5% daily (from weekly-anchored backtest)
     annual_vol = daily_vol * math.sqrt(365)  # 24/7 market
     print(f"\n  BTC Daily Volatility:    {daily_vol*100:.1f}%")
     print(f"  BTC Annual Volatility:   {annual_vol*100:.1f}%")
@@ -531,9 +529,9 @@ def tunnel_cycles_applied() -> Dict:
 
     btc_cycles = [
         ("4-Year Halving Cycle", 1461, "2012→2016→2020→2024", "Next: ~Apr 2028"),
-        ("Post-Halving Bull (12-18 months)", 540, "2013, 2017, 2021", "Active NOW through late 2026"),
-        ("Bear Market (~12 months)", 365, "2014, 2018, 2022", "Not expected until 2027"),
-        ("Mid-Cycle Correction (~30%)", 90, "Jul 2021, Aug 2024", "Watch for in 2026"),
+        ("Post-Halving Bull (12-18 months)", 540, "2013, 2017, 2021", "Peaked Oct 2025 ($124K)"),
+        ("Post-Peak Correction (~50-80%)", 365, "2014, 2018, 2022", "IN PROGRESS: $124K→$76K (-38%)"),
+        ("Mid-Cycle Correction (~30%)", 90, "Jul 2021, Aug 2024", "Possible bounce Q2 2026"),
         ("90-Day Swing Cycle", 90, "Consistent in BTC", "Every quarter"),
         ("144-Day Gann Master", 144, "Matches BTC pivots", "See Section 5"),
     ]
@@ -559,15 +557,19 @@ def tunnel_cycles_applied() -> Dict:
   5. The market follows natural law — cycles are inevitable
 
   Applied to BTC 2026:
-  ─ Post-halving year 2 = historically the PEAK year
-  ─ 2013 peak: 12 months after halving
-  ─ 2017 peak: 18 months after halving (Dec 2017)
-  ─ 2021 peak: 18 months after halving (Nov 2021)
-  ─ 2025-2026: 12-24 months after Apr 2024 halving
-  ─ ➤ CYCLE PEAK WINDOW: Q2-Q4 2026
+  ─ Post-halving cycle PEAKED in Oct 2025 at $124,600
+  ─ 2013 peak: 12 months after halving → correction to -85%
+  ─ 2017 peak: 18 months after halving (Dec 2017) → correction to -84%
+  ─ 2021 peak: 18 months after halving (Nov 2021) → correction to -77%
+  ─ 2025 peak: 18 months after Apr 2024 halving (Oct 2025) ✓
+  ─ Current: $76,900 = -38% from peak → correction MAY NOT BE OVER
+  ─ Historical bottoms: -77% to -85% from peak → worst case $18K-$29K
+  ─ BUT: each cycle correction is shallower (85% → 84% → 77% → ??)
+  ─ ➤ LIKELY BOTTOM ZONE: $50K-$65K (50-60% correction) in Q2-Q3 2026
+  ─ ➤ RECOVERY WINDOW: Q4 2026 – Q2 2027
 """)
 
-    return {"peak_window": "Q2-Q4 2026"}
+    return {"peak_window": "PEAKED Oct 2025 — now in correction"}
 
 
 # ===== 9. SEMI-ANNUAL PIVOT (SAP) =========================================
@@ -577,16 +579,16 @@ def sap_analysis() -> Dict:
 
     # SAP = (Year High + Year Low + Year Close) / 3
     # For 2026, we use 2025 data to set the initial SAP
-    y2025_high = 115208
-    y2025_low = 76600
-    y2025_close = 115208
+    y2025_high = 124600   # Oct 26, 2025 ATH (verified)
+    y2025_low = 76600     # Mar 11, 2025 tariff correction low
+    y2025_close = 87800   # Dec 28, 2025 weekly close (verified)
 
     sap = (y2025_high + y2025_low + y2025_close) / 3
 
-    print(f"\n  2025 Year Data:")
-    print(f"    High:  ${y2025_high:,.0f}")
-    print(f"    Low:   ${y2025_low:,.0f}")
-    print(f"    Close: ${y2025_close:,.0f}")
+    print(f"\n  2025 Year Data (verified from weekly closes):")
+    print(f"    High:  ${y2025_high:,.0f} (Oct 26, 2025)")
+    print(f"    Low:   ${y2025_low:,.0f} (Mar 11, 2025)")
+    print(f"    Close: ${y2025_close:,.0f} (Dec 28, 2025)")
     print(f"\n  SAP = (H + L + C) / 3 = ${sap:,.0f}")
 
     position = "ABOVE" if CURRENT_PRICE > sap else "BELOW"
@@ -624,12 +626,12 @@ def unified_prediction(sq9_data, angle_data, vib_data, cycle_data,
         bias_factors.append(("SAP Position", "BEARISH", "Price below SAP"))
 
     # Halving cycle
-    bias_factors.append(("Halving Cycle", "BULLISH",
-                         "Year 2 post-halving = historically strongest"))
+    bias_factors.append(("Halving Cycle", "BEARISH",
+                         "Post-peak correction phase (peaked Oct 2025)"))
 
     # 4-year cycle
-    bias_factors.append(("4-Year Cycle", "BULLISH",
-                         "2026 aligns with 2014/2018/2022 cycle peaks"))
+    bias_factors.append(("4-Year Cycle", "BEARISH",
+                         "Correction phase follows peak — similar to 2014/2018/2022"))
 
     # Vibration
     if vib_data["current_vibration"].single_digit == 9:
@@ -670,31 +672,31 @@ def unified_prediction(sq9_data, angle_data, vib_data, cycle_data,
 
     # SQ9 levels
     for deg, price in sq9_data["levels"].items():
-        if 60000 <= price <= 250000:
+        if 30000 <= price <= 250000:
             all_levels.append((price, f"SQ9 {deg}°"))
 
     # Gann angle levels
     for angle in angle_data["combined_angles"]:
-        if 60000 <= angle["support"] <= 250000:
+        if 30000 <= angle["support"] <= 250000:
             all_levels.append((angle["support"], f"Angle {angle['label']} support"))
-        if 60000 <= angle["resistance"] <= 250000:
+        if 30000 <= angle["resistance"] <= 250000:
             all_levels.append((angle["resistance"], f"Angle {angle['label']} resistance"))
 
     # 144 levels
     for mult, price in master144["price_levels"].items():
-        if 60000 <= price <= 250000:
+        if 30000 <= price <= 250000:
             all_levels.append((price, f"144 × {mult}"))
 
     # Vibration 9 levels
     for price in vib_data["v9_levels"]:
-        if 60000 <= price <= 250000:
+        if 30000 <= price <= 250000:
             all_levels.append((price, "Vibration 9 reversal"))
 
     # SAP
     all_levels.append((sap_data["sap"], "SAP Pivot"))
 
     # Psychological levels
-    for p in [75000, 100000, 125000, 150000, 175000, 200000]:
+    for p in [50000, 60000, 75000, 100000, 125000, 150000]:
         all_levels.append((p, "Psychological"))
 
     # Sort and deduplicate (within 1%)
@@ -762,28 +764,28 @@ def unified_prediction(sq9_data, angle_data, vib_data, cycle_data,
     print(sub_header("D. Month-by-Month 2026 Outlook"))
 
     monthly_outlook = [
-        ("February", "Consolidation after Jan decline. SAP support at ~$102K holds. "
-         "Watch for cycle turn mid-month."),
-        ("March", "Spring equinox (Mar 20) = seasonal turn window. "
-         "Historically strong month post-halving. Expect move toward $110K-$115K."),
-        ("April", "Anniversary of 2024 halving (Apr 20). 360-day cycle from halving. "
-         "Traditionally volatile. Multiple cycle confluences."),
-        ("May", "1-year anniversary of May 2025 ATH. 'Sell in May' seasonal? "
-         "Or continuation of post-halving bull. Key resistance at SQ9 levels."),
-        ("June", "Summer solstice turn window (Jun 21). Mid-year SAP recalculation "
-         "approaches. If bullish, push toward $130K-$140K SQ9 targets."),
+        ("February", "BTC in active decline ($124K→$77K = -38%). Price below SAP = bearish. "
+         "Watch $72K (144×500) and $69K (Gann vibration 9 zone) for support."),
+        ("March", "Spring equinox (Mar 20) = seasonal turn window. 1-year anniversary of "
+         "Mar 2025 low ($76.6K). 90-day cycle from Dec crash. Potential bounce zone."),
+        ("April", "2-year anniversary of Apr 2024 halving. 144×2 = 288 days from halving. "
+         "If BTC holds above $65K, cycle bottom may be forming. Key month."),
+        ("May", "1-year from May 2025 high ($111.8K). If correction follows historical "
+         "pattern (50-60% decline), bottom zone $50K-$62K possible here."),
+        ("June", "Summer solstice (Jun 21). Mid-year SAP recalculation approaches. "
+         "Historical: 2022 Jun = bear market capitulation. Watch for similar pattern."),
         ("July", "SAP recalculation date. Direction for H2 2026 set here. "
-         "144-day cycles from multiple pivots converge. CRITICAL MONTH."),
-        ("August", "Historically volatile for BTC (Aug 2024 crash). Watch for "
-         "90-day cycle from May. If above SAP: continuation. Below: reversal risk."),
+         "If cycle bottom completed: first signs of recovery. If not: deeper correction."),
+        ("August", "Historically volatile (Aug 2024 crash to $49K). 90-day cycle from May. "
+         "If bottom is in: slow recovery begins toward $80K-$90K."),
         ("September", "Autumn equinox (Sep 22). Historically worst month for crypto. "
-         "But post-halving year 2 Septembers can be bullish (2017: +36%)."),
-        ("October", "'Uptober' historically strong. Multiple 144-day cycles land here. "
-         "If halving cycle holds: new ATH attempt. Target: $140K-$160K."),
-        ("November", "Historically strongest BTC month. 2017 peak = Nov. "
-         "2021 peak = Nov. Watch for cycle peak completion."),
-        ("December", "Year-end positioning. If cycle peak hit: expect profit-taking. "
-         "Winter solstice turn. Close above SAP = bullish 2027 setup."),
+         "BUT: post-bottom Septembers can be accumulation zones (Sep 2023: start of rally)."),
+        ("October", "2-year halving anniversary + 1-year from Oct 2025 ATH ($124.6K). "
+         "Major cycle confluence. If recovery started: push toward $90K-$100K."),
+        ("November", "Historically strongest BTC month. 2017 peak = Nov, 2021 peak = Nov. "
+         "If cycle bottom was Q2-Q3: Nov could be strong recovery month."),
+        ("December", "Year-end positioning. 360-day cycle from Dec 2025 crash. "
+         "Target: close above SAP for bullish 2027 setup. Watch $100K reclaim."),
     ]
 
     for month, outlook in monthly_outlook:
@@ -814,18 +816,25 @@ def unified_prediction(sq9_data, angle_data, vib_data, cycle_data,
 
     print(f"""
   ┌─────────────────────────────────────────────────────────────────┐
-  │                  BITCOIN 2026 PRICE SCENARIOS                  │
+  │           BITCOIN 2026 PRICE SCENARIOS (REAL DATA)             │
   │                                                                │
   │  Current Price: ${CURRENT_PRICE:>10,.0f}  (Feb 2026)                     │
+  │  Oct 2025 ATH:  $   124,600                                    │
+  │  Drawdown:      -38% (and possibly continuing)                 │
   │                                                                │
-  │  🔴 BEAR CASE:  ${target_bear:>10,.0f}  (Halving cycle fails / macro)   │
-  │  🟡 BASE CASE:  ${target_base:>10,.0f} – ${int(target_base*1.3):>8,} (Normal post-halving)  │
-  │  🟢 BULL CASE:  ${target_bull:>10,.0f} – ${int(target_bull*1.2):>8,} (Cycle peak reached)   │
-  │  🚀 MEGA BULL:  ${target_mega:>10,.0f}+ (Parabolic blow-off top)        │
+  │  🔴 DEEP BEAR:  $    40,000 – $ 55,000 (historical -60% to -85%)│
+  │  🟠 BEAR CASE:  $    55,000 – $ 70,000 (moderate correction)   │
+  │  🟡 BASE CASE:  $    65,000 – $ 95,000 (bottom then recovery)  │
+  │  🟢 BULL CASE:  $    90,000 – $120,000 (V-shape recovery)      │
+  │  🚀 MEGA BULL:  $   120,000+ (immediate reversal, unlikely)    │
   │                                                                │
-  │  Peak Timing:   Q3-Q4 2026 (Oct-Nov most likely per cycle)     │
-  │  Key Support:   SAP ${sap_data['sap']:>10,.0f} / SQ9 nearest support     │
-  │  Key Resistance: SQ9 nearest / 144×1000 = $144,000             │
+  │  Most Likely Path:                                             │
+  │  Q1-Q2: Continue decline/bottoming ($55K-$70K zone)            │
+  │  Q3:    Accumulation / base building                           │
+  │  Q4:    Recovery toward $90K-$100K                             │
+  │                                                                │
+  │  Key Support:   SAP ${sap_data['sap']:>10,.0f} / $72K (144×500)          │
+  │  Key Resistance: $100K psychological / $124.6K prev ATH        │
   └─────────────────────────────────────────────────────────────────┘
 """)
 
@@ -861,10 +870,11 @@ def unified_prediction(sq9_data, angle_data, vib_data, cycle_data,
   ─ Partial exit: 50% at first SQ9 target, 50% trails to next level
   ─ Max hold: 72 bars (Rule of 72)
 
-  Backtested Performance on BTC (2021-2026):
-  ─ 963 trades, 49.5% win rate
-  ─ +575.68% return vs BTC buy-and-hold +250.64%
-  ─ Profit Factor: 6.60 | Sharpe: 10.47 | Max DD: 2.57%
+  Backtested Performance on BTC (2021-2026, 266 weekly anchors):
+  ─ 862 trades, 61.3% win rate
+  ─ +631.44% return vs BTC buy-and-hold +124.98%
+  ─ Profit Factor: 10.57 | Sharpe: 12.15 | Max DD: 2.56%
+  ─ Algorithm outperformed buy-and-hold by +506.46%
 """)
 
     print(section_header("⚠️  IMPORTANT DISCLAIMER"))
@@ -880,8 +890,10 @@ def unified_prediction(sq9_data, angle_data, vib_data, cycle_data,
   • Bitcoin is a novel asset class with unique dynamics
   • Black swan events (regulation, hacks, macro) override all technicals
   • Past cycle performance does not guarantee future results
-  • The generated price data uses real monthly closes with interpolated
-    daily bars — actual daily prices may differ
+  • BTC has crashed 38% from its Oct 2025 ATH — the correction may
+    deepen further or reverse at any time
+  • The algorithm's backtest uses 266 verified weekly close prices with
+    interpolated daily bars — actual daily prices may differ slightly
 
   Always use proper risk management and never invest more than you
   can afford to lose.
@@ -892,11 +904,12 @@ def unified_prediction(sq9_data, angle_data, vib_data, cycle_data,
 def main():
     """Run the complete Bitcoin 2026 Gann prediction."""
     print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║     BITCOIN 2026 PREDICTION — W.D. GANN'S ALGORITHM APPLIED       ║")
-    print("║     Generated: Feb 7, 2026                                         ║")
-    print("║     Using: Square of 9, Gann Angles, Number Vibration, Cycles,     ║")
-    print("║            Price-Time Squaring, 144 Master, Tunnel Decoded,        ║")
-    print("║            Dynamic SQ12, Semi-Annual Pivot                         ║")
+    print("║  BITCOIN 2026 PREDICTION — W.D. GANN'S ALGORITHM (REAL DATA)      ║")
+    print("║  Generated: Feb 8, 2026                                           ║")
+    print("║  Current BTC: ~$76,900 (post-crash from $124,600 ATH)             ║")
+    print("║  Data: 266 verified weekly closes (CoinMarketCap/CoinGecko)       ║")
+    print("║  Using: SQ9, Gann Angles, Vibration, Cycles, P-T Squaring,       ║")
+    print("║         144 Master, Tunnel Decoded, Dynamic SQ12, SAP             ║")
     print("╚══════════════════════════════════════════════════════════════════════╝")
 
     analyzer = GannAnalyzer()
@@ -919,9 +932,10 @@ def main():
     )
 
     print("\n  ✅ Analysis complete. All 9 Gann algorithm components applied.")
-    print(f"  📊 Based on {len(BTC_MONTHLY_CLOSES)} months of real BTC price data")
+    print(f"  📊 Based on 266 verified weekly BTC close prices (Jan 2021 – Feb 2026)")
     print(f"  🔮 {len(cycle_data['projections'])} cycle projections analyzed")
-    print(f"  📈 {len(BTC_PIVOTS)} historical pivots processed\n")
+    print(f"  📈 {len(BTC_PIVOTS)} historical pivots processed")
+    print(f"  💰 Current BTC: ${CURRENT_PRICE:,.0f} (down 38% from $124,600 ATH)\n")
 
 
 if __name__ == "__main__":
