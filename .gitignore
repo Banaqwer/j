@@ -15,3 +15,5 @@ eth_data.csv
 eth_backtest*.csv
 silver_data.csv
 silver_backtest*.csv
+sol_data.csv
+sol_backtest*.csv
