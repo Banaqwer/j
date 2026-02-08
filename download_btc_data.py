@@ -4,7 +4,7 @@ Download Real Daily Bitcoin OHLC Data
 
 Helper script to download actual daily Bitcoin OHLC data for use with the
 Gann algorithm backtester.  Run this on a machine with internet access,
-then place the resulting ``btc_data.csv`` in the same directory as
+then place the resulting ``btc_real_daily.csv`` in the same directory as
 ``backtest_bitcoin.py`` to use real data instead of interpolated data.
 
 Requirements:
