@@ -236,9 +236,9 @@ def vibration_analysis(analyzer: GannAnalyzer) -> Dict:
 
     # Current price vibration detail
     current_vib = results["Current BTC"]
+    digit_sum = sum(int(d) for d in str(int(CURRENT_PRICE)))
     print(f"\n  Current BTC ${CURRENT_PRICE:,.0f}:")
-    print(f"    Digit sum: {' + '.join(str(d) for d in str(int(CURRENT_PRICE)))} = "
-          f"{sum(int(d) for d in str(int(CURRENT_PRICE)))}")
+    print(f"    Digit sum: {' + '.join(str(d) for d in str(int(CURRENT_PRICE)))} = {digit_sum}")
     print(f"    Single-digit vibration: {current_vib.single_digit}")
     if current_vib.is_change_number:
         print(f"    ⚠️  Vibration = 9 → CHANGE NUMBER → expect reversal at this level!")
@@ -471,9 +471,9 @@ def dynamic_sq12_analysis(analyzer: GannAnalyzer) -> Dict:
     """Apply dynamic Square of 12 analysis for BTC's high volatility."""
     print(section_header("7. DYNAMIC SQ12 — VOLATILITY-TRIGGERED LEVELS"))
 
-    # BTC annualized volatility from weekly backtest: ~48%
-    # This triggers SQ12 (threshold > 40%) per PDF 5
-    daily_vol = 0.025  # ~2.5% daily (from weekly-anchored backtest)
+    # BTC daily volatility used for bar generation in the weekly-anchored backtest.
+    # Annualized via √365 (crypto trades 24/7). Triggers SQ12 at >40% per PDF 5.
+    daily_vol = 0.025  # 2.5% daily vol (used in backtest_bitcoin.py bar generation)
     annual_vol = daily_vol * math.sqrt(365)  # 24/7 market
     print(f"\n  BTC Daily Volatility:    {daily_vol*100:.1f}%")
     print(f"  BTC Annual Volatility:   {annual_vol*100:.1f}%")
