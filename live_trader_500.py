@@ -460,7 +460,7 @@ def main():
     print("  Simulation complete. Files are NOT exported for this quick run.")
     print("  To see full trade-by-trade details, run the individual backtests:")
     print("    python backtest_bitcoin.py")
-    print("    python backtest_ethereum.py")
+    print("    python backtest_ethereum_weekly.py")
     print_separator()
 
 
