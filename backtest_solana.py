@@ -15,7 +15,7 @@ approximation of Solana's actual price trajectory.
 Key Solana characteristics handled:
   - Trades 24/7 (no weekend gaps — all calendar days included)
   - Extremely high volatility (~80-120% annualized, higher than BTC/ETH)
-  - Massive price swings (ATH ~$295 → crash to ~$8 → recovery to ~$295 → back to ~$105)
+  - Massive price swings (ATH ~$260 in 2021 → crash to ~$8 in 2022 → new ATH ~$295 in Jan 2025 → back to ~$105)
   - FTX collapse in Nov 2022 caused a unique crash to single digits
   - Dynamic SQ12 used (very high-volatility regime)
   - Captures the 2021 bull run, 2022 bear + FTX collapse, 2023-24 recovery, and 2025 decline
@@ -332,9 +332,9 @@ def run_solana_backtest():
         (144, "12² = 144 (Gann master number)"),
         (169, "13² (perfect square)"),
         (196, "14² (perfect square)"),
-        (225, "15² — was near Jan 2025 ATH zone"),
-        (256, "16² — near ATH zone"),
-        (289, "17² (perfect square)"),
+        (225, "15² (perfect square)"),
+        (256, "16² (perfect square)"),
+        (289, "17² — near Jan 2025 ATH ($295)"),
         (324, "18² (perfect square)"),
         (360, "360 — full Gann circle"),
     ]
