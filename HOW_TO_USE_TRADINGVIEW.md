@@ -148,7 +148,7 @@ Click the **gear icon** (⚙️) next to the strategy name on the chart to chang
 
 | Problem | Solution |
 |---------|----------|
-| "Add to Chart" doesn't work | Make sure you copied ALL the code (392 lines) |
+| "Add to Chart" doesn't work | Make sure you copied ALL the code from the `.pine` file |
 | No signals appearing | Change timeframe to **1D** (Daily). Won't work on 1m/5m/1H. |
 | "Study error" message | Make sure you deleted the old code first before pasting |
 | Strategy Tester is empty | Click "Strategy Tester" tab at bottom, not "Pine Editor" |
