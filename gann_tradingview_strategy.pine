@@ -1,0 +1,379 @@
+// ============================================================================
+// GANN UNIFIED TRADING STRATEGY — TradingView Pine Script v5
+// ============================================================================
+// Translates the Python Gann algorithm (gann_trading_algorithm.py) into a
+// live TradingView strategy for BTC/USD and ETH/USD.
+//
+// Based on W.D. Gann's methods decoded from:
+//   - "20 Years of Studying Gann" (cycles, Law of Vibration)
+//   - "Intraday Trade Using Gann Angle" (11 angle lines, SQ9)
+//   - "Gann through My Lens" (price-time squaring, SAP)
+//   - "WD GANN Number Vibrations" (digit reduction, 144 cycles)
+//   - "Tunnel Thru the Air" (decoded cycle intervals)
+//
+// HOW TO USE:
+//   1. Open TradingView → Pine Editor
+//   2. Paste this entire script
+//   3. Click "Add to Chart"
+//   4. Select BTCUSD or ETHUSD on daily timeframe
+//   5. Open Strategy Tester tab to see backtest results
+//   6. For demo trading: Enable "Paper Trading" in TradingView
+//
+// Components implemented:
+//   1. Gann Angle Support/Resistance (11 angles)
+//   2. Square of 9 Price Levels
+//   3. Number Vibration Analysis
+//   4. Daily Volatility Calculation
+//   5. Dynamic Gann Levels (volatility-adjusted)
+//   6. 144-Cycle Price Zones
+//   7. Trend Confirmation from Angles
+//   8. Confidence Scoring System
+//   9. Strategy Entries/Exits with SL and TP
+// ============================================================================
+
+//@version=5
+strategy("Gann Unified Strategy", overlay=true, default_qty_type=strategy.percent_of_equity, default_qty_value=100, initial_capital=10000, commission_type=strategy.commission.percent, commission_value=0.1, slippage=2, pyramiding=0)
+
+// ============================================================================
+// INPUTS
+// ============================================================================
+grp_main    = "Main Settings"
+i_riskPct   = input.float(1.5,   "Risk Per Trade (%)",     minval=0.1, maxval=10.0, step=0.1, group=grp_main)
+i_rrRatio   = input.float(2.5,   "Reward:Risk Ratio",      minval=1.0, maxval=10.0, step=0.5, group=grp_main)
+i_confMin   = input.float(0.45,  "Min Confidence to Trade", minval=0.1, maxval=1.0,  step=0.05, group=grp_main)
+i_volLen    = input.int(20,      "Volatility Lookback",     minval=5,   maxval=100,  group=grp_main)
+i_swingLen  = input.int(50,      "Swing High/Low Lookback", minval=10,  maxval=200,  group=grp_main)
+
+grp_gann    = "Gann Settings"
+i_showAngles = input.bool(true,  "Show Gann Angle Levels",  group=grp_gann)
+i_showSQ9    = input.bool(true,  "Show Square of 9 Levels", group=grp_gann)
+i_show144    = input.bool(false, "Show 144-Cycle Levels",   group=grp_gann)
+i_sq9Tol     = input.float(0.5,  "SQ9 Confluence (%)",     minval=0.1, maxval=2.0, step=0.1, group=grp_gann)
+i_dynVolThresh = input.float(40.0, "Dynamic SQ12 Trigger (Ann.Vol%)", minval=10.0, maxval=100.0, step=5.0, group=grp_gann)
+
+grp_trade   = "Trade Management"
+i_partialPct = input.float(50.0, "Partial Exit (%)",       minval=0.0, maxval=100.0, step=10.0, group=grp_trade)
+i_trailPct   = input.float(2.0,  "Trailing Stop (%)",      minval=0.5, maxval=10.0,  step=0.5, group=grp_trade)
+i_maxBars    = input.int(60,     "Max Bars in Trade",       minval=10,  maxval=200,  group=grp_trade)
+
+// ============================================================================
+// COMPONENT 1: GANN ANGLE SUPPORT/RESISTANCE
+// ============================================================================
+// The 11 Gann angles from "Intraday Trade Using Gann Angle" PDF
+// Formula: level = (sqrt(base) ± degree_factor)²
+// Degree factors: [0.125, 0.25, 0.333, 0.5, 1.0, 2.0, 3.0, 4.0, 8.0, 12.0, 16.0]
+
+gannAngleLevel(float base, float degFactor, bool isUp) =>
+    sq = math.sqrt(base)
+    adjusted = isUp ? sq + degFactor : sq - degFactor
+    adjusted > 0 ? adjusted * adjusted : na
+
+// Get swing high and swing low for Gann angle base
+swingHi = ta.highest(high, i_swingLen)
+swingLo = ta.lowest(low,   i_swingLen)
+
+// 11 Gann Angle Resistance levels (from swing low)
+r_1x16 = gannAngleLevel(swingLo, 0.125, true)
+r_1x8  = gannAngleLevel(swingLo, 0.25,  true)
+r_1x6  = gannAngleLevel(swingLo, 0.333, true)
+r_1x4  = gannAngleLevel(swingLo, 0.5,   true)  // Buy entry
+r_1x1  = gannAngleLevel(swingLo, 1.0,   true)  // Key 45° angle
+r_4x1  = gannAngleLevel(swingLo, 2.0,   true)
+r_6x1  = gannAngleLevel(swingLo, 3.0,   true)
+r_8x1_r = gannAngleLevel(swingLo, 4.0,   true)
+
+// 11 Gann Angle Support levels (from swing high)
+s_1x16 = gannAngleLevel(swingHi, 0.125, false)
+s_1x8  = gannAngleLevel(swingHi, 0.25,  false)
+s_1x6  = gannAngleLevel(swingHi, 0.333, false)
+s_1x4  = gannAngleLevel(swingHi, 0.5,   false)
+s_1x1  = gannAngleLevel(swingHi, 1.0,   false)  // Key 45° angle
+s_4x1  = gannAngleLevel(swingHi, 2.0,   false)  // Sell entry
+s_6x1  = gannAngleLevel(swingHi, 3.0,   false)
+s_8x1_s = gannAngleLevel(swingHi, 4.0,   false)
+
+// ============================================================================
+// COMPONENT 2: SQUARE OF 9 PRICE LEVELS
+// ============================================================================
+// SQ9 cardinal degrees: 0°, 45°, 90°, 135°, 180°, 225°, 270°, 315°, 360°
+// Formula: level = (sqrt(price) + n * degree/360)²
+
+sq9Level(float price, int n, float degree) =>
+    sq = math.sqrt(price)
+    result = sq + n * degree / 360.0
+    result * result
+
+// Calculate SQ9 levels at key cardinal crosses (1 rotation up and down)
+sq9_90_up   = sq9Level(close, 1, 90)
+sq9_180_up  = sq9Level(close, 1, 180)
+sq9_270_up  = sq9Level(close, 1, 270)
+sq9_360_up  = sq9Level(close, 1, 360)
+sq9_90_dn   = sq9Level(close, -1, 90)
+sq9_180_dn  = sq9Level(close, -1, 180)
+sq9_270_dn  = sq9Level(close, -1, 270)
+sq9_360_dn  = sq9Level(close, -1, 360)
+
+// Check if price is near any SQ9 cardinal level (within tolerance)
+isNearSQ9(float price, float tol) =>
+    near = false
+    near := near or math.abs(price - sq9_90_up)  / price * 100 < tol
+    near := near or math.abs(price - sq9_180_up) / price * 100 < tol
+    near := near or math.abs(price - sq9_270_up) / price * 100 < tol
+    near := near or math.abs(price - sq9_360_up) / price * 100 < tol
+    near := near or math.abs(price - sq9_90_dn)  / price * 100 < tol
+    near := near or math.abs(price - sq9_180_dn) / price * 100 < tol
+    near := near or math.abs(price - sq9_270_dn) / price * 100 < tol
+    near := near or math.abs(price - sq9_360_dn) / price * 100 < tol
+    near
+
+sq9Confluence = isNearSQ9(close, i_sq9Tol)
+
+// ============================================================================
+// COMPONENT 3: NUMBER VIBRATION ANALYSIS
+// ============================================================================
+// Digit reduction: sum digits until single digit
+// Vibration 9 = "change number" (reversal likely)
+
+digitSum(int val) =>
+    n = math.abs(val)
+    sum = 0
+    sum := n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    // Reduce to single digit
+    while sum >= 10
+        s2 = 0
+        s2 := sum % 10
+        sum := math.floor(sum / 10)
+        s2 += sum % 10
+        sum := math.floor(sum / 10)
+        s2 += sum
+        sum := s2
+    sum
+
+priceVibration = digitSum(math.round(close))
+isVibration9 = priceVibration == 9
+
+// ============================================================================
+// COMPONENT 4: DAILY VOLATILITY
+// ============================================================================
+// Log-return based volatility (matches Python implementation)
+logReturn    = math.log(close / close[1])
+dailyVol     = ta.stdev(logReturn, i_volLen) * 100  // as percentage
+annualVol    = dailyVol * math.sqrt(365)             // annualized for crypto
+
+// ============================================================================
+// COMPONENT 5: DYNAMIC GANN LEVELS (Volatility-Adjusted)
+// ============================================================================
+// When annual vol > threshold, use SQ12 (12 divisions of 360° = 30° each)
+// Expected high/low = price ± (dailyVol% × price)
+
+useDynamic   = annualVol > i_dynVolThresh
+expectedHigh = close * (1 + dailyVol / 100)
+expectedLow  = close * (1 - dailyVol / 100)
+
+// Dynamic SQ12 levels (30° intervals around current price)
+dynSQ12_up1 = sq9Level(close, 1, 30)
+dynSQ12_up2 = sq9Level(close, 2, 30)
+dynSQ12_up3 = sq9Level(close, 3, 30)
+dynSQ12_dn1 = sq9Level(close, -1, 30)
+dynSQ12_dn2 = sq9Level(close, -2, 30)
+dynSQ12_dn3 = sq9Level(close, -3, 30)
+
+// ============================================================================
+// COMPONENT 6: 144-CYCLE PRICE ZONES
+// ============================================================================
+// Gann's master cycle number = 144
+// Price levels at multiples of 144 from a base
+
+cycle144_base  = math.floor(close / 144) * 144
+cycle144_below = cycle144_base
+cycle144_above = cycle144_base + 144
+cycle144_near  = math.abs(close - cycle144_below) < math.abs(close - cycle144_above) ? cycle144_below : cycle144_above
+cycle144_dist  = math.abs(close - cycle144_near) / close * 100
+
+// ============================================================================
+// COMPONENT 7: TREND CONFIRMATION FROM GANN ANGLES
+// ============================================================================
+// Price > 1x1 resistance from low = UPTREND
+// Price < 1x1 support from high = DOWNTREND
+
+trendUp   = close > r_1x1 and not na(r_1x1)
+trendDown = close < s_1x1 and not na(s_1x1)
+trendBull = trendUp and not trendDown
+trendBear = trendDown and not trendUp
+
+// Strong trend confirmation: above 4x1 or below 4x1
+strongBull = close > r_4x1 and not na(r_4x1)
+strongBear = close < s_4x1 and not na(s_4x1)
+
+// ============================================================================
+// COMPONENT 8: CONFIDENCE SCORING SYSTEM
+// ============================================================================
+// Matches Python: base 0.0, max 1.0
+// +0.30 trend confirmed
+// +0.10 SQ9 confluence
+// +0.10 vibration 9
+// +0.15 dynamic vol confirms
+// +0.15 R:R ratio good
+
+// Calculate buy/sell entry and stop
+buyEntry  = not na(r_1x4) ? r_1x4 : close
+buyStop   = not na(r_1x1) ? math.min(r_1x1, close * 0.95) : close * 0.95
+sellEntry = not na(s_4x1) ? s_4x1 : close
+sellStop  = not na(s_1x1) ? math.max(s_1x1, close * 1.05) : close * 1.05
+
+// Calculate best target from SQ9 levels
+buyTarget  = sq9_180_up
+sellTarget = sq9_180_dn
+
+// Risk-reward calculation
+buyRisk    = math.abs(buyEntry - buyStop)
+buyReward  = math.abs(buyTarget - buyEntry)
+buyRR      = buyRisk > 0 ? buyReward / buyRisk : 0
+
+sellRisk   = math.abs(sellEntry - sellStop)
+sellReward = math.abs(sellEntry - sellTarget)
+sellRR     = sellRisk > 0 ? sellReward / sellRisk : 0
+
+// --- Buy Confidence ---
+buyConf = 0.0
+buyConf := buyConf + (trendBull ? 0.30 : 0.0)
+buyConf := buyConf + (sq9Confluence ? 0.10 : 0.0)
+buyConf := buyConf + (isVibration9 ? 0.10 : 0.0)
+buyConf := buyConf + (useDynamic and close < expectedHigh ? 0.15 : 0.0)
+buyConf := buyConf + (buyRR >= i_rrRatio ? 0.15 : buyRR >= 1.5 ? 0.05 : -0.10)
+buyConf := math.max(0.0, math.min(1.0, buyConf))
+
+// --- Sell Confidence ---
+sellConf = 0.0
+sellConf := sellConf + (trendBear ? 0.30 : 0.0)
+sellConf := sellConf + (sq9Confluence ? 0.10 : 0.0)
+sellConf := sellConf + (isVibration9 ? 0.10 : 0.0)
+sellConf := sellConf + (useDynamic and close > expectedLow ? 0.15 : 0.0)
+sellConf := sellConf + (sellRR >= i_rrRatio ? 0.15 : sellRR >= 1.5 ? 0.05 : -0.10)
+sellConf := math.max(0.0, math.min(1.0, sellConf))
+
+// ============================================================================
+// COMPONENT 9: STRATEGY — ENTRIES, EXITS, AND TRADE MANAGEMENT
+// ============================================================================
+
+// --- Entry conditions ---
+longCond  = buyConf  >= i_confMin and trendBull and buyRR >= 1.5
+shortCond = sellConf >= i_confMin and trendBear and sellRR >= 1.5
+
+// --- Conflict resolution: only take the stronger signal ---
+goLong  = longCond  and (not shortCond or buyConf > sellConf)
+goShort = shortCond and (not longCond  or sellConf > buyConf)
+
+// --- Position sizing based on risk ---
+riskAmt   = strategy.equity * i_riskPct / 100
+longQty   = buyRisk  > 0 ? riskAmt / buyRisk  : 0
+shortQty  = sellRisk > 0 ? riskAmt / sellRisk : 0
+
+// --- Track bars in trade ---
+var int barsInTrade = 0
+if strategy.position_size != 0
+    barsInTrade += 1
+else
+    barsInTrade := 0
+
+// --- Entry execution ---
+if goLong and strategy.position_size <= 0
+    strategy.entry("Long", strategy.long, qty=longQty)
+    strategy.exit("Long SL/TP", "Long", stop=buyStop, limit=buyTarget, trail_offset=close * i_trailPct / 100, trail_points=close * i_trailPct / 100)
+    barsInTrade := 0
+
+if goShort and strategy.position_size >= 0
+    strategy.entry("Short", strategy.short, qty=shortQty)
+    strategy.exit("Short SL/TP", "Short", stop=sellStop, limit=sellTarget, trail_offset=close * i_trailPct / 100, trail_points=close * i_trailPct / 100)
+    barsInTrade := 0
+
+// --- Time-based exit (max bars in trade) ---
+if barsInTrade >= i_maxBars and strategy.position_size != 0
+    strategy.close_all("Timeout")
+    barsInTrade := 0
+
+// ============================================================================
+// VISUAL OVERLAYS
+// ============================================================================
+
+// --- Gann Angle Levels ---
+plot(i_showAngles ? r_1x1 : na, "1x1 Resistance (45°)", color=color.new(color.green, 50), linewidth=2)
+plot(i_showAngles ? r_1x4 : na, "1x4 Resistance (Buy Entry)", color=color.new(color.lime, 60))
+plot(i_showAngles ? r_4x1 : na, "4x1 Resistance", color=color.new(color.green, 70))
+plot(i_showAngles ? s_1x1 : na, "1x1 Support (45°)", color=color.new(color.red, 50), linewidth=2)
+plot(i_showAngles ? s_4x1 : na, "4x1 Support (Sell Entry)", color=color.new(color.orange, 60))
+
+// --- SQ9 Levels ---
+plot(i_showSQ9 ? sq9_180_up : na, "SQ9 180° Up", color=color.new(color.blue, 60), style=plot.style_cross)
+plot(i_showSQ9 ? sq9_360_up : na, "SQ9 360° Up", color=color.new(color.blue, 40), style=plot.style_cross)
+plot(i_showSQ9 ? sq9_180_dn : na, "SQ9 180° Down", color=color.new(color.purple, 60), style=plot.style_cross)
+plot(i_showSQ9 ? sq9_360_dn : na, "SQ9 360° Down", color=color.new(color.purple, 40), style=plot.style_cross)
+
+// --- 144 Cycle Levels ---
+plot(i_show144 ? cycle144_below : na, "144 Below", color=color.new(color.yellow, 50), style=plot.style_stepline)
+plot(i_show144 ? cycle144_above : na, "144 Above", color=color.new(color.yellow, 50), style=plot.style_stepline)
+
+// --- Dynamic Expected Range ---
+p_expHi = plot(useDynamic ? expectedHigh : na, "Expected High", color=color.new(color.teal, 80))
+p_expLo = plot(useDynamic ? expectedLow  : na, "Expected Low",  color=color.new(color.teal, 80))
+fill(p_expHi, p_expLo, color=color.new(color.teal, 95), title="Volatility Range")
+
+// --- Signal Markers ---
+plotshape(goLong  and strategy.position_size <= 0, "BUY Signal",  style=shape.triangleup,   location=location.belowbar, color=color.green, size=size.normal, text="BUY")
+plotshape(goShort and strategy.position_size >= 0, "SELL Signal", style=shape.triangledown, location=location.abovebar, color=color.red,   size=size.normal, text="SELL")
+
+// --- Confidence & Info Table ---
+var table infoTable = table.new(position.top_right, 2, 10, bgcolor=color.new(color.black, 80), border_width=1)
+
+if barstate.islast
+    table.cell(infoTable, 0, 0, "Gann Unified Strategy", text_color=color.white, text_size=size.normal)
+    table.cell(infoTable, 1, 0, "", text_color=color.white)
+    
+    table.cell(infoTable, 0, 1, "Trend", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 1, trendBull ? "▲ BULLISH" : trendBear ? "▼ BEARISH" : "— NEUTRAL", text_color=trendBull ? color.green : trendBear ? color.red : color.gray, text_size=size.small)
+    
+    table.cell(infoTable, 0, 2, "Buy Conf", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 2, str.tostring(buyConf, "#.##"), text_color=buyConf >= i_confMin ? color.green : color.gray, text_size=size.small)
+    
+    table.cell(infoTable, 0, 3, "Sell Conf", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 3, str.tostring(sellConf, "#.##"), text_color=sellConf >= i_confMin ? color.red : color.gray, text_size=size.small)
+    
+    table.cell(infoTable, 0, 4, "Vibration", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 4, str.tostring(priceVibration) + (isVibration9 ? " ⚡CHANGE" : ""), text_color=isVibration9 ? color.yellow : color.white, text_size=size.small)
+    
+    table.cell(infoTable, 0, 5, "SQ9 Near", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 5, sq9Confluence ? "✓ YES" : "✗ No", text_color=sq9Confluence ? color.blue : color.gray, text_size=size.small)
+    
+    table.cell(infoTable, 0, 6, "Daily Vol", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 6, str.tostring(dailyVol, "#.##") + "%", text_color=color.white, text_size=size.small)
+    
+    table.cell(infoTable, 0, 7, "Ann. Vol", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 7, str.tostring(annualVol, "#.#") + "%" + (useDynamic ? " [SQ12]" : ""), text_color=useDynamic ? color.teal : color.white, text_size=size.small)
+    
+    table.cell(infoTable, 0, 8, "Buy R:R", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 8, str.tostring(buyRR, "#.#") + ":1", text_color=buyRR >= i_rrRatio ? color.green : color.gray, text_size=size.small)
+    
+    table.cell(infoTable, 0, 9, "Sell R:R", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 9, str.tostring(sellRR, "#.#") + ":1", text_color=sellRR >= i_rrRatio ? color.red : color.gray, text_size=size.small)
+
+// --- Background color based on trend ---
+bgcolor(trendBull ? color.new(color.green, 95) : trendBear ? color.new(color.red, 95) : na, title="Trend Background")
+
+// ============================================================================
+// ALERTS
+// ============================================================================
+alertcondition(goLong  and strategy.position_size <= 0, "Gann BUY Signal",  "Gann Strategy: BUY signal — Confidence: {{plot_2}}")
+alertcondition(goShort and strategy.position_size >= 0, "Gann SELL Signal", "Gann Strategy: SELL signal — Confidence: {{plot_3}}")
+alertcondition(isVibration9, "Vibration 9 Alert", "Price vibration = 9 (CHANGE NUMBER) — Watch for reversal")
