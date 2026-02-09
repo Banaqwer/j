@@ -17,7 +17,7 @@ access needed — data is read entirely from local files.
 
 | Parameter | Value |
 |---|---|
-| Initial Capital | $100,000.00 |
+| Initial Capital | $1,000.00 |
 | Max Risk/Trade | 1.5% |
 | Min R:R Ratio | 2.5:1 |
 | Max Position | 40% of capital |
@@ -27,7 +27,7 @@ access needed — data is read entirely from local files.
 | Trailing Stop | Yes (after partial exit) |
 | Partial Exit | 50% at first target |
 | Slippage | 0.1% |
-| Commission | $15/trade |
+| Commission | $0.15/trade |
 | Position Sizing | Fixed (prevents unrealistic compounding) |
 
 ## Performance Summary
@@ -38,8 +38,8 @@ GANN ALGORITHM BACKTEST RESULTS
 ==============================================================================
   Period:            2021-01-01 to 2025-12-31
   Total bars:        1826
-  Initial capital:     100,000.00
-  Final equity:      1,196,396.00
+  Initial capital:       1,000.00
+  Final equity:         11,966.83
 
   ────────────────────────────────────────
   Total trades:      819
@@ -48,14 +48,14 @@ GANN ALGORITHM BACKTEST RESULTS
   Win rate:          66.7%
 
   ────────────────────────────────────────
-  Total PnL:           506,464.96 (+506.46%)
-  Average PnL:             618.39
-  Average win:           1,026.32
-  Average loss:           -197.46
+  Total PnL:             5,066.61 (+506.66%)
+  Average PnL:               6.19
+  Average win:              10.27
+  Average loss:             -1.97
   Profit factor:            10.40
 
   ────────────────────────────────────────
-  Max drawdown:          4,526.99 (2.78%)
+  Max drawdown:             45.32 (2.79%)
   Sharpe ratio:             12.34
   Consec. wins:      28
   Consec. losses:    7
@@ -67,12 +67,14 @@ GANN ALGORITHM BACKTEST RESULTS
 
 | Metric | Value |
 |---|---|
-| **Total Return** | **+506.46%** |
+| **Starting Capital** | **$1,000.00** |
+| **Final Equity** | **$11,966.83** |
+| **Total Return** | **+506.66%** |
 | **BTC Buy & Hold** | +198.82% |
-| **Outperformance** | **+307.65%** |
+| **Outperformance** | **+307.84%** |
 | **Win Rate** | 66.7% |
 | **Profit Factor** | 10.40 |
-| **Max Drawdown** | 2.78% |
+| **Max Drawdown** | 2.79% |
 | **Sharpe Ratio** | 12.34 |
 | **Total Trades** | 819 |
 | **Avg Hold Period** | 1.9 bars |
@@ -81,20 +83,20 @@ GANN ALGORITHM BACKTEST RESULTS
 
 | Year | Trades | Wins | Losses | Win% | PnL | Avg PnL | Profit Factor |
 |------|--------|------|--------|------|-----|---------|---------------|
-| 2021 | 170 | 105 | 65 | 61.8% | $146,270.50 | $860.41 | 11.50 |
-| 2022 | 154 | 110 | 44 | 71.4% | $100,258.21 | $651.03 | 11.38 |
-| 2023 | 159 | 106 | 53 | 66.7% | $89,020.84 | $559.88 | 8.74 |
-| 2024 | 165 | 116 | 49 | 70.3% | $109,958.07 | $666.41 | 13.20 |
-| 2025 | 171 | 109 | 62 | 63.7% | $60,957.34 | $356.48 | 7.22 |
+| 2021 | 170 | 105 | 65 | 61.8% | $1,462.82 | $8.60 | 11.50 |
+| 2022 | 154 | 110 | 44 | 71.4% | $1,003.05 | $6.51 | 11.39 |
+| 2023 | 159 | 106 | 53 | 66.7% | $890.20 | $5.60 | 8.74 |
+| 2024 | 165 | 116 | 49 | 70.3% | $1,100.31 | $6.67 | 13.20 |
+| 2025 | 171 | 109 | 62 | 63.7% | $610.23 | $3.57 | 7.23 |
 
 ## Exit Reason Breakdown
 
 | Reason | Count | Total PnL | Avg PnL |
 |--------|-------|-----------|---------|
-| Target hit | 546 | $560,371.26 | $1,026.32 |
-| Stop loss | 248 | -$53,047.75 | -$213.90 |
-| Trailing stop | 24 | -$840.00 | -$35.00 |
-| End of data | 1 | -$18.55 | -$18.55 |
+| Target hit | 546 | $5,605.53 | $10.27 |
+| Stop loss | 248 | -$530.33 | -$2.14 |
+| Trailing stop | 24 | -$8.40 | -$0.35 |
+| End of data | 1 | -$0.19 | -$0.19 |
 
 ## Gann Analysis (End of Data)
 

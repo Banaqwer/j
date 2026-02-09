@@ -188,7 +188,7 @@ def main():
     print("\n2. Configuring backtester for Bitcoin...")
 
     config = BacktestConfig(
-        initial_capital=100_000.0,
+        initial_capital=1_000.0,
         max_risk_pct=1.5,           # 1.5% risk — BTC is very volatile
         min_reward_risk=2.5,        # 2.5:1 R:R minimum (PDF 4 standard)
         max_position_pct=40.0,      # Max 40% — respect BTC volatility
@@ -198,7 +198,7 @@ def main():
         use_trailing_stop=True,     # Trail stop after partial exit
         partial_exit_pct=0.5,       # Book 50% at first target
         slippage_pct=0.001,         # 0.1% slippage (crypto spreads)
-        commission_per_trade=15.0,  # $15 per trade (exchange fees)
+        commission_per_trade=0.15,  # $0.15 per trade (proportional for $1k)
         use_fixed_sizing=True,      # Fixed sizing prevents unrealistic
         #   exponential compounding on BTC's extreme volatility
     )
