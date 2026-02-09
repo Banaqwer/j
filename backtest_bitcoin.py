@@ -35,6 +35,7 @@ import math
 import os
 import sys
 import zipfile
+from collections import Counter
 from datetime import datetime, timezone
 from typing import List
 
@@ -277,6 +278,404 @@ def main():
         avg = data["pnl"] / data["count"] if data["count"] > 0 else 0
         print(f"  {reason:>15}  {data['count']:>6}  "
               f"${data['pnl']:>13,.2f}  ${avg:>11,.2f}")
+
+    # ── 7.5. Loss pattern analysis ───────────────────────────────────────
+    print(f"\n{'─' * 78}")
+    print("LOSS PATTERN ANALYSIS")
+    print(f"{'─' * 78}")
+
+    losing_trades = [t for t in result.trades if t.pnl <= 0]
+    winning_trades = [t for t in result.trades if t.pnl > 0]
+    n_losses = len(losing_trades)
+
+    if n_losses > 0:
+        # ─── 1. Loss by direction ────────────────────────────────────
+        buy_losses = [t for t in losing_trades if t.direction == "BUY"]
+        sell_losses = [t for t in losing_trades if t.direction == "SELL"]
+        buy_wins = [t for t in winning_trades if t.direction == "BUY"]
+        sell_wins = [t for t in winning_trades if t.direction == "SELL"]
+
+        print(f"\n  1. LOSSES BY DIRECTION")
+        print(f"     {'Direction':>10}  {'Losses':>7}  {'Wins':>6}  "
+              f"{'Loss%':>6}  {'Avg Loss':>10}  {'Total Loss':>12}")
+        print(f"     {'─' * 10}  {'─' * 7}  {'─' * 6}  "
+              f"{'─' * 6}  {'─' * 10}  {'─' * 12}")
+
+        for label, losses, wins in [("BUY", buy_losses, buy_wins),
+                                     ("SELL", sell_losses, sell_wins)]:
+            total = len(losses) + len(wins)
+            loss_rate = len(losses) / total * 100 if total > 0 else 0
+            avg_loss = (sum(t.pnl for t in losses) / len(losses)
+                        if losses else 0)
+            total_loss = sum(t.pnl for t in losses)
+            print(f"     {label:>10}  {len(losses):>7}  {len(wins):>6}  "
+                  f"{loss_rate:>5.1f}%  ${avg_loss:>9.2f}  ${total_loss:>11.2f}")
+
+        # ─── 2. Loss by day of week ──────────────────────────────────
+        print(f"\n  2. LOSSES BY DAY OF WEEK")
+        day_names = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        day_losses: dict[int, list] = {i: [] for i in range(7)}
+        day_all: dict[int, int] = {i: 0 for i in range(7)}
+
+        for t in result.trades:
+            dow = t.entry_date.weekday()
+            day_all[dow] += 1
+            if t.pnl <= 0:
+                day_losses[dow].append(t)
+
+        print(f"     {'Day':>5}  {'Losses':>7}  {'Total':>6}  "
+              f"{'Loss%':>6}  {'Avg Loss':>10}  {'Total Loss':>12}")
+        print(f"     {'─' * 5}  {'─' * 7}  {'─' * 6}  "
+              f"{'─' * 6}  {'─' * 10}  {'─' * 12}")
+
+        for dow in range(7):
+            losses = day_losses[dow]
+            total = day_all[dow]
+            loss_rate = len(losses) / total * 100 if total > 0 else 0
+            avg_loss = (sum(t.pnl for t in losses) / len(losses)
+                        if losses else 0)
+            total_loss = sum(t.pnl for t in losses)
+            print(f"     {day_names[dow]:>5}  {len(losses):>7}  {total:>6}  "
+                  f"{loss_rate:>5.1f}%  ${avg_loss:>9.2f}  ${total_loss:>11.2f}")
+
+        # ─── 3. Loss by confidence level ─────────────────────────────
+        print(f"\n  3. LOSSES BY CONFIDENCE LEVEL")
+        conf_buckets = [
+            (0.0, 0.30, "Low (0.00–0.30)"),
+            (0.30, 0.45, "Med (0.30–0.45)"),
+            (0.45, 0.60, "High (0.45–0.60)"),
+            (0.60, 1.01, "Very High (0.60+)"),
+        ]
+        print(f"     {'Confidence':>20}  {'Losses':>7}  {'Wins':>6}  "
+              f"{'Loss%':>6}  {'Avg Loss':>10}")
+        print(f"     {'─' * 20}  {'─' * 7}  {'─' * 6}  "
+              f"{'─' * 6}  {'─' * 10}")
+
+        for lo, hi, label in conf_buckets:
+            bucket_losses = [t for t in losing_trades
+                             if lo <= t.confidence < hi]
+            bucket_wins = [t for t in winning_trades
+                           if lo <= t.confidence < hi]
+            total = len(bucket_losses) + len(bucket_wins)
+            loss_rate = (len(bucket_losses) / total * 100
+                         if total > 0 else 0)
+            avg_loss = (sum(t.pnl for t in bucket_losses)
+                        / len(bucket_losses) if bucket_losses else 0)
+            print(f"     {label:>20}  {len(bucket_losses):>7}  "
+                  f"{len(bucket_wins):>6}  {loss_rate:>5.1f}%  "
+                  f"${avg_loss:>9.2f}")
+
+        # ─── 4. Loss by exit reason ──────────────────────────────────
+        print(f"\n  4. LOSS EXIT REASONS")
+        loss_reasons: dict[str, list] = {}
+        for t in losing_trades:
+            loss_reasons.setdefault(t.exit_reason, []).append(t)
+
+        print(f"     {'Reason':>15}  {'Count':>6}  {'%Losses':>8}  "
+              f"{'Avg Loss':>10}  {'Worst':>10}")
+        print(f"     {'─' * 15}  {'─' * 6}  {'─' * 8}  "
+              f"{'─' * 10}  {'─' * 10}")
+
+        for reason in sorted(loss_reasons, key=lambda r: -len(loss_reasons[r])):
+            trades_r = loss_reasons[reason]
+            pct = len(trades_r) / n_losses * 100
+            avg_l = sum(t.pnl for t in trades_r) / len(trades_r)
+            worst = min(t.pnl for t in trades_r)
+            print(f"     {reason:>15}  {len(trades_r):>6}  "
+                  f"{pct:>7.1f}%  ${avg_l:>9.2f}  ${worst:>9.2f}")
+
+        # ─── 5. Consecutive loss streaks ─────────────────────────────
+        print(f"\n  5. CONSECUTIVE LOSS STREAKS")
+        streaks: list[list] = []
+        current_streak: list = []
+        for t in result.trades:
+            if t.pnl <= 0:
+                current_streak.append(t)
+            else:
+                if current_streak:
+                    streaks.append(current_streak)
+                    current_streak = []
+        if current_streak:
+            streaks.append(current_streak)
+
+        if streaks:
+            streak_lens = [len(s) for s in streaks]
+            streak_pnls = [sum(t.pnl for t in s) for s in streaks]
+            print(f"     Total streak events:   {len(streaks)}")
+            print(f"     Max streak length:     {max(streak_lens)}")
+            print(f"     Avg streak length:     {sum(streak_lens)/len(streaks):.1f}")
+            print(f"     Worst streak PnL:      ${min(streak_pnls):,.2f}")
+
+            # Distribution of streak lengths
+            print(f"\n     Streak length distribution:")
+            dist = Counter(streak_lens)
+            for length in sorted(dist.keys()):
+                bar = "█" * dist[length]
+                print(f"       {length:>2} losses: {dist[length]:>4}x  {bar}")
+
+        # ─── 6. Losses by market volatility regime ───────────────────
+        print(f"\n  6. LOSSES BY MARKET VOLATILITY REGIME")
+
+        # Build date→bar index for quick lookup
+        bar_by_date: dict[str, int] = {}
+        for i, b in enumerate(bars):
+            bar_by_date[b.date.strftime("%Y-%m-%d")] = i
+
+        low_vol_losses = []
+        high_vol_losses = []
+        low_vol_wins = []
+        high_vol_wins = []
+
+        for t in result.trades:
+            key = t.entry_date.strftime("%Y-%m-%d")
+            idx = bar_by_date.get(key)
+            if idx is None or idx < 14:
+                continue
+            # Calculate 14-bar realized volatility at entry
+            window = [bars[j].close for j in range(idx - 14, idx)]
+            rets = [(window[k] - window[k-1]) / window[k-1]
+                    for k in range(1, len(window))]
+            vol = (sum(r**2 for r in rets) / len(rets)) ** 0.5 if rets else 0
+            daily_vol_pct = vol * 100
+
+            if t.pnl <= 0:
+                if daily_vol_pct < 3.0:
+                    low_vol_losses.append((t, daily_vol_pct))
+                else:
+                    high_vol_losses.append((t, daily_vol_pct))
+            else:
+                if daily_vol_pct < 3.0:
+                    low_vol_wins.append((t, daily_vol_pct))
+                else:
+                    high_vol_wins.append((t, daily_vol_pct))
+
+        print(f"     {'Regime':>15}  {'Losses':>7}  {'Wins':>6}  "
+              f"{'Loss%':>6}  {'Avg Loss':>10}")
+        print(f"     {'─' * 15}  {'─' * 7}  {'─' * 6}  "
+              f"{'─' * 6}  {'─' * 10}")
+
+        for label, losses_l, wins_l in [
+            ("Low vol (<3%)", low_vol_losses, low_vol_wins),
+            ("High vol (≥3%)", high_vol_losses, high_vol_wins),
+        ]:
+            total = len(losses_l) + len(wins_l)
+            loss_rate = len(losses_l) / total * 100 if total > 0 else 0
+            avg_l = (sum(t.pnl for t, _ in losses_l) / len(losses_l)
+                     if losses_l else 0)
+            print(f"     {label:>15}  {len(losses_l):>7}  {len(wins_l):>6}  "
+                  f"{loss_rate:>5.1f}%  ${avg_l:>9.2f}")
+
+        # ─── 7. Monthly loss clustering ──────────────────────────────
+        print(f"\n  7. MONTHLY LOSS CLUSTERING")
+        month_data: dict[str, dict] = {}
+        for t in result.trades:
+            key = t.entry_date.strftime("%Y-%m")
+            if key not in month_data:
+                month_data[key] = {"losses": 0, "wins": 0, "loss_pnl": 0.0}
+            if t.pnl <= 0:
+                month_data[key]["losses"] += 1
+                month_data[key]["loss_pnl"] += t.pnl
+            else:
+                month_data[key]["wins"] += 1
+
+        # Find worst months by loss count
+        worst_months = sorted(month_data.items(),
+                              key=lambda x: x[1]["losses"], reverse=True)[:10]
+
+        print(f"     {'Month':>8}  {'Losses':>7}  {'Wins':>6}  "
+              f"{'Loss%':>6}  {'Loss PnL':>10}")
+        print(f"     {'─' * 8}  {'─' * 7}  {'─' * 6}  "
+              f"{'─' * 6}  {'─' * 10}")
+
+        for month, data in worst_months:
+            total = data["losses"] + data["wins"]
+            loss_rate = data["losses"] / total * 100 if total > 0 else 0
+            print(f"     {month:>8}  {data['losses']:>7}  {data['wins']:>6}  "
+                  f"{loss_rate:>5.1f}%  ${data['loss_pnl']:>9.2f}")
+
+        # ─── 8. Loss pattern near Gann levels ────────────────────────
+        print(f"\n  8. LOSSES NEAR KEY GANN PRICE LEVELS")
+
+        gann_price_levels = [
+            10000, 14400, 22500, 32400, 36000, 40000, 50625,
+            62500, 72900, 90000, 100000, 108900, 129600, 144000,
+        ]
+
+        near_gann_losses: List = []
+        far_gann_losses: List = []
+        for t in losing_trades:
+            min_dist = min(
+                abs(t.entry_price - lv) / lv * 100
+                for lv in gann_price_levels
+            )
+            if min_dist < 5.0:  # Within 5% of a Gann level
+                near_gann_losses.append(t)
+            else:
+                far_gann_losses.append(t)
+
+        near_gann_wins: List = []
+        far_gann_wins: List = []
+        for t in winning_trades:
+            min_dist = min(
+                abs(t.entry_price - lv) / lv * 100
+                for lv in gann_price_levels
+            )
+            if min_dist < 5.0:
+                near_gann_wins.append(t)
+            else:
+                far_gann_wins.append(t)
+
+        print(f"     {'Proximity':>20}  {'Losses':>7}  {'Wins':>6}  "
+              f"{'Loss%':>6}  {'Avg Loss':>10}")
+        print(f"     {'─' * 20}  {'─' * 7}  {'─' * 6}  "
+              f"{'─' * 6}  {'─' * 10}")
+
+        for label, losses_l, wins_l in [
+            ("Near Gann (<5%)", near_gann_losses, near_gann_wins),
+            ("Far from Gann (≥5%)", far_gann_losses, far_gann_wins),
+        ]:
+            n_l = len(losses_l)
+            n_w = len(wins_l)
+            total = n_l + n_w
+            loss_rate = n_l / total * 100 if total > 0 else 0
+            avg_l = sum(t.pnl for t in losses_l) / n_l if n_l else 0
+            print(f"     {label:>20}  {n_l:>7}  {n_w:>6}  "
+                  f"{loss_rate:>5.1f}%  ${avg_l:>9.2f}")
+
+        # ─── 9. Summary of key findings ──────────────────────────────
+        print(f"\n  {'─' * 74}")
+        print(f"  KEY LOSS PATTERN FINDINGS")
+        print(f"  {'─' * 74}")
+
+        # Find the worst day
+        worst_day_idx = max(range(7),
+                            key=lambda d: len(day_losses[d]))
+        worst_day_rate = (len(day_losses[worst_day_idx])
+                          / day_all[worst_day_idx] * 100
+                          if day_all[worst_day_idx] > 0 else 0)
+
+        # Find worst direction
+        buy_loss_rate = (len(buy_losses)
+                         / (len(buy_losses) + len(buy_wins)) * 100
+                         if (len(buy_losses) + len(buy_wins)) > 0 else 0)
+        sell_loss_rate = (len(sell_losses)
+                          / (len(sell_losses) + len(sell_wins)) * 100
+                          if (len(sell_losses) + len(sell_wins)) > 0 else 0)
+
+        # Dominant exit reason for losses
+        dominant_reason = max(loss_reasons,
+                              key=lambda r: len(loss_reasons[r]))
+        dominant_pct = len(loss_reasons[dominant_reason]) / n_losses * 100
+
+        findings = []
+        findings.append(
+            f"  1. STOP LOSSES DOMINATE: {dominant_pct:.0f}% of losses "
+            f"exit via {dominant_reason} — tight stops protect capital "
+            f"but cause frequent small losses."
+        )
+
+        if buy_loss_rate > sell_loss_rate + 5:
+            findings.append(
+                f"  2. DIRECTIONAL BIAS: BUY trades lose more often "
+                f"({buy_loss_rate:.1f}% vs {sell_loss_rate:.1f}%) — "
+                f"algorithm struggles with false breakouts on long entries."
+            )
+        elif sell_loss_rate > buy_loss_rate + 5:
+            findings.append(
+                f"  2. DIRECTIONAL BIAS: SELL trades lose more often "
+                f"({sell_loss_rate:.1f}% vs {buy_loss_rate:.1f}%) — "
+                f"shorting against BTC's long-term uptrend is harder."
+            )
+        else:
+            findings.append(
+                f"  2. NO DIRECTIONAL BIAS: BUY ({buy_loss_rate:.1f}%) "
+                f"and SELL ({sell_loss_rate:.1f}%) loss rates are similar "
+                f"— algorithm is direction-neutral."
+            )
+
+        findings.append(
+            f"  3. WORST DAY: {day_names[worst_day_idx]} has the highest "
+            f"loss rate ({worst_day_rate:.1f}% of trades lose) — "
+            f"consider filtering or reducing size."
+        )
+
+        if streaks:
+            max_streak = max(streak_lens)
+            findings.append(
+                f"  4. MAX LOSING STREAK: {max_streak} consecutive losses "
+                f"— acceptable for a {result.win_rate * 100:.0f}% win-rate system "
+                f"({'normal' if max_streak <= 10 else 'concerning'})."
+            )
+
+        low_vol_loss_rate = (len(low_vol_losses)
+                             / (len(low_vol_losses) + len(low_vol_wins)) * 100
+                             if (len(low_vol_losses) + len(low_vol_wins)) > 0
+                             else 0)
+        high_vol_loss_rate = (len(high_vol_losses)
+                              / (len(high_vol_losses) + len(high_vol_wins))
+                              * 100
+                              if (len(high_vol_losses) + len(high_vol_wins))
+                              > 0 else 0)
+
+        if low_vol_loss_rate > high_vol_loss_rate + 5:
+            findings.append(
+                f"  5. VOLATILITY PATTERN: More losses in low-volatility "
+                f"({low_vol_loss_rate:.1f}%) vs high-volatility "
+                f"({high_vol_loss_rate:.1f}%) — choppy, range-bound markets "
+                f"generate false signals."
+            )
+        elif high_vol_loss_rate > low_vol_loss_rate + 5:
+            findings.append(
+                f"  5. VOLATILITY PATTERN: More losses in high-volatility "
+                f"({high_vol_loss_rate:.1f}%) vs low-volatility "
+                f"({low_vol_loss_rate:.1f}%) — extreme moves blow through "
+                f"stops before targets hit."
+            )
+        else:
+            findings.append(
+                f"  5. VOLATILITY PATTERN: Loss rates similar across "
+                f"volatility regimes ({low_vol_loss_rate:.1f}% low vs "
+                f"{high_vol_loss_rate:.1f}% high) — no clear regime bias."
+            )
+
+        # Average loss size relative to average win
+        avg_loss_val = abs(sum(t.pnl for t in losing_trades) / n_losses)
+        avg_win_val = (sum(t.pnl for t in winning_trades)
+                       / len(winning_trades) if winning_trades else 0)
+        loss_win_ratio = avg_loss_val / avg_win_val if avg_win_val > 0 else 0
+
+        findings.append(
+            f"  6. LOSS SIZE: Average loss (${avg_loss_val:.2f}) is "
+            f"{loss_win_ratio:.1f}x the average win (${avg_win_val:.2f}) — "
+            f"{'excellent' if loss_win_ratio < 0.5 else 'good' if loss_win_ratio < 1.0 else 'needs improvement'} "
+            f"risk management."
+        )
+
+        near_loss_rate = (len(near_gann_losses)
+                          / (len(near_gann_losses) + len(near_gann_wins))
+                          * 100
+                          if (len(near_gann_losses) + len(near_gann_wins))
+                          > 0 else 0)
+        far_loss_rate = (len(far_gann_losses)
+                         / (len(far_gann_losses) + len(far_gann_wins)) * 100
+                         if (len(far_gann_losses) + len(far_gann_wins))
+                         > 0 else 0)
+
+        if near_loss_rate > far_loss_rate + 5:
+            findings.append(
+                f"  7. GANN LEVELS: Higher loss rate near Gann levels "
+                f"({near_loss_rate:.1f}% vs {far_loss_rate:.1f}%) — "
+                f"price oscillation around key levels triggers stops."
+            )
+        else:
+            findings.append(
+                f"  7. GANN LEVELS: Loss rate near Gann levels "
+                f"({near_loss_rate:.1f}%) vs far ({far_loss_rate:.1f}%) "
+                f"— {'no significant difference' if abs(near_loss_rate - far_loss_rate) < 5 else 'better performance near levels'}."
+            )
+
+        for f_line in findings:
+            print(f_line)
 
     # ── 8. Bitcoin-specific Gann analysis ────────────────────────────────
     print(f"\n{'─' * 78}")

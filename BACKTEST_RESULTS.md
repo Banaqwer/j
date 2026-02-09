@@ -98,6 +98,112 @@ GANN ALGORITHM BACKTEST RESULTS
 | Trailing stop | 24 | -$8.40 | -$0.35 |
 | End of data | 1 | -$0.19 | -$0.19 |
 
+## Loss Pattern Analysis
+
+### 1. Losses by Direction
+
+| Direction | Losses | Wins | Loss% | Avg Loss | Total Loss |
+|-----------|--------|------|-------|----------|------------|
+| BUY | 186 | 306 | 37.8% | -$1.84 | -$342.86 |
+| SELL | 87 | 240 | 26.6% | -$2.25 | -$196.06 |
+
+**Finding**: BUY trades lose 11.2% more often than SELL trades. The algorithm struggles with false upside breakouts — BTC's strong rallies attract buy signals that get stopped out when price reverses.
+
+### 2. Losses by Day of Week
+
+| Day | Losses | Total | Loss% | Avg Loss |
+|-----|--------|-------|-------|----------|
+| Mon | 52 | 131 | 39.7% | -$1.86 |
+| Tue | 46 | 111 | 41.4% | -$2.21 |
+| Wed | 50 | 130 | 38.5% | -$1.79 |
+| Thu | 37 | 113 | 32.7% | -$2.20 |
+| Fri | 25 | 125 | 20.0% | -$1.75 |
+| Sat | 21 | 97 | 21.6% | -$2.38 |
+| Sun | 42 | 112 | 37.5% | -$1.82 |
+
+**Finding**: Tuesday has the highest loss rate (41.4%), while Friday/Saturday are the safest (20.0%/21.6%). Early-week entries face more noise; weekend setups tend to follow through.
+
+### 3. Losses by Confidence Level
+
+| Confidence | Losses | Wins | Loss% | Avg Loss |
+|------------|--------|------|-------|----------|
+| Med (0.30–0.45) | 73 | 160 | 31.3% | -$1.88 |
+| High (0.45–0.60) | 200 | 386 | 34.1% | -$2.01 |
+
+**Finding**: Loss rates are similar across confidence bands (31–34%), suggesting the confidence scoring is well-calibrated. No low or very high confidence trades were generated.
+
+### 4. Loss Exit Reasons
+
+| Reason | Count | % of Losses | Avg Loss | Worst Loss |
+|--------|-------|-------------|----------|------------|
+| Stop loss | 248 | 90.8% | -$2.14 | -$4.75 |
+| Trailing stop | 24 | 8.8% | -$0.35 | -$0.35 |
+| End of data | 1 | 0.4% | -$0.19 | -$0.19 |
+
+**Finding**: 91% of losses are clean stop-loss exits — the risk management system works as designed. Trailing stop losses are very small ($0.35 avg), confirming they give back minimal profit.
+
+### 5. Consecutive Loss Streaks
+
+| Metric | Value |
+|--------|-------|
+| Total streak events | 127 |
+| Max streak length | 7 |
+| Avg streak length | 2.1 |
+| Worst streak PnL | -$15.19 |
+
+**Streak length distribution:**
+```
+ 1 losses:  61x  ████████████████████████████████
+ 2 losses:  25x  █████████████
+ 3 losses:  24x  ████████████
+ 4 losses:   6x  ███
+ 5 losses:   5x  ██
+ 6 losses:   1x  █
+ 7 losses:   5x  ██
+```
+
+**Finding**: 48% of losing streaks are single-trade losses (self-correcting). Max 7 consecutive losses is acceptable for a 67% win-rate system. The worst streak lost only $15.19 (1.5% of starting capital).
+
+### 6. Losses by Market Volatility Regime
+
+| Regime | Losses | Wins | Loss% | Avg Loss |
+|--------|--------|------|-------|----------|
+| Low vol (<3%) | 172 | 344 | 33.3% | -$1.86 |
+| High vol (≥3%) | 101 | 202 | 33.3% | -$2.16 |
+
+**Finding**: Loss rates are identical (33.3%) across volatility regimes. However, high-vol losses are 16% larger ($2.16 vs $1.86) — wider price swings cause slightly deeper stop-outs.
+
+### 7. Worst Months by Loss Count
+
+| Month | Losses | Wins | Loss% | Loss PnL |
+|-------|--------|------|-------|----------|
+| 2021-06 | 11 | 3 | 78.6% | -$25.00 |
+| 2025-03 | 9 | 8 | 52.9% | -$17.24 |
+| 2023-12 | 8 | 6 | 57.1% | -$12.91 |
+| 2025-02 | 8 | 7 | 53.3% | -$12.99 |
+| 2025-06 | 8 | 6 | 57.1% | -$12.13 |
+
+**Finding**: June 2021 was the worst month (78.6% loss rate) — this was BTC's crash from $40k to $30k, a choppy sideways market that generated many false signals. Worst months cluster around trend transitions.
+
+### 8. Losses Near Gann Price Levels
+
+| Proximity | Losses | Wins | Loss% | Avg Loss |
+|-----------|--------|------|-------|----------|
+| Near Gann (<5%) | 146 | 281 | 34.2% | -$1.87 |
+| Far from Gann (≥5%) | 127 | 265 | 32.4% | -$2.09 |
+
+**Finding**: No significant difference in loss rates near/far from Gann levels — the algorithm handles Gann proximity equally well in both zones.
+
+### Key Loss Pattern Summary
+
+1. **STOP LOSSES DOMINATE**: 91% of losses exit via stop — tight stops protect capital but cause frequent small losses
+2. **DIRECTIONAL BIAS**: BUY trades lose more often (37.8% vs 26.6%) — false breakouts on long entries
+3. **WORST DAYS**: Tuesday (41.4%) and Monday (39.7%) have the highest loss rates
+4. **EXCELLENT RISK MANAGEMENT**: Average loss ($1.97) is only 0.2x the average win ($10.27)
+5. **NO VOLATILITY BIAS**: Loss rates identical (33.3%) across low/high volatility regimes
+6. **MANAGEABLE STREAKS**: Max 7 consecutive losses, worst streak only -$15.19
+7. **WORST PERIOD**: June 2021 (BTC crash/chop) — 78.6% loss rate in choppy sideways markets
+
 ## Gann Analysis (End of Data)
 
 **BTC price**: $87,648.22 (2025-12-31)
