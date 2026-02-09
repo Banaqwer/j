@@ -5,16 +5,12 @@ Bitcoin (BTC/USD) 5-Year Backtest — Gann Unified Algorithm
 Backtests the W.D. Gann unified trading algorithm on Bitcoin (BTC/USD)
 daily data spanning approximately 5 years.
 
-Data is sourced from the **Binance public API** (no API key required),
-providing real daily OHLCV kline data for BTCUSDT.  If Binance is
-unavailable the script falls back to the **CoinGecko free API**, and
-finally to a locally cached CSV file (``btc_real_daily.csv``).
-
-No external Python packages are required — only the standard library
-``urllib`` and ``json`` modules are used for HTTP requests.
+Data is loaded from the **BTCUSDT-1d-YYYY-MM.zip** files included in
+this repository.  Each zip contains one CSV with real Binance daily
+kline data for that month.  No external APIs or packages are needed.
 
 Key Bitcoin characteristics handled:
-  - Real daily OHLCV data from Binance / CoinGecko (no interpolation)
+  - Real daily OHLCV data from Binance kline CSVs (no interpolation)
   - Much higher volatility than traditional markets (~60-80% annualized)
   - Large absolute price moves (hundreds/thousands of dollars per day)
   - Dynamic SQ12 used (high-volatility regime)
@@ -25,7 +21,7 @@ Usage:
     python backtest_bitcoin.py
 
 This will:
-  1. Download real daily BTC data from Binance (≈5 years)
+  1. Load real daily BTC data from BTCUSDT CSV zips in the repo (~5 years)
   2. Run the Gann algorithm backtester on every daily bar
   3. Print full results and trade log
   4. Export CSV files (btc_data.csv, btc_backtest_trades.csv, btc_backtest_equity.csv)
@@ -34,14 +30,12 @@ This will:
 from __future__ import annotations
 
 import csv
-import json
+import glob
 import math
 import os
 import sys
-import time
-import urllib.request
-import urllib.error
-from datetime import datetime, timedelta
+import zipfile
+from datetime import datetime, timezone
 from typing import List
 
 from backtest_engine import (
@@ -52,252 +46,100 @@ from backtest_engine import (
 
 
 # ---------------------------------------------------------------------------
-# Binance public API data download (primary)
+# Load BTCUSDT data from repository zip files
 # ---------------------------------------------------------------------------
 
-def download_btc_binance(
-    start: str = "2021-02-01",
-    end: str | None = None,
-) -> List[Bar]:
+def load_btcusdt_zips(data_dir: str | None = None) -> List[Bar]:
     """
-    Download real daily BTCUSDT OHLCV data from the Binance public API.
+    Load real daily BTCUSDT OHLCV bars from the monthly zip files
+    shipped with this repository (``BTCUSDT-1d-YYYY-MM.zip``).
 
-    Uses ``GET /api/v3/klines`` which requires no API key.  The endpoint
-    returns at most 1000 candles per request, so multiple requests are
-    made to cover the full date range.
+    Each zip contains a headerless CSV with Binance kline rows:
+        open_time, open, high, low, close, volume, close_time, ...
+
+    Handles both millisecond and microsecond timestamps.
 
     Parameters
     ----------
-    start : str
-        Start date (YYYY-MM-DD).
-    end : str or None
-        End date (YYYY-MM-DD). Defaults to today.
+    data_dir : str or None
+        Directory containing the zip files.  Defaults to the script dir.
 
     Returns
     -------
     List[Bar]
-        Daily OHLC bars.
-
-    Raises
-    ------
-    RuntimeError
-        If the API is unreachable or returns no data.
+        Sorted, de-duplicated daily bars.
     """
-    if end is None:
-        end = datetime.now().strftime("%Y-%m-%d")
+    if data_dir is None:
+        data_dir = os.path.dirname(os.path.abspath(__file__))
 
-    start_ms = int(datetime.strptime(start, "%Y-%m-%d").timestamp() * 1000)
-    end_ms = int(datetime.strptime(end, "%Y-%m-%d").timestamp() * 1000)
+    zip_files = sorted(glob.glob(os.path.join(data_dir, "BTCUSDT-1d-*.zip")))
+    if not zip_files:
+        raise FileNotFoundError(
+            f"No BTCUSDT-1d-*.zip files found in {data_dir}"
+        )
+
+    # Binance changed from millisecond to microsecond timestamps
+    _MICROSECOND_THRESHOLD = 1_000_000_000_000_000
 
     bars: List[Bar] = []
-    current_start = start_ms
-    base_url = "https://api.binance.com/api/v3/klines"
-
-    while current_start < end_ms:
-        params = (
-            f"?symbol=BTCUSDT&interval=1d"
-            f"&startTime={current_start}&endTime={end_ms}&limit=1000"
-        )
-        url = base_url + params
-
-        req = urllib.request.Request(url)
-        req.add_header("User-Agent", "Mozilla/5.0")
-        resp = urllib.request.urlopen(req, timeout=30)
-        data = json.loads(resp.read().decode())
-
-        if not data:
-            break
-
-        for k in data:
-            # Binance kline format:
-            # [open_time, open, high, low, close, volume, close_time, ...]
-            open_time_ms = int(k[0])
-            dt = datetime.utcfromtimestamp(open_time_ms / 1000)
-            bars.append(Bar(
-                date=dt,
-                open=round(float(k[1]), 2),
-                high=round(float(k[2]), 2),
-                low=round(float(k[3]), 2),
-                close=round(float(k[4]), 2),
-                volume=float(k[5]),
-            ))
-
-        # Move start to one millisecond after the last candle's close_time
-        last_close_time = int(data[-1][6])
-        current_start = last_close_time + 1
+    for zf_path in zip_files:
+        with zipfile.ZipFile(zf_path, "r") as zf:
+            for name in zf.namelist():
+                if not name.endswith(".csv"):
+                    continue
+                with zf.open(name) as cf:
+                    for raw_line in cf:
+                        cols = raw_line.decode("utf-8").strip().split(",")
+                        if len(cols) < 6:
+                            continue
+                        try:
+                            ts = int(cols[0])
+                            # Detect microseconds vs milliseconds
+                            if ts > _MICROSECOND_THRESHOLD:
+                                dt = datetime.fromtimestamp(
+                                    ts / 1_000_000, tz=timezone.utc
+                                ).replace(tzinfo=None)
+                            else:
+                                dt = datetime.fromtimestamp(
+                                    ts / 1_000, tz=timezone.utc
+                                ).replace(tzinfo=None)
+                            bars.append(Bar(
+                                date=dt,
+                                open=round(float(cols[1]), 2),
+                                high=round(float(cols[2]), 2),
+                                low=round(float(cols[3]), 2),
+                                close=round(float(cols[4]), 2),
+                                volume=round(float(cols[5]), 2),
+                            ))
+                        except (ValueError, IndexError):
+                            continue
 
     if not bars:
-        raise RuntimeError("No data returned from Binance API.")
+        raise RuntimeError("No valid kline rows found in BTCUSDT zip files.")
 
+    # Sort and de-duplicate by date
     bars.sort(key=lambda b: b.date)
-    return bars
+    seen: set[str] = set()
+    unique: List[Bar] = []
+    for b in bars:
+        key = b.date.strftime("%Y-%m-%d")
+        if key not in seen:
+            seen.add(key)
+            unique.append(b)
+    return unique
 
 
-# ---------------------------------------------------------------------------
-# CoinGecko free API data download (fallback)
-# ---------------------------------------------------------------------------
-
-def download_btc_coingecko(
-    start: str = "2021-02-01",
-    end: str | None = None,
-) -> List[Bar]:
-    """
-    Download daily BTC/USD market data from the CoinGecko free API.
-
-    Uses ``GET /api/v3/coins/bitcoin/market_chart/range`` which returns
-    daily-granularity data when the range exceeds 90 days.  No API key
-    is required for the free tier.
-
-    CoinGecko returns *prices*, *market_caps*, and *total_volumes* arrays,
-    each containing ``[timestamp_ms, value]`` pairs.  Because the free
-    API does not provide true OHLC over long ranges, the daily price
-    point is used as the close and a synthetic OHLC bar is built using
-    the close ± a small percentage derived from neighbouring data.
-
-    Parameters
-    ----------
-    start : str
-        Start date (YYYY-MM-DD).
-    end : str or None
-        End date (YYYY-MM-DD). Defaults to today.
-
-    Returns
-    -------
-    List[Bar]
-        Daily bars.
-
-    Raises
-    ------
-    RuntimeError
-        If the API is unreachable or returns no data.
-    """
-    if end is None:
-        end = datetime.now().strftime("%Y-%m-%d")
-
-    start_ts = int(datetime.strptime(start, "%Y-%m-%d").timestamp())
-    end_ts = int(datetime.strptime(end, "%Y-%m-%d").timestamp())
-
-    url = (
-        f"https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range"
-        f"?vs_currency=usd&from={start_ts}&to={end_ts}"
-    )
-
-    req = urllib.request.Request(url)
-    req.add_header("User-Agent", "Mozilla/5.0")
-    resp = urllib.request.urlopen(req, timeout=30)
-    data = json.loads(resp.read().decode())
-
-    prices = data.get("prices", [])
-    volumes = data.get("total_volumes", [])
-
-    if not prices:
-        raise RuntimeError("No data returned from CoinGecko API.")
-
-    # Build a volume lookup (timestamp → volume)
-    vol_map: dict[int, float] = {}
-    for ts_ms, vol in volumes:
-        day_key = int(ts_ms) // 86_400_000
-        vol_map[day_key] = vol
-
-    bars: List[Bar] = []
-    close_values = [p[1] for p in prices]
-
-    for idx, (ts_ms, price) in enumerate(prices):
-        dt = datetime.utcfromtimestamp(int(ts_ms) / 1000)
-        close = round(price, 2)
-
-        # Estimate OHLC from neighbouring closes
-        prev_close = close_values[idx - 1] if idx > 0 else close
-        next_close = close_values[idx + 1] if idx < len(close_values) - 1 else close
-        open_price = round(prev_close, 2)
-        high = round(max(open_price, close, next_close) * 1.005, 2)
-        low = round(min(open_price, close, next_close) * 0.995, 2)
-
-        day_key = int(ts_ms) // 86_400_000
-        volume = vol_map.get(day_key, 0.0)
-
-        bars.append(Bar(
-            date=dt,
-            open=open_price,
-            high=high,
-            low=low,
-            close=close,
-            volume=volume,
-        ))
-
-    bars.sort(key=lambda b: b.date)
-    return bars
-
-
-def load_btc_csv(filepath: str) -> List[Bar]:
-    """
-    Load BTC daily data from a CSV file (fallback when Yahoo is unavailable).
-
-    Expected columns: date, open, high, low, close, volume
-    """
-    bars: List[Bar] = []
-    with open(filepath, "r") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            try:
-                bars.append(Bar(
-                    date=datetime.strptime(row["date"].strip(), "%Y-%m-%d"),
-                    open=float(row["open"]),
-                    high=float(row["high"]),
-                    low=float(row["low"]),
-                    close=float(row["close"]),
-                    volume=float(row.get("volume", 0)),
-                ))
-            except (ValueError, KeyError):
-                continue
-    bars.sort(key=lambda b: b.date)
-    return bars
-
-
-def get_btc_data(
-    start: str = "2021-02-01",
-    end: str | None = None,
-    cache_csv: str | None = None,
-) -> List[Bar]:
-    """
-    Get BTC daily data — tries Binance, then CoinGecko, then cached CSV.
-
-    Fallback chain:
-      1. Binance public API (BTCUSDT klines, no key required)
-      2. CoinGecko free API (bitcoin market_chart/range)
-      3. Local CSV file at *cache_csv*
-    """
-    # 1. Try Binance public API
+def get_btc_data() -> List[Bar]:
+    """Load BTC daily data from the BTCUSDT zip files in the repository."""
+    base_dir = os.path.dirname(os.path.abspath(__file__))
     try:
-        bars = download_btc_binance(start=start, end=end)
-        print(f"   ✓ Downloaded {len(bars)} daily bars from Binance")
+        bars = load_btcusdt_zips(base_dir)
+        print(f"   ✓ Loaded {len(bars)} daily bars from BTCUSDT zip files")
         return bars
     except Exception as exc:
-        print(f"   ⚠ Binance download failed: {exc}")
-
-    # 2. Try CoinGecko free API
-    try:
-        bars = download_btc_coingecko(start=start, end=end)
-        print(f"   ✓ Downloaded {len(bars)} daily bars from CoinGecko")
-        return bars
-    except Exception as exc:
-        print(f"   ⚠ CoinGecko download failed: {exc}")
-
-    # 3. Fallback to cached CSV
-    if cache_csv is None:
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        cache_csv = os.path.join(base_dir, "btc_real_daily.csv")
-
-    if os.path.exists(cache_csv):
-        bars = load_btc_csv(cache_csv)
-        if bars:
-            print(f"   ✓ Loaded {len(bars)} daily bars from {cache_csv}")
-            return bars
-
-    print("   ✗ No data available. Ensure internet access and retry,")
-    print("     or place btc_real_daily.csv in the script directory.")
-    print("     Run:  python download_btc_data.py")
-    sys.exit(1)
+        print(f"   ✗ Failed to load BTCUSDT data: {exc}")
+        print("     Ensure BTCUSDT-1d-*.zip files are in the repository.")
+        sys.exit(1)
 
 
 def save_btc_csv(bars: List[Bar], filepath: str) -> None:
@@ -315,19 +157,19 @@ def save_btc_csv(bars: List[Bar], filepath: str) -> None:
 
 
 def main():
-    """Run the full 5-year Bitcoin backtest using Binance / CoinGecko data."""
+    """Run the full 5-year Bitcoin backtest using BTCUSDT CSV data."""
     base_dir = os.path.dirname(os.path.abspath(__file__))
 
     print("=" * 78)
     print("GANN UNIFIED TRADING ALGORITHM — BITCOIN (BTC/USD) 5-YEAR BACKTEST")
-    print("Using real daily data from Binance / CoinGecko")
+    print("Using real Binance BTCUSDT daily kline data from repository")
     print("=" * 78)
 
-    # ── 1. Download / load Bitcoin data ──────────────────────────────────
+    # ── 1. Load Bitcoin data from BTCUSDT zips ───────────────────────────
     print("\n1. Loading Bitcoin (BTC/USD) real daily OHLCV data...")
-    print("   Source: Binance public API → CoinGecko free API → cached CSV")
+    print("   Source: BTCUSDT-1d-*.zip files (Binance klines)")
 
-    bars = get_btc_data(start="2021-02-01")
+    bars = get_btc_data()
 
     print(f"   Total bars: {len(bars)}")
     print(f"   Period:     {bars[0].date.strftime('%Y-%m-%d')} to "
@@ -537,14 +379,14 @@ def main():
     print(f"\n  BTC buy-and-hold return: {btc_return:+.2f}%")
     print(f"  Algorithm return:        {algo_return:+.2f}%")
     print(f"  Outperformance:          {algo_return - btc_return:+.2f}%")
-    print(f"\n  Data source: Binance / CoinGecko — real daily OHLCV")
+    print(f"\n  Data source: BTCUSDT-1d-*.zip — real Binance daily klines")
     print(f"  Key observations:")
     print(f"    - Bitcoin's extreme volatility ({annual_vol:.0f}% annual) "
           f"triggers Dynamic SQ12")
     print(f"    - Gann angles adapt to BTC's large price swings")
     print(f"    - 144-cycle levels align with BTC's major turning points")
     print(f"    - Number vibration analysis works on any price scale")
-    print(f"\n  To re-run with latest data:")
+    print(f"\n  To re-run:")
     print(f"  >>> python backtest_bitcoin.py")
     print(f"{'=' * 78}")
 
