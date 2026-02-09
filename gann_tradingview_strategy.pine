@@ -134,10 +134,15 @@ sq9Confluence = isNearSQ9(close, i_sq9Tol)
 // Digit reduction: sum digits until single digit
 // Vibration 9 = "change number" (reversal likely)
 
+// Handles up to 9-digit numbers (covers all crypto prices including BTC > $100K)
 digitSum(int val) =>
     n = math.abs(val)
     sum = 0
     sum := n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
     n := math.floor(n / 10)
     sum += n % 10
     n := math.floor(n / 10)
@@ -277,6 +282,7 @@ goLong  = longCond  and (not shortCond or buyConf > sellConf)
 goShort = shortCond and (not longCond  or sellConf > buyConf)
 
 // --- Position sizing based on risk ---
+// For crypto, qty = riskAmt / riskPerUnit gives position in asset units (e.g., 0.05 BTC)
 riskAmt   = strategy.equity * i_riskPct / 100
 longQty   = buyRisk  > 0 ? riskAmt / buyRisk  : 0
 shortQty  = sellRisk > 0 ? riskAmt / sellRisk : 0
@@ -289,14 +295,21 @@ else
     barsInTrade := 0
 
 // --- Entry execution ---
+// trail_offset = profit needed before trailing starts (halfway to target)
+// trail_points = trailing distance once activated
+longTrailActivate  = math.abs(buyTarget - buyEntry)   * 0.5
+longTrailDist      = close * i_trailPct / 100
+shortTrailActivate = math.abs(sellEntry - sellTarget)  * 0.5
+shortTrailDist     = close * i_trailPct / 100
+
 if goLong and strategy.position_size <= 0
     strategy.entry("Long", strategy.long, qty=longQty)
-    strategy.exit("Long SL/TP", "Long", stop=buyStop, limit=buyTarget, trail_offset=close * i_trailPct / 100, trail_points=close * i_trailPct / 100)
+    strategy.exit("Long SL/TP", "Long", stop=buyStop, limit=buyTarget, trail_offset=longTrailActivate, trail_points=longTrailDist)
     barsInTrade := 0
 
 if goShort and strategy.position_size >= 0
     strategy.entry("Short", strategy.short, qty=shortQty)
-    strategy.exit("Short SL/TP", "Short", stop=sellStop, limit=sellTarget, trail_offset=close * i_trailPct / 100, trail_points=close * i_trailPct / 100)
+    strategy.exit("Short SL/TP", "Short", stop=sellStop, limit=sellTarget, trail_offset=shortTrailActivate, trail_points=shortTrailDist)
     barsInTrade := 0
 
 // --- Time-based exit (max bars in trade) ---

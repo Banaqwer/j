@@ -147,6 +147,12 @@ To set up alerts:
 | SOLUSD | 1D | Works well — 64.2% WR with Gann square alignment |
 | XAUUSD | 1D | Gold — traditional Gann asset |
 
+> **Note**: These backtest results are from 5-year historical simulations (Jan 2021 – Feb 2026)
+> using weekly-anchored price data with the Gann algorithm. Win rates and returns are
+> historical and **do not guarantee future performance**. BTC backtest: 862 trades, max DD 2.56%.
+> ETH backtest: 624 trades, max DD 2.75%. Always validate on TradingView's built-in Strategy
+> Tester with live market data before risking real capital.
+
 ---
 
 ## Disclaimer
