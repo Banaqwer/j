@@ -6,7 +6,7 @@ Backtests the W.D. Gann unified trading algorithm on Solana (SOL/USD)
 daily data from January 2021 to February 2026.
 
 Solana price data is generated using a historically-calibrated model
-anchored to 260+ real weekly close prices (Sunday closes) sourced from
+anchored to 267 real weekly close prices (Sunday closes) sourced from
 CoinMarketCap, CoinGecko, CoinLore, Investing.com, and BitScreener.
 Daily bars are interpolated between weekly anchors with crypto-appropriate
 volatility (~3.5% daily), producing a highly faithful approximation of
@@ -319,7 +319,7 @@ SOL_WEEKLY_CLOSES: List[Tuple[str, float]] = [
     ("2025-10-19", 110.00),
     ("2025-10-26", 105.00),
     ("2025-11-02", 100.00),
-    ("2025-11-09", 172.00),   # Brief spike (CoinLore: $171.93 on Nov 10)
+    ("2025-11-09", 172.00),   # Brief spike (CoinLore: $171.93 near Nov 9-10)
     ("2025-11-16", 145.00),
     ("2025-11-23", 130.00),
     ("2025-11-30", 125.00),
@@ -486,7 +486,7 @@ def main():
 
     # ── 1. Generate Solana data ──────────────────────────────────────────
     print("\n1. Generating Solana (SOL/USD) daily data (Jan 2021 – Feb 2026)...")
-    print("   Data calibrated to 260+ real weekly closes from CoinMarketCap /")
+    print("   Data calibrated to 267 real weekly closes from CoinMarketCap /")
     print("   CoinGecko / CoinLore / Investing.com / BitScreener")
     print("   Current SOL price: ~$87.55 (Feb 8, 2026)")
     print("   Note: Solana trades 24/7 — all calendar days included")
