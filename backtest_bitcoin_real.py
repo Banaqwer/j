@@ -69,6 +69,19 @@ from gann_trading_algorithm import GannAnalyzer
 
 
 # ---------------------------------------------------------------------------
+# Constants
+# ---------------------------------------------------------------------------
+
+# Timestamps above this threshold are in microseconds rather than milliseconds
+MICROSECOND_TIMESTAMP_THRESHOLD = 1e15
+
+# Scale factor to convert BTC price changes to time-equivalent units for
+# Price-Time Vector analysis (PDF 9).  BTC prices are ~5 digits, so dividing
+# by 100 makes the price dimension comparable to the time dimension.
+BTC_PRICE_SCALE = 0.01
+
+
+# ---------------------------------------------------------------------------
 # 1. Load real Binance BTCUSDT daily data from zip files
 # ---------------------------------------------------------------------------
 
@@ -117,8 +130,8 @@ def load_binance_btc_data(data_dir: str) -> List[Bar]:
                             try:
                                 # open_time is in milliseconds or microseconds
                                 open_time_raw = int(row[0])
-                                # If timestamp > 1e15, it's in microseconds
-                                if open_time_raw > 1e15:
+                                # Detect timestamp format
+                                if open_time_raw > MICROSECOND_TIMESTAMP_THRESHOLD:
                                     ts_seconds = open_time_raw / 1_000_000.0
                                 else:
                                     ts_seconds = open_time_raw / 1000.0
@@ -187,9 +200,10 @@ MASTER_TIME_PERIODS = [
 
 # Square of 52 important angles from PDF 10 (Ferrera)
 # Price/time balance: $100 = 360°, so $12.50 = 45°, $25 = 90°, etc.
-# These fractions of range are natural 1/8th divisions
-NATURAL_EIGHTH_FRACTIONS = [
-    0.125, 0.250, 0.375, 0.500, 0.625, 0.750, 0.875, 1.000,
+# These fractions of range are natural 1/8th and 1/3rd divisions
+NATURAL_RETRACEMENT_FRACTIONS = [
+    0.125, 0.250, 1.0 / 3.0, 0.375, 0.500,
+    0.625, 2.0 / 3.0, 0.750, 0.875, 1.000,
 ]
 
 # Gann's 30-year cycle divisions from PDF 8 (Hexagon)
@@ -272,11 +286,8 @@ def natural_eighth_levels(
     """
     price_range = swing_high - swing_low
     levels = []
-    for frac in NATURAL_EIGHTH_FRACTIONS:
+    for frac in NATURAL_RETRACEMENT_FRACTIONS:
         levels.append(round(swing_low + price_range * frac, 2))
-    # Also add 1/3 and 2/3 divisions (PDF 8 hexagon: 120° and 240°)
-    levels.append(round(swing_low + price_range * (1.0 / 3.0), 2))
-    levels.append(round(swing_low + price_range * (2.0 / 3.0), 2))
     levels.sort()
     return levels
 
@@ -336,8 +347,10 @@ def sq144_price_levels(base_price: float) -> List[float]:
     List[float]
         Price levels at 12-unit intervals up to ±144.
     """
+    # Number of 12-unit multiples above and below the base price
+    SQ144_MULTIPLIER_RANGE = 12
     levels = []
-    for i in range(-12, 13):
+    for i in range(-SQ144_MULTIPLIER_RANGE, SQ144_MULTIPLIER_RANGE + 1):
         offset = i * 12
         levels.append(round(base_price + offset, 2))
     return levels
@@ -523,7 +536,7 @@ def main():
         price_change = abs(p2[2] - p1[2])
         time_change = abs(p2[0] - p1[0])
         # For BTC, scale price by 1/100 to make it comparable to time
-        vector = price_time_vector_length(price_change, time_change, scale=0.01)
+        vector = price_time_vector_length(price_change, time_change, scale=BTC_PRICE_SCALE)
         print(f"\n   Price-Time Vector (last 2 pivots):")
         print(f"     Price change: ${price_change:,.2f}")
         print(f"     Time change:  {time_change} bars")
