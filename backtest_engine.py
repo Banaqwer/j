@@ -445,12 +445,12 @@ class GannBacktester:
                 check_idx = i - pivot_window
                 if check_idx >= pivot_window:
                     is_swing_high = all(
-                        bars[check_idx].high >= bars[check_idx + j].high
+                        bars[check_idx].high > bars[check_idx + j].high
                         for j in range(-pivot_window, pivot_window + 1)
                         if j != 0 and 0 <= check_idx + j < len(bars)
                     )
                     is_swing_low = all(
-                        bars[check_idx].low <= bars[check_idx + j].low
+                        bars[check_idx].low < bars[check_idx + j].low
                         for j in range(-pivot_window, pivot_window + 1)
                         if j != 0 and 0 <= check_idx + j < len(bars)
                     )

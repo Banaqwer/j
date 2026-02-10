@@ -1295,9 +1295,11 @@ class GannAnalyzer:
         """
         if days_from_pivot < 1:
             return False
-        # Check multiples of the lunar cycle
-        remainder = days_from_pivot % LUNAR_CYCLE_DAYS
-        return remainder <= tolerance or (LUNAR_CYCLE_DAYS - remainder) <= tolerance
+        # Check multiples of the lunar cycle (~29.53 days).
+        # Use round() to avoid floating-point modulo precision issues.
+        lunar_int = round(LUNAR_CYCLE_DAYS)  # 30 days
+        remainder = days_from_pivot % lunar_int
+        return remainder <= tolerance or (lunar_int - remainder) <= tolerance
 
     # ------------------------------------------------------------------
     # 16. SEASONAL DATE PROXIMITY CHECK (PDFs 10, 11)
@@ -1360,7 +1362,7 @@ class GannAnalyzer:
         bool
         """
         price_range = swing_high - swing_low
-        if price_range <= 0:
+        if price_range <= 0 or price <= 0:
             return False
         for frac in NATURAL_RETRACEMENT_FRACTIONS:
             level = swing_low + price_range * frac
@@ -1558,9 +1560,10 @@ class GannAnalyzer:
             p1_idx = pivot_bar_indices[-2]
             p2_idx = pivot_bar_indices[-1]
             if prices_history and len(prices_history) > 0:
-                # Approximate price change from bar indices
                 time_change = abs(p2_idx - p1_idx)
-                price_change = abs(high - low) * 2  # rough proxy
+                # Use the lookback high-low range as an estimate of the
+                # price swing magnitude between pivots.
+                price_change = abs(high - low)
                 # Scale: for large prices (crypto), use 0.01; for small, 1.0
                 scale = 0.01 if current_price > 1000 else 1.0
                 vector = self.price_time_vector(price_change, time_change, scale)
