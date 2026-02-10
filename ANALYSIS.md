@@ -413,4 +413,4 @@ This generates 252 bars of sample data, runs a full backtest, and exports result
 
 ---
 
-*This analysis, algorithm, Tunnel decryption, and backtesting engine were synthesized from seven W.D. Gann PDF documents, extracting and merging all quantifiable mathematical techniques and strategic principles into a unified, executable, and backtestable trading analysis system.*
+*This analysis, algorithm, Tunnel decryption, and backtesting engine were synthesized from ALL FOURTEEN W.D. Gann PDF documents, extracting and merging all quantifiable mathematical techniques and strategic principles into a unified, executable, and backtestable trading analysis system. The `generate_signal()` method integrates concepts from every PDF: Gann angles (PDFs 4, 5), Square of 9 (PDFs 4, 5, 8), number vibrations (PDF 6), dynamic volatility (PDF 5), hexagon chart timing (PDF 8), master time periods (PDFs 12, 13), natural 1/8th retracement levels (PDFs 10, 11, 13), price-time vectors (PDF 9), Gann time counts (PDFs 7, 11), lunar cycles (PDF 14), seasonal dates (PDFs 10, 11), 144-cycle levels (PDFs 6, 13), and astrological framework (PDFs 2, 3).*

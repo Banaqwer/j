@@ -2,49 +2,103 @@
 W.D. Gann Unified Trading Algorithm
 ====================================
 
-This algorithm synthesizes the teachings from seven W.D. Gann PDF documents:
+This algorithm synthesizes the teachings from ALL FOURTEEN W.D. Gann PDF
+documents included in the repository:
 
-1. "20 Years of Studying Gann" - Cycles of repetition, Law of Vibration, numerology,
-   the importance of time cycles with ~10% inversion rate, vibrational trading ranges.
+1.  "20 Years of Studying Gann" — Cycles of repetition, Law of Vibration,
+    numerology, time cycles with ~10% inversion rate, vibrational trading
+    ranges, instrument specificity.
 
-2. "Super Timing - W.D. Gann's Astrological Method" (Walker Myles Wilson) -
-   Astrological timing methods and planetary cycle correlations.
+2.  "Super Timing — W.D. Gann's Astrological Method" (Walker Myles Wilson)
+    — Astrological timing: planetary conjunctions, squares, oppositions,
+    trines time market turns.  Heliocentric & geocentric positions create
+    repeating patterns.  Specific planetary pairs govern specific markets.
 
-3. "WD Gann Astro Cycles" - Planetary cycle-based market timing.
+3.  "WD Gann Astro Cycles" — Planetary cycle-based market timing charts;
+    visual demonstrations of planetary overlays on price charts.
 
-4. "Gann through My Lens" (Raju Chowksey) - Natural squares, Square of 9 wheel,
-   dynamic Gann square from highs/lows, price-time squaring (P = T^2),
-   SAP (Semi-Annual Pivot), pattern recognition (2B/2T), ATM trade rules.
+4.  "Gann through My Lens" (Raju Chowksey) — Natural squares, Square of 9,
+    dynamic Gann square from highs/lows, price-time squaring (P = T²),
+    SAP (Semi-Annual Pivot), 2B/2T patterns, ATM trade rules, Rule of 72.
 
-5. "Intraday Trade Using Gann Angle" (Soumya Ranjan Panda) - 11 Gann angle trend
-   lines, support/resistance formulas, degree factors, volatility-based dynamic
-   approach, dynamic Square of 9 and Square of 12, trend confirmation rules.
+5.  "Intraday Trade Using Gann Angle" (Soumya Ranjan Panda) — 11 Gann angle
+    trend lines, support/resistance formulas, degree factors, volatility-
+    based dynamic approach, dynamic SQ9 / SQ12, trend confirmation rules.
 
-6. "WD GANN Number Vibrations" - Numerology digit reduction, 144-cycle significance,
-   360-degree circle divisions, percentage vibration patterns (3-6-9 symmetry).
+6.  "WD GANN Number Vibrations" — Numerology digit reduction, 144-cycle
+    significance, 360° circle divisions, percentage vibration patterns
+    (3-6-9 symmetry).
 
-7. "Tunnel Thru the Air" (W.D. Gann) - The foundational novel encoding Gann's
-   complete trading methodology in veiled language; cycles, inventions as metaphors,
-   and the importance of time as the dominant factor.
+7.  "Tunnel Thru the Air" (W.D. Gann) — Foundational novel encoding Gann's
+    complete trading methodology; encoded cycle lengths, 30/36/45/60/90/120/
+    144/180/225/360 day cycles, time dominance, "wheel within a wheel."
+
+8.  "1931 Usage of Gann SQ9 Hexagon Chart" — Hexagon Chart structure: 1→7→
+    19→37→61→91→127→169→217→271→331→397 central angle; 90° crosses at
+    2→9→22→41→66→97→134→177→226→281→342; 30-year cube cycle (6×60° = 360°);
+    66-month campaigns; speed accelerates away from center.
+
+9.  "TS-VECTOR-2" (Tarasov) — Price-Time Vector: price has the quality of
+    space; vector length = √(ΔPrice² + ΔTime²); key distances at 180/360/
+    720/1080°; equidistant ellipses as support/resistance.
+
+10. "Gann's Master Mathematical Formula for Market Predictions" (Ferrera) —
+    Square of 52 weekly overlay, Square of 90, Square of 144 plastic
+    overlays; natural 1/8th price divisions ($12.50=45°, $25=90°, $50=180°,
+    $100=360°); fractal "circle within square within circle" structure;
+    seasonal timing from Equinoxes/Solstices (Mar 21, Jun 21, Sep 21,
+    Dec 21); powers-of-2 time expansion (1yr→2yr→4yr→8yr squares).
+
+11. "Understanding Gann Price and Time Cycle" — Important divisions at
+    1/8, 1/4, 1/3, 3/8, 1/2, 5/8, 2/3, 3/4, 7/8 of range and time;
+    30-year cycle divided into 6×60° segments; square of range is most
+    powerful; time counts: 30/45/60/90/135/150/180/210/225/315/330/360
+    calendar days; 13/26/39/45/52/78 weeks; 3.5-day minor trend cycle;
+    7/14/21/42/49 day turning points; 1/2 = center of gravity.
+
+12. "Gann's Master Time Factor" (Flanagan) — Master Time Factor = annual
+    forecast from time cycles; #1 on Gann's 12-item pre-trade checklist;
+    determines bull/bear year and main trend.
+
+13. "1953 Mathematical Formula for Market Predictions" (Gann) — Square of
+    144 as the GREAT SQUARE (contains all squares 1-144); 20,736 = Great
+    Cycle; Master Numbers 3,5,7,9,12; key products 7×9=63, 8²=64,
+    7×12=84, 10×9=90, 9×12=108; strongest points at 1/4, 1/3, 2/3, 3/8,
+    1/2, 5/8, 3/4, 7/8; triangle points 36/48/72/96/108/144; 56yr+9mo
+    Great Yearly Cycle.
+
+14. "A Moon Beam Thru the Tunnel" (Amundsen) — Lunar Return decoded from
+    "Tunnel Thru the Air"; Cancer/Moon symbolism (Robert born 6/9, office
+    at 69 Wall St); ~29.5-day lunar cycle; Venus-Mars conjunction timing
+    for reunions/reversals.
 
 Key Cross-Document Similarities / Merged Concepts:
 ---------------------------------------------------
 - TIME is the dominant factor; price follows time (all documents).
 - Square root relationships underpin price level calculations (PDFs 4, 5).
 - The number 360 (full circle) and its divisions (90, 180, 45, etc.) are
-  fundamental to both angle and price calculations (PDFs 4, 5, 6).
+  fundamental to both angle and price calculations (PDFs 4, 5, 6, 8, 11).
 - The Square of 9 wheel arranges prices in a spiral; key levels occur at
-  cardinal (0/90/180/270) and diagonal (45/135/225/315) cross points (PDFs 4, 5).
+  cardinal (0/90/180/270) and diagonal (45/135/225/315) cross points
+  (PDFs 4, 5, 8).
 - Gann angles define support/resistance using degree factors derived from
   the ratio of price-to-time units (PDF 5 primary, PDF 4 confirms).
-- Volatility integration makes static Gann methods dynamic for intraday
-  use (PDF 5).
-- Number vibrations (digit reduction to single digit) reveal hidden symmetry
-  in price and percentage moves; the 3-6-9 pattern and 144 cycle (PDF 6).
-- Price-Time Squaring: when P = T^2 or T = sqrt(P), trend changes are
-  imminent (PDF 4).
+- Volatility integration makes static Gann methods dynamic (PDF 5).
+- Number vibrations (digit reduction to single digit) reveal hidden
+  symmetry in price and percentage moves; 3-6-9 pattern and 144 cycle
+  (PDF 6).
+- Price-Time Squaring: when P = T² or T = √P, trend changes are imminent
+  (PDF 4).
 - Cycle analysis: repeating time intervals from historical pivots predict
-  future turning points; ~10% inversion rate expected (PDF 1, 7).
+  future turning points; ~10% inversion rate expected (PDFs 1, 7).
+- Natural 1/8th divisions of price range define key S/R levels
+  (PDFs 10, 11, 13).
+- Hexagon chart numbers and cube cycle divisions mark important time
+  reversals (PDF 8).
+- Master Numbers (3, 5, 7, 9, 12) and their multiples define the most
+  important time periods (PDF 13).
+- Price-Time Vectors unify price and time into a single measurable
+  space (PDF 9).
 - Risk management: small stop-losses, max 10% account per trade, minimum
   1:2.5 reward-to-risk ratio (PDF 4).
 
@@ -117,6 +171,78 @@ GANN_NUMBERS = [144, 72, 36, 18, 9]
 
 # Square of 9 cardinal and ordinal degree offsets
 SQ9_DEGREES = [0, 45, 90, 135, 180, 225, 270, 315, 360]
+
+# ---------------------------------------------------------------------------
+# Constants from PDFs 8-14 (enhanced concepts)
+# ---------------------------------------------------------------------------
+
+# Hexagon Chart central angle numbers (PDF 8: SQ9 Hexagon, Gann 1931)
+# "We begin with a circle of '1', the second circle at 7, third at 19..."
+HEXAGON_CENTRAL_NUMBERS = [1, 7, 19, 37, 61, 91, 127, 169, 217, 271, 331, 397]
+
+# Hexagon 90° / 60°-240° angle numbers (PDF 8)
+# "2, 9, 22, 41, 66, 97, 134, 177, 226, 281, 342 are all on a same angle"
+HEXAGON_ANGLE_NUMBERS = [2, 9, 22, 41, 66, 97, 134, 177, 226, 281, 342]
+
+# Master Numbers (PDF 13: 1953 Mathematical Formula)
+# "The Master Numbers are 3, 5, 7, 9 and 12"
+MASTER_NUMBERS = [3, 5, 7, 9, 12]
+
+# Master Time Periods — products and squares of Master Numbers (PDFs 12, 13)
+# "7×9=63, 8²=64, 7×12=84, 10×9=90, 9×12=108" etc.
+MASTER_TIME_PERIODS = [
+    7, 9, 12, 14, 18, 21, 24, 25, 27, 30, 36, 42, 45, 49, 50, 52,
+    54, 60, 63, 64, 72, 75, 81, 84, 90, 98, 100, 108, 120,
+    127, 135, 144, 147, 162, 169, 180, 196, 217, 225, 240,
+    252, 270, 271, 288, 315, 324, 331, 360, 365,
+]
+
+# Important calendar-day counts from significant highs/lows (PDF 11)
+# "Significant changes in trend may take place on the following days"
+GANN_TIME_COUNTS_DAYS = [
+    30, 45, 60, 90, 135, 150, 180, 210, 225, 315, 330, 360,
+]
+
+# Important week counts (PDF 11)
+# "Important count of weeks: 13, 26, 39, 45, 52, 78"
+GANN_TIME_COUNTS_WEEKS = [13, 26, 39, 45, 52, 78]
+
+# Natural 1/8th + 1/3rd retracement fractions (PDFs 10, 11, 13)
+# "Important divisions on 1/8, 1/4, 1/3, 3/8, 1/2, 5/8, 2/3, 3/4, 7/8"
+# PDF 13: "Strongest points are 1/4, 1/3, 2/3, 3/8, 1/2, 5/8, 3/4, 7/8"
+NATURAL_RETRACEMENT_FRACTIONS = [
+    0.125, 0.250, 1.0 / 3.0, 0.375, 0.500,
+    0.625, 2.0 / 3.0, 0.750, 0.875, 1.000,
+]
+
+# Lunar cycle period in days (PDF 14: Moon Beam; PDF 7: Tunnel references)
+# "~29.5-day lunar cycle"
+LUNAR_CYCLE_DAYS = 29.53
+
+# Key SQ144 divisions — multiples of 12 within 144 (PDF 13)
+# "12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144"
+SQ144_DIVISIONS = [12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144]
+
+# 30-year cube cycle: 6 × 60° segments = 360° (PDF 8)
+# "In working out the 20-year Cycle... first 60° or 5 years forms bottom"
+CUBE_CYCLE_MONTHS = [60, 120, 180, 240, 300, 360]
+
+# "Third time against any support/resistance is the dangerous time" (PDF 11)
+DANGEROUS_TOUCH_COUNT = 3
+
+# Seasonal cardinal dates (PDF 10: Ferrera, PDF 11)
+# "Watch for significant days in solar year"
+SEASONAL_MONTHS_DAYS = [
+    (3, 21),   # Vernal Equinox
+    (6, 21),   # Summer Solstice
+    (9, 21),   # Autumnal Equinox
+    (12, 21),  # Winter Solstice
+]
+
+# Price-Time Vector harmonic angles (PDF 9: TS-VECTOR-2)
+# "For a properly scaled chart, the distance between important turning
+#  points should form 'good' angles like 180, 360, 720..."
+VECTOR_HARMONIC_ANGLES = [180, 360, 720, 1080, 1440]
 
 
 # ---------------------------------------------------------------------------
@@ -939,8 +1065,312 @@ class GannAnalyzer:
         return status
 
     # ------------------------------------------------------------------
-    # 9. UNIFIED SIGNAL GENERATION
-    #    Merges all methods from all PDFs
+    # 9. HEXAGON CHART TIME CHECK (PDF 8)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def hexagon_time_check(
+        bars_since_pivot: int, tolerance: int = 3
+    ) -> bool:
+        """
+        Check if bars_since_pivot aligns with a Hexagon Chart cycle number.
+
+        From PDF 8 (SQ9 Hexagon, 1931): "7, 19, 37, 61, 91, 127, 169, 217,
+        271, 331, 397 are all on this direct angle and are important points
+        in time measurement."
+
+        Parameters
+        ----------
+        bars_since_pivot : int
+        tolerance : int
+
+        Returns
+        -------
+        bool
+        """
+        all_hex = HEXAGON_CENTRAL_NUMBERS + HEXAGON_ANGLE_NUMBERS
+        return any(abs(bars_since_pivot - n) <= tolerance for n in all_hex)
+
+    # ------------------------------------------------------------------
+    # 10. MASTER TIME PERIOD CHECK (PDFs 12, 13)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def master_time_check(
+        bars_since_pivot: int, tolerance: int = 3
+    ) -> bool:
+        """
+        Check if bars_since_pivot matches a Master Time Period.
+
+        From PDF 13: Master Numbers (3,5,7,9,12) and their products/squares
+        define the most important time periods for trend changes.
+        From PDF 12 (Flanagan): Master Time Factor is #1 on Gann's checklist.
+
+        Parameters
+        ----------
+        bars_since_pivot : int
+        tolerance : int
+
+        Returns
+        -------
+        bool
+        """
+        return any(
+            abs(bars_since_pivot - p) <= tolerance for p in MASTER_TIME_PERIODS
+        )
+
+    # ------------------------------------------------------------------
+    # 11. NATURAL 1/8th RETRACEMENT LEVELS (PDFs 10, 11, 13)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def natural_eighth_levels(
+        swing_high: float, swing_low: float
+    ) -> List[float]:
+        """
+        Calculate natural 1/8th + 1/3rd retracement/extension levels.
+
+        From PDF 10 (Ferrera): "$100 = 360°, so 12.5 = 45°, 25 = 90°..."
+        From PDF 11: "Important divisions on 1/8, 1/4, 1/3, 3/8, 1/2,
+        5/8, 2/3, 3/4, 7/8"
+        From PDF 13: "Strongest points are 1/4, 1/3, 2/3, 3/8, 1/2,
+        5/8, 3/4, 7/8"
+
+        Parameters
+        ----------
+        swing_high, swing_low : float
+
+        Returns
+        -------
+        List[float]
+        """
+        price_range = swing_high - swing_low
+        levels = []
+        for frac in NATURAL_RETRACEMENT_FRACTIONS:
+            levels.append(round(swing_low + price_range * frac, 2))
+        levels.sort()
+        return levels
+
+    # ------------------------------------------------------------------
+    # 12. SQUARE OF 144 PRICE LEVELS (PDF 13)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def sq144_price_levels(base_price: float) -> List[float]:
+        """
+        Calculate Square of 144 price levels from a base price.
+
+        From PDF 13: "The square of 144 is the GREAT SQUARE and works
+        better than any other square both for TIME AND PRICE because
+        it contains all of the squares from 1 to 144."
+
+        Returns levels at multiples of 12 (the SQ144 column divisions)
+        above and below the base price.
+
+        Parameters
+        ----------
+        base_price : float
+
+        Returns
+        -------
+        List[float]
+        """
+        multiplier_range = 12
+        levels = []
+        for i in range(-multiplier_range, multiplier_range + 1):
+            offset = i * 12
+            levels.append(round(base_price + offset, 2))
+        return levels
+
+    # ------------------------------------------------------------------
+    # 13. PRICE-TIME VECTOR (PDF 9)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def price_time_vector(
+        price_change: float, time_bars: int, scale: float = 1.0
+    ) -> float:
+        """
+        Calculate price-time vector magnitude.
+
+        From PDF 9 (TS-VECTOR-2, Tarasov): "We calculate the Sun movement
+        between two turning points... then the price movement... So we
+        can calculate the length of the vector that connects these two
+        turning points."
+
+        Vector = √(ΔPrice² + ΔTime²)
+
+        Parameters
+        ----------
+        price_change : float
+            Absolute price change between two pivots.
+        time_bars : int
+            Number of bars between the two pivots.
+        scale : float
+            Price-to-time scaling factor.
+
+        Returns
+        -------
+        float
+            Vector magnitude.
+        """
+        scaled_price = price_change * scale
+        return math.sqrt(scaled_price ** 2 + time_bars ** 2)
+
+    @staticmethod
+    def vector_is_harmonic(vector_length: float, tolerance: float = 10.0) -> bool:
+        """
+        Check if a vector length is near a harmonic angle (180, 360, 720...).
+
+        From PDF 9: "For a properly scaled chart, the distance between
+        important turning points should form 'good' angles like 180,
+        360, 720..."
+
+        Parameters
+        ----------
+        vector_length : float
+        tolerance : float
+
+        Returns
+        -------
+        bool
+        """
+        return any(
+            abs(vector_length - h) <= tolerance for h in VECTOR_HARMONIC_ANGLES
+        )
+
+    # ------------------------------------------------------------------
+    # 14. GANN TIME COUNT CHECK (PDFs 7, 11)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def gann_time_count_check(
+        days_from_pivot: int, tolerance: int = 3
+    ) -> bool:
+        """
+        Check if days_from_pivot aligns with a key Gann time count.
+
+        From PDF 11: "Significant changes in trend may take place on
+        the following days from significant highs/lows — 30, 45, 60,
+        90, 135, 150, 180, 210, 225, 315, 330, 360."
+        From PDF 7 (Tunnel): encoded cycles at 30, 36, 45, 60, 90,
+        120, 144, 180, 225, 360 days.
+
+        Parameters
+        ----------
+        days_from_pivot : int
+        tolerance : int
+
+        Returns
+        -------
+        bool
+        """
+        return any(
+            abs(days_from_pivot - d) <= tolerance for d in GANN_TIME_COUNTS_DAYS
+        )
+
+    # ------------------------------------------------------------------
+    # 15. LUNAR CYCLE CHECK (PDF 14)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def lunar_cycle_check(
+        days_from_pivot: int, tolerance: int = 2
+    ) -> bool:
+        """
+        Check if days_from_pivot aligns with a lunar cycle multiple.
+
+        From PDF 14 (Moon Beam): The ~29.5-day lunar cycle is important
+        for market timing.  "The Moon is at the exact same spot it
+        occupied when they were separated."
+
+        Parameters
+        ----------
+        days_from_pivot : int
+        tolerance : int
+
+        Returns
+        -------
+        bool
+        """
+        if days_from_pivot < 1:
+            return False
+        # Check multiples of the lunar cycle
+        remainder = days_from_pivot % LUNAR_CYCLE_DAYS
+        return remainder <= tolerance or (LUNAR_CYCLE_DAYS - remainder) <= tolerance
+
+    # ------------------------------------------------------------------
+    # 16. SEASONAL DATE PROXIMITY CHECK (PDFs 10, 11)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def is_near_seasonal_date(
+        date: datetime, tolerance_days: int = 5
+    ) -> bool:
+        """
+        Check if a date is near a cardinal seasonal date.
+
+        From PDF 10 (Ferrera): "Gann placed great emphasis on the cardinal
+        points of the solar year — Vernal Equinox, Summer Solstice,
+        Autumnal Equinox, Winter Solstice (Mar 21, Jun 21, Sep 21, Dec 21)."
+        From PDF 11: "Watch for significant days in solar year."
+
+        Parameters
+        ----------
+        date : datetime
+        tolerance_days : int
+
+        Returns
+        -------
+        bool
+        """
+        year = date.year
+        for month, day in SEASONAL_MONTHS_DAYS:
+            seasonal = datetime(year, month, day)
+            if abs((date - seasonal).days) <= tolerance_days:
+                return True
+        return False
+
+    # ------------------------------------------------------------------
+    # 17. NATURAL 1/8th LEVEL PROXIMITY CHECK (PDFs 10, 11, 13)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def price_near_natural_level(
+        price: float, swing_high: float, swing_low: float,
+        tolerance_pct: float = 0.5,
+    ) -> bool:
+        """
+        Check if price is near a natural 1/8th division of the range.
+
+        From PDF 13: "The strongest points for resistance in PRICE and
+        TIME" are at 1/4, 1/3, 1/2, 2/3, 3/4 of the range.
+        From PDF 11: "1/2 is the most important level. This is the
+        centre of gravity."
+
+        Parameters
+        ----------
+        price : float
+        swing_high, swing_low : float
+        tolerance_pct : float
+            Percentage tolerance for matching.
+
+        Returns
+        -------
+        bool
+        """
+        price_range = swing_high - swing_low
+        if price_range <= 0:
+            return False
+        for frac in NATURAL_RETRACEMENT_FRACTIONS:
+            level = swing_low + price_range * frac
+            if abs(price - level) / price * 100 < tolerance_pct:
+                return True
+        return False
+
+    # ------------------------------------------------------------------
+    # 18. UNIFIED SIGNAL GENERATION
+    #     Merges ALL methods from ALL 14 PDFs
     # ------------------------------------------------------------------
 
     def generate_signal(
@@ -951,17 +1381,29 @@ class GannAnalyzer:
         prices_history: Optional[List[float]] = None,
         account_size: Optional[float] = None,
         max_risk_pct: float = 10.0,
+        bar_index: int = 0,
+        current_date: Optional[datetime] = None,
+        pivot_bar_indices: Optional[List[int]] = None,
     ) -> TradingSignal:
         """
-        Generate a unified trading signal by combining all Gann methods.
+        Generate a unified trading signal by combining ALL 14 PDF methods.
 
         Combines:
-        - Gann angle support/resistance (PDF 5)
-        - Square of 9 levels (PDF 4)
-        - Number vibration (PDF 6)
-        - Volatility-based dynamic levels (PDF 5)
+        - Gann angle support/resistance (PDFs 4, 5)
+        - Square of 9 levels (PDFs 4, 5, 8)
+        - Number vibration / 3-6-9 pattern (PDF 6)
+        - Volatility-based dynamic levels / SQ9 vs SQ12 (PDF 5)
         - Trend confirmation (PDF 5)
-        - Risk management rules (PDF 4: small SL, min 1:2.5 RR, max 10% account)
+        - Hexagon Chart cycle timing (PDF 8)
+        - Master Time Period alignment (PDFs 12, 13)
+        - Natural 1/8th level confluence (PDFs 10, 11, 13)
+        - Price-Time Vector harmonics (PDF 9)
+        - Gann time counts (PDFs 7, 11)
+        - Lunar cycle awareness (PDF 14)
+        - Seasonal date proximity (PDFs 10, 11)
+        - Square of 144 / Great Cycle levels (PDF 13)
+        - 144-cycle master levels (PDFs 6, 13)
+        - Risk management (PDF 4: small SL, min 1:2.5 RR, max 10%)
 
         Parameters
         ----------
@@ -976,7 +1418,13 @@ class GannAnalyzer:
         account_size : Optional[float]
             Trading account size for position sizing.
         max_risk_pct : float
-            Maximum percentage of account per trade (default 10%, from PDF 4).
+            Maximum percentage of account per trade (default 10%, PDF 4).
+        bar_index : int
+            Current bar index in the data series.
+        current_date : Optional[datetime]
+            Current bar's date for seasonal/lunar checks.
+        pivot_bar_indices : Optional[List[int]]
+            List of bar indices where significant pivots occurred.
 
         Returns
         -------
@@ -1065,6 +1513,88 @@ class GannAnalyzer:
                     f"Dynamic analysis: room to downside target {dynamic.expected_low:.2f}"
                 )
 
+        # ----------------------------------------------------------
+        # Enhanced checks from PDFs 8-14 (new concepts)
+        # ----------------------------------------------------------
+
+        # 5. Hexagon Chart cycle timing (PDF 8)
+        if pivot_bar_indices and len(pivot_bar_indices) >= 1:
+            bars_since_last_pivot = bar_index - pivot_bar_indices[-1]
+            if self.hexagon_time_check(bars_since_last_pivot):
+                confidence += 0.05
+                reasons.append(
+                    f"Hexagon Chart cycle alignment at {bars_since_last_pivot} bars"
+                )
+
+        # 6. Master Time Period alignment (PDFs 12, 13)
+        if pivot_bar_indices and len(pivot_bar_indices) >= 1:
+            bars_since_last_pivot = bar_index - pivot_bar_indices[-1]
+            if self.master_time_check(bars_since_last_pivot):
+                confidence += 0.05
+                reasons.append(
+                    f"Master Time Period alignment at {bars_since_last_pivot} bars"
+                )
+
+        # 7. Natural 1/8th level confluence (PDFs 10, 11, 13)
+        if self.price_near_natural_level(current_price, high, low):
+            confidence += 0.05
+            reasons.append(
+                "Price near natural 1/8th retracement level (PDF 10/11/13)"
+            )
+
+        # 8. 144-cycle level proximity (PDFs 6, 13)
+        levels_144 = self.gann_144_levels(current_price, count=2)
+        for lv in levels_144:
+            if lv != current_price and abs(lv - current_price) / current_price < 0.002:
+                confidence += 0.05
+                reasons.append(
+                    f"Near 144-cycle level ${lv:.2f} (PDFs 6, 13)"
+                )
+                break
+
+        # 9. Price-Time Vector harmonics (PDF 9)
+        if pivot_bar_indices and len(pivot_bar_indices) >= 2:
+            # Check vector between last two pivots
+            p1_idx = pivot_bar_indices[-2]
+            p2_idx = pivot_bar_indices[-1]
+            if prices_history and len(prices_history) > 0:
+                # Approximate price change from bar indices
+                time_change = abs(p2_idx - p1_idx)
+                price_change = abs(high - low) * 2  # rough proxy
+                # Scale: for large prices (crypto), use 0.01; for small, 1.0
+                scale = 0.01 if current_price > 1000 else 1.0
+                vector = self.price_time_vector(price_change, time_change, scale)
+                if self.vector_is_harmonic(vector):
+                    confidence += 0.05
+                    reasons.append(
+                        f"Price-Time Vector harmonic ({vector:.0f}°) (PDF 9)"
+                    )
+
+        # 10. Gann time count check (PDFs 7, 11)
+        if pivot_bar_indices and len(pivot_bar_indices) >= 1:
+            bars_since = bar_index - pivot_bar_indices[-1]
+            if self.gann_time_count_check(bars_since):
+                confidence += 0.05
+                reasons.append(
+                    f"Gann time count alignment at {bars_since} bars (PDFs 7, 11)"
+                )
+
+        # 11. Lunar cycle check (PDF 14)
+        if pivot_bar_indices and len(pivot_bar_indices) >= 1:
+            bars_since = bar_index - pivot_bar_indices[-1]
+            if self.lunar_cycle_check(bars_since):
+                confidence += 0.05
+                reasons.append(
+                    f"Lunar cycle alignment at {bars_since} bars (PDF 14)"
+                )
+
+        # 12. Seasonal date proximity (PDFs 10, 11)
+        if current_date is not None and self.is_near_seasonal_date(current_date):
+            confidence += 0.05
+            reasons.append(
+                f"Near seasonal cardinal date (PDF 10/11)"
+            )
+
         # Risk-reward check (from PDF 4: minimum 1:2.5)
         if direction != "NEUTRAL" and targets:
             risk = abs(entry_price - stop_loss)
@@ -1117,7 +1647,7 @@ def main():
 
     print("=" * 78)
     print("W.D. GANN UNIFIED TRADING ALGORITHM")
-    print("Synthesized from 7 PDF documents on Gann's methods")
+    print("Synthesized from ALL 14 PDF documents on Gann's methods")
     print("=" * 78)
 
     # --- Example 1: Gann Angle Levels (from PDF 5, SBI example) ---

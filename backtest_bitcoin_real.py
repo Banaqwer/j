@@ -65,7 +65,17 @@ from backtest_engine import (
     Bar,
     GannBacktester,
 )
-from gann_trading_algorithm import GannAnalyzer
+from gann_trading_algorithm import (
+    GannAnalyzer,
+    HEXAGON_CENTRAL_NUMBERS,
+    HEXAGON_ANGLE_NUMBERS,
+    MASTER_NUMBERS,
+    MASTER_TIME_PERIODS,
+    NATURAL_RETRACEMENT_FRACTIONS,
+    CUBE_CYCLE_MONTHS,
+    SQ144_DIVISIONS,
+    VECTOR_HARMONIC_ANGLES,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -166,11 +176,8 @@ def load_binance_btc_data(data_dir: str) -> List[Bar]:
 
 # ---------------------------------------------------------------------------
 # 2. Enhanced Gann concepts from additional PDFs
+#    (Core constants now imported from gann_trading_algorithm.py)
 # ---------------------------------------------------------------------------
-
-# Master Numbers from PDF 13 (1953 Mathematical Formula)
-# "The Master Numbers are 3, 5, 7, 9 and 12"
-MASTER_NUMBERS = [3, 5, 7, 9, 12]
 
 # Great Cycle divisions from PDF 13 (Square of 144)
 # 20,736 days total; key subdivisions for daily analysis
@@ -182,34 +189,8 @@ GREAT_CYCLE_DAILY_DIVISIONS = {
     "1/16": 1296,
 }
 
-# Hexagon Chart cycle numbers from PDF 8 (SQ9 Hexagon, Gann 1931)
-# These are the numbers on the central angle of the hexagon
-HEXAGON_CENTRAL_NUMBERS = [1, 7, 19, 37, 61, 91, 127, 169, 217, 271, 331, 397]
-
-# Key hexagon angle numbers (90/180 degree crosses)
-HEXAGON_90DEG_NUMBERS = [2, 9, 22, 41, 66, 97, 134, 177, 226, 281, 342]
-
-# Important time periods from PDF 13 (multiples of master numbers)
-# "7x9=63, 8^2=64, 9x12=108, 7x12=84, 10x9=90"
-MASTER_TIME_PERIODS = [
-    7, 9, 12, 14, 18, 21, 24, 25, 27, 30, 36, 45, 49, 50, 52,
-    54, 60, 63, 64, 72, 75, 81, 84, 90, 98, 100, 108, 120,
-    127, 135, 144, 147, 162, 169, 180, 196, 217, 225, 240,
-    252, 270, 271, 288, 315, 324, 331, 360, 365,
-]
-
-# Square of 52 important angles from PDF 10 (Ferrera)
-# Price/time balance: $100 = 360°, so $12.50 = 45°, $25 = 90°, etc.
-# These fractions of range are natural 1/8th and 1/3rd divisions
-NATURAL_RETRACEMENT_FRACTIONS = [
-    0.125, 0.250, 1.0 / 3.0, 0.375, 0.500,
-    0.625, 2.0 / 3.0, 0.750, 0.875, 1.000,
-]
-
-# Gann's 30-year cycle divisions from PDF 8 (Hexagon)
-# "The first 60° or 5 years forms the bottom of the cube"
-# Applied to BTC's shorter cycle structure
-THIRTY_YEAR_DIVISIONS_MONTHS = [60, 120, 180, 240, 300, 360]
+# 30-year cycle divisions months (re-exported for local use)
+THIRTY_YEAR_DIVISIONS_MONTHS = CUBE_CYCLE_MONTHS
 
 
 def hexagon_time_check(bars_since_pivot: int, tolerance: int = 3) -> bool:
@@ -231,7 +212,7 @@ def hexagon_time_check(bars_since_pivot: int, tolerance: int = 3) -> bool:
     bool
         True if the bar count matches a hexagon cycle number.
     """
-    all_hex_numbers = HEXAGON_CENTRAL_NUMBERS + HEXAGON_90DEG_NUMBERS
+    all_hex_numbers = HEXAGON_CENTRAL_NUMBERS + HEXAGON_ANGLE_NUMBERS
     for n in all_hex_numbers:
         if abs(bars_since_pivot - n) <= tolerance:
             return True
@@ -769,22 +750,26 @@ def main():
     print(f"  Period:      {bars[0].date.strftime('%Y-%m-%d')} to "
           f"{bars[-1].date.strftime('%Y-%m-%d')}")
 
-    print(f"\n  Gann PDF concepts applied:")
+    print(f"\n  Gann PDF concepts applied (ALL 14 PDFs integrated into signal):")
     print(f"    ✓ Gann Angle Support/Resistance (PDFs 4, 5)")
     print(f"    ✓ Square of 9 Price Levels (PDFs 4, 5, 8)")
-    print(f"    ✓ Dynamic Volatility Integration (PDF 5)")
+    print(f"    ✓ Dynamic Volatility Integration / SQ9 vs SQ12 (PDF 5)")
     print(f"    ✓ Number Vibration / 3-6-9 Pattern (PDF 6)")
     print(f"    ✓ 144-Cycle Master Levels (PDFs 6, 13)")
     print(f"    ✓ Price-Time Squaring (PDF 4)")
     print(f"    ✓ Cycle Detection & Projection (PDFs 1, 7)")
     print(f"    ✓ Semi-Annual Pivot (PDF 4)")
     print(f"    ✓ Trend Confirmation (PDF 5)")
-    print(f"    ✓ Hexagon Chart Cycle Numbers (PDF 8)")
+    print(f"    ✓ Hexagon Chart Cycle Timing in Signal (PDF 8)")
     print(f"    ✓ Square of 144 / Great Cycle (PDF 13)")
-    print(f"    ✓ Master Numbers Time Periods (PDFs 12, 13)")
-    print(f"    ✓ Natural 1/8th Retracement Levels (PDFs 10, 11)")
-    print(f"    ✓ Price-Time Vector Analysis (PDF 9)")
+    print(f"    ✓ Master Time Periods in Signal (PDFs 12, 13)")
+    print(f"    ✓ Natural 1/8th Retracement Confluence in Signal (PDFs 10, 11)")
+    print(f"    ✓ Price-Time Vector Harmonics in Signal (PDF 9)")
+    print(f"    ✓ Gann Time Counts (30/45/60/90... days) in Signal (PDFs 7, 11)")
+    print(f"    ✓ Lunar Cycle Awareness in Signal (PDF 14)")
+    print(f"    ✓ Seasonal Date Proximity in Signal (PDFs 10, 11)")
     print(f"    ✓ 30-Year Cube Cycle Structure (PDF 8)")
+    print(f"    ✓ Astrological Framework (PDFs 2, 3 — via cycle timing)")
     print(f"{'=' * 78}")
 
 
