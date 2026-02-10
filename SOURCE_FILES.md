@@ -131,4 +131,4 @@ data used for the 5-year backtest.
 | Additional advanced sources | 4 | Jenkins, Plummer, Sheppard, 144sqr — enhanced teachings |
 | Extracted text | 1 | Decoded content from "Tunnel Thru the Air" |
 | Bitcoin market data | 60 | 5-year daily OHLCV data for backtesting (2021–2025) |
-| **Total sources** | **79** | |
+| **Total source files** | **79** | **18 knowledge sources** + 1 extracted text + 60 data files |

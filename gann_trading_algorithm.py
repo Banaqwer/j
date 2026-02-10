@@ -1809,9 +1809,7 @@ class GannAnalyzer:
         if price <= 0:
             return False
         # Check within a reasonable range
-        diff = price - anchor_price
-        if diff < 0:
-            diff = -diff
+        diff = abs(price - anchor_price)
         # Find how far into the nearest 144 block
         block_pos = diff % 144
         for tp in SQ144_TRIANGLE_POINTS:
