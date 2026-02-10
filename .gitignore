@@ -12,6 +12,8 @@ wheat_backtest*.csv
 btc_data.csv
 btc_backtest*.csv
 btc_real_daily.csv
+btc_real_data.csv
+btc_real_backtest*.csv
 eth_data.csv
 eth_backtest*.csv
 silver_data.csv
