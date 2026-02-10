@@ -1,20 +1,21 @@
 """
-Bitcoin (BTC/USDT) 5-Year Backtest — Real Binance Data + Gann Unified Algorithm
-================================================================================
+Bitcoin (BTC/USDT) 5-Year Backtest — Real Binance Data + Enhanced Gann Algorithm
+=================================================================================
 
 Backtests the W.D. Gann unified trading algorithm on Bitcoin using REAL
 daily OHLCV data from Binance (BTCUSDT-1d zip files included in the repo).
 
 This script:
   1. Extracts real daily BTC data from the Binance zip/CSV files (2021-2025)
-  2. Enhances the Gann algorithm with additional PDF-derived concepts:
-     - Hexagon Chart time cycles (PDF: SQ9 Hexagon, Gann 1931)
-     - Square of 144 Great Cycle divisions (PDF: 1953 Mathematical Formula)
-     - Master Numbers (3, 5, 7, 9, 12) for time/price (PDF: 1953 Math Formula)
-     - Price-Time Vector analysis (PDF: TS-VECTOR-2)
-     - Square of 52 weekly overlay (PDF: Master Mathematical Formula)
-     - Master Time Factor / annual cycle (PDF: Flanagan)
-     - Moon cycle awareness from Tunnel (PDF: Moon Beam)
+  2. Applies the FULL Gann algorithm enhanced with ALL 18 source teachings:
+     - All 14 original Gann PDF concepts (angles, SQ9, vibration, etc.)
+     - Jenkins: squared time cycles, geometric mean, spiral calendar,
+       perfect-square price levels
+     - Plummer (Law of Vibration): Fibonacci/Lucas retracements and
+       extensions, golden ratio harmonics, vibrational wave structure
+     - Sheppard: planetary longitude price levels, astrological aspects
+     - 144sqr: deep SQ144 grid, triangle points, fractal sub-squares,
+       master-number divisions
   3. Runs the full 5-year backtest with real market data
   4. Outputs comprehensive results and exports CSV files
 
@@ -22,7 +23,7 @@ Data source: Binance BTCUSDT 1-day klines (zip files in the repository)
   Format: open_time, open, high, low, close, volume, close_time,
           quote_volume, count, taker_buy_base, taker_buy_quote, ignore
 
-PDF Sources Applied:
+Sources Applied (all 18):
   PDF 1:  "20 Years of Studying Gann" — time cycles, ~10% inversions
   PDF 2:  "Super Timing" (Walker Myles Wilson) — astrological timing
   PDF 3:  "WD Gann Astro Cycles" — planetary cycle correlation
@@ -34,9 +35,13 @@ PDF Sources Applied:
   PDF 9:  "TS-VECTOR-2" (Tarasov) — price-time vector, space-time unity
   PDF 10: "Master Mathematical Formula" (Ferrera) — SQ52, SQ90, SQ144 overlays
   PDF 11: "Understanding Gann Price & Time Cycle" — cycle divisions, range squares
-  PDF 12: "Gann's Master Time Factor" (Flanagan) — Master Time Factor, annual forecast
+  PDF 12: "Gann's Master Time Factor" (Flanagan) — Master Time Factor
   PDF 13: "1953 Mathematical Formula" (Gann) — SQ144, Great Cycle, Master Numbers
-  PDF 14: "A Moon Beam Thru the Tunnel" (Amundsen) — lunar cycles, Cancer sign
+  PDF 14: "A Moon Beam Thru the Tunnel" (Amundsen) — lunar cycles
+  Src 15: Jenkins — squared time cycles, geometric mean, spiral calendar
+  Src 16: Plummer — Fibonacci/Lucas harmonics, golden ratio, vibration
+  Src 17: Sheppard — planetary longitude, astrological aspects
+  Src 18: 144sqr — deep SQ144 grid, triangle points, fractal squares
 
 Usage:
 ------
@@ -44,7 +49,7 @@ Usage:
 
 This will:
   1. Load ~1,800+ real daily BTC bars from Binance zip files (2021–2025)
-  2. Run the Gann algorithm backtester with enhanced signal generation
+  2. Run the Gann algorithm backtester with ALL 18 source enhancements
   3. Print full results and trade log
   4. Export CSV files (btc_real_data.csv, btc_real_backtest_trades.csv,
      btc_real_backtest_equity.csv)
@@ -75,6 +80,16 @@ from gann_trading_algorithm import (
     CUBE_CYCLE_MONTHS,
     SQ144_DIVISIONS,
     VECTOR_HARMONIC_ANGLES,
+    FIBONACCI_SEQUENCE,
+    FIBONACCI_RETRACEMENT_LEVELS,
+    FIBONACCI_EXTENSION_LEVELS,
+    LUCAS_SEQUENCE,
+    PHI,
+    PHI_INV,
+    SQUARED_TIME_CYCLES,
+    SPIRAL_CALENDAR_DAYS,
+    SQ144_TRIANGLE_POINTS,
+    SQ144_MASTER_DIVISIONS,
 )
 
 
@@ -437,6 +452,7 @@ def main():
     print("=" * 78)
     print("GANN UNIFIED TRADING ALGORITHM — BITCOIN (BTC/USDT)")
     print("REAL BINANCE DATA 5-YEAR BACKTEST")
+    print("Enhanced with ALL 18 sources (14 PDFs + Jenkins, Plummer, Sheppard, 144sqr)")
     print("=" * 78)
 
     # ── 1. Load real Bitcoin data ────────────────────────────────────────
@@ -544,6 +560,59 @@ def main():
     )
     print(f"\n   Volatility: daily={daily_vol:.4f}%, annual={annual_vol:.2f}%")
     print(f"   Dynamic square: {sq_type.upper()}")
+
+    # 2k. Fibonacci retracement levels (Plummer — Law of Vibration)
+    fib_levels = analyzer.fibonacci_retracement_levels(overall_high, overall_low)
+    print(f"\n   Fibonacci retracement levels (Plummer):")
+    for i, lv in enumerate(fib_levels):
+        pct = FIBONACCI_RETRACEMENT_LEVELS[i] * 100
+        print(f"     {pct:5.1f}% → ${lv:>12,.2f}")
+
+    # 2l. Fibonacci extension levels (Plummer)
+    fib_ext = analyzer.fibonacci_extension_levels(overall_high, overall_low)
+    print(f"   Fibonacci extension levels:")
+    for i, lv in enumerate(fib_ext):
+        pct = FIBONACCI_EXTENSION_LEVELS[i] * 100
+        print(f"     {pct:5.1f}% → ${lv:>12,.2f}")
+
+    # 2m. Geometric mean equilibrium (Jenkins)
+    geo_mean = analyzer.geometric_mean(overall_high, overall_low)
+    print(f"\n   Geometric mean √(H×L) = ${geo_mean:,.2f} (Jenkins)")
+    print(f"   Arithmetic mean (H+L)/2 = ${(overall_high + overall_low) / 2:,.2f}")
+    print(f"   Current price ${last_price:,.2f} vs geo mean: "
+          f"{'ABOVE' if last_price > geo_mean else 'BELOW'}")
+
+    # 2n. Squared time cycle check (Jenkins)
+    if len(pivots) >= 2:
+        bars_since = total_bars_count - 1 - pivots[-1][0]
+        sq_match = analyzer.squared_time_check(bars_since)
+        spiral_match = analyzer.spiral_calendar_check(bars_since)
+        lucas_match = analyzer.lucas_cycle_check(bars_since)
+        print(f"\n   Timing from last pivot ({bars_since} bars):")
+        print(f"     Squared time cycle:  {'YES' if sq_match else 'No'}")
+        print(f"     Spiral calendar:     {'YES' if spiral_match else 'No'}")
+        print(f"     Lucas cycle:         {'YES' if lucas_match else 'No'}")
+
+    # 2o. Perfect-square price check (Jenkins)
+    sqrt_price = math.sqrt(last_price)
+    nearest_sq = round(sqrt_price) ** 2
+    ps_match = analyzer.price_near_perfect_square(last_price)
+    print(f"\n   Perfect-square analysis (Jenkins):")
+    print(f"     √${last_price:,.2f} = {sqrt_price:.2f}")
+    print(f"     Nearest perfect square: ${nearest_sq:,}")
+    print(f"     Near perfect square: {'YES' if ps_match else 'No'}")
+
+    # 2p. SQ144 triangle proximity (144sqr)
+    tri_match = analyzer.price_near_sq144_triangle(last_price, overall_low)
+    print(f"\n   SQ144 triangle proximity (144sqr, anchored to ${overall_low:,.2f}):")
+    print(f"     Near triangle point: {'YES' if tri_match else 'No'}")
+
+    # 2q. Golden ratio levels (Plummer)
+    phi_level_up = last_price * PHI
+    phi_level_dn = last_price * PHI_INV
+    print(f"\n   Golden ratio projections from ${last_price:,.2f} (Plummer):")
+    print(f"     φ × price (1.618): ${phi_level_up:,.2f}")
+    print(f"     1/φ × price (0.618): ${phi_level_dn:,.2f}")
 
     # ── 3. Configure backtester ──────────────────────────────────────────
     print("\n3. Configuring backtester for Bitcoin (real data)...")
@@ -750,7 +819,7 @@ def main():
     print(f"  Period:      {bars[0].date.strftime('%Y-%m-%d')} to "
           f"{bars[-1].date.strftime('%Y-%m-%d')}")
 
-    print(f"\n  Gann PDF concepts applied (ALL 14 PDFs integrated into signal):")
+    print(f"\n  Sources applied (ALL 18 integrated into signal):")
     print(f"    ✓ Gann Angle Support/Resistance (PDFs 4, 5)")
     print(f"    ✓ Square of 9 Price Levels (PDFs 4, 5, 8)")
     print(f"    ✓ Dynamic Volatility Integration / SQ9 vs SQ12 (PDF 5)")
@@ -770,6 +839,15 @@ def main():
     print(f"    ✓ Seasonal Date Proximity in Signal (PDFs 10, 11)")
     print(f"    ✓ 30-Year Cube Cycle Structure (PDF 8)")
     print(f"    ✓ Astrological Framework (PDFs 2, 3 — via cycle timing)")
+    print(f"    ✓ Fibonacci Retracement Confluence (Plummer — Law of Vibration)")
+    print(f"    ✓ Fibonacci/Lucas Cycle Timing (Plummer)")
+    print(f"    ✓ Squared Time Cycles from Pivots (Jenkins — Secret Science)")
+    print(f"    ✓ Spiral Calendar Fibonacci Timing (Jenkins)")
+    print(f"    ✓ Geometric Mean Equilibrium (Jenkins)")
+    print(f"    ✓ Perfect-Square Price Proximity (Jenkins)")
+    print(f"    ✓ SQ144 Triangle-Point Proximity (144sqr methodology)")
+    print(f"    ✓ SQ144 Offset Grid Levels (144sqr)")
+    print(f"    ✓ Planetary Longitude Aspects (Sheppard)")
     print(f"{'=' * 78}")
 
 

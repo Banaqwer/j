@@ -1,7 +1,7 @@
 # Source Files Used as Basis for the Trading Algorithm
 
-This document lists **every file** in the repository that was used as the basis
-for building and backtesting the W.D. Gann unified trading algorithm.
+This document lists **every file and source** used as the basis for
+building and backtesting the W.D. Gann unified trading algorithm.
 
 ---
 
@@ -29,7 +29,22 @@ cross-referenced, and merged into the algorithm's signal generation logic.
 
 ---
 
-## 2. Extracted Text (1 file — decoded from PDF 7)
+## 2. Additional Advanced Sources (4 — knowledge basis)
+
+These sources were analyzed in their entirety, line by line, and their
+teachings integrated into the algorithm's constants, methods, and signal
+generation logic.
+
+| # | Source | Key Teachings Integrated |
+|---|--------|------------------------|
+| 15 | Michael S. Jenkins — "The Secret Science of the Stock Market" / "Chart Reading for Professional Traders" | Squared time cycles (1²,2²,3²…), geometric mean √(H×L) equilibrium, spiral calendar (Fibonacci day-counts from pivots), perfect-square price levels as S/R, planetary price conversion |
+| 16 | Tony Plummer — "The Law of Vibration" | Fibonacci sequence as primary vibrational harmonic, Lucas sequence as secondary harmonic, golden ratio φ=1.618 retracements (23.6/38.2/50/61.8/78.6%), Fibonacci extensions (127.2/161.8/200/261.8/423.6%), impulse-correction wave structure, growth/decay spirals |
+| 17 | Charles Sheppard — Gann teaching materials | Planetary longitude → price conversion, Jupiter-Saturn 20-year conjunction cycle, astrological aspect angles (0/60/90/120/180°), heliocentric vs geocentric price levels, cardinal ingress dates, time-price grid overlays |
+| 18 | 144sqr — Square of 144 Deep Methodology | Full SQ144 grid (144×144=20,736 cells), 45° diagonal tracing perfect squares, SQ144 triangle points (36/48/72/96/108/144), master-number divisions of 144 (144/3=48, 144/5=28.8, etc.), fractal squares-within-squares, offset SQ144 grids, Great Cycle 20,736 sub-divisions |
+
+---
+
+## 3. Extracted Text (1 file — decoded from PDF 7)
 
 | Filename | Description |
 |----------|-------------|
@@ -37,7 +52,7 @@ cross-referenced, and merged into the algorithm's signal generation logic.
 
 ---
 
-## 3. Bitcoin Market Data (60 files — backtesting data)
+## 4. Bitcoin Market Data (60 files — backtesting data)
 
 Binance BTCUSDT daily kline (candlestick) data covering January 2021 through
 December 2025 (5 full years). Each zip file contains one month of daily OHLCV
@@ -112,7 +127,8 @@ data used for the 5-year backtest.
 
 | Category | File Count | Purpose |
 |----------|-----------|---------|
-| Gann PDF documents | 14 | Knowledge basis — all trading concepts extracted from these |
+| Gann PDF documents | 14 | Knowledge basis — original Gann trading concepts |
+| Additional advanced sources | 4 | Jenkins, Plummer, Sheppard, 144sqr — enhanced teachings |
 | Extracted text | 1 | Decoded content from "Tunnel Thru the Air" |
 | Bitcoin market data | 60 | 5-year daily OHLCV data for backtesting (2021–2025) |
-| **Total source files** | **75** | |
+| **Total sources** | **79** | |

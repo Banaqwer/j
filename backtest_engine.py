@@ -3,7 +3,7 @@ Gann Trading Algorithm — Backtesting Engine
 =============================================
 
 A complete backtesting framework that validates the W.D. Gann unified trading
-algorithm (derived from ALL 14 PDFs) against historical OHLC price data.
+algorithm (derived from ALL 18 sources) against historical OHLC price data.
 
 This engine makes the algorithm from gann_trading_algorithm.py fully backtestable
 by simulating bar-by-bar trading with:
@@ -20,6 +20,12 @@ by simulating bar-by-bar trading with:
   - Lunar cycle awareness (PDF 14)
   - Seasonal date proximity (PDFs 10, 11)
   - 144-cycle and SQ144 levels (PDFs 6, 13)
+  - Fibonacci/Lucas retracement confluence (Plummer — Law of Vibration)
+  - Squared time cycles from pivots (Jenkins — Secret Science)
+  - Spiral calendar Fibonacci timing (Jenkins)
+  - Geometric mean equilibrium (Jenkins)
+  - Perfect-square price proximity (Jenkins)
+  - SQ144 triangle-point proximity (144sqr methodology)
   - Risk management (stop loss, targets, position sizing — PDF 4)
 
 Data Format:
