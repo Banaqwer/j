@@ -57,7 +57,7 @@ BINANCE_KLINES_URL = "https://api.binance.com/api/v3/klines"
 # Default symbols to download
 DEFAULT_SYMBOLS = ["ETHUSDT", "SOLUSDT"]
 
-# Default date range: past 5 years
+# Default date range (2021 onwards — covers ~5 years of crypto history)
 DEFAULT_START_YEAR = 2021
 DEFAULT_END_YEAR = datetime.now().year
 
@@ -261,11 +261,11 @@ def parse_args() -> dict:
                 symbols.append(argv[i].upper())
                 i += 1
             args["symbols"] = symbols
-        elif argv[i] in ("--start-year",):
+        elif argv[i] == "--start-year":
             i += 1
             args["start_year"] = int(argv[i])
             i += 1
-        elif argv[i] in ("--end-year",):
+        elif argv[i] == "--end-year":
             i += 1
             args["end_year"] = int(argv[i])
             i += 1
