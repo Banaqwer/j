@@ -3,16 +3,30 @@ Gann Trading Algorithm — Backtesting Engine
 =============================================
 
 A complete backtesting framework that validates the W.D. Gann unified trading
-algorithm against historical OHLC price data.
+algorithm (derived from ALL 18 sources) against historical OHLC price data.
 
 This engine makes the algorithm from gann_trading_algorithm.py fully backtestable
 by simulating bar-by-bar trading with:
-  - Gann angle support/resistance signals
-  - Square of 9 confluence detection
-  - Number vibration (change number) filtering
-  - Volatility-based dynamic level adaptation
-  - Price-Time squaring for cycle alignment
-  - Risk management (stop loss, targets, position sizing)
+  - Gann angle support/resistance signals (PDFs 4, 5)
+  - Square of 9 confluence detection (PDFs 4, 5, 8)
+  - Number vibration (change number) filtering (PDF 6)
+  - Volatility-based dynamic level adaptation (PDF 5)
+  - Price-Time squaring for cycle alignment (PDF 4)
+  - Hexagon Chart cycle timing confirmation (PDF 8)
+  - Master Time Period alignment (PDFs 12, 13)
+  - Natural 1/8th retracement confluence (PDFs 10, 11, 13)
+  - Price-Time Vector harmonics (PDF 9)
+  - Gann time counts from pivots (PDFs 7, 11)
+  - Lunar cycle awareness (PDF 14)
+  - Seasonal date proximity (PDFs 10, 11)
+  - 144-cycle and SQ144 levels (PDFs 6, 13)
+  - Fibonacci/Lucas retracement confluence (Plummer — Law of Vibration)
+  - Squared time cycles from pivots (Jenkins — Secret Science)
+  - Spiral calendar Fibonacci timing (Jenkins)
+  - Geometric mean equilibrium (Jenkins)
+  - Perfect-square price proximity (Jenkins)
+  - SQ144 triangle-point proximity (144sqr methodology)
+  - Risk management (stop loss, targets, position sizing — PDF 4)
 
 Data Format:
   CSV with columns: date, open, high, low, close, volume (volume optional)
@@ -424,7 +438,33 @@ class GannBacktester:
 
         lookback = self.config.lookback_bars
 
+        # Track pivot bar indices for enhanced signal generation
+        # (PDFs 8, 9, 11, 12, 13, 14)
+        pivot_bar_indices: List[int] = []
+
         for i, bar in enumerate(bars):
+            # --- Detect pivots for enhanced PDF 8-14 analysis ---
+            # Simple swing pivot: bar's high is highest or low is lowest
+            # in a ±5 bar window (computed only for settled bars)
+            pivot_window = 5
+            if i >= pivot_window + 1:
+                check_idx = i - pivot_window
+                if check_idx >= pivot_window:
+                    is_swing_high = all(
+                        bars[check_idx].high > bars[check_idx + j].high
+                        for j in range(-pivot_window, pivot_window + 1)
+                        if j != 0 and 0 <= check_idx + j < len(bars)
+                    )
+                    is_swing_low = all(
+                        bars[check_idx].low < bars[check_idx + j].low
+                        for j in range(-pivot_window, pivot_window + 1)
+                        if j != 0 and 0 <= check_idx + j < len(bars)
+                    )
+                    if (is_swing_high or is_swing_low) and (
+                        not pivot_bar_indices
+                        or pivot_bar_indices[-1] != check_idx
+                    ):
+                        pivot_bar_indices.append(check_idx)
             # ----- CHECK EXITS FIRST -----
             if position is not None:
                 exit_price = None
@@ -557,6 +597,9 @@ class GannBacktester:
                     prices_history=prices_history,
                     account_size=capital,
                     max_risk_pct=self.config.max_risk_pct,
+                    bar_index=i,
+                    current_date=current_bar.date,
+                    pivot_bar_indices=pivot_bar_indices if pivot_bar_indices else None,
                 )
 
                 if (signal.direction != "NEUTRAL" and
