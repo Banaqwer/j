@@ -904,6 +904,14 @@ class GannAnalyzer:
             pct_vibrations.append((round(pct, 3), vib))
             pct += 3.125
 
+        # Check if percentage vibrations follow the yin-yang pattern
+        # (PDF 4 "Number Vibrations", pp.1-2: the pattern is 2-4-6-8-1-3-5-7-9)
+        pattern_matches = 0
+        for i, (_, vib) in enumerate(pct_vibrations):
+            expected = PERCENTAGE_VIBRATION_PATTERN[i % len(PERCENTAGE_VIBRATION_PATTERN)]
+            if vib == expected:
+                pattern_matches += 1
+
         return NumberVibrationResult(
             original=price,
             single_digit=single,
@@ -1706,6 +1714,7 @@ class GannAnalyzer:
             "Shephard_1262 (1260 in days)": 1262,
             "Biblical_1290 (1260+30 leap)": 1290,
             "Shephard_1336 (Earth cycle²)": 1336,
+            "7yr_2556 (7-year cycle days)": SEVEN_YEAR_CYCLE_DAYS,
             "Mars_687 (orbit cycle)": MARS_CYCLE,
             "Venus_224 (synodic cycle)": VENUS_CYCLE,
             "Week_168 (hours in week)": WEEK_HOURS,
@@ -1996,7 +2005,10 @@ class GannAnalyzer:
         position = elapsed % MASTER_TIME_FACTOR
 
         # Determine diatonic note
-        frac = position / MASTER_TIME_FACTOR
+        frac = position / MASTER_TIME_FACTOR if MASTER_TIME_FACTOR else 0.0
+        # Clamp frac so that position == MASTER_TIME_FACTOR maps back to "Do"
+        if frac >= 1.0:
+            frac = 0.0
         note = "Do"
         for n, f in DIATONIC_FRACTIONS.items():
             nxt = f + 0.125
@@ -2229,6 +2241,7 @@ class GannAnalyzer:
         prices_history: Optional[List[float]] = None,
         account_size: Optional[float] = None,
         max_risk_pct: float = 10.0,
+        current_date: Optional[str] = None,
     ) -> TradingSignal:
         """
         Generate a unified trading signal by combining all Gann methods.
@@ -2255,6 +2268,9 @@ class GannAnalyzer:
             Trading account size for position sizing.
         max_risk_pct : float
             Maximum percentage of account per trade (default 10%, from PDF 4).
+        current_date : Optional[str]
+            Current date in ``YYYY-MM-DD`` format for time-based analysis.
+            If omitted, time-cycle checks are skipped to avoid non-determinism.
 
         Returns
         -------
@@ -2396,6 +2412,19 @@ class GannAnalyzer:
                 f"(Gann's Fatal 49, PDF 18 p.86)"
             )
 
+        # Check significant squares of the low (PDF 10, p.2)
+        # "The 1st, 2nd, 3rd, 4th, 7th, 9th and 12th squares of the
+        # low are significant."
+        for sq in SIGNIFICANT_SQUARES_OF_LOW:
+            sq_level = low * sq
+            if abs(sq_level - current_price) / current_price < 0.005:
+                confidence += 0.05
+                reasons.append(
+                    f"Price near {sq}× low ({sq_level:.2f}) — "
+                    f"significant square of low (PDF 10, p.2)"
+                )
+                break
+
         # Check Third-Time Test rule (PDF 10, p.2 — deep study finding)
         # "The 3rd time against any S/R zone is the dangerous time."
         if prices_history and len(prices_history) >= 10:
@@ -2412,14 +2441,13 @@ class GannAnalyzer:
                 )
 
         # Check 192-Day Master Time Factor shock points (PDF 6, pp.5–8)
-        # If we have a reference date, check if we're at a Fa/La shock point
-        # Use the earliest date derivable from prices_history length as proxy
-        if prices_history and len(prices_history) >= 30:
+        # Requires a deterministic current_date to avoid non-reproducibility.
+        if current_date and prices_history and len(prices_history) >= 30:
+            cur_dt = datetime.strptime(current_date, "%Y-%m-%d")
             ref_date_proxy = (
-                datetime.now() - timedelta(days=len(prices_history))
+                cur_dt - timedelta(days=len(prices_history))
             ).strftime("%Y-%m-%d")
-            cur_date_proxy = datetime.now().strftime("%Y-%m-%d")
-            mtf = self.master_time_factor_analysis(ref_date_proxy, cur_date_proxy)
+            mtf = self.master_time_factor_analysis(ref_date_proxy, current_date)
             if mtf.is_shock_point:
                 confidence += 0.05
                 reasons.append(

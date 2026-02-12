@@ -557,6 +557,7 @@ class GannBacktester:
                     prices_history=prices_history,
                     account_size=capital,
                     max_risk_pct=self.config.max_risk_pct,
+                    current_date=current_bar.date,
                 )
 
                 if (signal.direction != "NEUTRAL" and
