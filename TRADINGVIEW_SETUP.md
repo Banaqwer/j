@@ -4,14 +4,14 @@
 
 | File | Components | Description |
 |------|-----------|-------------|
-| **`gann_complete_strategy.pine`** | **All 21** | Full algorithm — all PDF teachings implemented |
-| `gann_tradingview_strategy.pine` | 9 of 21 | Original version — core Gann methods only |
+| **`gann_complete_strategy.pine`** | **All 27** | Full algorithm — all PDF teachings implemented |
+| `gann_tradingview_strategy.pine` | 9 of 27 | Original version — core Gann methods only |
 
 > **Recommended**: Use `gann_complete_strategy.pine` for the most complete implementation.
 
-## Gann Complete Strategy — Pine Script v5 (21 Components)
+## Gann Complete Strategy — Pine Script v5 (27 Components)
 
-This Pine Script translates the **full** Python Gann algorithm (all 21 components from
+This Pine Script translates the **full** Python Gann algorithm (all 27 components from
 21 PDF documents) into a TradingView strategy that can be used for **live paper trading**
 (demo account) on any asset (BTC, ETH, Gold, Forex, Stocks).
 
@@ -62,17 +62,23 @@ This Pine Script translates the **full** Python Gann algorithm (all 21 component
 | Teal shaded area | Teal | Expected daily volatility range |
 | Yellow diamonds ◆ | Yellow | Shephard key cycle alignment |
 | Orange x-crosses | Orange | Fatal Number (49) time alignment |
+| Fuchsia circles ● | Fuchsia | 192-day diatonic shock point (Fa/La) |
+| Red flags 🚩 | Red | Third-time test — dangerous breakout zone |
+| Lime arrows ↑ | Lime | Minor trend turn day (14 or 21 days) |
+| Aqua squares ■ | Aqua | Jensen critical time point (harmonic of 90°) |
+| Orange labels P5 | Orange | Jensen five-phase blowoff detected |
+| Lime crosses + | Lime | Vectorial projection price level |
 | Blue background | Light blue | Seasonal cardinal date (equinox/solstice) |
 | Purple background | Light purple | Seasonal octave date |
 | Green background | Light green | Bullish trend confirmed |
 | Red background | Light red | Bearish trend confirmed |
 
-## Info Panel (Top Right) — 16-Row Dashboard
+## Info Panel (Top Right) — 24-Row Dashboard
 
 The strategy displays a real-time info panel showing:
 - **Trend (C7)**: Gann angle trend direction
 - **Swing (C11)**: Mechanical HH/HL vs LH/LL trend
-- **Buy/Sell Confidence**: 0.00 to 1.00 score (12 factors)
+- **Buy/Sell Confidence**: 0.00 to 1.00 score (19 factors)
 - **Vibration (C3)**: Digit reduction (9 = change number)
 - **SQ9 (C2)**: Price near Square of 9 level
 - **Hexagon (C9)**: Price near hexagon 60° level
@@ -80,8 +86,16 @@ The strategy displays a real-time info panel showing:
 - **Fatal 49 (C14)**: Price or time near Fatal Number
 - **Seasonal (C13)**: Cardinal or octave date status
 - **Shephard (C15)**: Key cycle alignment warning
+- **192d Octave (C21)**: Diatonic note + position in 192-day cycle (shock = Fa/La)
+- **3rd Test (C22)**: Zone test count — dangerous at 3rd touch
+- **Minor Turn (C23)**: Key day count from pivot (3/4/7/14/21/42/45/49)
+- **Jensen (C24)**: Critical time point (harmonic of 90°, Mercury cycle)
+- **5-Phase (C25)**: Current intermediate trend phase (1-5, blowoff at 5)
+- **Vectorial (C26)**: 45°/60° projected exhaustion price and days
+- **Sq of Low**: Significant squares of the low level proximity
 - **Daily/Annual Vol**: Volatility (SQ12 triggers at high vol)
 - **Buy/Sell R:R**: Current reward-to-risk ratios
+- **Bars Lo/Hi**: Bars since last swing low/high pivot
 
 ---
 
@@ -123,12 +137,18 @@ The strategy displays a real-time info panel showing:
 | Use Range % Confidence | ✓ | Range percentage level confluence |
 | Use Hexagon Confidence | ✓ | Hexagon chart level confluence |
 | Swing Trend Bars | 5 | Number of bars for swing trend counting |
+| Use 192-Day Octave (C21) | ✓ | Diatonic shock point detection (Fa/La) |
+| Use Third-Time Test (C22) | ✓ | S/R zone touch count — 3rd test danger |
+| Use Minor Trend Turn (C23) | ✓ | Key day counts from pivot (14, 21, 49) |
+| Use Jensen Critical (C24) | ✓ | Harmonics of 90° time cycle detection |
+| Use Five-Phase Trend (C25) | ✓ | Jensen intermediate trend phases |
+| Use Vectorial Proj. (C26) | ✓ | 45°+60° dual-angle exhaustion projection |
 
 ---
 
 ## Gann Components Implemented
 
-### `gann_complete_strategy.pine` — All 21 Components
+### `gann_complete_strategy.pine` — All 27 Components
 
 | # | Component | Source PDFs | Method |
 |---|-----------|-------------|--------|
@@ -152,11 +172,17 @@ The strategy displays a real-time info panel showing:
 | C18 | **Master Time Factor** | PDFs 13, 16 | 7/10/20/30/60-year cycles |
 | C19 | **Range Extensions** | PDFs 12, 17 | Projection above high |
 | C20 | **Multi-Timeframe** | General Gann | Weekly trend context |
-| C21 | **Confidence Scoring** | All PDFs | 12-factor scoring (0.0–1.0) |
+| C21 | **192-Day Octave** | PDF 6 pp.5-8 | Diatonic scale cycle; Fa/La shock |
+| C22 | **Third-Time Test** | PDF 10 p.2 | 3rd touch of S/R = danger |
+| C23 | **Minor Trend Turn** | PDFs 10, 16 | Key day counts: 3/4/7/14/21/42/45/49 |
+| C24 | **Jensen Critical** | Jensen pp.108-113 | Harmonics of 90° + Mercury 88d |
+| C25 | **Five-Phase Trend** | Jensen pp.121-122 | 5-phase intermediate; Phase 5 = blowoff |
+| C26 | **Vectorial Projection** | Jensen pp.124-126 | 45°+60° dual-angle convergence |
+| C27 | **Confidence Scoring** | All PDFs | 19-factor scoring (0.0–1.0) |
 
 ---
 
-## Confidence Scoring Breakdown (21-Component Version)
+## Confidence Scoring Breakdown (27-Component Version)
 
 | Factor | Points | Condition |
 |--------|--------|-----------|
@@ -171,18 +197,25 @@ The strategy displays a real-time info panel showing:
 | Seasonal date (C13) | +0.05 | Cardinal or octave date ±3 days |
 | Shephard/planetary cycle (C15/16) | +0.05 | Key cycle number from pivot |
 | Weekly trend confirms (C20) | +0.05 | Weekly timeframe agrees |
+| Significant sq of low (C22) | +0.05 | Price near 1×/2×/.../12× of low |
+| Third-time test danger (C22) | +0.05 | 3rd touch of S/R zone |
+| 192-day shock point (C21) | +0.05 | Diatonic Fa or La note position |
+| Jensen critical time (C24) | +0.05 | Harmonic of 90° or Mercury cycle |
+| Five-phase blowoff (C25) | +0.05 | Phase 5 in intermediate trend |
+| Minor trend turn (C23) | +0.05 | Key day count from pivot (14, 21) |
+| Vectorial projection (C26) | +0.05 | Price near 45°/60° convergence |
 | R:R ≥ 2.5:1 | +0.15 | Good reward-to-risk |
 | R:R 1.5–2.5:1 | +0.05 | Acceptable reward-to-risk |
 | R:R < 1.5:1 | −0.10 | Poor reward-to-risk penalty |
 
-**Maximum possible: 1.10 → capped at 1.00**
+**Maximum possible: 1.45 → capped at 1.00**
 **Minimum to trade: 0.40** (configurable)
 
 ---
 
 ## Alerts Setup
 
-The complete strategy includes **7 alert conditions**:
+The complete strategy includes **13 alert conditions**:
 1. **Gann BUY Signal** — All buy conditions met
 2. **Gann SELL Signal** — All sell conditions met
 3. **Vibration 9 Alert** — Price digit sum = 9 (reversal watch)
@@ -190,10 +223,16 @@ The complete strategy includes **7 alert conditions**:
 5. **Fatal 49 Alert** — Price near Fatal Number multiple
 6. **Seasonal Cardinal Alert** — Cardinal/octave date (increased reversal probability)
 7. **Cumulative Range Alert** — Hidden cycle sum detected
+8. **192-Day Shock Point** — Diatonic Fa/La shock point (trend may invert)
+9. **Third-Time Test Alert** — 3rd touch of S/R zone (breakout/breakdown imminent)
+10. **Minor Trend Turn Alert** — Key day count from pivot (14 or 21 days)
+11. **Jensen Critical Point** — Harmonic of 90° time resistance
+12. **Five-Phase Blowoff Alert** — Phase 5 exhaustion detected
+13. **Vectorial Projection Alert** — Price near 45°/60° exhaustion convergence
 
 To set up alerts:
 1. Right-click on the chart → "Add Alert"
-2. Condition: Select "Gann Complete Strategy (21 Components)"
+2. Condition: Select "Gann Complete Strategy (27 Components)"
 3. Choose the alert type
 4. Set notification method (popup, email, webhook)
 

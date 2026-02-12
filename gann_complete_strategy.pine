@@ -1,7 +1,7 @@
 // ============================================================================
 // GANN COMPLETE UNIFIED STRATEGY — TradingView Pine Script v5
 // ============================================================================
-// Full translation of gann_trading_algorithm.py (all 21 components) into a
+// Full translation of gann_trading_algorithm.py (all 27 components) into a
 // live TradingView strategy for any market (BTC, ETH, Gold, Forex, Stocks).
 //
 // Based on W.D. Gann's methods decoded from 21 PDF documents:
@@ -11,7 +11,7 @@
 //   PDFs 15-17: Moon Beam, Jenkins, 1953 Mathematical Formula
 //   PDFs 18-21: Shephard Course, Astro-Cycles, Basis of Forecasting, Law of Vibration
 //
-// 21 Components Implemented:
+// 27 Components Implemented:
 //   C1:  Gann Angle Support/Resistance (11 angles)
 //   C2:  Square of 9 Price Levels
 //   C3:  Number Vibration Analysis (digit reduction)
@@ -32,7 +32,13 @@
 //   C18: Master Time Factor (7/10/20/30/60-year)
 //   C19: Range Extension Levels
 //   C20: Multi-Timeframe Confluence
-//   C21: Confidence Scoring & Signal Generation
+//   C21: 192-Day Master Time Factor / Diatonic Octave (PDF 6, pp.5-8)
+//   C22: Third-Time Test Rule (PDF 10, p.2)
+//   C23: Minor Trend Turn Analysis (PDFs 10, 16)
+//   C24: Jensen Critical Points — harmonics of 90° (Jensen, pp.108-113)
+//   C25: Jensen Five-Phase Trend (Jensen, pp.121-122)
+//   C26: Vectorial Projection — 45°+60° exhaustion (Jensen, pp.124-126)
+//   C27: Confidence Scoring & Signal Generation (27-factor)
 //
 // HOW TO USE:
 //   1. Open TradingView → Pine Editor
@@ -44,7 +50,7 @@
 // ============================================================================
 
 //@version=5
-strategy("Gann Complete Strategy (21 Components)", overlay=true,
+strategy("Gann Complete Strategy (27 Components)", overlay=true,
      default_qty_type=strategy.percent_of_equity, default_qty_value=100,
      initial_capital=10000, commission_type=strategy.commission.percent,
      commission_value=0.1, slippage=2, pyramiding=0)
@@ -80,6 +86,12 @@ i_useSeasonal= input.bool(true,   "Use Seasonal Cardinal",     group=grp_adv)
 i_useRangePct= input.bool(true,   "Use Range % Confidence",    group=grp_adv)
 i_useHexConf = input.bool(true,   "Use Hexagon Confidence",    group=grp_adv)
 i_swingTrendLen = input.int(5,    "Swing Trend Bars",          minval=3, maxval=20, group=grp_adv)
+i_use192     = input.bool(true,   "Use 192-Day Octave (C21)",  group=grp_adv)
+i_use3rdTest = input.bool(true,   "Use Third-Time Test (C22)", group=grp_adv)
+i_useMinorTurn = input.bool(true, "Use Minor Trend Turn (C23)",group=grp_adv)
+i_useJensen  = input.bool(true,   "Use Jensen Critical (C24)", group=grp_adv)
+i_use5Phase  = input.bool(true,   "Use Five-Phase Trend (C25)",group=grp_adv)
+i_useVectorial = input.bool(true, "Use Vectorial Proj. (C26)", group=grp_adv)
 
 // ============================================================================
 // C1: GANN ANGLE SUPPORT/RESISTANCE (11 angles)
@@ -611,19 +623,293 @@ weeklyTrendUp   = weeklyClose > (weeklyHigh + weeklyLow) / 2
 weeklyTrendDown = weeklyClose < (weeklyHigh + weeklyLow) / 2
 
 // ============================================================================
-// C21: CONFIDENCE SCORING & SIGNAL GENERATION
+// C21: 192-DAY MASTER TIME FACTOR / DIATONIC OCTAVE
 // ============================================================================
-// Scoring system (matches Python generate_signal):
-//   +0.30  Gann angle trend confirmed
-//   +0.10  SQ9 confluence (within 0.5%)
-//   +0.10  Vibration = 9 (change number)
-//   +0.15  Dynamic vol confirms direction
-//   +0.05  Range % level nearby
-//   +0.05  Hexagon level nearby
-//   +0.05  Fatal Number nearby
-//   +0.05  Swing trend confirms
-//   +0.05  Seasonal cardinal date
-//   +0.05  Shephard/planetary cycle window
+// The 192-day cycle subdivides into musical notes (diatonic scale):
+//   Do=0, Re=24, Mi=48, Fa=72, So=96, La=120, Ti=144, Do2=168
+// "Fa" (day 72) and "La" (day 120) are SHOCK POINTS where trend may invert.
+// Source: PDF 6 "144 Square" (pp.5-8)
+
+// Position in 192-day cycle from chart's first bar
+octavePosition  = totalBarsElapsed % 192
+octaveFraction  = octavePosition / 192.0
+
+// Determine the diatonic note
+diatonicNote    = octaveFraction < 0.125 ? "Do" :
+                  octaveFraction < 0.250 ? "Re" :
+                  octaveFraction < 0.375 ? "Mi" :
+                  octaveFraction < 0.500 ? "Fa" :
+                  octaveFraction < 0.625 ? "So" :
+                  octaveFraction < 0.750 ? "La" :
+                  octaveFraction < 0.875 ? "Ti" : "Do2"
+
+// Shock points: Fa (3/8 = day 72) and La (5/8 = day 120)
+isShockPoint    = (diatonicNote == "Fa" or diatonicNote == "La") and i_use192
+
+// Also check if bars from swing pivot are near 192-day multiples
+isNear192(int bars) =>
+    if bars <= 0
+        false
+    else
+        near = false
+        near := near or math.abs(bars - 192)  <= 3
+        near := near or math.abs(bars - 384)  <= 3
+        near := near or math.abs(bars - 576)  <= 3
+        near := near or math.abs(bars - 768)  <= 3
+        near := near or math.abs(bars - 960)  <= 3
+        near := near or math.abs(bars - 1152) <= 3
+        near
+
+mtfOctaveLo  = isNear192(barsSinceSwingLo)
+mtfOctaveHi  = isNear192(barsSinceSwingHi)
+
+// ============================================================================
+// C22: THIRD-TIME TEST RULE
+// ============================================================================
+// "The third time against any support or resistance zone is the dangerous time."
+// Count how many times price has tested a zone (within 0.5% tolerance).
+// Consecutive touches within the zone count as one test.
+// Source: PDF 10 "Understanding Gann Price & Time Cycle" (page 2)
+
+// Test the 50% range level (center of gravity) as the key zone
+thirdTestZone = range_500
+thirdTestTol  = thirdTestZone * 0.005  // 0.5% tolerance
+
+// Count distinct touches of the zone over lookback period
+var int zoneTestCount = 0
+var bool wasInZone    = false
+
+inZone = math.abs(close - thirdTestZone) <= thirdTestTol
+if inZone and not wasInZone
+    zoneTestCount += 1
+wasInZone := inZone
+
+// Reset if zone moves significantly (new swing)
+if ta.change(thirdTestZone) != 0 and not na(ta.change(thirdTestZone))
+    zoneTestCount := inZone ? 1 : 0
+
+isThirdTest   = zoneTestCount >= 3 and i_use3rdTest
+isDangerZone  = zoneTestCount == 3 and i_use3rdTest
+
+// Also check significant squares of the low (1st, 2nd, 3rd, 4th, 7th, 9th, 12th)
+// Source: PDF 10 "Understanding Gann" (page 2)
+isNearSqOfLow(float price, float lo) =>
+    near = false
+    near := near or math.abs(price - lo * 1)  / price * 100 < 0.5
+    near := near or math.abs(price - lo * 2)  / price * 100 < 0.5
+    near := near or math.abs(price - lo * 3)  / price * 100 < 0.5
+    near := near or math.abs(price - lo * 4)  / price * 100 < 0.5
+    near := near or math.abs(price - lo * 7)  / price * 100 < 0.5
+    near := near or math.abs(price - lo * 9)  / price * 100 < 0.5
+    near := near or math.abs(price - lo * 12) / price * 100 < 0.5
+    near
+
+sqOfLowNear = isNearSqOfLow(close, swingLo)
+
+// ============================================================================
+// C23: MINOR TREND TURN ANALYSIS
+// ============================================================================
+// Watch the 3rd/4th day from an important top/bottom for change in minor trend.
+// 14th day is most significant, 21 the next. Also: 7, 42, 45, 49.
+// Source: PDF 10 "Understanding Gann" (p.2), PDF 16 "Shephard" (p.50)
+
+isMinorTurnDay(int bars) =>
+    if bars <= 0
+        false
+    else
+        near = false
+        near := near or math.abs(bars - 3)  <= 1
+        near := near or math.abs(bars - 4)  <= 1
+        near := near or math.abs(bars - 7)  <= 1
+        near := near or math.abs(bars - 14) <= 1
+        near := near or math.abs(bars - 21) <= 1
+        near := near or math.abs(bars - 42) <= 1
+        near := near or math.abs(bars - 45) <= 1
+        near := near or math.abs(bars - 49) <= 1
+        near
+
+minorTurnLo = isMinorTurnDay(barsSinceSwingLo) and i_useMinorTurn
+minorTurnHi = isMinorTurnDay(barsSinceSwingHi) and i_useMinorTurn
+minorTurnActive = minorTurnLo or minorTurnHi
+
+// Significance level: 14 and 21 are highest
+isHighSigTurn(int bars) =>
+    math.abs(bars - 14) <= 1 or math.abs(bars - 21) <= 1
+
+highSigMinorTurn = (isHighSigTurn(barsSinceSwingLo) or isHighSigTurn(barsSinceSwingHi)) and i_useMinorTurn
+
+// ============================================================================
+// C24: JENSEN CRITICAL POINTS — Harmonics of 90°
+// ============================================================================
+// "In measuring time count from a major hi or low in calendar days, weeks or
+// months for critical areas in time."
+// Critical points: 7.5, 11.25, 15, 22.5, 30, 45, 60, 67.5, 75, 90,
+//   105, 120, 135, 150, 165, 180, 225, 270, 315, 360
+// Also Mercury 88-day cycle ≈ 90° harmonic
+// Source: Jensen "Astro-Cycles" (1978), Section III, pp.108-113
+
+isJensenCritical(int bars) =>
+    if bars <= 0
+        false
+    else
+        near = false
+        // Primary cardinal harmonics (strongest)
+        near := near or math.abs(bars - 90)  <= 2
+        near := near or math.abs(bars - 180) <= 2
+        near := near or math.abs(bars - 270) <= 2
+        near := near or math.abs(bars - 360) <= 2
+        // Diagonal harmonics
+        near := near or math.abs(bars - 45)  <= 2
+        near := near or math.abs(bars - 135) <= 2
+        near := near or math.abs(bars - 225) <= 2
+        near := near or math.abs(bars - 315) <= 2
+        // Sub-harmonics
+        near := near or math.abs(bars - 22)  <= 2  // 22.5 ≈ Mercury quarter
+        near := near or math.abs(bars - 30)  <= 2
+        near := near or math.abs(bars - 60)  <= 2
+        near := near or math.abs(bars - 67)  <= 2  // 67.5
+        near := near or math.abs(bars - 75)  <= 2
+        near := near or math.abs(bars - 105) <= 2
+        near := near or math.abs(bars - 120) <= 2
+        near := near or math.abs(bars - 150) <= 2
+        // Mercury cycle
+        near := near or math.abs(bars - 88)  <= 2  // Mercury orbital period
+        near := near or math.abs(bars - 176) <= 2  // 2x Mercury
+        near := near or math.abs(bars - 264) <= 2  // 3x Mercury
+        near := near or math.abs(bars - 352) <= 2  // 4x Mercury
+        // Full circle multiples (for longer timeframes)
+        near := near or math.abs(bars - 720) <= 3   // 2x360
+        near := near or math.abs(bars - 1080) <= 3  // 3x360
+        near
+
+jensenCritLo = isJensenCritical(barsSinceSwingLo) and i_useJensen
+jensenCritHi = isJensenCritical(barsSinceSwingHi) and i_useJensen
+jensenCritActive = jensenCritLo or jensenCritHi
+
+// Classify the type of critical point for display
+jensenLabel(int bars) =>
+    if bars <= 0
+        "—"
+    else if math.abs(bars - 360) <= 2 or math.abs(bars - 720) <= 2 or math.abs(bars - 1080) <= 2
+        str.tostring(bars) + "d Full"
+    else if math.abs(bars - 90) <= 2 or math.abs(bars - 180) <= 2 or math.abs(bars - 270) <= 2
+        str.tostring(bars) + "d Card"
+    else if math.abs(bars - 45) <= 2 or math.abs(bars - 135) <= 2 or math.abs(bars - 225) <= 2 or math.abs(bars - 315) <= 2
+        str.tostring(bars) + "d Diag"
+    else if math.abs(bars - 88) <= 2 or math.abs(bars - 176) <= 2 or math.abs(bars - 264) <= 2 or math.abs(bars - 352) <= 2
+        str.tostring(bars) + "d Merc"
+    else
+        str.tostring(bars) + "d Harm"
+
+jensenCritLabel = jensenCritLo ? jensenLabel(barsSinceSwingLo) : jensenCritHi ? jensenLabel(barsSinceSwingHi) : "—"
+
+// ============================================================================
+// C25: JENSEN FIVE-PHASE INTERMEDIATE TREND
+// ============================================================================
+// "An intermediate trend usually has five phases, three in its direction
+// and two corrective minor trends."
+// Phase 1: initial directional move
+// Phase 2: first corrective setback
+// Phase 3: second directional move
+// Phase 4: second corrective setback
+// Phase 5: third directional move / BLOWOFF (largest and longest)
+// Source: Jensen "Astro-Cycles" Section IV, pp.121-122
+
+// Count swing highs and lows using 3-bar pivots
+isPivotHigh = high[1] > high[2] and high[1] > high[0]
+isPivotLow  = low[1]  < low[2]  and low[1]  < low[0]
+
+// Track alternating swings over last 20 bars to count wave phases
+var int waveCount = 0
+var string lastSwingType = "none"
+
+if isPivotHigh and lastSwingType != "H"
+    waveCount += 1
+    lastSwingType := "H"
+if isPivotLow and lastSwingType != "L"
+    waveCount += 1
+    lastSwingType := "L"
+
+// Reset wave count periodically (every 50 bars) to track current cycle
+if totalBarsElapsed % 50 == 0
+    waveCount := 0
+    lastSwingType := "none"
+
+// Map to 5-phase model (cap at 5)
+currentPhase = math.min(waveCount, 5)
+if currentPhase == 0
+    currentPhase := 1
+
+fivePhaseLabel = currentPhase == 1 ? "Phase 1 (Dir)" :
+                 currentPhase == 2 ? "Phase 2 (Corr)" :
+                 currentPhase == 3 ? "Phase 3 (Dir)" :
+                 currentPhase == 4 ? "Phase 4 (Corr)" :
+                 "Phase 5 (BLOW)"
+
+isBlowoffPhase = currentPhase >= 5 and i_use5Phase
+
+// Overall trend direction from price position vs 20-bar-ago
+fivePhaseTrendUp   = close > close[20] and not na(close[20])
+fivePhaseTrendDown = close < close[20] and not na(close[20])
+
+// ============================================================================
+// C26: VECTORIAL PROJECTION — 45°+60° Exhaustion
+// ============================================================================
+// "A 45° angle on the low close day and a lesser angle [60°] on the first
+// preceding low close day; the crossing will estimate exhaustion in time
+// and price."
+// 45° line: P = first_low + t (tan(45°) = 1.0)
+// 60° line: P = second_low + tan(60°) * (t - days_between)
+// Convergence point = projected exhaustion (potential top/bottom)
+// Source: Jensen Section IV, pp.124-126
+
+// Find two recent swing lows for projection
+recentLo1_price = ta.valuewhen(isPivotLow, low[1], 1)   // Earlier (1st preceding) low
+recentLo2_price = ta.valuewhen(isPivotLow, low[1], 0)   // Most recent (2nd) low
+recentLo1_bar   = ta.valuewhen(isPivotLow, bar_index[1], 1)
+recentLo2_bar   = ta.valuewhen(isPivotLow, bar_index[1], 0)
+
+daysBetweenLows = not na(recentLo1_bar) and not na(recentLo2_bar) ? math.abs(recentLo2_bar - recentLo1_bar) : 0
+
+// Projection calculation:
+// 45° from first_low: P = first_low + t
+// 60° from second_low: P = second_low + tan(60°) * (t - daysBetween)
+// Solving: t = (second_low - first_low + tan60 * daysBetween) / (tan60 - 1)
+tan60 = math.tan(math.toradians(60))  // ≈ 1.7321
+
+vecDenom = tan60 - 1.0
+vecTconverge = vecDenom != 0 and daysBetweenLows > 0 and not na(recentLo1_price) and not na(recentLo2_price) ?
+     (recentLo2_price - recentLo1_price + tan60 * daysBetweenLows) / vecDenom : na
+
+vecProjectedPrice = not na(vecTconverge) ? recentLo1_price + vecTconverge : na
+vecProjectedDays  = not na(vecTconverge) ? math.max(0, math.round(vecTconverge - daysBetweenLows)) : na
+
+// Check if current price is near the vectorial projection (within 1%)
+vecNearProjection = not na(vecProjectedPrice) and vecProjectedPrice > 0 and
+     math.abs(close - vecProjectedPrice) / close * 100 < 1.0 and i_useVectorial
+
+// ============================================================================
+// C27: CONFIDENCE SCORING & SIGNAL GENERATION (27-factor)
+// ============================================================================
+// Scoring system (matches Python generate_signal with all additions):
+//   +0.30  Gann angle trend confirmed (C7)
+//   +0.10  SQ9 confluence (C2)
+//   +0.10  Vibration = 9 change number (C3)
+//   +0.15  Dynamic vol confirms direction (C5)
+//   +0.05  Range % level nearby (C10)
+//   +0.05  Hexagon level nearby (C9)
+//   +0.05  Fatal Number nearby (C14)
+//   +0.05  Swing trend confirms (C11)
+//   +0.05  Seasonal cardinal date (C13)
+//   +0.05  Shephard/planetary cycle window (C15/C16)
+//   +0.05  Weekly trend confirms (C20)
+//   +0.05  Significant squares of low (C22)
+//   +0.05  Third-time test dangerous zone (C22)
+//   +0.05  192-day shock point (C21)
+//   +0.05  Jensen critical time point (C24)
+//   +0.05  Jensen five-phase blowoff (C25)
+//   +0.05  Minor trend turn window (C23)
+//   +0.05  Vectorial projection confluence (C26)
 //   +0.15  R:R ratio ≥ 2.5:1
 //   -0.10  R:R ratio < 1.5:1
 //   Max: 1.0; Min to trade: configurable (default 0.40)
@@ -646,7 +932,7 @@ sellRisk   = math.abs(sellEntry - sellStop)
 sellReward = math.abs(sellEntry - sellTarget)
 sellRR     = sellRisk > 0 ? sellReward / sellRisk : 0
 
-// --- Buy Confidence (21-component scoring) ---
+// --- Buy Confidence (27-component scoring) ---
 buyConf = 0.0
 // C7: Gann angle trend
 buyConf := buyConf + (trendBull ? 0.30 : 0.0)
@@ -670,12 +956,26 @@ buyConf := buyConf + (i_useSeasonal and isSeasonalDate ? 0.05 : 0.0)
 buyConf := buyConf + (shepherdCycleLo or planetaryCycleLo ? 0.05 : 0.0)
 // C20: Weekly trend confirms daily
 buyConf := buyConf + (weeklyTrendUp ? 0.05 : 0.0)
+// C22: Significant squares of low
+buyConf := buyConf + (sqOfLowNear ? 0.05 : 0.0)
+// C22: Third-time test dangerous zone
+buyConf := buyConf + (isDangerZone ? 0.05 : 0.0)
+// C21: 192-day shock point
+buyConf := buyConf + (isShockPoint ? 0.05 : 0.0)
+// C24: Jensen critical time point
+buyConf := buyConf + (jensenCritActive ? 0.05 : 0.0)
+// C25: Jensen five-phase blowoff
+buyConf := buyConf + (isBlowoffPhase and fivePhaseTrendUp ? 0.05 : 0.0)
+// C23: Minor trend turn window
+buyConf := buyConf + (minorTurnActive ? 0.05 : 0.0)
+// C26: Vectorial projection confluence
+buyConf := buyConf + (vecNearProjection ? 0.05 : 0.0)
 // Risk-reward validation
 buyConf := buyConf + (buyRR >= i_rrRatio ? 0.15 : buyRR >= 1.5 ? 0.05 : -0.10)
 // Clamp 0.0 - 1.0
 buyConf := math.max(0.0, math.min(1.0, buyConf))
 
-// --- Sell Confidence (21-component scoring) ---
+// --- Sell Confidence (27-component scoring) ---
 sellConf = 0.0
 // C7: Gann angle trend
 sellConf := sellConf + (trendBear ? 0.30 : 0.0)
@@ -699,6 +999,20 @@ sellConf := sellConf + (i_useSeasonal and isSeasonalDate ? 0.05 : 0.0)
 sellConf := sellConf + (shepherdCycleHi or planetaryCycleHi ? 0.05 : 0.0)
 // C20: Weekly trend confirms daily
 sellConf := sellConf + (weeklyTrendDown ? 0.05 : 0.0)
+// C22: Significant squares of low
+sellConf := sellConf + (sqOfLowNear ? 0.05 : 0.0)
+// C22: Third-time test dangerous zone
+sellConf := sellConf + (isDangerZone ? 0.05 : 0.0)
+// C21: 192-day shock point
+sellConf := sellConf + (isShockPoint ? 0.05 : 0.0)
+// C24: Jensen critical time point
+sellConf := sellConf + (jensenCritActive ? 0.05 : 0.0)
+// C25: Jensen five-phase blowoff
+sellConf := sellConf + (isBlowoffPhase and fivePhaseTrendDown ? 0.05 : 0.0)
+// C23: Minor trend turn window
+sellConf := sellConf + (minorTurnActive ? 0.05 : 0.0)
+// C26: Vectorial projection confluence
+sellConf := sellConf + (vecNearProjection ? 0.05 : 0.0)
 // Risk-reward validation
 sellConf := sellConf + (sellRR >= i_rrRatio ? 0.15 : sellRR >= 1.5 ? 0.05 : -0.10)
 // Clamp 0.0 - 1.0
@@ -805,6 +1119,28 @@ plotshape(timeFatalLo or timeFatalHi, "Fatal Time", style=shape.xcross,
      location=location.belowbar, color=color.new(color.orange, 30),
      size=size.tiny, text="F49")
 
+// --- New component markers (C21-C26) ---
+plotshape(isShockPoint, "192-Day Shock", style=shape.circle,
+     location=location.abovebar, color=color.new(color.fuchsia, 30),
+     size=size.tiny, text="♪")
+plotshape(isDangerZone, "3rd Test!", style=shape.flag,
+     location=location.belowbar, color=color.new(color.red, 20),
+     size=size.tiny, text="3X")
+plotshape(highSigMinorTurn, "Minor Turn", style=shape.arrowup,
+     location=location.belowbar, color=color.new(color.lime, 30),
+     size=size.tiny, text="MT")
+plotshape(jensenCritActive, "Jensen Critical", style=shape.square,
+     location=location.abovebar, color=color.new(color.aqua, 30),
+     size=size.tiny, text="JC")
+plotshape(isBlowoffPhase, "Blowoff Phase", style=shape.labelup,
+     location=location.belowbar, color=color.new(color.orange, 20),
+     size=size.tiny, text="P5")
+
+// --- Vectorial Projection line ---
+plot(i_useVectorial and not na(vecProjectedPrice) ? vecProjectedPrice : na,
+     "Vec Projection", color=color.new(color.lime, 40), linewidth=2,
+     style=plot.style_cross)
+
 // --- Seasonal markers ---
 bgcolor(isCardinalDate ? color.new(color.blue, 92) : na, title="Cardinal Date")
 bgcolor(isOctaveDate   ? color.new(color.purple, 92) : na, title="Octave Date")
@@ -814,14 +1150,14 @@ bgcolor(trendBull ? color.new(color.green, 95) : trendBear ? color.new(color.red
      title="Trend Background")
 
 // ============================================================================
-// INFO TABLE — Full 21-Component Dashboard
+// INFO TABLE — Full 27-Component Dashboard
 // ============================================================================
-var table infoTable = table.new(position.top_right, 2, 16,
+var table infoTable = table.new(position.top_right, 2, 24,
      bgcolor=color.new(color.black, 80), border_width=1)
 
 if barstate.islast
     // Header
-    table.cell(infoTable, 0, 0, "Gann Complete (21 Components)", text_color=color.white, text_size=size.normal)
+    table.cell(infoTable, 0, 0, "Gann Complete (27 Components)", text_color=color.white, text_size=size.normal)
     table.cell(infoTable, 1, 0, "", text_color=color.white)
     
     // Row 1: Trend
@@ -876,21 +1212,61 @@ if barstate.islast
     table.cell(infoTable, 0, 11, "Shephard (C15)", text_color=color.gray, text_size=size.small)
     table.cell(infoTable, 1, 11, shepherdAlert ? "⚠ Cycle!" : "—", text_color=shepherdAlert ? color.yellow : color.gray, text_size=size.small)
     
-    // Row 12: Volatility
-    table.cell(infoTable, 0, 12, "Daily Vol", text_color=color.gray, text_size=size.small)
-    table.cell(infoTable, 1, 12, str.tostring(dailyVol, "#.##") + "%", text_color=color.white, text_size=size.small)
+    // Row 12: 192-Day Octave (C21)
+    table.cell(infoTable, 0, 12, "192d Octave (C21)", text_color=color.gray, text_size=size.small)
+    octaveStr = diatonicNote + " d" + str.tostring(octavePosition) + (isShockPoint ? " ⚡SHOCK" : "")
+    table.cell(infoTable, 1, 12, octaveStr, text_color=isShockPoint ? color.fuchsia : color.white, text_size=size.small)
     
-    // Row 13: Annual Vol
-    table.cell(infoTable, 0, 13, "Ann. Vol", text_color=color.gray, text_size=size.small)
-    table.cell(infoTable, 1, 13, str.tostring(annualVol, "#.#") + "%" + (useDynamic ? " [SQ12]" : ""), text_color=useDynamic ? color.teal : color.white, text_size=size.small)
+    // Row 13: Third-Time Test (C22)
+    table.cell(infoTable, 0, 13, "3rd Test (C22)", text_color=color.gray, text_size=size.small)
+    testStr = isDangerZone ? "⚠ 3rd TOUCH!" : isThirdTest ? str.tostring(zoneTestCount) + "× tested" : str.tostring(zoneTestCount) + "× safe"
+    testClr = isDangerZone ? color.red : isThirdTest ? color.orange : color.gray
+    table.cell(infoTable, 1, 13, testStr, text_color=testClr, text_size=size.small)
     
-    // Row 14: Buy R:R
-    table.cell(infoTable, 0, 14, "Buy R:R", text_color=color.gray, text_size=size.small)
-    table.cell(infoTable, 1, 14, str.tostring(buyRR, "#.#") + ":1", text_color=buyRR >= i_rrRatio ? color.green : color.gray, text_size=size.small)
+    // Row 14: Minor Turn (C23)
+    table.cell(infoTable, 0, 14, "Minor Turn (C23)", text_color=color.gray, text_size=size.small)
+    turnStr = highSigMinorTurn ? "⚠ Key Day!" : minorTurnActive ? "◆ Watch" : "—"
+    turnClr = highSigMinorTurn ? color.lime : minorTurnActive ? color.yellow : color.gray
+    table.cell(infoTable, 1, 14, turnStr, text_color=turnClr, text_size=size.small)
     
-    // Row 15: Sell R:R
-    table.cell(infoTable, 0, 15, "Sell R:R", text_color=color.gray, text_size=size.small)
-    table.cell(infoTable, 1, 15, str.tostring(sellRR, "#.#") + ":1", text_color=sellRR >= i_rrRatio ? color.red : color.gray, text_size=size.small)
+    // Row 15: Jensen Critical (C24)
+    table.cell(infoTable, 0, 15, "Jensen (C24)", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 15, jensenCritActive ? jensenCritLabel : "—", text_color=jensenCritActive ? color.aqua : color.gray, text_size=size.small)
+    
+    // Row 16: Five-Phase (C25)
+    table.cell(infoTable, 0, 16, "5-Phase (C25)", text_color=color.gray, text_size=size.small)
+    phaseClr = isBlowoffPhase ? color.orange : currentPhase >= 3 ? color.yellow : color.gray
+    table.cell(infoTable, 1, 16, fivePhaseLabel, text_color=phaseClr, text_size=size.small)
+    
+    // Row 17: Vectorial (C26)
+    table.cell(infoTable, 0, 17, "Vectorial (C26)", text_color=color.gray, text_size=size.small)
+    vecStr = vecNearProjection ? "✓ " + str.tostring(vecProjectedPrice, "#.0") : not na(vecProjectedPrice) ? "→ " + str.tostring(vecProjectedPrice, "#.0") + " (" + str.tostring(vecProjectedDays) + "d)" : "—"
+    vecClr = vecNearProjection ? color.lime : not na(vecProjectedPrice) ? color.white : color.gray
+    table.cell(infoTable, 1, 17, vecStr, text_color=vecClr, text_size=size.small)
+    
+    // Row 18: Sq of Low
+    table.cell(infoTable, 0, 18, "Sq of Low", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 18, sqOfLowNear ? "✓ Near" : "✗ No", text_color=sqOfLowNear ? color.white : color.gray, text_size=size.small)
+    
+    // Row 19: Volatility
+    table.cell(infoTable, 0, 19, "Daily Vol", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 19, str.tostring(dailyVol, "#.##") + "%", text_color=color.white, text_size=size.small)
+    
+    // Row 20: Annual Vol
+    table.cell(infoTable, 0, 20, "Ann. Vol", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 20, str.tostring(annualVol, "#.#") + "%" + (useDynamic ? " [SQ12]" : ""), text_color=useDynamic ? color.teal : color.white, text_size=size.small)
+    
+    // Row 21: Buy R:R
+    table.cell(infoTable, 0, 21, "Buy R:R", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 21, str.tostring(buyRR, "#.#") + ":1", text_color=buyRR >= i_rrRatio ? color.green : color.gray, text_size=size.small)
+    
+    // Row 22: Sell R:R
+    table.cell(infoTable, 0, 22, "Sell R:R", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 22, str.tostring(sellRR, "#.#") + ":1", text_color=sellRR >= i_rrRatio ? color.red : color.gray, text_size=size.small)
+    
+    // Row 23: Bars from pivots
+    table.cell(infoTable, 0, 23, "Bars Lo/Hi", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 23, str.tostring(barsSinceSwingLo) + "/" + str.tostring(barsSinceSwingHi), text_color=color.white, text_size=size.small)
 
 // ============================================================================
 // ALERTS
@@ -916,3 +1292,21 @@ alertcondition(isSeasonalDate,
 alertcondition(cumRangeSignal,
      "Cumulative Range Alert",
      "Cumulative range matches key cycle number — Hidden reversal signal")
+alertcondition(isShockPoint,
+     "192-Day Shock Point",
+     "Diatonic Fa/La shock point in 192-day cycle — Trend may invert (PDF 6)")
+alertcondition(isDangerZone,
+     "Third-Time Test Alert",
+     "3rd touch of S/R zone — DANGEROUS: breakout/breakdown imminent (PDF 10)")
+alertcondition(highSigMinorTurn,
+     "Minor Trend Turn Alert",
+     "Key minor trend turn day (14 or 21 days from pivot) — Watch closely (PDF 10)")
+alertcondition(jensenCritActive,
+     "Jensen Critical Point",
+     "Jensen harmonic of 90° critical point — Reversal window (Jensen pp.108-113)")
+alertcondition(isBlowoffPhase,
+     "Five-Phase Blowoff Alert",
+     "Jensen Phase 5 (blowoff) detected — Trend exhaustion imminent (Jensen pp.121-122)")
+alertcondition(vecNearProjection,
+     "Vectorial Projection Alert",
+     "Price near 45°/60° vectorial exhaustion point — Top/bottom likely (Jensen pp.124-126)")
