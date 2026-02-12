@@ -184,6 +184,55 @@ CARDINAL_DATES = [(3, 21), (6, 21), (9, 21), (12, 21)]
 # Square of 52 octave nesting dates (month, day) from Master Mathematical Formula
 OCTAVE_DATES = [(2, 5), (5, 6), (8, 5), (11, 5)]
 
+# ---------------------------------------------------------------------------
+# NEW Constants discovered from page-by-page study (see PDF_STUDY_LOG.md)
+# ---------------------------------------------------------------------------
+
+# Shephard's Key Cycle Numbers — the MOST critical cycles (PDF 18, pp.85–86, 130, 148)
+# These are the primary time cycles that cause major market reversals.
+# 1260 = "a time, times, and half a time" = 360 + 720 + 180 (biblical, p.85)
+# 1290 = 1260 + leap month of 30 days (p.86)
+# 1336 = 3.6525 × 365.25 — Earth cycle squared (p.148)
+# 631/668 = half-cycles of 1262/1336 (p.86)
+# 840 = 1/3 of 2520 = 33.3% of 360 weeks (p.86)
+SHEPHARD_KEY_CYCLES = [631, 668, 840, 1260, 1262, 1290, 1336]
+
+# Planetary cycle lengths in days (PDF 18, pp.67, 71, 75, 108)
+# Mars orbit = 687 days — appears frequently in S&P 500 and Australian SPI
+# Venus synodic = 224 days — 672 = 3 × 224 = 4 × 168
+# Week hours = 168 — "the hours of our week" — appears as symbolic number
+MARS_CYCLE = 687
+VENUS_CYCLE = 224
+WEEK_HOURS = 168
+
+# Divisions of 168 (hours in a week) — important S/R levels (PDF 18, p.75)
+WEEK_HOUR_DIVISIONS = [21, 42, 63, 84, 105, 126, 147, 168, 336, 504, 672, 840]
+
+# Gann's Fatal Number and its multiples (PDF 18, pp.86, 100; PDF 12, p.6)
+# 49 = 7² — "Gann's Fatal Number" — major trend change trigger
+# 343 = 7 × 49, 392 = 8 × 49, 490 = 10 × 49
+FATAL_NUMBER = 49
+FATAL_MULTIPLES = [49, 98, 147, 196, 245, 294, 343, 392, 441, 490]
+
+# Biblical/symbolic numbers that appear at market reversals (PDF 18, p.85)
+BIBLICAL_NUMBERS = [390, 430, 490, 666, 888, 1150, 2300]
+
+# Wheel within a Wheel — extending 360° cycle to 2520° (PDF 18, p.73, p.85)
+# 360 weeks = 2520 days. Key divisions: 630°, 840°, 900°, 1260°
+WHEEL_CYCLE = 2520
+WHEEL_DIVISIONS = [90, 120, 180, 240, 270, 360, 450, 480, 540, 630, 720,
+                   840, 900, 1080, 1260, 1290, 1336, 1440, 1800, 2160, 2520]
+
+# Important time counts in calendar days from highs/lows (PDF 12, p.3)
+IMPORTANT_CALENDAR_DAYS = [30, 45, 60, 90, 135, 150, 180, 210, 225, 315, 330, 360]
+
+# Important time counts in trading days (PDF 12, p.3)
+IMPORTANT_TRADING_DAYS = [11, 22, 33, 45, 56, 67, 78, 90, 101, 112, 123, 135,
+                          146, 157, 168, 180]
+
+# Important week counts (PDF 12, p.4)
+IMPORTANT_WEEKS = [7, 13, 26, 39, 45, 52, 78]
+
 
 # ---------------------------------------------------------------------------
 # Data classes for structured output
@@ -310,6 +359,32 @@ class TradingSignal:
     vibration_digit: int
     gann_levels: GannAngleResult
     sq9_levels: SquareOfNineResult
+
+
+@dataclass
+class CycleAlignmentResult:
+    """Result from Shephard key cycle alignment check.
+
+    Source: PDF 18, pp.85-86, 130 — "When multiple time counts cluster
+    on the same date = cluster date = higher probability reversal."
+    """
+    reference_date: str
+    target_date: str
+    days_elapsed: int
+    matching_cycles: List[Tuple[str, int, float]]  # (cycle_name, cycle_value, deviation_pct)
+    cluster_strength: int  # number of matching cycles
+
+
+@dataclass
+class FatalNumberResult:
+    """Result from Gann's Fatal Number (49) analysis.
+
+    Source: PDF 18, pp.86, 100; PDF 12, p.6 — "49 = 7² is the 'Fatal
+    Number' — it and its multiples mark major trend change points."
+    """
+    price: float
+    nearby_fatal_levels: List[Tuple[int, float]]  # (multiple, price_level)
+    time_fatal_levels: List[int]  # days that are multiples of 49
 
 
 # ---------------------------------------------------------------------------
@@ -1469,6 +1544,314 @@ class GannAnalyzer:
         return cycles
 
     # ------------------------------------------------------------------
+    # 18. SHEPHARD KEY CYCLE ALIGNMENT
+    #     Source: PDF 18 "Charles Shephard Gann Cycles Course"
+    #     Pages: 85-86, 130, 148
+    #     WHY: The page-by-page study revealed that Shephard identifies
+    #     specific cycle numbers (631, 668, 840, 1260, 1262, 1290, 1336)
+    #     as THE most critical for major reversals. When multiple cycles
+    #     cluster on the same date, reversal probability is highest.
+    #     These were completely missing from the algorithm.
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def shephard_cycle_alignment(
+        reference_date: str,
+        target_date: str,
+        date_fmt: str = "%Y-%m-%d",
+        tolerance_pct: float = 2.0,
+    ) -> CycleAlignmentResult:
+        """
+        Check if the elapsed time between two dates aligns with
+        Shephard's key cycle numbers.
+
+        From PDF 18, p.130: "The main or weekly high and low points can
+        be determined by the important cycle numbers: 631, 668, 840,
+        1262, 1290, 1336 days and degrees."
+
+        From PDF 18, p.85: "1260 = a time, times, and half a time
+        (360 + 720 + 180). 1290 = 1260 + leap month. 1336 = 3.6525 ×
+        365.25."
+
+        Parameters
+        ----------
+        reference_date : str
+            Date of a known pivot (high or low).
+        target_date : str
+            Date to check for cycle alignment.
+        date_fmt : str
+            Date format string.
+        tolerance_pct : float
+            Percentage tolerance for matching (default 2%).
+
+        Returns
+        -------
+        CycleAlignmentResult
+        """
+        dt_ref = datetime.strptime(reference_date, date_fmt)
+        dt_tgt = datetime.strptime(target_date, date_fmt)
+        days = abs((dt_tgt - dt_ref).days)
+
+        # Check all cycle numbers including planetary and biblical
+        all_cycles = {
+            "Shephard_631 (half 1262)": 631,
+            "Shephard_668 (half 1336)": 668,
+            "Shephard_840 (1/3 of 2520)": 840,
+            "Biblical_1260 (time,times,half)": 1260,
+            "Shephard_1262 (1260 in days)": 1262,
+            "Biblical_1290 (1260+leap)": 1290,
+            "Shephard_1336 (Earth²)": 1336,
+            "Mars_687": MARS_CYCLE,
+            "Venus_224": VENUS_CYCLE,
+            "Week_168": WEEK_HOURS,
+            "Wheel_2520 (360 weeks)": WHEEL_CYCLE,
+            "Fatal_49": FATAL_NUMBER,
+            "Fatal_343 (7×49)": 343,
+            "Fatal_490 (10×49)": 490,
+        }
+
+        matching: List[Tuple[str, int, float]] = []
+        for name, cycle_val in all_cycles.items():
+            if cycle_val == 0:
+                continue
+            # Check direct match and multiples up to 5×
+            for mult in range(1, 6):
+                expected = cycle_val * mult
+                if expected > 0:
+                    deviation = abs(days - expected) / expected * 100
+                    if deviation <= tolerance_pct:
+                        label = f"{name} ×{mult}" if mult > 1 else name
+                        matching.append((label, expected, round(deviation, 2)))
+
+        return CycleAlignmentResult(
+            reference_date=reference_date,
+            target_date=target_date,
+            days_elapsed=days,
+            matching_cycles=matching,
+            cluster_strength=len(matching),
+        )
+
+    # ------------------------------------------------------------------
+    # 19. GANN'S FATAL NUMBER ANALYSIS
+    #     Source: PDF 18, pp.86, 100; PDF 12, p.6
+    #     WHY: The page-by-page study of Shephard (p.86) revealed that
+    #     "49 was often quoted by WD Gann as the Fatal Number." The
+    #     number 49 and its multiples (98, 147, 196, 245, 294, 343,
+    #     392, 441, 490) appear repeatedly in time and price ranges at
+    #     major reversals. This was NOT previously implemented.
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def fatal_number_analysis(
+        price: float,
+        days_from_pivot: int = 0,
+    ) -> FatalNumberResult:
+        """
+        Analyze a price and time for proximity to Gann's Fatal Number.
+
+        From PDF 18, p.86: "343 + 343 years. 343 is 7 times 49, the
+        number 49 was often quoted by WD Gann as the Fatal Number."
+
+        From PDF 18, p.100: "147 is 3 × 49 – Gann's fatal number."
+
+        From PDF 12, p.6: "The square of 49 = 2401. The square of 7
+        (49) is very important for trend changes."
+
+        Parameters
+        ----------
+        price : float
+            Current price level to check.
+        days_from_pivot : int
+            Days elapsed from last significant pivot.
+
+        Returns
+        -------
+        FatalNumberResult
+        """
+        # Find nearby fatal price levels
+        nearby_levels: List[Tuple[int, float]] = []
+        for mult in FATAL_MULTIPLES:
+            # Check price proximity to multiples of 49
+            if price > 0:
+                ratio = price / mult
+                nearest_mult = round(ratio)
+                if nearest_mult > 0:
+                    level = mult * nearest_mult
+                    deviation_pct = abs(price - level) / price * 100
+                    if deviation_pct < 3.0:  # Within 3%
+                        nearby_levels.append((mult, level))
+
+        # Find time-based fatal alignments
+        time_levels: List[int] = []
+        for mult in FATAL_MULTIPLES:
+            if days_from_pivot > 0:
+                deviation = abs(days_from_pivot - mult) / mult * 100 if mult > 0 else 100
+                if deviation < 5.0:
+                    time_levels.append(mult)
+            # Also check if days is an exact multiple
+            if days_from_pivot > 0 and days_from_pivot % FATAL_NUMBER == 0:
+                if days_from_pivot not in time_levels:
+                    time_levels.append(days_from_pivot)
+
+        return FatalNumberResult(
+            price=price,
+            nearby_fatal_levels=nearby_levels,
+            time_fatal_levels=time_levels,
+        )
+
+    # ------------------------------------------------------------------
+    # 20. PLANETARY CYCLE TIME WINDOWS
+    #     Source: PDF 18, pp.67, 71, 75, 108; PDF 19, pp.46-97
+    #     WHY: The page-by-page study revealed that specific planetary
+    #     cycles (Mars=687, Venus=224, Week=168) and their Gann
+    #     percentage divisions create precise time windows for reversals.
+    #     "168 hours in our week... consequently 168 can symbolically
+    #     appear in any other time period" (Shephard, p.71).
+    #     This calculation was completely absent from the algorithm.
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def planetary_cycle_windows(
+        reference_date: str,
+        date_fmt: str = "%Y-%m-%d",
+    ) -> Dict[str, List[Tuple[str, str]]]:
+        """
+        Project future reversal dates based on planetary cycle
+        divisions from a reference pivot date.
+
+        From PDF 18, p.71: "The 7 year cycle... is exactly 2556 days.
+        Also 2520 days or 360 weeks. The 168 can appear as 168 minutes,
+        days, degrees, weeks, months or years."
+
+        From PDF 18, p.75: "Divisions of 168 to be monitored are: 21,
+        42, 63, 84, 105, 126 and 147, as well as its multiples."
+
+        From PDF 18, p.108: "919 days or 133.3% of 687 [Mars]."
+
+        Parameters
+        ----------
+        reference_date : str
+            Date of a known pivot point.
+        date_fmt : str
+            Date format string.
+
+        Returns
+        -------
+        Dict mapping cycle name to list of (label, projected_date).
+        """
+        dt = datetime.strptime(reference_date, date_fmt)
+
+        cycles_config = {
+            "Mars (687 days)": MARS_CYCLE,
+            "Venus (224 days)": VENUS_CYCLE,
+            "Week Hours (168 days)": WEEK_HOURS,
+            "Wheel (2520 days)": WHEEL_CYCLE,
+        }
+
+        result: Dict[str, List[Tuple[str, str]]] = {}
+
+        for cycle_name, base_days in cycles_config.items():
+            windows: List[Tuple[str, str]] = []
+            for pct in GANN_PERCENTAGES:
+                days_forward = int(round(base_days * pct))
+                projected = dt + timedelta(days=days_forward)
+                label = f"{pct*100:.1f}% = {days_forward}d"
+                windows.append((label, projected.strftime(date_fmt)))
+
+            # Add the 133.3% and higher extensions (PDF 18, p.108)
+            for ext_pct in [1.25, 1.333, 1.5, 1.666, 2.0, 3.0]:
+                days_forward = int(round(base_days * ext_pct))
+                projected = dt + timedelta(days=days_forward)
+                label = f"{ext_pct*100:.1f}% = {days_forward}d"
+                windows.append((label, projected.strftime(date_fmt)))
+
+            result[cycle_name] = windows
+
+        return result
+
+    # ------------------------------------------------------------------
+    # 21. CUMULATIVE RANGE ANALYSIS
+    #     Source: PDF 18, pp.96, 110, 135
+    #     WHY: Shephard demonstrates that when you ADD consecutive price
+    #     ranges together, the cumulative total often equals a key cycle
+    #     number. Example (p.110): "186 + 58 + 93 = 337 which is 2×168
+    #     and 50% of 687." This provides a hidden confirmation signal
+    #     that was not in the algorithm.
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def cumulative_range_check(
+        price_ranges: List[float],
+        tolerance_pct: float = 2.0,
+    ) -> List[Tuple[float, str, float]]:
+        """
+        Check if cumulative sums of consecutive price ranges match
+        key Gann cycle numbers.
+
+        From PDF 18, p.110: "cumulative prices (186+58+93=337 which
+        is 2×168 and 50% of 687)."
+
+        From PDF 18, p.96: "627 + 210 + 421 = 1258, almost 1260."
+
+        Parameters
+        ----------
+        price_ranges : List[float]
+            Consecutive price ranges (absolute values of moves).
+        tolerance_pct : float
+            Percentage tolerance for matching.
+
+        Returns
+        -------
+        List of (cumulative_sum, matched_cycle_description, deviation_pct).
+        """
+        # Key cycle numbers to check against
+        key_numbers = (
+            SHEPHARD_KEY_CYCLES + BIBLICAL_NUMBERS +
+            [MARS_CYCLE, VENUS_CYCLE, WEEK_HOURS, WHEEL_CYCLE, FATAL_NUMBER] +
+            list(FATAL_MULTIPLES) + GANN_NUMBERS +
+            [n * 2 for n in [168, 224, 687]] +  # 2× multiples
+            [n * 3 for n in [168, 224]] +  # 3× multiples
+            [n * 7 for n in [168, 49]]  # 7× multiples (PDF 18, p.73)
+        )
+
+        results: List[Tuple[float, str, float]] = []
+        n = len(price_ranges)
+
+        # Check all consecutive sub-sequences
+        for start in range(n):
+            cumsum = 0.0
+            for end in range(start, n):
+                cumsum += abs(price_ranges[end])
+
+                # Check against all key numbers
+                for key_num in key_numbers:
+                    if key_num <= 0:
+                        continue
+                    # Also check Gann percentage multiples of key numbers
+                    for pct in [0.25, 0.333, 0.5, 0.666, 0.75, 1.0, 1.25, 1.333, 1.5, 2.0]:
+                        target = key_num * pct
+                        if target < 5:
+                            continue
+                        deviation = abs(cumsum - target) / target * 100
+                        if deviation <= tolerance_pct:
+                            desc = (
+                                f"Ranges[{start}:{end+1}] sum={cumsum:.1f} "
+                                f"≈ {pct*100:.1f}% of {key_num}"
+                            )
+                            results.append((cumsum, desc, round(deviation, 2)))
+
+        # Deduplicate and sort by deviation
+        seen = set()
+        unique_results = []
+        for item in sorted(results, key=lambda x: x[2]):
+            key = (round(item[0], 1), item[1][:50])
+            if key not in seen:
+                seen.add(key)
+                unique_results.append(item)
+
+        return unique_results[:20]  # Top 20 matches
+
+    # ------------------------------------------------------------------
     # 8. TREND CONFIRMATION (from Gann Angle theory)
     #    Source: PDF 5
     # ------------------------------------------------------------------
@@ -1708,6 +2091,16 @@ class GannAnalyzer:
             reasons.append(
                 f"Max position size: {max_position:.2f} "
                 f"({max_risk_pct}% of {account_size:.2f})"
+            )
+
+        # Check Fatal Number proximity (PDF 18 pp.86,100 — page-by-page finding)
+        fatal = self.fatal_number_analysis(current_price)
+        if fatal.nearby_fatal_levels:
+            mult, lvl = fatal.nearby_fatal_levels[0]
+            confidence += 0.05
+            reasons.append(
+                f"Price near Fatal Number level: {mult}×n = {lvl:.0f} "
+                f"(Gann's Fatal 49, PDF 18 p.86)"
             )
 
         # Cap confidence at 1.0
