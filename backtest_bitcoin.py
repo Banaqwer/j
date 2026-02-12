@@ -39,7 +39,7 @@ import math
 import os
 import zipfile
 from datetime import datetime, timezone
-from typing import List
+from typing import Dict, IO, List
 
 from backtest_engine import (
     BacktestConfig,
@@ -69,7 +69,7 @@ def load_btc_from_zips(data_dir: str) -> List[Bar]:
     List[Bar]
         Sorted daily OHLCV bars.
     """
-    bars_by_date: dict[str, Bar] = {}
+    bars_by_date: Dict[str, Bar] = {}
 
     zip_paths = sorted(glob.glob(os.path.join(data_dir, "BTCUSDT-1d-*.zip")))
     if not zip_paths:
@@ -84,9 +84,14 @@ def load_btc_from_zips(data_dir: str) -> List[Bar]:
     return bars
 
 
+# Minimum columns expected in a Binance kline CSV row
+# (open_time, open, high, low, close, volume)
+_MIN_KLINE_COLUMNS = 6
+
+
 def _extract_bars_from_zip(
     zpath: str,
-    bars_by_date: dict[str, Bar],
+    bars_by_date: Dict[str, Bar],
 ) -> None:
     """Extract bars from a single zip (handles nested zips)."""
     with zipfile.ZipFile(zpath, "r") as zf:
@@ -105,19 +110,20 @@ def _extract_bars_from_zip(
 
 
 def _parse_binance_csv(
-    csvfile: io.BufferedIOBase,
-    bars_by_date: dict[str, Bar],
+    csvfile: IO[bytes],
+    bars_by_date: Dict[str, Bar],
 ) -> None:
     """Parse a headerless Binance kline CSV into Bar objects."""
     text = io.TextIOWrapper(csvfile, encoding="utf-8")
     reader = csv.reader(text)
     for row in reader:
-        if len(row) < 6:
+        if len(row) < _MIN_KLINE_COLUMNS:
             continue
         try:
             ts_ms = int(row[0])
             dt = datetime.fromtimestamp(ts_ms / 1000, tz=timezone.utc)
-            dt = dt.replace(tzinfo=None)  # naive UTC for consistency
+            # Remove tzinfo to match Bar's expected naive datetime format
+            dt = dt.replace(tzinfo=None)
             date_key = dt.strftime("%Y-%m-%d")
 
             bar = Bar(
