@@ -93,6 +93,12 @@ Key Cross-Document Similarities / Merged Concepts:
   solstice points; markets are self-similar across timeframes (PDFs 8, 11, 17).
 - Seasonal cardinal timing: year begins March 21; equinoxes and solstices
   define primary timing framework (PDFs 11, 12, 19).
+- 192-day Master Time Factor: the diatonic octave cycle governing when the
+  wheel returns to origin; Fa/La shock points invert price (PDF 6, pp.5-8).
+- Third-Time Test Rule: the 3rd touch of any S/R zone is the dangerous/
+  breakout time (PDF 10, p.2).
+- Minor Trend Turns: 3rd/4th day from pivot = minor trend change; 14th day
+  most significant, 21 next; also 7, 42, 45, 49 (PDFs 10, 16).
 - Risk management: small stop-losses, max 10% account per trade, minimum
   1:2.5 reward-to-risk ratio (PDFs 1, 4, 18).
 
@@ -232,6 +238,51 @@ IMPORTANT_TRADING_DAYS = [11, 22, 33, 45, 56, 67, 78, 90, 101, 112, 123, 135,
 
 # Important week counts (PDF 12, p.4)
 IMPORTANT_WEEKS = [7, 13, 26, 39, 45, 52, 78]
+
+# ---------------------------------------------------------------------------
+# Constants discovered from deep page-by-page study (session 5)
+# ---------------------------------------------------------------------------
+
+# 192 Calendar Day Master Time Factor (PDF 6 "144 Square", pages 5–8)
+# The time factor governing when the wheel returns to its origin.
+# Discovered via diatonic octave analysis: 24 octaves × 8 days = 192 CD.
+# Robert Gordon born June 9 1906; discovered master time factor June 19 1927
+# = 7680 days = 40 × 192.  Marie left June 5 1927, returned Aug 30 1932
+# = 1913 days ≈ 10 × 192 − 7 (one diatonic octave).
+# 144 square fits within 192 CD octave: 192 − 144 = 48 = 4 octaves of 12.
+MASTER_TIME_FACTOR = 192
+
+# 2556 = 7-year cycle in calendar days (PDF 16 "Shephard", p.142)
+# When divided by 16ths, 32nds and 12ths gives S&P reversal dates.
+SEVEN_YEAR_CYCLE_DAYS = 2556
+
+# Third-time rule: the 3rd test of any S/R zone is the dangerous time
+# (PDF 10 "Understanding Gann", p.2). Also: 1st, 2nd, 3rd, 4th, 7th, 9th,
+# 12th squares of the low are significant.
+SIGNIFICANT_SQUARES_OF_LOW = [1, 2, 3, 4, 7, 9, 12]
+
+# Minor trend turn watch: 3.5 day / 7 / 14 / 21 days from pivot
+# (PDF 10, p.2; PDF 16, p.50). 14th day is most significant, 21 next.
+MINOR_TREND_DAYS = [3, 4, 7, 14, 21, 42, 45, 49]
+
+# Gann percentage vibration pattern (PDF 4 "Number Vibrations", pages 1–2)
+# When price percentage moves (3.125, 6.25, 9.375, ..., 100) are digit-reduced,
+# they follow an exact yin-yang pattern: 2-4-6-8-1-3-5-7-9 repeating.
+# This proves market percentages are governed by numerological law.
+PERCENTAGE_VIBRATION_PATTERN = [2, 4, 6, 8, 1, 3, 5, 7, 9]
+
+# 192-day multiples for long-range cycle timing (PDF 6, pages 5–8)
+MASTER_TIME_FACTOR_MULTIPLES = [192, 384, 576, 768, 960, 1152, 1344,
+                                 1536, 1728, 1920]
+
+# Diatonic octave note positions as fractions of the 192-day cycle
+# Do=0, Re=1/8, Mi=2/8, Fa=3/8, So=4/8, La=5/8, Ti=6/8, Do=7/8
+# The Fa (3/8) and La (5/8) are "shock points" where trend may invert.
+# (PDF 6, p.6: "Do, Fa, La vibration — deny, consolidate, shock price levels")
+DIATONIC_FRACTIONS = {
+    "Do": 0.0, "Re": 0.125, "Mi": 0.25, "Fa": 0.375,
+    "So": 0.5, "La": 0.625, "Ti": 0.75, "Do2": 0.875,
+}
 
 
 # ---------------------------------------------------------------------------
@@ -385,6 +436,60 @@ class FatalNumberResult:
     price: float
     nearby_fatal_levels: List[Tuple[int, float]]  # (multiple, price_level)
     time_fatal_levels: List[int]  # days that are multiples of 49
+
+
+@dataclass
+class MasterTimeFactorResult:
+    """Result from the 192-day Master Time Factor analysis.
+
+    Source: PDF 6 "144 Square", pages 5-8.  The author proves the 192
+    calendar-day cycle is the interval after which "the wheel returns
+    to its origin."  Robert Gordon discovered this on day 7680 of his
+    life (= 40 × 192).  The 144 square fits within the 192-day octave:
+    192 − 144 = 48 = 4 × 12.
+    """
+    reference_date: str
+    current_date: str
+    days_elapsed: int
+    current_octave: int          # which 192-day octave we are in
+    position_in_octave: int      # 0-191: position within current octave
+    diatonic_note: str           # Do/Re/Mi/Fa/So/La/Ti
+    is_shock_point: bool         # True at Fa (3/8) or La (5/8)
+    next_octave_reset: str       # date of next 192-day boundary
+    nearby_multiples: List[Tuple[int, int]]  # (multiple_N, days_away)
+
+
+@dataclass
+class ThirdTimeTestResult:
+    """Result from the Third-Time Support/Resistance Test rule.
+
+    Source: PDF 10 "Understanding Gann", page 2.
+    "The third time against any support or resistance zone is the
+    dangerous time."  Also: the 1st, 2nd, 3rd, 4th, 7th, 9th and
+    12th squares of the low are significant.
+    """
+    price: float
+    zone_price: float
+    zone_kind: str           # "support" or "resistance"
+    test_count: int          # how many times price has tested this zone
+    is_third_test: bool      # True when test_count >= 3
+    is_dangerous: bool       # True when test_count == 3
+
+
+@dataclass
+class MinorTrendTurnResult:
+    """Result from the 3.5-day minor trend turn analysis.
+
+    Source: PDF 10, page 2; PDF 16 "Shephard", page 50.
+    "Watch 3.5 day i.e. the 3rd/4th day from the important top/bottom
+    for change in minor trend.  14th day is most significant, 21 next."
+    """
+    pivot_date: str
+    current_date: str
+    days_from_pivot: int
+    matching_day: Optional[int]     # e.g. 3, 4, 7, 14, 21, 42, 45, 49
+    is_minor_turn_window: bool      # True if within ±1 day of a key count
+    significance: str               # "high", "medium", "low"
 
 
 # ---------------------------------------------------------------------------
@@ -1853,6 +1958,193 @@ class GannAnalyzer:
         return unique_results[:20]  # Top 20 matches
 
     # ------------------------------------------------------------------
+    # 22. MASTER TIME FACTOR (192 Calendar Days)
+    #     Source: PDF 6 "144 Square" (pages 5-8)
+    #     The 192-day cycle is the "time factor" governing when the
+    #     wheel resets.  24 diatonic octaves of 8 days = 192 CD.
+    #     Key insight: the Fa (3/8 = day 72) and La (5/8 = day 120)
+    #     positions within each 192-day octave are "shock points"
+    #     where price may deny/consolidate/invert.
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def master_time_factor_analysis(
+        reference_date: str,
+        current_date: str,
+    ) -> MasterTimeFactorResult:
+        """Check position within the 192-day Master Time Factor cycle.
+
+        Parameters
+        ----------
+        reference_date : str
+            Reference pivot date in ``YYYY-MM-DD`` format.
+        current_date : str
+            Current date in ``YYYY-MM-DD`` format.
+
+        Returns
+        -------
+        MasterTimeFactorResult
+        """
+        ref = datetime.strptime(reference_date, "%Y-%m-%d")
+        cur = datetime.strptime(current_date, "%Y-%m-%d")
+        elapsed = (cur - ref).days
+
+        if elapsed < 0:
+            elapsed = abs(elapsed)
+
+        octave_num = elapsed // MASTER_TIME_FACTOR
+        position = elapsed % MASTER_TIME_FACTOR
+
+        # Determine diatonic note
+        frac = position / MASTER_TIME_FACTOR
+        note = "Do"
+        for n, f in DIATONIC_FRACTIONS.items():
+            nxt = f + 0.125
+            if f <= frac < nxt:
+                note = n
+                break
+
+        is_shock = note in ("Fa", "La")
+
+        # Next octave reset
+        days_to_next = MASTER_TIME_FACTOR - position
+        next_reset = (cur + timedelta(days=days_to_next)).strftime("%Y-%m-%d")
+
+        # Find nearby 192-multiples (within ±5 days)
+        nearby: List[Tuple[int, int]] = []
+        for mult in MASTER_TIME_FACTOR_MULTIPLES:
+            dist = abs(elapsed - mult)
+            if dist <= 5:
+                nearby.append((mult // MASTER_TIME_FACTOR, dist))
+
+        return MasterTimeFactorResult(
+            reference_date=reference_date,
+            current_date=current_date,
+            days_elapsed=elapsed,
+            current_octave=octave_num,
+            position_in_octave=position,
+            diatonic_note=note,
+            is_shock_point=is_shock,
+            next_octave_reset=next_reset,
+            nearby_multiples=nearby,
+        )
+
+    # ------------------------------------------------------------------
+    # 23. THIRD-TIME TEST RULE
+    #     Source: PDF 10 "Understanding Gann Price & Time" (page 2)
+    #     "The third time against any support or resistance zone is
+    #     the dangerous time."
+    #     Implementation: count how many times in price history the
+    #     price has touched a particular S/R zone (within tolerance).
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def third_time_test(
+        prices_history: List[float],
+        zone_price: float,
+        tolerance_pct: float = 0.5,
+        zone_kind: str = "support",
+    ) -> ThirdTimeTestResult:
+        """Count how many times price has tested a zone and flag 3rd test.
+
+        Parameters
+        ----------
+        prices_history : List[float]
+            Recent price series (lows for support, highs for resistance).
+        zone_price : float
+            The support or resistance level to test against.
+        tolerance_pct : float
+            Percentage tolerance around the zone (default 0.5%).
+        zone_kind : str
+            ``"support"`` or ``"resistance"``.
+
+        Returns
+        -------
+        ThirdTimeTestResult
+        """
+        if zone_price <= 0:
+            return ThirdTimeTestResult(
+                price=prices_history[-1] if prices_history else 0.0,
+                zone_price=zone_price,
+                zone_kind=zone_kind,
+                test_count=0,
+                is_third_test=False,
+                is_dangerous=False,
+            )
+
+        tol = zone_price * tolerance_pct / 100.0
+        test_count = 0
+        # Avoid counting consecutive touches as separate tests
+        was_in_zone = False
+        for p in prices_history:
+            in_zone = abs(p - zone_price) <= tol
+            if in_zone and not was_in_zone:
+                test_count += 1
+            was_in_zone = in_zone
+
+        return ThirdTimeTestResult(
+            price=prices_history[-1] if prices_history else 0.0,
+            zone_price=zone_price,
+            zone_kind=zone_kind,
+            test_count=test_count,
+            is_third_test=test_count >= 3,
+            is_dangerous=test_count == 3,
+        )
+
+    # ------------------------------------------------------------------
+    # 24. MINOR TREND TURN ANALYSIS
+    #     Source: PDF 10 "Understanding Gann" (page 2), PDF 16 (page 50)
+    #     Watch the 3rd/4th day from an important top/bottom for change
+    #     in minor trend.  14th day is most significant, 21 the next.
+    #     Also: 7, 42, 45, 49 are key counts.
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def minor_trend_turn(
+        pivot_date: str,
+        current_date: str,
+    ) -> MinorTrendTurnResult:
+        """Check if current date falls on a minor trend turn day count.
+
+        Parameters
+        ----------
+        pivot_date : str
+            Date of the important high/low in ``YYYY-MM-DD`` format.
+        current_date : str
+            Current date in ``YYYY-MM-DD`` format.
+
+        Returns
+        -------
+        MinorTrendTurnResult
+        """
+        piv = datetime.strptime(pivot_date, "%Y-%m-%d")
+        cur = datetime.strptime(current_date, "%Y-%m-%d")
+        days = abs((cur - piv).days)
+
+        matching: Optional[int] = None
+        is_window = False
+        for d in MINOR_TREND_DAYS:
+            if abs(days - d) <= 1:
+                matching = d
+                is_window = True
+                break
+
+        sig = "low"
+        if matching in (14, 21):
+            sig = "high"
+        elif matching in (3, 4, 7, 49):
+            sig = "medium"
+
+        return MinorTrendTurnResult(
+            pivot_date=pivot_date,
+            current_date=current_date,
+            days_from_pivot=days,
+            matching_day=matching,
+            is_minor_turn_window=is_window,
+            significance=sig,
+        )
+
+    # ------------------------------------------------------------------
     # 8. TREND CONFIRMATION (from Gann Angle theory)
     #    Source: PDF 5
     # ------------------------------------------------------------------
@@ -2103,6 +2395,38 @@ class GannAnalyzer:
                 f"Price near Fatal Number level: {mult}×n = {lvl:.0f} "
                 f"(Gann's Fatal 49, PDF 18 p.86)"
             )
+
+        # Check Third-Time Test rule (PDF 10, p.2 — deep study finding)
+        # "The 3rd time against any S/R zone is the dangerous time."
+        if prices_history and len(prices_history) >= 10:
+            # Test the current midpoint as a key zone
+            midpoint = (high + low) / 2.0
+            third_test = self.third_time_test(
+                prices_history, midpoint, tolerance_pct=0.5, zone_kind="support"
+            )
+            if third_test.is_dangerous:
+                confidence += 0.05
+                reasons.append(
+                    f"Third-time test at {midpoint:.2f} zone — "
+                    f"breakout/breakdown imminent (PDF 10, p.2)"
+                )
+
+        # Check 192-Day Master Time Factor shock points (PDF 6, pp.5–8)
+        # If we have a reference date, check if we're at a Fa/La shock point
+        # Use the earliest date derivable from prices_history length as proxy
+        if prices_history and len(prices_history) >= 30:
+            ref_date_proxy = (
+                datetime.now() - timedelta(days=len(prices_history))
+            ).strftime("%Y-%m-%d")
+            cur_date_proxy = datetime.now().strftime("%Y-%m-%d")
+            mtf = self.master_time_factor_analysis(ref_date_proxy, cur_date_proxy)
+            if mtf.is_shock_point:
+                confidence += 0.05
+                reasons.append(
+                    f"At diatonic '{mtf.diatonic_note}' shock point in "
+                    f"192-day octave #{mtf.current_octave} "
+                    f"(day {mtf.position_in_octave}/192, PDF 6 pp.5-8)"
+                )
 
         # Cap confidence at 1.0
         confidence = max(0.0, min(1.0, confidence))
