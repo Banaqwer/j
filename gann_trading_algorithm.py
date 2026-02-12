@@ -118,6 +118,24 @@ GANN_NUMBERS = [144, 72, 36, 18, 9]
 # Square of 9 cardinal and ordinal degree offsets
 SQ9_DEGREES = [0, 45, 90, 135, 180, 225, 270, 315, 360]
 
+# Hexagon chart circle completion values (from Gann SQ9 Hexagon Chart PDF)
+HEXAGON_CIRCLES = [1, 7, 19, 37, 61, 91, 127, 169, 217, 271, 331, 397]
+
+# Gann percentage divisions for range analysis (from Understanding Gann Price & Time)
+GANN_PERCENTAGES = [0.125, 0.25, 0.333, 0.375, 0.5, 0.625, 0.666, 0.75, 0.875, 1.0]
+
+# Master numbers (from 1953 Mathematical Formula PDF)
+MASTER_NUMBERS = [3, 5, 7, 9, 12]
+
+# Great Cycle of 144 squared = 20736 (from 1953 Mathematical Formula PDF)
+GREAT_CYCLE = 20736
+
+# Seasonal cardinal dates (month, day) - Gann's year starts March 21
+CARDINAL_DATES = [(3, 21), (6, 21), (9, 21), (12, 21)]
+
+# Square of 52 octave nesting dates (month, day) from Master Mathematical Formula
+OCTAVE_DATES = [(2, 5), (5, 6), (8, 5), (11, 5)]
+
 
 # ---------------------------------------------------------------------------
 # Data classes for structured output
@@ -193,6 +211,43 @@ class CyclePoint:
     date: datetime
     cycle_length_days: int
     description: str
+
+
+@dataclass
+class HexagonResult:
+    """Result of Gann Hexagon chart analysis."""
+    seed_price: float
+    circle_levels: Dict[int, float]  # circle_number -> price level
+    angle_levels: Dict[int, float]   # angle_degrees -> price level
+
+
+@dataclass
+class RangePercentageResult:
+    """Result of range percentage division analysis."""
+    high: float
+    low: float
+    price_range: float
+    support_levels: Dict[float, float]     # percentage -> price (below current)
+    resistance_levels: Dict[float, float]  # percentage -> price (above current)
+    extension_levels: Dict[float, float]   # percentage -> price (beyond range)
+
+
+@dataclass
+class SquareOfPriceResult:
+    """Result of squaring price with time."""
+    price: float
+    is_high: bool
+    base_date: str
+    square_dates: Dict[float, str]  # percentage -> projected date
+
+
+@dataclass
+class MasterTimeResult:
+    """Result from the Great Cycle / Master 144 Square analysis."""
+    price: float
+    great_cycle_days: int
+    subdivision_dates: Dict[str, int]  # label -> days from reference
+    key_resistance_points: List[float]
 
 
 @dataclass
@@ -867,6 +922,497 @@ class GannAnalyzer:
         }
 
     # ------------------------------------------------------------------
+    # 10. HEXAGON CHART LEVELS
+    #     Source: "1931 Usage of Gann SQ9 Hexagon Chart"
+    #     The Hexagon chart arranges numbers in concentric hexagonal
+    #     rings. Each ring completion is a key support/resistance level.
+    #     Gann: "The cube or hexagon proves exactly the law which works
+    #     because of time and space in the market."
+    # ------------------------------------------------------------------
+
+    def hexagon_levels(self, seed_price: float) -> HexagonResult:
+        """
+        Calculate Hexagon chart price levels from a seed price.
+
+        The Hexagon chart places numbers in concentric rings of 6.
+        Circle completions: 1, 7, 19, 37, 61, 91, 127, 169, 217, 271, 331, 397.
+        Key angle levels occur at 60°, 120°, 180°, 240°, 300°, 360° positions.
+
+        Parameters
+        ----------
+        seed_price : float
+            Reference price (major high or low).
+
+        Returns
+        -------
+        HexagonResult
+        """
+        circle_levels: Dict[int, float] = {}
+        for i, hex_val in enumerate(HEXAGON_CIRCLES):
+            if seed_price > 100:
+                circle_levels[i] = seed_price + hex_val
+                circle_levels[-i] = seed_price - hex_val if seed_price - hex_val > 0 else 0
+            else:
+                circle_levels[i] = seed_price * (1 + hex_val / 100.0)
+                circle_levels[-i] = max(0, seed_price * (1 - hex_val / 100.0))
+
+        # Key angle levels on the hexagon (every 60°)
+        angle_levels: Dict[int, float] = {}
+        sqrt_p = math.sqrt(seed_price)
+        for deg in [60, 120, 180, 240, 300, 360]:
+            offset = deg / 180.0
+            angle_levels[deg] = round((sqrt_p + offset) ** 2, 4)
+            angle_levels[-deg] = round(max(0, (sqrt_p - offset) ** 2), 4)
+
+        return HexagonResult(
+            seed_price=seed_price,
+            circle_levels=circle_levels,
+            angle_levels=angle_levels,
+        )
+
+    # ------------------------------------------------------------------
+    # 11. RANGE PERCENTAGE DIVISIONS
+    #     Source: "Understanding Gann Price and Time Cycle",
+    #             "Charles Shephard Gann Cycles Course"
+    #     Divide any range by Gann percentages (1/8ths and 1/3rds)
+    #     to find support, resistance, and extension levels.
+    #     "The 50% level of price and time ranges was of great
+    #     importance to Gann and is the first division applied."
+    # ------------------------------------------------------------------
+
+    def range_percentage_levels(
+        self,
+        high: float,
+        low: float,
+    ) -> RangePercentageResult:
+        """
+        Divide a price range by Gann's standard percentages.
+
+        Gann percentages: 12.5%, 25%, 33.3%, 37.5%, 50%, 62.5%, 66.6%, 75%, 87.5%, 100%.
+        Provides retracement levels (support/resistance within range) and
+        extension levels (projections beyond range).
+
+        Parameters
+        ----------
+        high : float
+            The higher price of the range.
+        low : float
+            The lower price of the range.
+
+        Returns
+        -------
+        RangePercentageResult
+        """
+        price_range = abs(high - low)
+
+        # Retracement levels (from the high going down)
+        support_levels: Dict[float, float] = {}
+        for pct in GANN_PERCENTAGES:
+            support_levels[pct] = round(high - price_range * pct, 4)
+
+        # Resistance levels (from the low going up)
+        resistance_levels: Dict[float, float] = {}
+        for pct in GANN_PERCENTAGES:
+            resistance_levels[pct] = round(low + price_range * pct, 4)
+
+        # Extension levels (beyond the high)
+        extension_levels: Dict[float, float] = {}
+        for pct in GANN_PERCENTAGES:
+            extension_levels[pct] = round(high + price_range * pct, 4)
+
+        return RangePercentageResult(
+            high=high,
+            low=low,
+            price_range=price_range,
+            support_levels=support_levels,
+            resistance_levels=resistance_levels,
+            extension_levels=extension_levels,
+        )
+
+    # ------------------------------------------------------------------
+    # 12. SQUARING PRICE WITH TIME
+    #     Source: "Understanding Gann Price and Time Cycle",
+    #             "Charles Shephard Gann Cycles Course",
+    #             "Gann's Master Mathematical Formula" (Ferrera)
+    #     Project a price value into time by dividing it by Gann
+    #     percentages and converting to calendar days/weeks/months.
+    #     "A high price of 100 would square out time 100 days
+    #     forward from the date of the high."
+    # ------------------------------------------------------------------
+
+    def square_price_in_time(
+        self,
+        price: float,
+        base_date: str,
+        is_high: bool = True,
+        date_fmt: str = "%Y-%m-%d",
+    ) -> SquareOfPriceResult:
+        """
+        Project a price level into future time using Gann squaring.
+
+        Takes a significant price (high or low), treats it as a number
+        of time units (days), and projects forward at Gann percentage
+        divisions: 12.5%, 25%, 33.3%, 37.5%, 50%, 62.5%, 66.6%, 75%,
+        87.5%, and 100% of the price value.
+
+        Parameters
+        ----------
+        price : float
+            Significant high or low price to square.
+        base_date : str
+            Date of the high or low.
+        is_high : bool
+            True if price is a high, False if a low.
+        date_fmt : str
+            Date string format.
+
+        Returns
+        -------
+        SquareOfPriceResult
+        """
+        dt = datetime.strptime(base_date, date_fmt)
+        square_dates: Dict[float, str] = {}
+
+        for pct in GANN_PERCENTAGES:
+            days_forward = int(round(price * pct))
+            projected = dt + timedelta(days=days_forward)
+            label = f"{pct*100:.1f}%"
+            square_dates[pct] = projected.strftime(date_fmt)
+
+        return SquareOfPriceResult(
+            price=price,
+            is_high=is_high,
+            base_date=base_date,
+            square_dates=square_dates,
+        )
+
+    # ------------------------------------------------------------------
+    # 13. MASTER 144 SQUARE / GREAT CYCLE
+    #     Source: "1953 Mathematical Formula for Market Predictions"
+    #     The Great Cycle = 144² = 20,736 time units.
+    #     Its subdivisions (1/2, 1/4, 1/8, ..., 1/256) define key
+    #     time resistance points. The Master Numbers are 3, 5, 7, 9, 12.
+    #     "The square of 12 is always important... the square of 144
+    #     is the GREAT SQUARE and works better than any other."
+    # ------------------------------------------------------------------
+
+    def master_144_square(
+        self,
+        price: float,
+    ) -> MasterTimeResult:
+        """
+        Calculate key time and price resistance points from the Master
+        144 Square (Great Cycle = 20,736).
+
+        Subdivisions: 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128, 1/256.
+        Also calculates the strongest resistance points at fractions
+        of 144: 1/4, 1/3, 3/8, 1/2, 5/8, 2/3, 3/4, 7/8.
+
+        Parameters
+        ----------
+        price : float
+            Reference price level.
+
+        Returns
+        -------
+        MasterTimeResult
+        """
+        # Subdivisions of the Great Cycle in days
+        subdivisions: Dict[str, int] = {}
+        gc = GREAT_CYCLE
+        for power in range(1, 9):  # 1/2 through 1/256
+            divisor = 2 ** power
+            label = f"1/{divisor}"
+            subdivisions[label] = gc // divisor
+
+        # Key resistance fractions of 144
+        key_fractions = [
+            (0.25, "1/4 of 144 = 36"),
+            (1/3, "1/3 of 144 = 48"),
+            (0.375, "3/8 of 144 = 54"),
+            (0.5, "1/2 of 144 = 72"),
+            (0.625, "5/8 of 144 = 90"),
+            (2/3, "2/3 of 144 = 96"),
+            (0.75, "3/4 of 144 = 108"),
+            (0.875, "7/8 of 144 = 126"),
+        ]
+
+        key_resistance: List[float] = []
+        sqrt_p = math.sqrt(price) if price > 0 else 0
+        for frac, _label in key_fractions:
+            offset = frac * 2  # 144/360 * degree equivalent
+            level = (sqrt_p + offset) ** 2
+            key_resistance.append(round(level, 4))
+
+        return MasterTimeResult(
+            price=price,
+            great_cycle_days=gc,
+            subdivision_dates=subdivisions,
+            key_resistance_points=key_resistance,
+        )
+
+    # ------------------------------------------------------------------
+    # 14. PRICE-TIME VECTOR DISTANCE
+    #     Source: "TS Vector 2" (Sergey Tarasov)
+    #     In the price-time Universe, the distance between two turning
+    #     points is calculated as: D = √((ΔPrice)² + (ΔTime)²)
+    #     When this distance is a "good" angle (180, 360, 720...),
+    #     it indicates harmonic resonance between price and time.
+    #     "For a properly scaled chart, the distance between important
+    #     turning points should form 'good' angles."
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def pricetime_vector_distance(
+        price1: float,
+        price2: float,
+        time_days1: int,
+        time_days2: int,
+        scale: float = 1.0,
+    ) -> Dict[str, float]:
+        """
+        Calculate the price-time vector distance between two turning points.
+
+        Uses the Euclidean metric in price-time space where both
+        dimensions are treated equally (signature +,+).
+
+        Parameters
+        ----------
+        price1 : float
+            Price at the first turning point.
+        price2 : float
+            Price at the second turning point.
+        time_days1 : int
+            Solar degrees (or days) at first point.
+        time_days2 : int
+            Solar degrees (or days) at second point.
+        scale : float
+            Price-to-time scaling factor (default 1.0 = 1 point per degree).
+
+        Returns
+        -------
+        Dict with distance, nearest_harmonic, deviation_pct.
+        """
+        delta_price = (price2 - price1) / scale
+        delta_time = float(time_days2 - time_days1)
+        distance = math.sqrt(delta_price ** 2 + delta_time ** 2)
+
+        # Check nearest harmonic (multiple of 360)
+        harmonics = [180, 360, 540, 720, 1080, 1440]
+        nearest = min(harmonics, key=lambda h: abs(distance - h))
+        deviation = abs(distance - nearest) / nearest * 100 if nearest else 0
+
+        return {
+            "distance": round(distance, 4),
+            "delta_price": round(delta_price, 4),
+            "delta_time": delta_time,
+            "nearest_harmonic": nearest,
+            "deviation_pct": round(deviation, 4),
+            "is_harmonic": deviation < 5.0,  # within 5% = harmonic
+        }
+
+    # ------------------------------------------------------------------
+    # 15. SEASONAL CARDINAL TIMING
+    #     Source: "Gann's Master Mathematical Formula" (Ferrera),
+    #             "Understanding Gann Price and Time Cycle",
+    #             "1978 Astro-Cycles and Speculative Markets"
+    #     Gann's year begins at March 21 (Vernal Equinox).
+    #     Cardinal points: Mar 21, Jun 21, Sep 21, Dec 21.
+    #     "Musical octave" nesting: squares within squares at
+    #     solstice points and 45-degree sub-intervals.
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def seasonal_cardinal_check(
+        date_str: str,
+        date_fmt: str = "%Y-%m-%d",
+        tolerance_days: int = 3,
+    ) -> Dict[str, object]:
+        """
+        Check if a date is near a Gann seasonal cardinal or octave point.
+
+        Cardinal points: Equinoxes and Solstices (Mar 21, Jun 21, Sep 21, Dec 21).
+        Octave points: Feb 5, May 6, Aug 5, Nov 5 (inner square nesting from
+        the Master Mathematical Formula).
+
+        Parameters
+        ----------
+        date_str : str
+            Date to check.
+        date_fmt : str
+            Date string format.
+        tolerance_days : int
+            Number of days tolerance for matching.
+
+        Returns
+        -------
+        Dict with is_cardinal, is_octave, nearest_cardinal, days_from_cardinal.
+        """
+        dt = datetime.strptime(date_str, date_fmt)
+        year = dt.year
+
+        # Build cardinal and octave dates for this year
+        cardinal_list = []
+        for m, d in CARDINAL_DATES:
+            try:
+                cardinal_list.append(datetime(year, m, d))
+            except ValueError:
+                pass
+
+        octave_list = []
+        for m, d in OCTAVE_DATES:
+            try:
+                octave_list.append(datetime(year, m, d))
+            except ValueError:
+                pass
+
+        # Check cardinals
+        is_cardinal = False
+        nearest_cardinal = None
+        min_cardinal_dist = 999
+        for cd in cardinal_list:
+            dist = abs((dt - cd).days)
+            if dist < min_cardinal_dist:
+                min_cardinal_dist = dist
+                nearest_cardinal = cd.strftime(date_fmt)
+            if dist <= tolerance_days:
+                is_cardinal = True
+
+        # Check octave points
+        is_octave = False
+        for od in octave_list:
+            if abs((dt - od).days) <= tolerance_days:
+                is_octave = True
+                break
+
+        return {
+            "is_cardinal": is_cardinal,
+            "is_octave": is_octave,
+            "nearest_cardinal": nearest_cardinal,
+            "days_from_cardinal": min_cardinal_dist,
+        }
+
+    # ------------------------------------------------------------------
+    # 16. SWING CHART TREND ANALYSIS
+    #     Source: "Charles Shephard Gann Cycles Course"
+    #     Mechanical trading method using swing highs/lows.
+    #     "Trade only with the trend. Higher swing tops and higher
+    #     swing bottoms ARE an UPTREND."
+    #     Entries at point C (reaction), stop below C.
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def swing_trend(
+        highs: List[float],
+        lows: List[float],
+    ) -> Dict[str, object]:
+        """
+        Determine trend using Gann's mechanical swing chart method.
+
+        Identifies higher highs + higher lows (uptrend) or lower highs
+        + lower lows (downtrend). Returns sections/waves count.
+
+        Parameters
+        ----------
+        highs : List[float]
+            Sequence of swing high prices (chronological).
+        lows : List[float]
+            Sequence of swing low prices (chronological).
+
+        Returns
+        -------
+        Dict with trend, sections_count, last_swing_high, last_swing_low.
+        """
+        if len(highs) < 2 or len(lows) < 2:
+            return {
+                "trend": "NEUTRAL",
+                "sections_count": 0,
+                "last_swing_high": highs[-1] if highs else 0,
+                "last_swing_low": lows[-1] if lows else 0,
+            }
+
+        # Count consecutive higher highs / higher lows
+        hh_count = sum(
+            1 for i in range(1, len(highs)) if highs[i] > highs[i - 1]
+        )
+        hl_count = sum(
+            1 for i in range(1, len(lows)) if lows[i] > lows[i - 1]
+        )
+        lh_count = sum(
+            1 for i in range(1, len(highs)) if highs[i] < highs[i - 1]
+        )
+        ll_count = sum(
+            1 for i in range(1, len(lows)) if lows[i] < lows[i - 1]
+        )
+
+        n = len(highs) - 1
+        trend = "NEUTRAL"
+        if n > 0:
+            if hh_count / n > 0.5 and hl_count / n > 0.5:
+                trend = "UP"
+            elif lh_count / n > 0.5 and ll_count / n > 0.5:
+                trend = "DOWN"
+
+        # Sections count (wave analysis)
+        sections = 1
+        if len(highs) >= 3:
+            for i in range(2, min(len(highs), len(lows))):
+                if trend == "UP" and highs[i] > highs[i - 1]:
+                    sections += 1
+                elif trend == "DOWN" and lows[i] < lows[i - 1]:
+                    sections += 1
+
+        return {
+            "trend": trend,
+            "sections_count": sections,
+            "last_swing_high": highs[-1],
+            "last_swing_low": lows[-1],
+            "higher_highs": hh_count,
+            "higher_lows": hl_count,
+        }
+
+    # ------------------------------------------------------------------
+    # 17. MASTER TIME FACTOR PROJECTION
+    #     Source: "Gann's Master Time Factor" (Flanagan)
+    #     The Master Time Factor is the annual forecast based on major
+    #     time cycles. The 60-year cycle is the master key—all seven
+    #     visible planets return to the same positions.
+    #     Also integrates the 20-year, 10-year, and 7-year cycles.
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def master_time_cycles(
+        reference_year: int,
+    ) -> Dict[str, List[int]]:
+        """
+        Project major Gann time cycle years from a reference year.
+
+        Cycles from Flanagan's Master Time Factor analysis:
+        - 7-year cycle (sacred number, square of 7 = 49)
+        - 10-year decennial pattern
+        - 20-year Jupiter-Saturn conjunction cycle
+        - 30-year (360 months, completing the "cube")
+        - 60-year (all planets return, master cycle)
+
+        Parameters
+        ----------
+        reference_year : int
+            A significant year (e.g., year of a major high or low).
+
+        Returns
+        -------
+        Dict mapping cycle name to list of projected years.
+        """
+        cycles = {
+            "7_year": [reference_year + 7 * i for i in range(1, 11)],
+            "10_year": [reference_year + 10 * i for i in range(1, 7)],
+            "20_year": [reference_year + 20 * i for i in range(1, 4)],
+            "30_year": [reference_year + 30 * i for i in range(1, 3)],
+            "60_year": [reference_year + 60],
+        }
+        return cycles
+
+    # ------------------------------------------------------------------
     # 8. TREND CONFIRMATION (from Gann Angle theory)
     #    Source: PDF 5
     # ------------------------------------------------------------------
@@ -1051,6 +1597,26 @@ class GannAnalyzer:
         if vibration.is_change_number:
             confidence += 0.1
             reasons.append("Price vibration is 9 (change number - potential reversal)")
+
+        # Check range percentage levels (PDFs 8, 11, 15)
+        range_pct = self.range_percentage_levels(high, low)
+        for pct, level in range_pct.support_levels.items():
+            if abs(level - current_price) / current_price < 0.003:
+                confidence += 0.05
+                reasons.append(
+                    f"Price near Gann {pct*100:.1f}% support level ({level:.2f})"
+                )
+                break
+
+        # Check Hexagon chart levels (PDF 8)
+        hex_levels = self.hexagon_levels(low)
+        for deg, level in hex_levels.angle_levels.items():
+            if deg > 0 and abs(level - current_price) / current_price < 0.005:
+                confidence += 0.05
+                reasons.append(
+                    f"Price near Hexagon {deg}° level ({level:.2f})"
+                )
+                break
 
         # Dynamic volatility confirmation
         if dynamic:
