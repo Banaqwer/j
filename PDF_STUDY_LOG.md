@@ -5,6 +5,25 @@
 > Page numbers are cited for all findings. After each completed PDF, findings are summarized and implementation decisions documented.
 > Total PDFs studied: 21 | Total pages processed: 1,953
 
+## Full Page-by-Page Text Extractions
+
+Every page of every text-extractable PDF has been extracted verbatim into the following files:
+
+| File | Contents | Text Pages | Characters |
+|------|----------|-----------|------------|
+| [PDF_EXTRACTIONS_PART1.md](PDF_EXTRACTIONS_PART1.md) | 10 short reference PDFs (Number Vibrations, Flanagan, Moon Beam, Master Formula, TS Vector, SQ9, Understanding Gann, 1953 Formula, 144 Square, Intraday Gann) | 80 | 180,942 |
+| [PDF_EXTRACTIONS_PART2.md](PDF_EXTRACTIONS_PART2.md) | 3 study guides (20 Years of Studying Gann, Gann/Chowksey, Jenkins) | 89 | 148,507 |
+| [PDF_EXTRACTIONS_PART3.md](PDF_EXTRACTIONS_PART3.md) | Shephard Gann Cycles Course (148 pages) | 147 | 184,244 |
+| [PDF_EXTRACTIONS_PART4.md](PDF_EXTRACTIONS_PART4.md) | 1978 Astro-Cycles & George Bayer Book III | 276 | 591,308 |
+| [PDF_EXTRACTIONS_PART5.md](PDF_EXTRACTIONS_PART5.md) | Tunnel Thru the Air (432 pages) | 427 | 651,316 |
+| **TOTAL** | **17 text-extractable PDFs** | **1,019** | **1,756,317** |
+
+**4 image-only PDFs** (no extractable text — scanned pages only):
+- Super Timing (Walker) — 186 pages
+- WD Gann Astro Cycles — 77 pages  
+- Basis of Forecasting — 34 pages
+- Law of Vibration (Plummer) — 225 pages
+
 ---
 
 ## Table of Contents
