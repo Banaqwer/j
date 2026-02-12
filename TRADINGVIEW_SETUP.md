@@ -78,7 +78,7 @@ This Pine Script translates the **full** Python Gann algorithm (all 27 component
 The strategy displays a real-time info panel showing:
 - **Trend (C7)**: Gann angle trend direction
 - **Swing (C11)**: Mechanical HH/HL vs LH/LL trend
-- **Buy/Sell Confidence**: 0.00 to 1.00 score (19 factors)
+- **Buy/Sell Confidence**: 0.00 to 1.00 score (19 scoring factors from 27 components)
 - **Vibration (C3)**: Digit reduction (9 = change number)
 - **SQ9 (C2)**: Price near Square of 9 level
 - **Hexagon (C9)**: Price near hexagon 60° level
@@ -208,7 +208,8 @@ The strategy displays a real-time info panel showing:
 | R:R 1.5–2.5:1 | +0.05 | Acceptable reward-to-risk |
 | R:R < 1.5:1 | −0.10 | Poor reward-to-risk penalty |
 
-**Maximum possible: 1.45 → capped at 1.00**
+**Theoretical maximum: ~1.45 → capped at 1.00**
+**Practical maximum: ~0.85–0.95** (some factors rarely align simultaneously)
 **Minimum to trade: 0.40** (configurable)
 
 ---

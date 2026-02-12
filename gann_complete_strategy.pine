@@ -830,7 +830,9 @@ if isPivotLow and lastSwingType != "L"
     waveCount += 1
     lastSwingType := "L"
 
-// Reset wave count periodically (every 50 bars) to track current cycle
+// Reset wave count periodically (every 50 bars ≈ 2.5 months on daily,
+// roughly one intermediate trend cycle per Jensen's framework) to track
+// only the current cycle's waves rather than accumulating indefinitely.
 if totalBarsElapsed % 50 == 0
     waveCount := 0
     lastSwingType := "none"
@@ -871,10 +873,11 @@ recentLo2_bar   = ta.valuewhen(isPivotLow, bar_index[1], 0)
 
 daysBetweenLows = not na(recentLo1_bar) and not na(recentLo2_bar) ? math.abs(recentLo2_bar - recentLo1_bar) : 0
 
-// Projection calculation:
-// 45° from first_low: P = first_low + t
-// 60° from second_low: P = second_low + tan(60°) * (t - daysBetween)
-// Solving: t = (second_low - first_low + tan60 * daysBetween) / (tan60 - 1)
+// Projection calculation (Jensen pp.124-126):
+// Line 1 (45° from first_low):  P₁(t) = first_low + t            [tan(45°) = 1]
+// Line 2 (60° from second_low): P₂(t) = second_low + tan(60°)·(t - Δ)  [Δ = daysBetween]
+// Setting P₁ = P₂ and solving for t:
+//   t = (second_low − first_low + tan(60°)·Δ) / (tan(60°) − 1)
 tan60 = math.tan(math.toradians(60))  // ≈ 1.7321
 
 vecDenom = tan60 - 1.0
@@ -889,9 +892,12 @@ vecNearProjection = not na(vecProjectedPrice) and vecProjectedPrice > 0 and
      math.abs(close - vecProjectedPrice) / close * 100 < 1.0 and i_useVectorial
 
 // ============================================================================
-// C27: CONFIDENCE SCORING & SIGNAL GENERATION (27-factor)
+// C27: CONFIDENCE SCORING & SIGNAL GENERATION
 // ============================================================================
-// Scoring system (matches Python generate_signal with all additions):
+// 27 strategy components (C1-C27); 19 scoring factors feed the confidence
+// score.  The R:R check is a single tiered factor (+0.15 / +0.05 / −0.10).
+//
+// Scoring factors (matches Python generate_signal):
 //   +0.30  Gann angle trend confirmed (C7)
 //   +0.10  SQ9 confluence (C2)
 //   +0.10  Vibration = 9 change number (C3)
@@ -910,9 +916,10 @@ vecNearProjection = not na(vecProjectedPrice) and vecProjectedPrice > 0 and
 //   +0.05  Jensen five-phase blowoff (C25)
 //   +0.05  Minor trend turn window (C23)
 //   +0.05  Vectorial projection confluence (C26)
-//   +0.15  R:R ratio ≥ 2.5:1
-//   -0.10  R:R ratio < 1.5:1
-//   Max: 1.0; Min to trade: configurable (default 0.40)
+//   +0.15 / +0.05 / −0.10  R:R ratio (tiered)
+// Theoretical max (all factors active): ~1.45 → capped at 1.00
+// In practice ~0.85–0.95 is achievable since some factors rarely align.
+// Min to trade: configurable (default 0.40)
 
 // Calculate entry/stop/target
 buyEntry  = not na(r_1x4) ? r_1x4 : close
