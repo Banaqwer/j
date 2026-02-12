@@ -148,7 +148,7 @@ A signal needs **minimum 0.25 confidence** to trigger a trade in the backtester.
 
 ### 3.1 Overview
 
-The algorithm is a **multi-layer trading signal generator** that combines fourteen different Gann analysis methods into a single confidence-weighted trading decision. It processes any market's price data and outputs: direction (BUY/SELL/NEUTRAL), entry price, stop loss, up to 3 profit targets, and a confidence score.
+The algorithm is a **multi-layer trading signal generator** that combines seventeen different Gann analysis methods into a single confidence-weighted trading decision. It processes any market's price data and outputs: direction (BUY/SELL/NEUTRAL), entry price, stop loss, up to 3 profit targets, and a confidence score.
 
 ### 3.2 The Components
 

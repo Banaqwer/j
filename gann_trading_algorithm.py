@@ -997,12 +997,15 @@ class GannAnalyzer:
         """
         circle_levels: Dict[int, float] = {}
         for i, hex_val in enumerate(HEXAGON_CIRCLES):
+            # Hexagon circles added/subtracted as absolute offsets from seed
+            # For low-priced instruments (≤100), scale offsets proportionally
+            # to preserve meaningful relative distances
             if seed_price > 100:
                 circle_levels[i] = seed_price + hex_val
-                circle_levels[-i] = seed_price - hex_val if seed_price - hex_val > 0 else 0
+                circle_levels[-i] = max(0, seed_price - hex_val)
             else:
-                circle_levels[i] = seed_price * (1 + hex_val / 100.0)
-                circle_levels[-i] = max(0, seed_price * (1 - hex_val / 100.0))
+                circle_levels[i] = seed_price + hex_val * (seed_price / 100.0)
+                circle_levels[-i] = max(0, seed_price - hex_val * (seed_price / 100.0))
 
         # Key angle levels on the hexagon (every 60°)
         angle_levels: Dict[int, float] = {}
@@ -1188,7 +1191,10 @@ class GannAnalyzer:
         key_resistance: List[float] = []
         sqrt_p = math.sqrt(price) if price > 0 else 0
         for frac, _label in key_fractions:
-            offset = frac * 2  # 144/360 * degree equivalent
+            # Each fraction of 144 maps to a sqrt-space offset:
+            # full 144 = 360° = offset of 2.0 in sqrt-space (360/180)
+            # so fraction f of 144 = offset of f * 2.0
+            offset = frac * 2.0
             level = (sqrt_p + offset) ** 2
             key_resistance.append(round(level, 4))
 
@@ -1393,12 +1399,14 @@ class GannAnalyzer:
             1 for i in range(1, len(lows)) if lows[i] < lows[i - 1]
         )
 
-        n = len(highs) - 1
+        n_highs = len(highs) - 1
+        n_lows = len(lows) - 1
+        n = min(n_highs, n_lows)
         trend = "NEUTRAL"
         if n > 0:
-            if hh_count / n > 0.5 and hl_count / n > 0.5:
+            if hh_count / n_highs > 0.5 and hl_count / n_lows > 0.5:
                 trend = "UP"
-            elif lh_count / n > 0.5 and ll_count / n > 0.5:
+            elif lh_count / n_highs > 0.5 and ll_count / n_lows > 0.5:
                 trend = "DOWN"
 
         # Sections count (wave analysis)
