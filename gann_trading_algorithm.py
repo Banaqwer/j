@@ -1594,20 +1594,20 @@ class GannAnalyzer:
 
         # Check all cycle numbers including planetary and biblical
         all_cycles = {
-            "Shephard_631 (half 1262)": 631,
-            "Shephard_668 (half 1336)": 668,
+            "Shephard_631 (half of 1262)": 631,
+            "Shephard_668 (half of 1336)": 668,
             "Shephard_840 (1/3 of 2520)": 840,
-            "Biblical_1260 (time,times,half)": 1260,
+            "Biblical_1260 (time+times+half)": 1260,
             "Shephard_1262 (1260 in days)": 1262,
-            "Biblical_1290 (1260+leap)": 1290,
-            "Shephard_1336 (Earth²)": 1336,
-            "Mars_687": MARS_CYCLE,
-            "Venus_224": VENUS_CYCLE,
-            "Week_168": WEEK_HOURS,
+            "Biblical_1290 (1260+30 leap)": 1290,
+            "Shephard_1336 (Earth cycle²)": 1336,
+            "Mars_687 (orbit cycle)": MARS_CYCLE,
+            "Venus_224 (synodic cycle)": VENUS_CYCLE,
+            "Week_168 (hours in week)": WEEK_HOURS,
             "Wheel_2520 (360 weeks)": WHEEL_CYCLE,
-            "Fatal_49": FATAL_NUMBER,
-            "Fatal_343 (7×49)": 343,
-            "Fatal_490 (10×49)": 490,
+            "Fatal_49 (7² fatal num)": FATAL_NUMBER,
+            "Fatal_343 (7 × 49)": 343,
+            "Fatal_490 (10 × 49)": 490,
         }
 
         matching: List[Tuple[str, int, float]] = []
@@ -1684,8 +1684,8 @@ class GannAnalyzer:
         # Find time-based fatal alignments
         time_levels: List[int] = []
         for mult in FATAL_MULTIPLES:
-            if days_from_pivot > 0:
-                deviation = abs(days_from_pivot - mult) / mult * 100 if mult > 0 else 100
+            if days_from_pivot > 0 and mult > 0:
+                deviation = abs(days_from_pivot - mult) / mult * 100
                 if deviation < 5.0:
                     time_levels.append(mult)
             # Also check if days is an exact multiple
@@ -1841,10 +1841,11 @@ class GannAnalyzer:
                             results.append((cumsum, desc, round(deviation, 2)))
 
         # Deduplicate and sort by deviation
-        seen = set()
-        unique_results = []
+        seen: set = set()
+        unique_results: List[Tuple[float, str, float]] = []
         for item in sorted(results, key=lambda x: x[2]):
-            key = (round(item[0], 1), item[1][:50])
+            # Use cumulative sum and the full description for dedup
+            key = (round(item[0], 1), item[1])
             if key not in seen:
                 seen.add(key)
                 unique_results.append(item)
