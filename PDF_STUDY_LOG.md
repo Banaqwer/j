@@ -19,10 +19,15 @@ Every page of every text-extractable PDF has been extracted verbatim into the fo
 | **TOTAL** | **17 text-extractable PDFs** | **1,019** | **1,756,317** |
 
 **4 image-only PDFs** (no extractable text — scanned pages only):
-- Super Timing (Walker) — 186 pages
-- WD Gann Astro Cycles — 77 pages  
-- Basis of Forecasting — 34 pages
-- Law of Vibration (Plummer) — 225 pages
+
+| # | Exact Filename | Short Title | Pages | Text |
+|---|---------------|-------------|-------|------|
+| 1 | `344593197-Walker-Myles-Wilson-Super-Timing-W-D-Ganns-Astrological-Method-pdf.pdf` | Super Timing (Walker) | 186 | 0 chars |
+| 2 | `512911483-WD-Gann-Astro-Cycles.pdf` | WD Gann Astro Cycles | 77 | 0 chars |
+| 3 | `WDGann_The_Basis_Of_My_Forecasting_Method.pdf` | Basis of My Forecasting Method | 34 | 201 chars (title page only) |
+| 4 | `pdfcoffee.com-plummer-tony-the-law-of-vibration_compressed.pdf` | The Law of Vibration (Plummer) | 225 | 0 chars |
+
+These 4 PDFs (522 pages total) contain only scanned images with no embedded text layer. They would require OCR (optical character recognition) to extract content, which is beyond the current text extraction capability.
 
 ---
 
