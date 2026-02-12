@@ -139,6 +139,9 @@ The algorithm converts the Tunnel's layered approach into a **numerical confiden
 | Risk-reward ratio < 2.5:1 | −0.10 | PDF 4 |
 | Price near Gann percentage support level | +0.05 | PDFs 12, 17, 18 |
 | Price near Hexagon chart angle level | +0.05 | PDF 9 |
+| Price near Fatal Number (49) multiple | +0.05 | PDF 18 (pp.86, 100) ★ |
+
+★ = Added after page-by-page study
 
 A signal needs **minimum 0.25 confidence** to trigger a trade in the backtester.
 
@@ -148,11 +151,11 @@ A signal needs **minimum 0.25 confidence** to trigger a trade in the backtester.
 
 ### 3.1 Overview
 
-The algorithm is a **multi-layer trading signal generator** that combines seventeen different Gann analysis methods into a single confidence-weighted trading decision. It processes any market's price data and outputs: direction (BUY/SELL/NEUTRAL), entry price, stop loss, up to 3 profit targets, and a confidence score.
+The algorithm is a **multi-layer trading signal generator** that combines twenty-one different Gann analysis methods into a single confidence-weighted trading decision. It processes any market's price data and outputs: direction (BUY/SELL/NEUTRAL), entry price, stop loss, up to 3 profit targets, and a confidence score.
 
 ### 3.2 The Components
 
-The algorithm consists of 17 functional components plus a unified signal generator, each derived from specific PDFs:
+The algorithm consists of 21 functional components plus a unified signal generator, each derived from specific PDFs:
 
 ---
 
@@ -406,7 +409,75 @@ Otherwise → NEUTRAL
 
 ---
 
-#### Component 17: Unified Signal Generation
+#### Component 17: Shephard Key Cycle Alignment (NEW — from PDF 18 page-by-page study)
+
+**What it does:** Checks if elapsed time between two dates aligns with Shephard's key cycle numbers.
+
+**Key cycles (PDF 18, pp.85-86, 130, 148):**
+```
+631 = half of 1262 (1260 in calendar days)
+668 = half of 1336 (Earth cycle squared)
+840 = 1/3 of 2520 (360 weeks)
+1260 = "a time, times, and half a time" (360 + 720 + 180)
+1290 = 1260 + biblical leap month of 30 days
+1336 = 3.6525 × 365.25 = Earth orbital cycle squared
+Also checks: Mars (687), Venus (224), Week Hours (168), Fatal (49)
+```
+
+**Why added:** Page-by-page study revealed these specific numbers appear at virtually every major S&P 500 reversal but were missing from the algorithm.
+
+---
+
+#### Component 18: Gann's Fatal Number Analysis (NEW — from PDF 18 page-by-page study)
+
+**What it does:** Checks if price or elapsed time is near a multiple of 49 (Gann's "Fatal Number").
+
+**The math (PDF 18, pp.86, 100):**
+```
+Fatal Number = 49 = 7²
+Multiples: 49, 98, 147, 196, 245, 294, 343, 392, 441, 490
+343 = 7 × 49 — the number behind "343 + 343 years"
+490 = 10 × 49 — "Gann's Fatal Number of 490"
+```
+
+**Why added:** Shephard (p.86) explicitly states "49 was often quoted by WD Gann as the Fatal Number." Added to signal confidence scoring (+0.05).
+
+---
+
+#### Component 19: Planetary Cycle Windows (NEW — from PDF 18 page-by-page study)
+
+**What it does:** Projects future reversal dates using Gann percentage divisions of planetary cycle lengths.
+
+**Key cycles (PDF 18, pp.67, 71, 75, 108):**
+```
+Mars = 687 days — "458 is 66.6% of 687, the Mars orbit cycle"
+Venus = 224 days — "672 = 3 × 224 = 4 × 168"
+Week = 168 days — "168 hours in our week... can appear in any time period"
+Wheel = 2520 days — "360 weeks in degrees"
+Each divided by Gann percentages: 12.5%, 25%, 33.3%, 37.5%, 50%, ...
+Extended to: 125%, 133.3%, 150%, 200%, 300%
+```
+
+**Why added:** These specific planetary cycles and their Gann percentage divisions were not in the algorithm despite being extensively documented in Shephard.
+
+---
+
+#### Component 20: Cumulative Range Check (NEW — from PDF 18 page-by-page study)
+
+**What it does:** Checks if consecutive price ranges, when added together, equal key Gann cycle numbers.
+
+**Examples from PDF 18:**
+```
+p.110: 186 + 58 + 93 = 337 = 2×168 = 50% of 687
+p.96: 627 + 210 + 421 = 1258 ≈ 1260
+p.135: 1412 + 807 + 454 = 2673 = 2 × 1336
+```
+
+**Why added:** This "cumulative range" technique provides hidden confirmation that a market is aligned with a major cycle. Completely absent from the algorithm prior to page-by-page study.
+
+---
+
+#### Component 21: Unified Signal Generation
 
 **What it does:** Combines ALL of the above into a single trading decision.
 
@@ -466,7 +537,7 @@ FOR each bar in historical OHLC data:
         Check timeout → exit remaining position after 72 bars maximum
     
     IF no position AND enough history bars:
-        Generate unified signal (all 17 components)
+        Generate unified signal (all 21 components)
         IF signal ≠ NEUTRAL AND confidence ≥ 0.25 AND R:R ≥ 2.5:1:
             Calculate position size (max 10% account risk)
             ENTER trade with slippage applied
@@ -501,7 +572,9 @@ Price Data (High, Low, Close, History)
         │
         ├──→ [7] Hexagon Chart ──→ 60°-360° levels ──→ Near level? (+0.05)
         │
-        └──→ [8] R:R Check ──→ ≥ 2.5:1? (+0.15 / −0.10)
+        ├──→ [8] Fatal Number ──→ 49 multiples ──→ Near level? (+0.05) ★
+        │
+        └──→ [9] R:R Check ──→ ≥ 2.5:1? (+0.15 / −0.10)
                     │
                     ▼
             ┌──────────────┐
@@ -544,4 +617,4 @@ result.export_csv('results.csv')
 
 ---
 
-*This summary consolidates the findings from decrypting W.D. Gann's "Tunnel Thru the Air" using techniques from all twenty-one companion PDFs, and documents how those findings were integrated into the backtestable trading algorithm.*
+*This summary consolidates the findings from decrypting W.D. Gann's "Tunnel Thru the Air" using techniques from all twenty-one companion PDFs, and documents how those findings were integrated into the backtestable trading algorithm. Page-by-page study proof is available in [`PDF_STUDY_LOG.md`](PDF_STUDY_LOG.md).*
