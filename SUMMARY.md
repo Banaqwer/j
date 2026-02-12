@@ -477,7 +477,48 @@ p.135: 1412 + 807 + 454 = 2673 = 2 × 1336
 
 ---
 
-#### Component 21: Unified Signal Generation
+#### Component 21: Jensen Critical-Point Time Analysis (NEW — from Jensen Astro-Cycles 1978, pp.108-113)
+
+**What it does:** Checks if the elapsed calendar days from a major high or low falls on a "critical point" — a harmonic of 90° in time.
+
+**Source Teaching (Jensen, p.108):** "In measuring time count from a major hi or low in calendar days, weeks or months for critical areas in time. This coincides with the 88, 44 and 22 day cycles of Mercury, viz, 90, 45 and 22½."
+
+**Method:** `jensen_critical_points(reference_date, current_date)`
+- Counts elapsed calendar days (including weekends — Jensen insists on all 7 days)
+- Checks proximity to JENSEN_CRITICAL_POINTS: 7.5, 11.25, 15, 22.5, 30, 45, 60, 67.5, 75, 90, 105, 120, 135, 150, 165, 180, 225, 270, 315, 360
+- Critical window = within ±2 days
+- Contributes +0.05 confidence when in window
+
+---
+
+#### Component 22: Jensen Five-Phase Intermediate Trend (NEW — from Jensen Astro-Cycles 1978, pp.121-122)
+
+**What it does:** Classifies price action into Jensen's five-phase intermediate trend model.
+
+**Source Teaching (Jensen, p.122):** "An intermediate trend usually has five phases, three in its direction and two corrective minor trends. It is almost axiomatic that the third phase of an intermediate uptrend is the largest and longest because by that time people feel the future profit..."
+
+**Method:** `five_phase_trend(prices)`
+- Detects swing highs and lows using 3-bar pivot method
+- Counts directional vs corrective waves
+- Phase 5 = "blowoff" phase — most dangerous, largest, longest
+- Contributes +0.05 confidence when in blowoff phase
+
+---
+
+#### Component 23: Jensen Vectorial Price-Time Projection (NEW — from Jensen Astro-Cycles 1978, pp.124-126)
+
+**What it does:** Projects a price-time exhaustion point using dual-angle convergence.
+
+**Source Teaching (Jensen, p.125):** "Project one angle [45°] on the low close day and a lesser angle [60°] on the first preceding low close day; the crossing will estimate exhaustion in time and price."
+
+**Method:** `vectorial_projection(first_low_price, second_low_price, days_between)`
+- 45° line from first low: rises 1 unit per day (average velocity)
+- 60° line from second low: rises at tan(60°) ≈ 1.732 units per day (resistance angle)
+- Convergence = projected top in both price and time
+
+---
+
+#### Component 24: Unified Signal Generation
 
 **What it does:** Combines ALL of the above into a single trading decision.
 
@@ -516,6 +557,12 @@ STEP 7: Calculate position size
          → Max risk = 10% of account size
          → Position = max_risk ÷ (entry − stop_loss)
 
+STEP 7a: Check Jensen critical time points (if date available)
+          → If elapsed days from pivot ≈ harmonic of 90 (+0.05 confidence)
+
+STEP 7b: Check Jensen five-phase intermediate trend
+          → If in blowoff phase 5 (+0.05 confidence, caution flag)
+
 STEP 8: Output signal
          → Direction: BUY / SELL / NEUTRAL
          → Entry price, stop loss, up to 3 targets
@@ -537,7 +584,7 @@ FOR each bar in historical OHLC data:
         Check timeout → exit remaining position after 72 bars maximum
     
     IF no position AND enough history bars:
-        Generate unified signal (all 21 components)
+        Generate unified signal (all 24 components)
         IF signal ≠ NEUTRAL AND confidence ≥ 0.25 AND R:R ≥ 2.5:1:
             Calculate position size (max 10% account risk)
             ENTER trade with slippage applied

@@ -349,17 +349,29 @@
 
 ### PDF 19: "1978 Astro-Cycles and Speculative Markets" by L.J. Jensen (143 pages)
 
-**About:** A comprehensive book on astro-economic interpretation, linking planetary cycles to business trends, stock prices, commodities, and mass psychology. Published by Lambert-Gann.
+**About:** A comprehensive book on astro-economic interpretation, linking planetary cycles to business trends, stock prices, commodities, and mass psychology. Published by Lambert-Gann. **Newly OCR-readable** — 139 text pages, 258,360 chars extracted page-by-page. Full extraction in PDF_EXTRACTIONS_PART6.md.
 
 **Key Teachings (Beneficial for Algorithm):**
 
-- **Law of Vibration as Universal Principle:** Sound, light, heat, and markets are all forms of vibration occupying niches in the "huge vibrational spectrum of nature."
-- **Planetary Cycles as Economic Causes:** Jupiter-Saturn conjunction (~20 years) is the most reliable business cycle. The 60-year cycle is when all seven visible planets realign.
-- **Uranus Cycle (84 years):** Governs generational shifts and long-term structural changes.
-- **Mundane Astrology for Markets:** Each country, commodity, and exchange has rulerships tied to zodiacal signs. Specific planetary transits over these signs affect specific markets.
-- **Eclipses and Markets:** Major eclipses often coincide with major market turns. Progressed eclipses in natal charts can close exchanges.
-- **Charting = Time + Price Coupling:** Section III uses simple charting where the arithmetic scale is critical — logarithmic scales destroy the time-price relationship.
-- **Resistance, Objective, and Trend:** Three fundamental chart concepts. Resistance levels come from prior highs/lows; objectives from measured moves; trend from the angle of advance/decline.
+- **Law of Vibration as Universal Principle** (pp.5-6, 9-10): Sound, light, heat, and markets are all forms of vibration occupying niches in the "huge vibrational spectrum of nature." Cosmic radiation permeates the atmosphere with penetrating power — "millions of atoms are broken up in every human body every second."
+- **Sunspot Cycle ≈ 11.2 years** (pp.7-8): Direct correlation with business cycle prosperity/depression, tree rings, fur-bearing animal pelts, ultra-violet radiation.
+- **Planetary Cycles as Economic Causes** (pp.10-11, 35-36): Jupiter-Saturn conjunction (~20 years) is the most reliable business cycle. When Saturn, Uranus, and Jupiter are 90°/180° apart = depression; when 60°/120° apart = prosperity. Confirmed 13 for 13 unfavorable aspects = decline.
+- **Uranus 84-Year Epoch Cycle** (pp.12-20): North American economic epochs align with Uranus returning to 8-9° Gemini: 1523 → 1607 → 1691 → 1775 → 1859 → 1943 → 2027. Each transition accompanied by "tremendous and chaotic circumstances."
+- **Jupiter-Saturn 20-Year Conjunction Cycle** (pp.11, 14-15): When in earth signs (Taurus/Virgo/Capricorn) → political upheaval, currency crises. Every president elected during these conjunctions since 1840 died in office.
+- **Moon's Node 18.6-Year Cycle** (pp.69-73): Square aspects to the 8-9° Gemini critical point mark major stock market lows. Lows after sextiles differ in intensity from lows after trines.
+- **Mundane Astrology for Markets** (pp.25-30): Each country and city has zodiacal rulerships computed from the Pyramid of Gizeh (31° 07½' East Longitude = 0° Taurus). The 12×12 = 144 Dwadasamsas sub-divisions give precise rulerships.
+- **Planetary Aspects Classification** (pp.35-40): 30°/60°/120° = favorable (expansion); 90°/180° = unfavorable (compression); 45°/135° = valuable indicators.
+- **Geometrical Charting Fundamentals** (pp.101-113): Time and price units MUST be identical (1:1 ratio). The square of 90 is the base unit. Show every calendar day, not just trading days. Harmonics of 90° = days of resistance from major highs/lows. Mercury's 88-day cycle ≈ 90.
+- **Five-Phase Intermediate Trend** (pp.121-122): 3 directional + 2 corrective = complete intermediate cycle. "The third phase is the largest and longest because by that time people feel the future profit..." = blowoff.
+- **Vectorial Price-Time Projection** (pp.124-126): 45° angle from first low + 60° from second low → convergence estimates exhaustion in time and price. The Dow Jones Industrials average velocity = 45° (one-half of π/2 radians). Associated price resistance factor = 60°.
+- **Eclipses and Markets** (p.42): Major eclipses coincide with major market turns.
+- **Charting = Time + Price Coupling** (pp.105-107): Arithmetic scale is critical — logarithmic scales destroy the time-price relationship. "Any change or revision in the basic premises destroys its effectiveness."
+
+**Algorithm Implementation:**
+- `jensen_critical_points()` — checks elapsed days from pivot against harmonics of 90
+- `five_phase_trend()` — classifies current phase in 5-phase intermediate trend
+- `vectorial_projection()` — projects price-time exhaustion from dual-angle convergence
+- Constants: `URANUS_CYCLE_YEARS`, `JUPITER_SATURN_CYCLE_YEARS`, `BULLISH_ASPECTS`, `BEARISH_ASPECTS`, `MOON_NODE_CYCLE_YEARS`, `JENSEN_CRITICAL_POINTS`, `MERCURY_CYCLE_DAYS`
 
 ---
 

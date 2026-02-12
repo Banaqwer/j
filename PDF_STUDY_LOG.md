@@ -16,7 +16,8 @@ Every page of every text-extractable PDF has been extracted verbatim into the fo
 | [PDF_EXTRACTIONS_PART3.md](PDF_EXTRACTIONS_PART3.md) | Shephard Gann Cycles Course (148 pages) | 147 | 184,244 |
 | [PDF_EXTRACTIONS_PART4.md](PDF_EXTRACTIONS_PART4.md) | 1978 Astro-Cycles & George Bayer Book III | 276 | 591,308 |
 | [PDF_EXTRACTIONS_PART5.md](PDF_EXTRACTIONS_PART5.md) | Tunnel Thru the Air (432 pages) | 427 | 651,316 |
-| **TOTAL** | **17 text-extractable PDFs** | **1,019** | **1,756,317** |
+| [PDF_EXTRACTIONS_PART6.md](PDF_EXTRACTIONS_PART6.md) | **Re-uploaded OCR-fixed docs:** Jensen Astro-Cycles (139p), Shephard re-upload (147p), Bayer re-upload (134p) | 420 | 848,022 |
+| **TOTAL** | **17 text-extractable PDFs + 3 re-uploads** | **1,439** | **2,604,339** |
 
 **4 image-only PDFs** (no extractable text — scanned pages only):
 
@@ -24,10 +25,10 @@ Every page of every text-extractable PDF has been extracted verbatim into the fo
 |---|---------------|-------------|-------|------|
 | 1 | `344593197-Walker-Myles-Wilson-Super-Timing-W-D-Ganns-Astrological-Method-pdf.pdf` | Super Timing (Walker) | 186 | 0 chars |
 | 2 | `512911483-WD-Gann-Astro-Cycles.pdf` | WD Gann Astro Cycles | 77 | 0 chars |
-| 3 | `WDGann_The_Basis_Of_My_Forecasting_Method.pdf` | Basis of My Forecasting Method | 34 | 201 chars (title page only) |
-| 4 | `pdfcoffee.com-plummer-tony-the-law-of-vibration_compressed.pdf` | The Law of Vibration (Plummer) | 225 | 0 chars |
+| 3 | `WDGann_The_Basis_Of_My_Forecasting_Method.pdf` | Basis of My Forecasting Method (re-uploaded, still image) | 34 | 201 chars (title page only) |
+| 4 | `pdfcoffee.com-plummer-tony-the-law-of-vibration_compressed.pdf` | The Law of Vibration (Plummer, re-uploaded, still image) | 225 | 0 chars |
 
-These 4 PDFs (522 pages total) contain only scanned images with no embedded text layer. They would require OCR (optical character recognition) to extract content, which is beyond the current text extraction capability.
+**Note:** Documents 3 and 4 were re-uploaded by the user but remain image-only. Document `Book_1978_Gann_Astro Cycles And Speculative methods.pdf` was successfully OCR-converted and is now fully extractable (258K chars, see Part 6).
 
 ---
 

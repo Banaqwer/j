@@ -61,7 +61,10 @@ This algorithm synthesizes the teachings from twenty-one W.D. Gann PDF documents
     Gann percentage levels, sections/waves, squaring price/time from different points.
 
 19. "1978 Astro-Cycles and Speculative Markets" (L.J. Jensen) - Law of Vibration
-    as universal principle; planetary cycles as economic causes; arithmetic scale charting.
+    as universal principle; planetary cycles as economic causes; arithmetic scale
+    charting; 84-year Uranus epoch cycle; Jupiter-Saturn 20-year conjunction cycle;
+    Moon's Node 18.6-year business cycle; five-phase intermediate trend structure;
+    vectorial 45°+60° price-time projection; Mercury 88-day harmonics.
 
 20. "W.D. Gann — The Basis of My Forecasting Method" - Gann's foundational paper
     on mathematical forecasting (image-based).
@@ -284,6 +287,56 @@ DIATONIC_FRACTIONS = {
     "So": 0.5, "La": 0.625, "Ti": 0.75, "Do2": 0.875,
 }
 
+# ---------------------------------------------------------------------------
+# Constants from L.J. Jensen "Astro-Cycles and Speculative Markets" (1978)
+# Book_1978_Gann_Astro Cycles And Speculative methods.pdf
+# (Previously image-only, newly OCR-readable with 258K chars, 139 text pages)
+# ---------------------------------------------------------------------------
+
+# Uranus 84-year epoch cycle — North American economic epochs align with
+# Uranus returning to 8-9° Gemini (Jensen, Section I, Chapter 5, pp.17-20)
+# 1523 → 1607 → 1691 → 1775 → 1859 → 1943 → 2027
+URANUS_CYCLE_YEARS = 84
+URANUS_EPOCH_YEARS = [1523, 1607, 1691, 1775, 1859, 1943, 2027]
+
+# Jupiter-Saturn conjunction cycle ~20 years (Jensen, pp.11-16)
+# When in earth signs → political upheaval, credit problems
+# Election years: 1840, 1860, 1880, 1900, 1920, 1940, 1960, 1980, 2000, 2020
+JUPITER_SATURN_CYCLE_YEARS = 20
+
+# Planetary aspect angles and their market effects (Jensen, pp.35-40, 68-69)
+# Favorable (bullish/expansion): 60° sextile, 120° trine
+# Unfavorable (bearish/compression): 90° square, 180° opposition
+# Intermediate: 30° semi-sextile, 45° semi-square, 150° quincunx
+BULLISH_ASPECTS = [60, 120]
+BEARISH_ASPECTS = [90, 180]
+
+# Moon's Node 18.6-year cycle (Jensen, pp.69-73)
+# Square aspects mark major lows; interacts with 8-9° Gemini critical point
+MOON_NODE_CYCLE_YEARS = 18.6
+
+# Five-phase intermediate trend structure (Jensen, Section IV, pp.121-122)
+# 3 directional waves + 2 corrective waves = complete intermediate trend
+INTERMEDIATE_TREND_PHASES = 5
+
+# Jensen's key timing principle: count from major high or low in calendar
+# days/weeks/months for critical areas at harmonics of 90 (Jensen, p.108-110)
+# "Always use every calendar day — forces operate 7 days a week, 24 hours"
+JENSEN_CRITICAL_POINTS = [
+    7.5, 11.25, 15, 22.5, 30, 45, 60, 67.5, 75, 90,
+    105, 120, 135, 150, 165, 180, 225, 270, 315, 360
+]
+
+# Vectorial price-time angles for projection (Jensen, Section IV, pp.124-126)
+# 45° is the average velocity of Dow Jones Industrials
+# 60° is the associated price resistance factor
+# Convergence of 45° from first low + 60° from second low = exhaustion point
+JENSEN_VELOCITY_ANGLE = 45
+JENSEN_RESISTANCE_ANGLE = 60
+
+# Mercury cycles (harmonics of 90): 88, 44, 22 day cycles (Jensen, p.108)
+MERCURY_CYCLE_DAYS = 88
+
 
 # ---------------------------------------------------------------------------
 # Data classes for structured output
@@ -490,6 +543,53 @@ class MinorTrendTurnResult:
     matching_day: Optional[int]     # e.g. 3, 4, 7, 14, 21, 42, 45, 49
     is_minor_turn_window: bool      # True if within ±1 day of a key count
     significance: str               # "high", "medium", "low"
+
+
+@dataclass
+class JensenCriticalResult:
+    """Result from Jensen's critical-point time analysis.
+
+    Source: L.J. Jensen "Astro-Cycles" (1978), Section III, pp.108-113.
+    "Count from a major high or low in calendar days, weeks or months
+    for critical areas in time at harmonics of 90."
+    """
+    reference_date: str
+    current_date: str
+    elapsed_days: int
+    nearest_critical: float   # nearest critical point value
+    distance_days: float      # how many days away from critical point
+    is_critical_window: bool  # within ±2 days of a critical point
+    cycle_label: str          # e.g. "90-day", "180-day", "360-day"
+
+
+@dataclass
+class FivePhaseTrendResult:
+    """Result from Jensen's five-phase intermediate trend analysis.
+
+    Source: Jensen Section IV, pp.121-122.
+    "An intermediate trend usually has five phases: three in its
+    direction and two corrective minor trends."
+    """
+    current_phase: int         # 1-5 (1,3,5 = directional; 2,4 = corrective)
+    phase_label: str           # "directional_1", "corrective_1", etc.
+    trend_direction: str       # "UP" or "DOWN"
+    is_blowoff_phase: bool     # True if in phase 5 (most dangerous)
+    swing_count: int           # total number of swings detected
+
+
+@dataclass
+class VectorialProjection:
+    """Result from Jensen's vectorial price-time projection.
+
+    Source: Jensen Section IV, pp.124-126.
+    "A 45° angle from the first low and a 60° angle from the second
+    low; the convergence estimates exhaustion in time and price."
+    """
+    projected_price: float
+    projected_days: int        # calendar days from second low to convergence
+    angle_45_origin: float     # price of first low
+    angle_60_origin: float     # price of second low
+    days_between_lows: int     # calendar days between first and second low
 
 
 # ---------------------------------------------------------------------------
@@ -2157,6 +2257,220 @@ class GannAnalyzer:
         )
 
     # ------------------------------------------------------------------
+    # Jensen's Critical-Point Time Analysis
+    #   Source: L.J. Jensen "Astro-Cycles" (1978), Section III, pp.108-113
+    #   "In measuring time count from a major hi or low in calendar days,
+    #   weeks or months for critical areas in time."
+    #   Harmonics of 90: 22.5, 45, 67.5, 90, 105, 120, 135, 180, 270, 360
+    # ------------------------------------------------------------------
+
+    def jensen_critical_points(
+        self,
+        reference_date: str,
+        current_date: str,
+    ) -> JensenCriticalResult:
+        """Check if elapsed calendar days from a reference date hit a Jensen
+        critical point — a harmonic of 90° time division.
+
+        Jensen (p.108): "The 90° angle is the symbol of the meeting of force
+        and resistance... all harmonical points of 90, or from 0 to 360,
+        represent days, weeks or months of resistance from a major high or low.
+        This coincides with the 88, 44 and 22 day cycles of Mercury."
+
+        Parameters
+        ----------
+        reference_date, current_date : str  (``YYYY-MM-DD``)
+        """
+        ref_dt = datetime.strptime(reference_date, "%Y-%m-%d")
+        cur_dt = datetime.strptime(current_date, "%Y-%m-%d")
+        elapsed = (cur_dt - ref_dt).days
+
+        best_dist = float("inf")
+        best_cp = 0.0
+        for cp in JENSEN_CRITICAL_POINTS:
+            # Check raw and multiples of 360 (full circle repetitions).
+            # We need enough multiples to cover elapsed days; dividing by
+            # 300 (slightly less than 360) gives a safe upper bound for
+            # the number of full-circle repetitions to check.
+            full_circles = max(1, elapsed // 300) + 2
+            for mult in range(0, full_circles):
+                val = cp + mult * 360
+                dist = abs(elapsed - val)
+                if dist < best_dist:
+                    best_dist = dist
+                    best_cp = val
+
+        is_window = best_dist <= 2
+
+        if best_cp <= 0:
+            label = "origin"
+        elif best_cp % 360 == 0:
+            label = f"{int(best_cp)}d-full-cycle"
+        elif best_cp % 90 == 0:
+            label = f"{int(best_cp)}d-cardinal"
+        elif best_cp % 45 == 0:
+            label = f"{int(best_cp)}d-diagonal"
+        else:
+            label = f"{best_cp}d-harmonic"
+
+        return JensenCriticalResult(
+            reference_date=reference_date,
+            current_date=current_date,
+            elapsed_days=elapsed,
+            nearest_critical=best_cp,
+            distance_days=best_dist,
+            is_critical_window=is_window,
+            cycle_label=label,
+        )
+
+    # ------------------------------------------------------------------
+    # Jensen's Five-Phase Intermediate Trend
+    #   Source: Jensen Section IV, pp.121-122
+    #   "An intermediate trend usually has five phases, three in its
+    #   direction and two corrective minor trends."
+    # ------------------------------------------------------------------
+
+    def five_phase_trend(
+        self,
+        prices: List[float],
+    ) -> FivePhaseTrendResult:
+        """Classify the current position within Jensen's five-phase
+        intermediate trend model.
+
+        Jensen (pp.121-122): The intermediate upward trend has:
+        Phase 1 — initial upward move (small)
+        Phase 2 — first corrective minor downtrend
+        Phase 3 — second upswing
+        Phase 4 — second corrective setback
+        Phase 5 — third upswing / blowoff (largest and longest)
+
+        "It is almost axiomatic that the third phase of an intermediate
+        uptrend is the largest and longest because by that time people
+        feel the future profit..."
+
+        Parameters
+        ----------
+        prices : List[float]
+            Recent price history (at least 20 values recommended).
+        """
+        n = len(prices)
+        if n < 10:
+            return FivePhaseTrendResult(
+                current_phase=1,
+                phase_label="insufficient_data",
+                trend_direction="NEUTRAL",
+                is_blowoff_phase=False,
+                swing_count=0,
+            )
+
+        # Detect swing highs and lows (simple 3-bar pivot method)
+        # Each swing is (index, type "H"/"L", price)
+        swings: List[Tuple[int, str, float]] = []
+        for i in range(1, n - 1):
+            if prices[i] > prices[i - 1] and prices[i] > prices[i + 1]:
+                swings.append((i, "H", prices[i]))
+            elif prices[i] < prices[i - 1] and prices[i] < prices[i + 1]:
+                swings.append((i, "L", prices[i]))
+
+        # Determine overall direction by first and last significant prices
+        direction = "UP" if prices[-1] > prices[0] else "DOWN"
+
+        # Count directional and corrective waves
+        # A directional wave moves with the trend; corrective moves against
+        wave_count = 0
+        prev_type = None
+        for _idx, stype, _price in swings:
+            if stype != prev_type:
+                wave_count += 1
+                prev_type = stype
+
+        # Map wave count to phase
+        phase = min(wave_count, INTERMEDIATE_TREND_PHASES)
+        if phase == 0:
+            phase = 1
+
+        phase_labels = {
+            1: "directional_1",
+            2: "corrective_1",
+            3: "directional_2",
+            4: "corrective_2",
+            5: "directional_3_blowoff",
+        }
+
+        return FivePhaseTrendResult(
+            current_phase=phase,
+            phase_label=phase_labels.get(phase, f"phase_{phase}"),
+            trend_direction=direction,
+            is_blowoff_phase=(phase >= 5),
+            swing_count=len(swings),
+        )
+
+    # ------------------------------------------------------------------
+    # Jensen's Vectorial Price-Time Projection
+    #   Source: Jensen Section IV, pp.124-126
+    #   "A 45° angle on the low close day and a lesser angle [60°] on the
+    #   first preceding low close day; the crossing will estimate
+    #   exhaustion in time and price."
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def vectorial_projection(
+        first_low_price: float,
+        second_low_price: float,
+        days_between: int,
+    ) -> VectorialProjection:
+        """Project a price-time exhaustion point using Jensen's dual-angle
+        convergence method.
+
+        Jensen (pp.125-126): From the first (higher) preceding low, project
+        a 45° angle upward. From the second (lower) low, project a 60° angle
+        upward. Where they converge is the estimated exhaustion (potential
+        top) in both time and price.
+
+        The 45° angle rises at 1 price-unit per time-unit (tan(45°) = 1).
+        The 60° angle rises at tan(60°) ≈ 1.732 price-units per time-unit.
+
+        Parameters
+        ----------
+        first_low_price : float
+            Price at the first (earlier, usually higher) low.
+        second_low_price : float
+            Price at the second (later, usually lower) low.
+        days_between : int
+            Calendar days between the two lows.
+        """
+        # 45° line from first low: P = first_low + t (where t starts at 0)
+        # 60° line from second low: P = second_low + tan(60°) * (t - days_between)
+        # At convergence: first_low + t = second_low + 1.7321 * (t - days_between)
+        tan60 = math.tan(math.radians(JENSEN_RESISTANCE_ANGLE))  # ≈ 1.7321
+
+        denominator = tan60 - 1.0
+        if abs(denominator) < 1e-10:
+            # Degenerate case — parallel lines
+            return VectorialProjection(
+                projected_price=second_low_price,
+                projected_days=0,
+                angle_45_origin=first_low_price,
+                angle_60_origin=second_low_price,
+                days_between_lows=days_between,
+            )
+
+        # t measured from first_low date
+        t_converge = (second_low_price - first_low_price
+                      + tan60 * days_between) / denominator
+        projected_price = first_low_price + t_converge
+        # Days from second low
+        projected_days_from_second = max(0, int(t_converge - days_between))
+
+        return VectorialProjection(
+            projected_price=round(projected_price, 2),
+            projected_days=projected_days_from_second,
+            angle_45_origin=first_low_price,
+            angle_60_origin=second_low_price,
+            days_between_lows=days_between,
+        )
+
+    # ------------------------------------------------------------------
     # 8. TREND CONFIRMATION (from Gann Angle theory)
     #    Source: PDF 5
     # ------------------------------------------------------------------
@@ -2454,6 +2768,33 @@ class GannAnalyzer:
                     f"At diatonic '{mtf.diatonic_note}' shock point in "
                     f"192-day octave #{mtf.current_octave} "
                     f"(day {mtf.position_in_octave}/192, PDF 6 pp.5-8)"
+                )
+
+        # Check Jensen critical time points (Jensen Astro-Cycles, pp.108-113)
+        # "Count from a major high or low in calendar days for critical areas."
+        if current_date and prices_history and len(prices_history) >= 30:
+            cur_dt = datetime.strptime(current_date, "%Y-%m-%d")
+            ref_date_proxy = (
+                cur_dt - timedelta(days=len(prices_history))
+            ).strftime("%Y-%m-%d")
+            jcp = self.jensen_critical_points(ref_date_proxy, current_date)
+            if jcp.is_critical_window:
+                confidence += 0.05
+                reasons.append(
+                    f"Jensen critical time point: {jcp.cycle_label} "
+                    f"(day {jcp.elapsed_days}, Jensen pp.108-113)"
+                )
+
+        # Check Jensen five-phase intermediate trend (Jensen, pp.121-122)
+        # "The 3rd directional phase is the largest and longest — blowoff."
+        if prices_history and len(prices_history) >= 20:
+            fpt = self.five_phase_trend(prices_history)
+            if fpt.is_blowoff_phase:
+                confidence += 0.05
+                reasons.append(
+                    f"Jensen five-phase: in blowoff phase 5 "
+                    f"({fpt.swing_count} swings, trend={fpt.trend_direction}, "
+                    f"Jensen pp.121-122)"
                 )
 
         # Cap confidence at 1.0
