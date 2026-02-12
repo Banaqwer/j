@@ -2,7 +2,7 @@
 W.D. Gann Unified Trading Algorithm
 ====================================
 
-This algorithm synthesizes the teachings from seven W.D. Gann PDF documents:
+This algorithm synthesizes the teachings from twenty-one W.D. Gann PDF documents:
 
 1. "20 Years of Studying Gann" - Cycles of repetition, Law of Vibration, numerology,
    the importance of time cycles with ~10% inversion rate, vibrational trading ranges.
@@ -27,26 +27,74 @@ This algorithm synthesizes the teachings from seven W.D. Gann PDF documents:
    complete trading methodology in veiled language; cycles, inventions as metaphors,
    and the importance of time as the dominant factor.
 
+8. "144 Square" - The 144 Square as a lattice mapping a multidimensional market
+   into 2D; time-price configurations, gravity centers, stacking squares.
+
+9. "1931 Usage of Gann SQ9 Hexagon Chart" - Hexagonal number arrangement, circle
+   completions (1,7,19,37,61,...), the 20-year cycle as a cube.
+
+10. "TS Vector 2" (Sergey Tarasov) - Price-time Universe with Euclidean metric,
+    vector distance as harmonic angles (360°, 720°, 1080°).
+
+11. "Gann's Master Mathematical Formula" (Daniel T. Ferrera) - Square of 52,
+    fractal/musical octave nesting of squares at seasonal cardinal points.
+
+12. "Understanding Gann Price and Time Cycle" - Range percentage divisions (1/8ths
+    and 1/3rds), price-as-time squaring, important day/week/month counts.
+
+13. "Gann's Master Time Factor" (Flanagan) - The $3,000 Master Time Factor =
+    annual forecast from 7/10/20/30/60-year major time cycles.
+
+14. "George Bayer Book III" - Astro-cycles, market natal charts, eclipses closing
+    markets, ephemerides from 1536 validating centuries of cycle repetition.
+
+15. "A Moon Beam Thru the Tunnel" (Amundsen) - Lunar Return as the hidden key
+    to the Tunnel novel; Venus-Mars conjunctions in Cancer as timing mechanism.
+
+16. "Jenkins UnEncrypted" (Michael S. Jenkins) - Complete trading course covering
+    angles, arcs, Square of Nine, P=t^2 proof, mirror image foldbacks, 60-year cycle.
+
+17. "1953 Mathematical Formula for Market Predictions" (W.D. Gann) - Great Cycle
+    of 144^2 = 20,736; Master Numbers (3,5,7,9,12); strongest resistance fractions.
+
+18. "Charles Shephard Gann Cycles Course" - Swing chart mechanical trading method,
+    Gann percentage levels, sections/waves, squaring price/time from different points.
+
+19. "1978 Astro-Cycles and Speculative Markets" (L.J. Jensen) - Law of Vibration
+    as universal principle; planetary cycles as economic causes; arithmetic scale charting.
+
+20. "W.D. Gann — The Basis of My Forecasting Method" - Gann's foundational paper
+    on mathematical forecasting (image-based).
+
+21. "The Law of Vibration" (Tony Plummer) - Formal treatment of vibration theory
+    applied to financial markets (image-based).
+
 Key Cross-Document Similarities / Merged Concepts:
 ---------------------------------------------------
 - TIME is the dominant factor; price follows time (all documents).
-- Square root relationships underpin price level calculations (PDFs 4, 5).
+- Square root relationships underpin price level calculations (PDFs 4, 5, 9, 12, 16).
 - The number 360 (full circle) and its divisions (90, 180, 45, etc.) are
-  fundamental to both angle and price calculations (PDFs 4, 5, 6).
+  fundamental across all mathematical PDFs (4, 5, 6, 8, 9, 10, 11, 12, 17).
 - The Square of 9 wheel arranges prices in a spiral; key levels occur at
   cardinal (0/90/180/270) and diagonal (45/135/225/315) cross points (PDFs 4, 5).
 - Gann angles define support/resistance using degree factors derived from
   the ratio of price-to-time units (PDF 5 primary, PDF 4 confirms).
 - Volatility integration makes static Gann methods dynamic for intraday
-  use (PDF 5).
+  use (PDF 5). Higher prices → faster swings (PDF 8).
 - Number vibrations (digit reduction to single digit) reveal hidden symmetry
   in price and percentage moves; the 3-6-9 pattern and 144 cycle (PDF 6).
 - Price-Time Squaring: when P = T^2 or T = sqrt(P), trend changes are
-  imminent (PDF 4).
+  imminent (PDFs 4, 11, 12, 16, 17, 18).
 - Cycle analysis: repeating time intervals from historical pivots predict
-  future turning points; ~10% inversion rate expected (PDF 1, 7).
+  future turning points; ~10% inversion rate expected (PDFs 1, 7, 13, 16, 18).
+- Range percentage divisions (1/8ths and 1/3rds) apply to BOTH price AND time
+  (PDFs 11, 12, 17, 18). The 50% level is the "center of gravity."
+- Fractal/nested structure: inner squares are musical octaves (half size) at
+  solstice points; markets are self-similar across timeframes (PDFs 8, 11, 17).
+- Seasonal cardinal timing: year begins March 21; equinoxes and solstices
+  define primary timing framework (PDFs 11, 12, 19).
 - Risk management: small stop-losses, max 10% account per trade, minimum
-  1:2.5 reward-to-risk ratio (PDF 4).
+  1:2.5 reward-to-risk ratio (PDFs 1, 4, 18).
 
 Usage:
 ------

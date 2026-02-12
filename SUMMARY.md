@@ -107,6 +107,14 @@ The following Tunnel revelations are **already implemented** in the algorithm:
 | **Semi-Annual Pivot from January/July** | `semi_annual_pivot()` calculates 6-month directional bias from OHLC of Jan/Jul 1st–14th | `gann_trading_algorithm.py` → `GannAnalyzer.semi_annual_pivot()` |
 | **Volatility makes static methods dynamic** | `dynamic_gann_levels()` uses daily volatility to project expected range, then applies Gann angles to the projected range | `gann_trading_algorithm.py` → `GannAnalyzer.dynamic_gann_levels()` |
 | **SQ9 vs SQ12 based on annual volatility** | `choose_dynamic_square()` selects Square of 9 (annual vol < 40%) or Square of 12 (12² = 144 levels, annual vol > 40%) | `gann_trading_algorithm.py` → `GannAnalyzer.choose_dynamic_square()` |
+| **Hexagon chart angular levels** | `hexagon_levels()` projects support/resistance from hexagonal ring geometry (60°, 120°, 180°, 240°, 300°, 360°) | `gann_trading_algorithm.py` → `GannAnalyzer.hexagon_levels()` |
+| **Range percentage divisions** | `range_percentage_levels()` divides any range by Gann's 1/8th and 1/3rd percentages for support, resistance, and extensions | `gann_trading_algorithm.py` → `GannAnalyzer.range_percentage_levels()` |
+| **Squaring price in time** | `square_price_in_time()` converts price to future calendar dates using Gann percentage divisions | `gann_trading_algorithm.py` → `GannAnalyzer.square_price_in_time()` |
+| **Master 144 Square (Great Cycle)** | `master_144_square()` calculates time subdivisions of 20,736 and key resistance at fractions of 144 | `gann_trading_algorithm.py` → `GannAnalyzer.master_144_square()` |
+| **Price-Time vector harmonics** | `pricetime_vector_distance()` measures Euclidean distance in price-time space; harmonic when distance = N×360° | `gann_trading_algorithm.py` → `GannAnalyzer.pricetime_vector_distance()` |
+| **Seasonal cardinal timing** | `seasonal_cardinal_check()` identifies dates near equinoxes/solstices and octave points (Feb 5, May 6, Aug 5, Nov 5) | `gann_trading_algorithm.py` → `GannAnalyzer.seasonal_cardinal_check()` |
+| **Swing chart trend (mechanical)** | `swing_trend()` counts higher highs/higher lows for trend direction and wave/section counting | `gann_trading_algorithm.py` → `GannAnalyzer.swing_trend()` |
+| **Master Time Factor cycles** | `master_time_cycles()` projects 7, 10, 20, 30, and 60-year major cycle dates from a reference year | `gann_trading_algorithm.py` → `GannAnalyzer.master_time_cycles()` |
 
 ### 2.2 How Tunnel Cycles Feed the Backtester
 
@@ -129,6 +137,8 @@ The algorithm converts the Tunnel's layered approach into a **numerical confiden
 | Dynamic volatility confirms direction | +0.15 | PDF 5 |
 | Risk-reward ratio ≥ 2.5:1 | +0.15 | PDF 4 |
 | Risk-reward ratio < 2.5:1 | −0.10 | PDF 4 |
+| Price near Gann percentage support level | +0.05 | PDFs 12, 17, 18 |
+| Price near Hexagon chart angle level | +0.05 | PDF 9 |
 
 A signal needs **minimum 0.25 confidence** to trigger a trade in the backtester.
 
@@ -138,11 +148,11 @@ A signal needs **minimum 0.25 confidence** to trigger a trade in the backtester.
 
 ### 3.1 Overview
 
-The algorithm is a **multi-layer trading signal generator** that combines six different Gann analysis methods into a single confidence-weighted trading decision. It processes any market's price data and outputs: direction (BUY/SELL/NEUTRAL), entry price, stop loss, up to 3 profit targets, and a confidence score.
+The algorithm is a **multi-layer trading signal generator** that combines fourteen different Gann analysis methods into a single confidence-weighted trading decision. It processes any market's price data and outputs: direction (BUY/SELL/NEUTRAL), entry price, stop loss, up to 3 profit targets, and a confidence score.
 
-### 3.2 The Nine Components
+### 3.2 The Components
 
-The algorithm consists of 9 functional components, each derived from specific PDFs:
+The algorithm consists of 17 functional components plus a unified signal generator, each derived from specific PDFs:
 
 ---
 
@@ -284,7 +294,119 @@ Otherwise             → NEUTRAL
 
 ---
 
-#### Component 9: Unified Signal Generation
+#### Component 9: Hexagon Chart Levels (NEW — from PDF 9)
+
+**What it does:** Calculates support/resistance levels using Gann's hexagonal number arrangement, where numbers spiral outward in concentric rings of 6.
+
+**The math:**
+```
+Circle completions: 1, 7, 19, 37, 61, 91, 127, 169, 217, 271, 331, 397
+For each angle (60°, 120°, 180°, 240°, 300°, 360°):
+    Level = (√price ± angle/180)²
+```
+
+**Trading application:** Hexagon angle levels provide alternative support/resistance that complements the Square of 9. Price near a hexagon level adds +0.05 confidence.
+
+---
+
+#### Component 10: Range Percentage Divisions (NEW — from PDFs 12, 17, 18)
+
+**What it does:** Divides any price range by Gann's standard percentages to find retracement, resistance, and extension levels.
+
+**The math:**
+```
+Percentages: 12.5%, 25%, 33.3%, 37.5%, 50%, 62.5%, 66.6%, 75%, 87.5%, 100%
+Support = High − Range × Percentage
+Resistance = Low + Range × Percentage
+Extension = High + Range × Percentage
+```
+
+**Trading application:** The 50% level is the "center of gravity" — the strongest. Price near any Gann percentage level adds +0.05 confidence.
+
+---
+
+#### Component 11: Square Price in Time (NEW — from PDFs 12, 17, 18)
+
+**What it does:** Converts a significant price level into future time projections.
+
+**The math:**
+```
+For each Gann percentage P:
+    Projected date = Base date + (Price × P) days
+```
+
+**Trading application:** When a projected date arrives, watch for trend changes. Strongest when multiple squarings from different reference points converge on the same date.
+
+---
+
+#### Component 12: Master 144 Square / Great Cycle (NEW — from PDF 17)
+
+**What it does:** Analyzes time and price through the Great Cycle (144² = 20,736) and its subdivisions.
+
+**The math:**
+```
+Great Cycle = 20,736 days/weeks/months
+Subdivisions: 1/2 = 10368, 1/4 = 5184, 1/8 = 2592, ... 1/256 = 81
+Key resistance: (√price + fraction × 2)² for fractions 1/4, 1/3, 3/8, 1/2, 5/8, 2/3, 3/4, 7/8
+```
+
+---
+
+#### Component 13: Price-Time Vector Distance (NEW — from PDF 10)
+
+**What it does:** Measures the Euclidean distance between two turning points in price-time space.
+
+**The math:**
+```
+D = √((ΔPrice/scale)² + (ΔTime)²)
+If D ≈ N × 360° (within 5%) → harmonic resonance → high-probability turning point
+```
+
+---
+
+#### Component 14: Seasonal Cardinal Timing (NEW — from PDFs 11, 12, 19)
+
+**What it does:** Checks whether a date is near a Gann seasonal cardinal point or octave sub-point.
+
+**Key dates:**
+```
+Cardinals: March 21, June 21, September 21, December 21
+Octave points: February 5, May 6, August 5, November 5
+```
+
+---
+
+#### Component 15: Swing Chart Trend Analysis (NEW — from PDF 18)
+
+**What it does:** Determines trend using Gann's mechanical swing chart method — counting higher highs/higher lows vs. lower highs/lower lows.
+
+**Rules:**
+```
+Higher highs + higher lows > 50% → UPTREND
+Lower highs + lower lows > 50% → DOWNTREND
+Otherwise → NEUTRAL
+```
+
+**Also counts:** Number of sections/waves in the current campaign (Gann's "4th section" rule).
+
+---
+
+#### Component 16: Master Time Factor Projection (NEW — from PDFs 13, 16, 19)
+
+**What it does:** Projects major Gann time cycle years from a reference year.
+
+**Cycles:**
+```
+7-year cycle (sacred number)
+10-year decennial pattern
+20-year Jupiter-Saturn conjunction
+30-year (completing the cube)
+60-year (master cycle — all planets return)
+```
+
+---
+
+#### Component 17: Unified Signal Generation
 
 **What it does:** Combines ALL of the above into a single trading decision.
 
@@ -307,6 +429,12 @@ STEP 4: Analyze number vibration of current price
 
 STEP 5: If price history available, calculate dynamic volatility levels
          → If direction matches dynamic range (+0.15 confidence)
+
+STEP 5a: Calculate Gann range percentage levels
+          → If price is within 0.3% of any Gann percentage support (+0.05 confidence)
+
+STEP 5b: Calculate Hexagon chart angle levels
+          → If price is within 0.5% of any Hexagon level (+0.05 confidence)
 
 STEP 6: Check risk-reward ratio
          → Entry at 1X4 level, stop loss at 1X1 level
@@ -338,7 +466,7 @@ FOR each bar in historical OHLC data:
         Check timeout → exit remaining position after 72 bars maximum
     
     IF no position AND enough history bars:
-        Generate unified signal (all 9 components)
+        Generate unified signal (all 17 components)
         IF signal ≠ NEUTRAL AND confidence ≥ 0.25 AND R:R ≥ 2.5:1:
             Calculate position size (max 10% account risk)
             ENTER trade with slippage applied
@@ -369,7 +497,11 @@ Price Data (High, Low, Close, History)
         │
         ├──→ [5] Dynamic Vol ──→ Expected range ──→ Confirms dir? (+0.15)
         │
-        └──→ [6] R:R Check ──→ ≥ 2.5:1? (+0.15 / −0.10)
+        ├──→ [6] Range % Levels ──→ Gann 1/8th + 1/3rd ──→ Near level? (+0.05)
+        │
+        ├──→ [7] Hexagon Chart ──→ 60°-360° levels ──→ Near level? (+0.05)
+        │
+        └──→ [8] R:R Check ──→ ≥ 2.5:1? (+0.15 / −0.10)
                     │
                     ▼
             ┌──────────────┐
@@ -412,4 +544,4 @@ result.export_csv('results.csv')
 
 ---
 
-*This summary consolidates the findings from decrypting W.D. Gann's "Tunnel Thru the Air" using techniques from all seven companion PDFs, and documents how those findings were integrated into the backtestable trading algorithm.*
+*This summary consolidates the findings from decrypting W.D. Gann's "Tunnel Thru the Air" using techniques from all twenty-one companion PDFs, and documents how those findings were integrated into the backtestable trading algorithm.*
