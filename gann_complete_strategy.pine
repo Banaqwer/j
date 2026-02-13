@@ -998,12 +998,14 @@ triNearLevel  = triDist <= triThreshold and i_useTriangular
 //   base+240, base+270, base+300, base+360
 // Source: PDF 23 "Using Planetary Harmonics for Key Reversals" (pp.1-3)
 
-// Approximate Sun longitude from day of year (0-365 → 0-360°)
+// Approximate Sun longitude from day of year.
+// Simplified: day_of_year × (360/365), ignoring leap years and orbital
+// eccentricity. Intentionally approximate for harmonic-based trading use.
 sunLongitude  = dayofyear * (360.0 / 365.0)
 
-// Apply price scale: for high-priced assets like BTC, divide by a power of 10
-// so that harmonic levels land near the current price range.
-// Auto-scale: find order of magnitude of price
+// Auto-scale: map degrees into the asset's price range so that harmonic
+// levels land near current prices.  Thresholds are order-of-magnitude
+// breakpoints (e.g., BTC ~100K → scale=100, Gold ~2K → scale=10).
 autoScale     = close > 10000 ? 100.0 : close > 1000 ? 10.0 : 1.0
 scaledSunBase = sunLongitude * autoScale
 
