@@ -1006,9 +1006,9 @@ triNearLevel  = triDist <= triThreshold and i_useTriangular
 // Approximate Sun longitude from day of year.
 // Simplified: day_of_year × (360/365), ignoring leap years and orbital
 // eccentricity. Intentionally approximate for harmonic-based trading use.
-// Pine Script has no built-in dayofyear, so we compute it from timestamps.
-_janFirst      = timestamp(year, 1, 1, 0, 0)
-_dayOfYear     = math.floor((time - _janFirst) / 86400000) + 1
+// Uses month/dayofmonth built-ins (chart timezone) to avoid UTC mismatch.
+_cumDays = array.from(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
+_dayOfYear     = array.get(_cumDays, month - 1) + dayofmonth
 sunLongitude   = _dayOfYear * (360.0 / 365.0)
 
 // Auto-scale: map degrees into the asset's price range so that harmonic
