@@ -694,8 +694,13 @@ if inZone and not wasInZone
     zoneTestCount += 1
 wasInZone := inZone
 
+// Pre-compute ta.change() at global scope so it runs on every bar.
+// Calling ta.change() inside an `if` can cause inconsistent results
+// because the function depends on prior-bar history.
+_thirdTestZoneChg = ta.change(thirdTestZone)
+
 // Reset if zone moves significantly (new swing)
-if ta.change(thirdTestZone) != 0 and not na(ta.change(thirdTestZone))
+if _thirdTestZoneChg != 0 and not na(_thirdTestZoneChg)
     zoneTestCount := inZone ? 1 : 0
 
 isThirdTest   = zoneTestCount >= 3 and i_use3rdTest
@@ -1001,7 +1006,10 @@ triNearLevel  = triDist <= triThreshold and i_useTriangular
 // Approximate Sun longitude from day of year.
 // Simplified: day_of_year × (360/365), ignoring leap years and orbital
 // eccentricity. Intentionally approximate for harmonic-based trading use.
-sunLongitude  = dayofyear * (360.0 / 365.0)
+// Pine Script has no built-in dayofyear, so we compute it from timestamps.
+_janFirst      = timestamp(year, 1, 1, 0, 0)
+_dayOfYear     = math.floor((time - _janFirst) / 86400000) + 1
+sunLongitude   = _dayOfYear * (360.0 / 365.0)
 
 // Auto-scale: map degrees into the asset's price range so that harmonic
 // levels land near current prices.  Thresholds are order-of-magnitude
