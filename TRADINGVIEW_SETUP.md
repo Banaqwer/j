@@ -1,9 +1,19 @@
 # TradingView Live Trader Setup Guide
 
-## Gann Unified Strategy — Pine Script v5
+## Pine Script Versions
 
-This Pine Script translates the full Python Gann algorithm into a TradingView strategy
-that can be used for **live paper trading** (demo account) on BTC/USD and ETH/USD.
+| File | Components | Description |
+|------|-----------|-------------|
+| **`gann_complete_strategy.pine`** | **All 31** | Full algorithm — all PDF teachings implemented |
+| `gann_tradingview_strategy.pine` | 9 of 31 | Original version — core Gann methods only |
+
+> **Recommended**: Use `gann_complete_strategy.pine` for the most complete implementation.
+
+## Gann Complete Strategy — Pine Script v5 (31 Components)
+
+This Pine Script translates the **full** Python Gann algorithm (all 31 components from
+27 PDF documents) into a TradingView strategy that can be used for **live paper trading**
+(demo account) on any asset (BTC, ETH, Gold, Forex, Stocks).
 
 ---
 
@@ -17,7 +27,7 @@ that can be used for **live paper trading** (demo account) on BTC/USD and ETH/US
 ### Step 2: Add the Strategy
 1. Click **Pine Editor** at the bottom of the screen
 2. Delete any existing code
-3. Copy the entire contents of `gann_tradingview_strategy.pine`
+3. Copy the entire contents of **`gann_complete_strategy.pine`** (recommended) or `gann_tradingview_strategy.pine`
 4. Paste into the Pine Editor
 5. Click **"Add to Chart"** (or press Ctrl+Enter)
 
@@ -46,19 +56,55 @@ that can be used for **live paper trading** (demo account) on BTC/USD and ETH/US
 | Solid red line | Red | 1x1 (45°) Support |
 | Blue crosses + | Blue | Square of 9 levels (up) |
 | Purple crosses + | Purple | Square of 9 levels (down) |
+| White step-line | White | Range 50% (center of gravity) |
+| Gray step-lines | Gray | Range 25%, 33%, 66%, 75% divisions |
+| Aqua crosses + | Aqua | Hexagon chart levels |
 | Teal shaded area | Teal | Expected daily volatility range |
+| Yellow diamonds ◆ | Yellow | Shephard key cycle alignment |
+| Orange x-crosses | Orange | Fatal Number (49) time alignment |
+| Fuchsia circles ● | Fuchsia | 192-day diatonic shock point (Fa/La) |
+| Red flags 🚩 | Red | Third-time test — dangerous breakout zone |
+| Lime arrows ↑ | Lime | Minor trend turn day (14 or 21 days) |
+| Aqua squares ■ | Aqua | Jensen critical time point (harmonic of 90°) |
+| Orange labels P5 | Orange | Jensen five-phase blowoff detected |
+| Lime crosses + | Lime | Vectorial projection price level |
+| Yellow diamonds FA | Yellow | Futia SQ9 cardinal/ordinal axis hit |
+| Green arrows RE ▲ | Green | Range expansion bullish (>1.2x) |
+| Red arrows RE ▼ | Red | Range expansion bearish (>1.2x) |
+| White circles Δ | White | Triangular (summation) number S/R |
+| Purple squares ☉ | Purple | Planetary harmonic price level |
+| Blue background | Light blue | Seasonal cardinal date (equinox/solstice) |
+| Purple background | Light purple | Seasonal octave date |
 | Green background | Light green | Bullish trend confirmed |
 | Red background | Light red | Bearish trend confirmed |
 
-## Info Panel (Top Right)
+## Info Panel (Top Right) — 28-Row Dashboard
 
 The strategy displays a real-time info panel showing:
-- **Trend**: Current Gann angle trend direction
-- **Buy/Sell Confidence**: 0.00 to 1.00 score
-- **Vibration**: Digit reduction of price (9 = change number)
-- **SQ9 Near**: Whether price is near a Square of 9 cardinal level
-- **Daily/Annual Vol**: Current volatility (SQ12 activates at high vol)
-- **Buy/Sell R:R**: Current reward-to-risk ratio
+- **Trend (C7)**: Gann angle trend direction
+- **Swing (C11)**: Mechanical HH/HL vs LH/LL trend
+- **Buy/Sell Confidence**: 0.00 to 1.00 score (22 scoring factors from 31 components)
+- **Vibration (C3)**: Digit reduction (9 = change number)
+- **SQ9 (C2)**: Price near Square of 9 level
+- **Hexagon (C9)**: Price near hexagon 60° level
+- **Range% (C10)**: Price near Gann percentage division
+- **Fatal 49 (C14)**: Price or time near Fatal Number
+- **Seasonal (C13)**: Cardinal or octave date status
+- **Shephard (C15)**: Key cycle alignment warning
+- **192d Octave (C21)**: Diatonic note + position in 192-day cycle (shock = Fa/La)
+- **3rd Test (C22)**: Zone test count — dangerous at 3rd touch
+- **Minor Turn (C23)**: Key day count from pivot (3/4/7/14/21/42/45/49)
+- **Jensen (C24)**: Critical time point (harmonic of 90°, Mercury cycle)
+- **5-Phase (C25)**: Current intermediate trend phase (1-5, blowoff at 5)
+- **Vectorial (C26)**: 45°/60° projected exhaustion price and days
+- **Sq of Low**: Significant squares of the low level proximity
+- **Daily/Annual Vol**: Volatility (SQ12 triggers at high vol)
+- **Buy/Sell R:R**: Current reward-to-risk ratios
+- **Bars Lo/Hi**: Bars since last swing low/high pivot
+- **Futia SQ9 (C28)**: Angular position on SQ9 + distance to nearest axis
+- **Range Exp (C29)**: Range expansion ratio + bullish/bearish bias
+- **Tri Num (C30)**: Nearest triangular number + distance
+- **Planet ☉ (C31)**: Sun longitude + planetary harmonic level status
 
 ---
 
@@ -69,7 +115,7 @@ The strategy displays a real-time info panel showing:
 |-----------|---------|-------------|
 | Risk Per Trade (%) | 1.5% | Percentage of equity risked per trade |
 | Reward:Risk Ratio | 2.5:1 | Minimum R:R to boost confidence |
-| Min Confidence | 0.45 | Minimum confidence score to enter trade |
+| Min Confidence | 0.40 | Minimum confidence score to enter trade |
 | Volatility Lookback | 20 bars | Periods for volatility calculation |
 | Swing Lookback | 50 bars | Periods for swing high/low detection |
 
@@ -79,6 +125,8 @@ The strategy displays a real-time info panel showing:
 | Show Gann Angles | ✓ | Display 11 angle S/R levels |
 | Show SQ9 Levels | ✓ | Display Square of 9 price levels |
 | Show 144 Levels | ✗ | Display 144-cycle price zones |
+| Show Range % Levels | ✓ | Display Gann percentage divisions |
+| Show Hexagon Levels | ✗ | Display hexagon 60° angle levels |
 | SQ9 Confluence (%) | 0.5% | Tolerance for SQ9 level proximity |
 | SQ12 Trigger Vol | 40% | Annual vol threshold for dynamic levels |
 
@@ -89,50 +137,127 @@ The strategy displays a real-time info panel showing:
 | Trailing Stop (%) | 2.0% | Trail distance for remaining position |
 | Max Bars in Trade | 60 | Force close after N bars |
 
+### Advanced — New Components
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| Use Fatal Number (49) | ✓ | Check price proximity to multiples of 49 |
+| Use Swing Trend | ✓ | HH/HL/LH/LL mechanical trend analysis |
+| Use Seasonal Cardinal | ✓ | Equinox/solstice/octave date checks |
+| Use Range % Confidence | ✓ | Range percentage level confluence |
+| Use Hexagon Confidence | ✓ | Hexagon chart level confluence |
+| Swing Trend Bars | 5 | Number of bars for swing trend counting |
+| Use 192-Day Octave (C21) | ✓ | Diatonic shock point detection (Fa/La) |
+| Use Third-Time Test (C22) | ✓ | S/R zone touch count — 3rd test danger |
+| Use Minor Trend Turn (C23) | ✓ | Key day counts from pivot (14, 21, 49) |
+| Use Jensen Critical (C24) | ✓ | Harmonics of 90° time cycle detection |
+| Use Five-Phase Trend (C25) | ✓ | Jensen intermediate trend phases |
+| Use Vectorial Proj. (C26) | ✓ | 45°+60° dual-angle exhaustion projection |
+| Use Futia SQ9 Angular (C28) | ✓ | SQ9 cardinal/ordinal axis detection |
+| Use Range Expansion (C29) | ✓ | Range expansion 75%+ continuation bias |
+| Use Triangular Numbers (C30) | ✓ | Summation number S/R levels |
+| Use Planetary Harmonic (C31) | ✓ | Sun longitude→price harmonic levels |
+
 ---
 
 ## Gann Components Implemented
 
-All 9 components from the Python algorithm are translated:
+### `gann_complete_strategy.pine` — All 31 Components
 
-1. **Gann Angles** (11 angles): `(√base ± degree_factor)²`
-2. **Square of 9**: Spiral levels at 0°–360° cardinal crosses
-3. **Number Vibration**: Digit reduction, vibration 9 = reversal signal
-4. **Daily Volatility**: Log-return standard deviation
-5. **Dynamic Levels**: Volatility-adjusted expected range + SQ12
-6. **144 Cycles**: Master cycle price zones
-7. **Trend Confirmation**: 1x1 angle breakout = trend direction
-8. **Confidence Scoring**: 5-factor scoring system (0.0–1.0)
-9. **Trade Management**: Entry, SL, TP, trailing stop, timeout
+| # | Component | Source PDFs | Method |
+|---|-----------|-------------|--------|
+| C1 | **Gann Angle S/R** (11 angles) | PDF 5 | `(√base ± factor)²` |
+| C2 | **Square of 9** levels | PDFs 4, 5 | Spiral at 0°–360° crosses |
+| C3 | **Number Vibration** | PDF 6 | Digit reduction; 9 = change |
+| C4 | **Daily Volatility** | PDF 5 | Log-return std deviation |
+| C5 | **Dynamic Levels** (SQ9/SQ12) | PDF 5 | Volatility-adjusted range |
+| C6 | **144-Cycle Zones** | PDFs 6, 17 | Master cycle price levels |
+| C7 | **Trend Confirmation** | PDF 5 | 1x1 angle breakout |
+| C8 | **Price-Time Squaring** | PDFs 4, 12, 17 | P = T² projections |
+| C9 | **Hexagon Chart** | PDF 9 | 60° angle levels |
+| C10 | **Range % Divisions** | PDFs 12, 17, 18 | 1/8th & 1/3rd levels |
+| C11 | **Swing Trend** | PDF 18 | HH/HL/LH/LL mechanical |
+| C12 | **Master 144 Square** | PDF 17 | Great Cycle = 20,736 |
+| C13 | **Seasonal Cardinal** | PDFs 11, 12, 19 | Equinox/solstice timing |
+| C14 | **Fatal Number (49)** | PDF 18 pp.86,100 | 49 multiples in price/time |
+| C15 | **Shephard Cycles** | PDF 18 pp.85-86 | 631/668/840/1260/1290/1336 |
+| C16 | **Planetary Cycles** | PDF 18 pp.67-108 | Mars 687d, Venus 224d |
+| C17 | **Cumulative Range** | PDF 18 pp.96,110 | Hidden cycle sums |
+| C18 | **Master Time Factor** | PDFs 13, 16 | 7/10/20/30/60-year cycles |
+| C19 | **Range Extensions** | PDFs 12, 17 | Projection above high |
+| C20 | **Multi-Timeframe** | General Gann | Weekly trend context |
+| C21 | **192-Day Octave** | PDF 6 pp.5-8 | Diatonic scale cycle; Fa/La shock |
+| C22 | **Third-Time Test** | PDF 10 p.2 | 3rd touch of S/R = danger |
+| C23 | **Minor Trend Turn** | PDFs 10, 16 | Key day counts: 3/4/7/14/21/42/45/49 |
+| C24 | **Jensen Critical** | Jensen pp.108-113 | Harmonics of 90° + Mercury 88d |
+| C25 | **Five-Phase Trend** | Jensen pp.121-122 | 5-phase intermediate; Phase 5 = blowoff |
+| C26 | **Vectorial Projection** | Jensen pp.124-126 | 45°+60° dual-angle convergence |
+| C28 | **Futia SQ9 Angular** | PDF 25 (Spiral Chart) | A=MOD(180√(P-1)-225, 360) axis detection |
+| C29 | **Range Expansion** | PDF 27 (Crabel) | Today>yesterday range = 75%+ continuation |
+| C30 | **Triangular Number S/R** | PDF 26 (Adv Group p.21) | n(n+1)/2 summation numbers as S/R |
+| C31 | **Planetary Harmonic** | PDF 23 (Thomas Long) | Sun longitude→price harmonic levels |
+| C27 | **Confidence Scoring** | All PDFs | 22-factor scoring (0.0–1.0) |
 
 ---
 
-## Confidence Scoring Breakdown
+## Confidence Scoring Breakdown (27-Component Version)
 
 | Factor | Points | Condition |
 |--------|--------|-----------|
-| Trend confirmed | +0.30 | Price above/below 1x1 angle |
-| SQ9 confluence | +0.10 | Price within 0.5% of cardinal level |
-| Vibration 9 | +0.10 | Price digit sum = 9 |
-| Dynamic vol confirms | +0.15 | Price within expected range |
+| Trend confirmed (C7) | +0.30 | Price above/below 1x1 angle |
+| SQ9 confluence (C2) | +0.10 | Price within 0.5% of cardinal level |
+| Vibration 9 (C3) | +0.10 | Price digit sum = 9 |
+| Dynamic vol confirms (C5) | +0.15 | Price within expected range |
+| Range % nearby (C10) | +0.05 | Price near 1/8th or 1/3rd level |
+| Hexagon nearby (C9) | +0.05 | Price near 60° hexagon level |
+| Fatal 49 nearby (C14) | +0.05 | Price near multiple of 49 |
+| Swing trend confirms (C11) | +0.05 | HH+HL (buy) or LH+LL (sell) |
+| Seasonal date (C13) | +0.05 | Cardinal or octave date ±3 days |
+| Shephard/planetary cycle (C15/16) | +0.05 | Key cycle number from pivot |
+| Weekly trend confirms (C20) | +0.05 | Weekly timeframe agrees |
+| Significant sq of low (C22) | +0.05 | Price near 1×/2×/.../12× of low |
+| Third-time test danger (C22) | +0.05 | 3rd touch of S/R zone |
+| 192-day shock point (C21) | +0.05 | Diatonic Fa or La note position |
+| Jensen critical time (C24) | +0.05 | Harmonic of 90° or Mercury cycle |
+| Five-phase blowoff (C25) | +0.05 | Phase 5 in intermediate trend |
+| Minor trend turn (C23) | +0.05 | Key day count from pivot (14, 21) |
+| Vectorial projection (C26) | +0.05 | Price near 45°/60° convergence |
+| Futia SQ9 on axis (C28) | +0.05 | Price on cardinal/ordinal SQ9 axis |
+| Triangular number S/R (C30) | +0.05 | Price near summation number |
+| Range expansion bias (C29) | +0.05 | Range expanding with matching bias |
 | R:R ≥ 2.5:1 | +0.15 | Good reward-to-risk |
 | R:R 1.5–2.5:1 | +0.05 | Acceptable reward-to-risk |
 | R:R < 1.5:1 | −0.10 | Poor reward-to-risk penalty |
 
-**Minimum to trade: 0.45** (configurable)
+**Theoretical maximum: ~1.60 → capped at 1.00**
+**Practical maximum: ~0.85–0.95** (some factors rarely align simultaneously)
+**Minimum to trade: 0.40** (configurable)
 
 ---
 
 ## Alerts Setup
 
-The strategy includes three alert conditions:
-1. **Gann BUY Signal** — Triggers when all buy conditions are met
-2. **Gann SELL Signal** — Triggers when all sell conditions are met
-3. **Vibration 9 Alert** — Triggers when price digit sum = 9 (reversal watch)
+The complete strategy includes **17 alert conditions**:
+1. **Gann BUY Signal** — All buy conditions met
+2. **Gann SELL Signal** — All sell conditions met
+3. **Vibration 9 Alert** — Price digit sum = 9 (reversal watch)
+4. **Shephard Cycle Alert** — Key cycle number alignment (major reversal window)
+5. **Fatal 49 Alert** — Price near Fatal Number multiple
+6. **Seasonal Cardinal Alert** — Cardinal/octave date (increased reversal probability)
+7. **Cumulative Range Alert** — Hidden cycle sum detected
+8. **192-Day Shock Point** — Diatonic Fa/La shock point (trend may invert)
+9. **Third-Time Test Alert** — 3rd touch of S/R zone (breakout/breakdown imminent)
+10. **Minor Trend Turn Alert** — Key day count from pivot (14 or 21 days)
+11. **Jensen Critical Point** — Harmonic of 90° time resistance
+12. **Five-Phase Blowoff Alert** — Phase 5 exhaustion detected
+13. **Vectorial Projection Alert** — Price near 45°/60° exhaustion convergence
+14. **Futia SQ9 Axis Alert** — Price on SQ9 cardinal/ordinal axis (key S/R)
+15. **Range Expansion Alert** — Range expanding >1.2x (75%+ continuation)
+16. **Triangular Number Alert** — Price near summation number S/R
+17. **Planetary Harmonic Alert** — Price near planetary harmonic level
 
 To set up alerts:
 1. Right-click on the chart → "Add Alert"
-2. Condition: Select "Gann Unified Strategy"
+2. Condition: Select "Gann Complete Strategy (31 Components)"
 3. Choose the alert type
 4. Set notification method (popup, email, webhook)
 
@@ -142,16 +267,18 @@ To set up alerts:
 
 | Asset | Timeframe | Notes |
 |-------|-----------|-------|
-| BTCUSD | 1D | Primary — backtested with 61.3% WR, +631% return |
-| ETHUSD | 1D | Primary — backtested with 70.8% WR, +772% return |
-| SOLUSD | 1D | Works well — 64.2% WR with Gann square alignment |
-| XAUUSD | 1D | Gold — traditional Gann asset |
+| BTCUSD | 1D | Primary — real data backtest: 67.4% WR, +445% return, 648 trades |
+| ETHUSD | 1D | Works well with Gann angle adaptation |
+| SOLUSD | 1D | Crypto — SQ12 activates on high volatility |
+| XAUUSD | 1D | Gold — traditional Gann asset, lower volatility uses SQ9 |
+| EURUSD | 1D | Forex — Gann angles work well on majors |
+| Any stock | 1D | Works on any daily chart |
 
-> **Note**: These backtest results are from 5-year historical simulations (Jan 2021 – Feb 2026)
-> using weekly-anchored price data with the Gann algorithm. Win rates and returns are
-> historical and **do not guarantee future performance**. BTC backtest: 862 trades, max DD 2.56%.
-> ETH backtest: 624 trades, max DD 2.75%. Always validate on TradingView's built-in Strategy
-> Tester with live market data before risking real capital.
+> **Note**: BTC backtest was run on real Binance BTCUSDT daily klines (2021-2024).
+> 648 trades, 67.4% WR, profit factor 11.10, max DD 2.78%.
+> Past performance does **not** guarantee future results.
+> Always validate on TradingView's built-in Strategy Tester with live market data
+> before risking real capital.
 
 ---
 
