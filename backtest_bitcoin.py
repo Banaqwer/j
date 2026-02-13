@@ -120,8 +120,11 @@ def _parse_binance_csv(
         if len(row) < _MIN_KLINE_COLUMNS:
             continue
         try:
-            ts_ms = int(row[0])
-            dt = datetime.fromtimestamp(ts_ms / 1000, tz=timezone.utc)
+            ts_raw = int(row[0])
+            # Binance uses millisecond timestamps (13 digits) for older data
+            # and microsecond timestamps (16 digits) for newer data (2025+).
+            divisor = 1_000_000 if ts_raw > 9_999_999_999_999 else 1_000
+            dt = datetime.fromtimestamp(ts_raw / divisor, tz=timezone.utc)
             # Remove tzinfo to match Bar's expected naive datetime format
             dt = dt.replace(tzinfo=None)
             date_key = dt.strftime("%Y-%m-%d")
@@ -378,8 +381,8 @@ def main():
     print(f"\n  Data source: Real Binance BTCUSDT daily klines")
     print(f"  Total bars:  {len(bars)}")
     print(f"  Key observations:")
-    print(f"    - Bitcoin's extreme volatility ({annual_vol:.0f}% annual) "
-          f"triggers Dynamic SQ12")
+    print(f"    - Bitcoin volatility ({annual_vol:.0f}% annual) "
+          f"triggers Dynamic {sq_type.upper()}")
     print(f"    - Gann angles adapt to BTC's large price swings")
     print(f"    - 144-cycle levels align with BTC's major turning points")
     print(f"    - Number vibration analysis works on any price scale")
