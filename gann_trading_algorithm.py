@@ -72,6 +72,36 @@ This algorithm synthesizes the teachings from twenty-one W.D. Gann PDF documents
 21. "The Law of Vibration" (Tony Plummer) - Formal treatment of vibration theory
     applied to financial markets (image-based).
 
+22. "Sephariel — The Numbers Book" - Complete numerology system: unit system
+    (1-9 with planetary rulers), Hebrew Kabalistic system (1-22 with zodiac),
+    Numbers and Speculation chapter for stocks/shares: planetary rulership of
+    sectors, number timing for trade entries, winning = odd, losing = even.
+
+23. "Using Planetary Harmonics to Find Key Reversals" (Thomas Long) - Converting
+    planetary longitude to price: 1 degree = price unit scaled by market range;
+    mirror lines (360-degree inversion); harmonic divisions (360/1, /2=180,
+    /3=120, /4=90); conjunction = most powerful reversal geometry.
+
+24. "Gann Wheel" (Dave "Gann Wheel Man") - TIME is more important than price;
+    time windows and time patterns; all markets turn at same time aspects;
+    musical scale-planet-number correspondence table; 45° and 144° on the wheel
+    convert date to price and vice versa; "zero drawdown point" exists.
+
+25. "Spiral Chart — Gann Mysteries" - Complete Square of Nine construction;
+    Futia's universal angular formula: A = MOD(180 × sqrt(P-1) - 225, 360);
+    Octagon Chart (8th harmonic); odd squares on 315° axis, even on 45°;
+    zodiacal overlay: 0°=Aries, 90°=Cancer, 180°=Libra, 270°=Capricorn.
+
+26. "Advanced WD Gann Group" - Forum compilation: SQ9 as square root calculator;
+    summation formula n/2×(n+1) for triangular numbers; planetary geocentric
+    averaging for composite cycle; death zone concept; Saros 1260 cycle;
+    "squaring price with time is the ONLY tool you need."
+
+27. "Short-Term Market Forecasting via Astrology" - Multiple authors: biblical
+    cycles (1260, 2520, 3.5 years); Saros eclipse cycles (6585.33 days);
+    Gann-Fibonacci unification (Granville Cooley): master numbers, death zone,
+    Great Cycle of Enoch; range expansion bias 75%+ (Toby Crabel).
+
 Key Cross-Document Similarities / Merged Concepts:
 ---------------------------------------------------
 - TIME is the dominant factor; price follows time (all documents).
@@ -104,6 +134,18 @@ Key Cross-Document Similarities / Merged Concepts:
   most significant, 21 next; also 7, 42, 45, 49 (PDFs 10, 16).
 - Risk management: small stop-losses, max 10% account per trade, minimum
   1:2.5 reward-to-risk ratio (PDFs 1, 4, 18).
+- Planetary longitude → price conversion: degree × scale_factor gives key
+  S/R levels; conjunctions are the strongest reversals (PDFs 23, 26).
+- Futia's SQ9 Angular Formula: A = MOD(180 × √(P-1) - 225, 360) converts
+  any price to its angular position on the Square of Nine (PDF 25).
+- Range Expansion: when daily range > previous day's range, next day has
+  75%+ probability of continuing in expansion direction (PDF 27, Crabel).
+- Saros Eclipse Cycle: 6585.33 days = 1260 years; Biblical 3.5 × 360 = 1260
+  days links Gann's time counts to eclipse periodicity (PDFs 26, 27).
+- Summation (triangular) numbers: n/2 × (n+1) = 1, 3, 6, 10, 15, 21, 28,
+  36, 45, 55, 66, 78, 91, ..., 561 — function as natural S/R (PDF 26).
+- Sephariel numerology: unit system (1-9) maps numbers to Sun/Moon/planets;
+  Kabalistic system (1-22) extends mapping to zodiac signs (PDF 22).
 
 Usage:
 ------
@@ -336,6 +378,79 @@ JENSEN_RESISTANCE_ANGLE = 60
 
 # Mercury cycles (harmonics of 90): 88, 44, 22 day cycles (Jensen, p.108)
 MERCURY_CYCLE_DAYS = 88
+
+# ---------------------------------------------------------------------------
+# Constants from pdf24_ocrPdf.zip — 6 new PDFs (PDFs 22-27)
+# ---------------------------------------------------------------------------
+
+# Futia's Square of Nine angular formula constants (PDF 25 "Spiral Chart")
+# A = MOD(180 × sqrt(P - 1) - 225, 360)
+# Odd perfect squares fall on 315° axis, even squares on 45° axis.
+FUTIA_OFFSET = 225  # degrees
+FUTIA_SCALE = 180   # degrees per sqrt unit
+
+# Sephariel's numerology: planet-number mappings (PDF 22 "The Numbers Book")
+# Unit system: each digit 1-9 maps to a planetary ruler
+# Positive numbers (winning/rising): 1, 3, 5, 7, 9
+# Negative numbers (losing/falling): 2, 4, 6, 8
+SEPHARIEL_POSITIVE_NUMBERS = [1, 3, 5, 7, 9]
+SEPHARIEL_NEGATIVE_NUMBERS = [2, 4, 6, 8]
+
+# Planetary sector rulership for stocks (PDF 22, pp.63-64)
+# SUN: govt, gold; MOON: silver, property; MERCURY: transport, newspapers
+# VENUS: banks, copper; MARS: iron/steel, engineering; JUPITER: shipping, insurance
+# SATURN: coal, building materials; URANUS: electrical, scientific; NEPTUNE: oil
+SEPHARIEL_SECTOR_NUMBERS = {
+    1: "transport/newspapers/aluminium",
+    2: "tea/coffee/cocoa/cereals/food",
+    3: "diamonds/luxury/watches/perfumes",
+    4: "chemicals/drugs/breweries/rubber",
+    5: "shipping/overseas/tin/publishing",
+    6: "copper/currency/tobacco/entertainment",
+    7: "insurance/shipping/tin/paper",
+    8: "government/mines/coal/building",
+    9: "aircraft/musical/television/cables",
+}
+
+# Planetary harmonic conversion (PDF 23 "Planetary Harmonics")
+# 1 degree longitude = price unit (scaled by market range)
+# Harmonic divisions of the 360° wheel
+HARMONIC_DIVISIONS = {
+    1: 360,   # conjunction (full wheel)
+    2: 180,   # opposition (half wheel)
+    3: 120,   # trine (third)
+    4: 90,    # square (quarter)
+    6: 60,    # sextile (sixth)
+    8: 45,    # semi-square (eighth)
+}
+
+# Musical-planet-number correspondence table (PDF 24 "Gann Wheel", p.7)
+# Planet → (musical note, color, number, perfect square)
+MUSICAL_PLANET_TABLE = {
+    "Sun":     ("C", "Yellow", 4, 36),
+    "Moon":    ("F", "Violet", 7, 81),
+    "Mars":    ("G", "Red",    9, 25),
+    "Mercury": ("E", "Orange", 5, 64),
+    "Jupiter": ("B", "Blue",   3, 16),
+    "Venus":   ("A", "Green",  6, 49),
+    "Saturn":  ("D", "Indigo", 8, 9),
+}
+
+# Triangular (summation) numbers: n(n+1)/2 — natural S/R levels (PDF 26, p.21)
+# These numbers appear as natural market turning points
+TRIANGULAR_NUMBERS = [1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91,
+                      105, 120, 136, 153, 171, 190, 210, 231, 253, 276,
+                      300, 325, 351, 378, 406, 435, 465, 496, 528, 561]
+
+# Saros eclipse cycle (PDF 27, pp.6-7)
+# Complete eclipse repetition: 6585.33 days (18 years, 11.33 days)
+# 360° × biblical 3.5 = 1260 days; complete Saros series = 1260 years
+SAROS_ECLIPSE_DAYS = 6585.33
+BIBLICAL_HALF_WEEK = 1260  # days (3.5 × 360)
+
+# Range expansion threshold (PDF 27 "Short-Term Forecasting", Toby Crabel, p.11)
+# When daily range > previous day range, 75%+ continuation bias next day
+RANGE_EXPANSION_BIAS_PCT = 75
 
 
 # ---------------------------------------------------------------------------
@@ -590,6 +705,46 @@ class VectorialProjection:
     angle_45_origin: float     # price of first low
     angle_60_origin: float     # price of second low
     days_between_lows: int     # calendar days between first and second low
+
+
+@dataclass
+class FutiaAngularResult:
+    """Result from Futia's SQ9 angular formula.
+
+    Source: PDF 25 "Spiral Chart — Gann Mysteries"
+    A = MOD(180 × √(P-1) - 225, 360)
+    """
+    price: float
+    angular_position: float    # degrees on the SQ9 wheel
+    nearest_cardinal: int      # nearest cardinal degree (0/90/180/270)
+    distance_to_cardinal: float  # degrees to nearest cardinal
+    is_near_cardinal: bool     # within 5° of a cardinal/ordinal axis
+
+
+@dataclass
+class RangeExpansionResult:
+    """Result from range expansion analysis.
+
+    Source: PDF 27 "Short-Term Market Forecasting" (Toby Crabel, p.11)
+    75%+ continuation bias after range expansion.
+    """
+    is_expanding: bool
+    expansion_ratio: float     # current range / previous range
+    bias_direction: str        # "bullish" or "bearish" or "neutral"
+    confidence: float          # 0.0-1.0
+
+
+@dataclass
+class TriangularNumberResult:
+    """Result from triangular number proximity analysis.
+
+    Source: PDF 26 "Advanced Group" (p.21)
+    Triangular numbers = n(n+1)/2 act as natural S/R levels.
+    """
+    price: float
+    nearest_triangular: int
+    distance: float
+    is_near_level: bool        # within 1% of a triangular number
 
 
 # ---------------------------------------------------------------------------
@@ -2543,6 +2698,198 @@ class GannAnalyzer:
         return status
 
     # ------------------------------------------------------------------
+    # NEW METHODS from pdf24_ocrPdf.zip (PDFs 22-27)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def futia_angular_position(price: float) -> FutiaAngularResult:
+        """
+        Calculate the angular position of a price on the Square of Nine
+        using Futia's universal formula.
+
+        Source: PDF 25 "Spiral Chart — Gann Mysteries"
+        Formula: A = MOD(180 × √(P-1) - 225, 360)
+
+        The SQ9 spiral chart maps integers onto a square spiral. Futia's
+        formula converts any number to its angular position on this spiral.
+        Key levels occur at cardinal (0/90/180/270) and ordinal
+        (45/135/225/315) axes.
+
+        Why implemented: This gives a precise mathematical way to determine
+        where any price sits on the Gann wheel, enabling angular distance
+        calculations between prices and identification of prices that lie
+        on critical axes.
+        """
+        if price <= 1:
+            return FutiaAngularResult(
+                price=price, angular_position=0.0,
+                nearest_cardinal=0, distance_to_cardinal=0.0,
+                is_near_cardinal=True,
+            )
+
+        angle = (FUTIA_SCALE * math.sqrt(price - 1) - FUTIA_OFFSET) % 360
+
+        cardinals = [0, 45, 90, 135, 180, 225, 270, 315, 360]
+        nearest = min(cardinals, key=lambda c: min(
+            abs(angle - c), 360 - abs(angle - c)
+        ))
+        if nearest == 360:
+            nearest = 0
+        dist = min(abs(angle - nearest), 360 - abs(angle - nearest))
+
+        return FutiaAngularResult(
+            price=price,
+            angular_position=round(angle, 2),
+            nearest_cardinal=nearest,
+            distance_to_cardinal=round(dist, 2),
+            is_near_cardinal=dist <= 5.0,
+        )
+
+    @staticmethod
+    def range_expansion_check(
+        highs: List[float],
+        lows: List[float],
+        closes: List[float],
+    ) -> RangeExpansionResult:
+        """
+        Check for range expansion — a wider daily range than the prior day.
+
+        Source: PDF 27 "Short-Term Market Forecasting" (Toby Crabel, pp.11-12)
+        "Over 75% of the time, the price pattern showed a percentage
+        profitability favoring the bias of the range expansion."
+
+        When today's range exceeds yesterday's range, the market is showing
+        increased energy. The direction of that expansion (whether close is
+        higher or lower) predicts next day continuation with 75%+ accuracy.
+
+        Why implemented: Range expansion is one of the simplest and most
+        statistically robust short-term signals. It detects the moment
+        when volatility expands, which Gann associated with the start
+        of meaningful price moves.
+        """
+        if len(highs) < 2 or len(lows) < 2 or len(closes) < 2:
+            return RangeExpansionResult(
+                is_expanding=False, expansion_ratio=1.0,
+                bias_direction="neutral", confidence=0.0,
+            )
+
+        today_range = highs[-1] - lows[-1]
+        yesterday_range = highs[-2] - lows[-2]
+
+        if yesterday_range <= 0:
+            return RangeExpansionResult(
+                is_expanding=False, expansion_ratio=1.0,
+                bias_direction="neutral", confidence=0.0,
+            )
+
+        ratio = today_range / yesterday_range
+        is_expanding = ratio > 1.0
+
+        if is_expanding:
+            direction = "bullish" if closes[-1] > closes[-2] else "bearish"
+            conf = min(1.0, 0.5 + (ratio - 1.0) * 0.25)
+        else:
+            direction = "neutral"
+            conf = 0.0
+
+        return RangeExpansionResult(
+            is_expanding=is_expanding,
+            expansion_ratio=round(ratio, 4),
+            bias_direction=direction,
+            confidence=round(conf, 4),
+        )
+
+    @staticmethod
+    def triangular_number_proximity(price: float) -> TriangularNumberResult:
+        """
+        Check if a price is near a triangular (summation) number.
+
+        Source: PDF 26 "Advanced Group" (p.21)
+        "561 is the SUMMATION of all numbers from 1 to 33.
+        The formula is n/2 × (n+1)"
+
+        Triangular numbers (1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, ...)
+        are natural S/R levels because they represent the sum of all integers
+        from 1 to n — a concept tied to the Square of Nine's accumulation
+        of complete "rings" around the center.
+
+        Why implemented: These numbers appear as natural market support and
+        resistance levels. When price approaches a triangular number, the
+        market often stalls, reverses, or consolidates.
+        """
+        # Find the nearest triangular number by solving n(n+1)/2 = price
+        # n ≈ (-1 + sqrt(1 + 8*price)) / 2
+        if price <= 0:
+            return TriangularNumberResult(
+                price=price, nearest_triangular=1,
+                distance=abs(price - 1), is_near_level=False,
+            )
+
+        n_approx = (-1 + math.sqrt(1 + 8 * abs(price))) / 2
+        n_low = max(1, int(n_approx))
+        candidates = [
+            n_low * (n_low + 1) // 2,
+            (n_low + 1) * (n_low + 2) // 2,
+        ]
+        if n_low > 1:
+            candidates.append((n_low - 1) * n_low // 2)
+
+        nearest = min(candidates, key=lambda t: abs(price - t))
+        dist = abs(price - nearest)
+        threshold = max(abs(price) * 0.01, 1.0)  # 1% or minimum 1
+
+        return TriangularNumberResult(
+            price=price,
+            nearest_triangular=nearest,
+            distance=round(dist, 2),
+            is_near_level=dist <= threshold,
+        )
+
+    @staticmethod
+    def planetary_harmonic_price(
+        degree_longitude: float,
+        price_scale: float = 1.0,
+    ) -> Dict[str, float]:
+        """
+        Convert a planetary longitude to price levels at multiple harmonics.
+
+        Source: PDF 23 "Using Planetary Harmonics" (Thomas Long, pp.1-3)
+        "I do this simply by converting planetary positions into price.
+        A conjunction between two planets is the most powerful geometric
+        relationship. Conjunctions are responsible for a majority of major
+        market reversals."
+
+        The conversion is: price = degree × scale_factor
+        Then harmonic levels are generated at 360° multiples above and below.
+        Mirror lines are computed as 360 - degree for downtrend tracking.
+
+        Why implemented: This provides the foundational calculation for
+        converting planetary astronomy data into actionable price levels.
+        When price touches a planetary harmonic line, it signals potential
+        reversal — especially at conjunction points where multiple planet
+        lines intersect.
+        """
+        base = (degree_longitude % 360) * price_scale
+        mirror = ((360 - degree_longitude % 360) % 360) * price_scale
+
+        levels: Dict[str, float] = {
+            "base": round(base, 2),
+            "mirror": round(mirror, 2),
+        }
+
+        # Generate harmonic levels at each division
+        for harmonic, division in HARMONIC_DIVISIONS.items():
+            h_degree = degree_longitude % division
+            h_price = h_degree * price_scale
+            levels[f"harmonic_{harmonic}"] = round(h_price, 2)
+
+        # Multiple wheels of 360
+        for wheel in range(1, 4):
+            levels[f"wheel_{wheel}"] = round(base + 360 * wheel * price_scale, 2)
+
+        return levels
+
+    # ------------------------------------------------------------------
     # 9. UNIFIED SIGNAL GENERATION
     #    Merges all methods from all PDFs
     # ------------------------------------------------------------------
@@ -2797,6 +3144,44 @@ class GannAnalyzer:
                     f"Jensen pp.121-122)"
                 )
 
+        # --- NEW: Futia Angular Position (PDF 25) ---
+        futia = self.futia_angular_position(current_price)
+        if futia.is_near_cardinal:
+            confidence += 0.05
+            reasons.append(
+                f"Futia SQ9 angular: price {current_price} at {futia.angular_position}° "
+                f"near {futia.nearest_cardinal}° axis "
+                f"(distance={futia.distance_to_cardinal}°, PDF 25)"
+            )
+
+        # --- NEW: Triangular Number Proximity (PDF 26) ---
+        tri = self.triangular_number_proximity(current_price)
+        if tri.is_near_level:
+            confidence += 0.05
+            reasons.append(
+                f"Triangular S/R: price {current_price} near summation "
+                f"number {tri.nearest_triangular} "
+                f"(distance={tri.distance}, PDF 26 p.21)"
+            )
+
+        # --- NEW: Range Expansion (PDF 27) ---
+        if prices_history and len(prices_history) >= 4:
+            # Approximate highs/lows from consecutive closes
+            recent_closes = prices_history[-4:]
+            approx_highs = [max(recent_closes[i], recent_closes[i + 1])
+                            for i in range(len(recent_closes) - 1)]
+            approx_lows = [min(recent_closes[i], recent_closes[i + 1])
+                           for i in range(len(recent_closes) - 1)]
+            rex = self.range_expansion_check(
+                approx_highs[-2:], approx_lows[-2:], recent_closes[-2:]
+            )
+            if rex.is_expanding and rex.expansion_ratio > 1.2:
+                confidence += 0.05
+                reasons.append(
+                    f"Range expansion: ratio={rex.expansion_ratio}, "
+                    f"bias={rex.bias_direction} (Crabel, PDF 27 p.11)"
+                )
+
         # Cap confidence at 1.0
         confidence = max(0.0, min(1.0, confidence))
 
@@ -2826,7 +3211,7 @@ def main():
 
     print("=" * 78)
     print("W.D. GANN UNIFIED TRADING ALGORITHM")
-    print("Synthesized from 7 PDF documents on Gann's methods")
+    print("Synthesized from 27 PDF documents on Gann's methods")
     print("=" * 78)
 
     # --- Example 1: Gann Angle Levels (from PDF 5, SBI example) ---
