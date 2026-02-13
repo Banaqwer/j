@@ -1,17 +1,19 @@
 // ============================================================================
 // GANN COMPLETE UNIFIED STRATEGY — TradingView Pine Script v5
 // ============================================================================
-// Full translation of gann_trading_algorithm.py (all 27 components) into a
+// Full translation of gann_trading_algorithm.py (all 31 components) into a
 // live TradingView strategy for any market (BTC, ETH, Gold, Forex, Stocks).
 //
-// Based on W.D. Gann's methods decoded from 21 PDF documents:
-//   PDFs 1-7: Core Gann methods (angles, SQ9, vibration, cycles)
-//   PDFs 8-11: 144 Square, Hexagon, Price-Time Vector, Master Formula
+// Based on W.D. Gann's methods decoded from 27 PDF documents:
+//   PDFs 1-7:   Core Gann methods (angles, SQ9, vibration, cycles)
+//   PDFs 8-11:  144 Square, Hexagon, Price-Time Vector, Master Formula
 //   PDFs 12-14: Range divisions, Master Time Factor, George Bayer
 //   PDFs 15-17: Moon Beam, Jenkins, 1953 Mathematical Formula
 //   PDFs 18-21: Shephard Course, Astro-Cycles, Basis of Forecasting, Law of Vibration
+//   PDFs 22-27: Sephariel Numbers, Planetary Harmonics, Gann Wheel,
+//               Spiral Chart/Futia, Advanced Group, Short-Term Astrology
 //
-// 27 Components Implemented:
+// 31 Components Implemented:
 //   C1:  Gann Angle Support/Resistance (11 angles)
 //   C2:  Square of 9 Price Levels
 //   C3:  Number Vibration Analysis (digit reduction)
@@ -38,7 +40,11 @@
 //   C24: Jensen Critical Points — harmonics of 90° (Jensen, pp.108-113)
 //   C25: Jensen Five-Phase Trend (Jensen, pp.121-122)
 //   C26: Vectorial Projection — 45°+60° exhaustion (Jensen, pp.124-126)
-//   C27: Confidence Scoring & Signal Generation (27-factor)
+//   C28: Futia SQ9 Angular Position (PDF 25, Spiral Chart formula)
+//   C29: Range Expansion Check (PDF 27, Crabel 75%+ continuation)
+//   C30: Triangular Number S/R (PDF 26, summation formula)
+//   C31: Planetary Harmonic Price Levels (PDF 23, longitude→price)
+//   C27: Confidence Scoring & Signal Generation (22-factor)
 //
 // HOW TO USE:
 //   1. Open TradingView → Pine Editor
@@ -50,7 +56,7 @@
 // ============================================================================
 
 //@version=5
-strategy("Gann Complete Strategy (27 Components)", overlay=true,
+strategy("Gann Complete Strategy (31 Components)", overlay=true,
      default_qty_type=strategy.percent_of_equity, default_qty_value=100,
      initial_capital=10000, commission_type=strategy.commission.percent,
      commission_value=0.1, slippage=2, pyramiding=0)
@@ -92,6 +98,10 @@ i_useMinorTurn = input.bool(true, "Use Minor Trend Turn (C23)",group=grp_adv)
 i_useJensen  = input.bool(true,   "Use Jensen Critical (C24)", group=grp_adv)
 i_use5Phase  = input.bool(true,   "Use Five-Phase Trend (C25)",group=grp_adv)
 i_useVectorial = input.bool(true, "Use Vectorial Proj. (C26)", group=grp_adv)
+i_useFutia     = input.bool(true, "Use Futia SQ9 Angular (C28)",group=grp_adv)
+i_useRangeExp  = input.bool(true, "Use Range Expansion (C29)",  group=grp_adv)
+i_useTriangular= input.bool(true, "Use Triangular Numbers (C30)",group=grp_adv)
+i_usePlanHarm  = input.bool(true, "Use Planetary Harmonic (C31)",group=grp_adv)
 
 // ============================================================================
 // C1: GANN ANGLE SUPPORT/RESISTANCE (11 angles)
@@ -892,9 +902,134 @@ vecNearProjection = not na(vecProjectedPrice) and vecProjectedPrice > 0 and
      math.abs(close - vecProjectedPrice) / close * 100 < 1.0 and i_useVectorial
 
 // ============================================================================
+// C28: FUTIA SQ9 ANGULAR POSITION
+// ============================================================================
+// Futia's universal formula converts any price to its angular position on the
+// Square of Nine spiral chart:  A = MOD(180 × √(P − 1) − 225, 360)
+// When a price sits on a cardinal (0/90/180/270) or ordinal (45/135/225/315)
+// axis, it occupies a critical S/R position.
+// Source: PDF 25 "Spiral Chart — Gann Mysteries"
+
+futiaAngle(float price) =>
+    if price <= 1
+        0.0
+    else
+        raw = 180.0 * math.sqrt(price - 1) - 225.0
+        // Manual modulo: Pine's % can return negative for floats
+        wrapped = raw - math.floor(raw / 360.0) * 360.0
+        wrapped
+
+futiaCurrentAngle = futiaAngle(close)
+
+// Find distance to nearest cardinal/ordinal axis (0,45,90,...,315)
+futiaAxisDist(float angle) =>
+    minDist = 360.0
+    for axis = 0 to 7
+        axisAngle = axis * 45.0
+        d = math.abs(angle - axisAngle)
+        if d > 180
+            d := 360 - d
+        if d < minDist
+            minDist := d
+    minDist
+
+futiaDistToAxis = futiaAxisDist(futiaCurrentAngle)
+futiaOnAxis     = futiaDistToAxis <= 5.0 and i_useFutia   // within 5°
+
+// Also compute Futia angles for swing pivots (to detect angular relationships)
+futiaSwingLoAngle = futiaAngle(swingLo)
+futiaSwingHiAngle = futiaAngle(swingHi)
+
+// ============================================================================
+// C29: RANGE EXPANSION CHECK (Crabel)
+// ============================================================================
+// When today's range (high − low) exceeds yesterday's range, the market is
+// showing increased energy.  The direction of close relative to yesterday's
+// close predicts next-day continuation with 75%+ accuracy.
+// Range expansion ratio = today_range / yesterday_range; > 1.0 = expanding.
+// Source: PDF 27 "Short-Term Market Forecasting" (Toby Crabel, pp.11-12)
+
+todayRange     = high - low
+yesterdayRange = high[1] - low[1]
+rangeExpRatio  = yesterdayRange > 0 ? todayRange / yesterdayRange : 1.0
+isRangeExpanding = rangeExpRatio > 1.0
+
+// Bias direction: if expanding, follow the close direction
+rangeExpBullish = isRangeExpanding and close > close[1]
+rangeExpBearish = isRangeExpanding and close < close[1]
+
+// Confidence from expansion magnitude (ratio > 1.2 is strong)
+rangeExpStrong  = isRangeExpanding and rangeExpRatio > 1.2 and i_useRangeExp
+
+// ============================================================================
+// C30: TRIANGULAR NUMBER S/R (Summation Numbers)
+// ============================================================================
+// Triangular numbers = n(n+1)/2: 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66,
+// 78, 91, 105, 120, 136, 153, 171, 190, 210, 231, 253, 276, 300, 325, 351,
+// 378, 406, 435, 465, 496, 528, 561, 595, 630, 666, ...
+// These are natural S/R levels because they represent the accumulation of
+// complete "rings" around the Square of Nine center.
+// Source: PDF 26 "Advanced Group" (p.21)
+
+// Solve n(n+1)/2 = price for n, then check nearest triangular numbers
+triangularNearest(float price) =>
+    if price <= 0
+        1.0
+    else
+        n_approx = (-1.0 + math.sqrt(1.0 + 8.0 * price)) / 2.0
+        n_low = math.max(1.0, math.floor(n_approx))
+        t_low  = n_low * (n_low + 1) / 2.0
+        t_high = (n_low + 1) * (n_low + 2) / 2.0
+        math.abs(price - t_low) <= math.abs(price - t_high) ? t_low : t_high
+
+nearestTriNum = triangularNearest(close)
+triDist       = math.abs(close - nearestTriNum)
+triThreshold  = math.max(close * 0.01, 1.0)    // 1% of price, floor of 1.0
+triNearLevel  = triDist <= triThreshold and i_useTriangular
+
+// ============================================================================
+// C31: PLANETARY HARMONIC PRICE LEVELS
+// ============================================================================
+// "I convert planetary positions into price. A conjunction between two planets
+// is the most powerful geometric relationship." (Thomas Long, PDF 23)
+// Without live ephemeris data, we use the Sun's approximate ecliptic longitude
+// (≈ day_of_year × 360/365) as a proxy, then project price harmonics at:
+//   base, base+30, base+45, base+60, base+90, base+120, base+144, base+180,
+//   base+240, base+270, base+300, base+360
+// Source: PDF 23 "Using Planetary Harmonics for Key Reversals" (pp.1-3)
+
+// Approximate Sun longitude from day of year (0-365 → 0-360°)
+sunLongitude  = dayofyear * (360.0 / 365.0)
+
+// Apply price scale: for high-priced assets like BTC, divide by a power of 10
+// so that harmonic levels land near the current price range.
+// Auto-scale: find order of magnitude of price
+autoScale     = close > 10000 ? 100.0 : close > 1000 ? 10.0 : 1.0
+scaledSunBase = sunLongitude * autoScale
+
+// Key harmonic offsets (from Gann + Thomas Long)
+harmonic_90   = (sunLongitude + 90.0)  * autoScale
+harmonic_180  = (sunLongitude + 180.0) * autoScale
+harmonic_270  = (sunLongitude + 270.0) * autoScale
+harmonic_360  = (sunLongitude + 360.0) * autoScale
+
+// Check if current price is near any planetary harmonic level (within 1%)
+isNearPlanetaryHarmonic(float price, float tol) =>
+    near = false
+    if scaledSunBase > 0
+        near := near or math.abs(price - scaledSunBase) / price * 100 < tol
+        near := near or math.abs(price - harmonic_90)   / price * 100 < tol
+        near := near or math.abs(price - harmonic_180)  / price * 100 < tol
+        near := near or math.abs(price - harmonic_270)  / price * 100 < tol
+        near := near or math.abs(price - harmonic_360)  / price * 100 < tol
+    near
+
+planetaryHarmConf = isNearPlanetaryHarmonic(close, 1.0) and i_usePlanHarm
+
+// ============================================================================
 // C27: CONFIDENCE SCORING & SIGNAL GENERATION
 // ============================================================================
-// 27 strategy components (C1-C27); 19 scoring factors feed the confidence
+// 31 strategy components (C1-C31); 22 scoring factors feed the confidence
 // score.  The R:R check is a single tiered factor (+0.15 / +0.05 / −0.10).
 //
 // Scoring factors (matches Python generate_signal):
@@ -916,8 +1051,11 @@ vecNearProjection = not na(vecProjectedPrice) and vecProjectedPrice > 0 and
 //   +0.05  Jensen five-phase blowoff (C25)
 //   +0.05  Minor trend turn window (C23)
 //   +0.05  Vectorial projection confluence (C26)
+//   +0.05  Futia SQ9 on cardinal/ordinal axis (C28)
+//   +0.05  Triangular number S/R nearby (C30)
+//   +0.05  Range expansion with matching bias (C29)
 //   +0.15 / +0.05 / −0.10  R:R ratio (tiered)
-// Theoretical max (all factors active): ~1.45 → capped at 1.00
+// Theoretical max (all factors active): ~1.60 → capped at 1.00
 // In practice ~0.85–0.95 is achievable since some factors rarely align.
 // Min to trade: configurable (default 0.40)
 
@@ -939,7 +1077,7 @@ sellRisk   = math.abs(sellEntry - sellStop)
 sellReward = math.abs(sellEntry - sellTarget)
 sellRR     = sellRisk > 0 ? sellReward / sellRisk : 0
 
-// --- Buy Confidence (27-component scoring) ---
+// --- Buy Confidence (31-component scoring) ---
 buyConf = 0.0
 // C7: Gann angle trend
 buyConf := buyConf + (trendBull ? 0.30 : 0.0)
@@ -977,12 +1115,18 @@ buyConf := buyConf + (isBlowoffPhase and fivePhaseTrendUp ? 0.05 : 0.0)
 buyConf := buyConf + (minorTurnActive ? 0.05 : 0.0)
 // C26: Vectorial projection confluence
 buyConf := buyConf + (vecNearProjection ? 0.05 : 0.0)
+// C28: Futia SQ9 on cardinal/ordinal axis
+buyConf := buyConf + (futiaOnAxis ? 0.05 : 0.0)
+// C30: Triangular number S/R nearby
+buyConf := buyConf + (triNearLevel ? 0.05 : 0.0)
+// C29: Range expansion confirms bullish bias
+buyConf := buyConf + (rangeExpStrong and rangeExpBullish ? 0.05 : 0.0)
 // Risk-reward validation
 buyConf := buyConf + (buyRR >= i_rrRatio ? 0.15 : buyRR >= 1.5 ? 0.05 : -0.10)
 // Clamp 0.0 - 1.0
 buyConf := math.max(0.0, math.min(1.0, buyConf))
 
-// --- Sell Confidence (27-component scoring) ---
+// --- Sell Confidence (31-component scoring) ---
 sellConf = 0.0
 // C7: Gann angle trend
 sellConf := sellConf + (trendBear ? 0.30 : 0.0)
@@ -1020,6 +1164,12 @@ sellConf := sellConf + (isBlowoffPhase and fivePhaseTrendDown ? 0.05 : 0.0)
 sellConf := sellConf + (minorTurnActive ? 0.05 : 0.0)
 // C26: Vectorial projection confluence
 sellConf := sellConf + (vecNearProjection ? 0.05 : 0.0)
+// C28: Futia SQ9 on cardinal/ordinal axis
+sellConf := sellConf + (futiaOnAxis ? 0.05 : 0.0)
+// C30: Triangular number S/R nearby
+sellConf := sellConf + (triNearLevel ? 0.05 : 0.0)
+// C29: Range expansion confirms bearish bias
+sellConf := sellConf + (rangeExpStrong and rangeExpBearish ? 0.05 : 0.0)
 // Risk-reward validation
 sellConf := sellConf + (sellRR >= i_rrRatio ? 0.15 : sellRR >= 1.5 ? 0.05 : -0.10)
 // Clamp 0.0 - 1.0
@@ -1148,6 +1298,29 @@ plot(i_useVectorial and not na(vecProjectedPrice) ? vecProjectedPrice : na,
      "Vec Projection", color=color.new(color.lime, 40), linewidth=2,
      style=plot.style_cross)
 
+// --- C28: Futia Angular axis marker ---
+plotshape(futiaOnAxis, "Futia Axis", style=shape.diamond,
+     location=location.belowbar, color=color.new(color.yellow, 20),
+     size=size.tiny, text="FA")
+
+// --- C29: Range Expansion marker ---
+plotshape(rangeExpStrong and rangeExpBullish, "Range Exp ▲", style=shape.arrowup,
+     location=location.belowbar, color=color.new(color.green, 20),
+     size=size.tiny, text="RE")
+plotshape(rangeExpStrong and rangeExpBearish, "Range Exp ▼", style=shape.arrowdown,
+     location=location.abovebar, color=color.new(color.red, 20),
+     size=size.tiny, text="RE")
+
+// --- C30: Triangular Number S/R marker ---
+plotshape(triNearLevel, "Tri Number", style=shape.circle,
+     location=location.abovebar, color=color.new(color.white, 30),
+     size=size.tiny, text="Δ")
+
+// --- C31: Planetary Harmonic marker ---
+plotshape(planetaryHarmConf, "Planet Harm", style=shape.square,
+     location=location.belowbar, color=color.new(color.purple, 20),
+     size=size.tiny, text="☉")
+
 // --- Seasonal markers ---
 bgcolor(isCardinalDate ? color.new(color.blue, 92) : na, title="Cardinal Date")
 bgcolor(isOctaveDate   ? color.new(color.purple, 92) : na, title="Octave Date")
@@ -1157,14 +1330,14 @@ bgcolor(trendBull ? color.new(color.green, 95) : trendBear ? color.new(color.red
      title="Trend Background")
 
 // ============================================================================
-// INFO TABLE — Full 27-Component Dashboard
+// INFO TABLE — Full 31-Component Dashboard
 // ============================================================================
-var table infoTable = table.new(position.top_right, 2, 24,
+var table infoTable = table.new(position.top_right, 2, 28,
      bgcolor=color.new(color.black, 80), border_width=1)
 
 if barstate.islast
     // Header
-    table.cell(infoTable, 0, 0, "Gann Complete (27 Components)", text_color=color.white, text_size=size.normal)
+    table.cell(infoTable, 0, 0, "Gann Complete (31 Components)", text_color=color.white, text_size=size.normal)
     table.cell(infoTable, 1, 0, "", text_color=color.white)
     
     // Row 1: Trend
@@ -1274,6 +1447,27 @@ if barstate.islast
     // Row 23: Bars from pivots
     table.cell(infoTable, 0, 23, "Bars Lo/Hi", text_color=color.gray, text_size=size.small)
     table.cell(infoTable, 1, 23, str.tostring(barsSinceSwingLo) + "/" + str.tostring(barsSinceSwingHi), text_color=color.white, text_size=size.small)
+    
+    // Row 24: Futia Angular (C28)
+    table.cell(infoTable, 0, 24, "Futia SQ9 (C28)", text_color=color.gray, text_size=size.small)
+    futiaStr = str.tostring(futiaCurrentAngle, "#.#") + "° " + (futiaOnAxis ? "⚡AXIS" : "d=" + str.tostring(futiaDistToAxis, "#.#") + "°")
+    table.cell(infoTable, 1, 24, futiaStr, text_color=futiaOnAxis ? color.yellow : color.white, text_size=size.small)
+    
+    // Row 25: Range Expansion (C29)
+    table.cell(infoTable, 0, 25, "Range Exp (C29)", text_color=color.gray, text_size=size.small)
+    reStr = isRangeExpanding ? str.tostring(rangeExpRatio, "#.##") + "x " + (rangeExpBullish ? "▲" : "▼") : "—"
+    reClr = rangeExpStrong ? (rangeExpBullish ? color.green : color.red) : isRangeExpanding ? color.yellow : color.gray
+    table.cell(infoTable, 1, 25, reStr, text_color=reClr, text_size=size.small)
+    
+    // Row 26: Triangular Number (C30)
+    table.cell(infoTable, 0, 26, "Tri Num (C30)", text_color=color.gray, text_size=size.small)
+    triStr = triNearLevel ? "✓ " + str.tostring(nearestTriNum, "#") : "→ " + str.tostring(nearestTriNum, "#") + " (d=" + str.tostring(triDist, "#.#") + ")"
+    table.cell(infoTable, 1, 26, triStr, text_color=triNearLevel ? color.white : color.gray, text_size=size.small)
+    
+    // Row 27: Planetary Harmonic (C31)
+    table.cell(infoTable, 0, 27, "Planet ☉ (C31)", text_color=color.gray, text_size=size.small)
+    phStr = planetaryHarmConf ? "✓ Harmonic" : "Sun " + str.tostring(sunLongitude, "#.#") + "°"
+    table.cell(infoTable, 1, 27, phStr, text_color=planetaryHarmConf ? color.purple : color.gray, text_size=size.small)
 
 // ============================================================================
 // ALERTS
@@ -1317,3 +1511,15 @@ alertcondition(isBlowoffPhase,
 alertcondition(vecNearProjection,
      "Vectorial Projection Alert",
      "Price near 45°/60° vectorial exhaustion point — Top/bottom likely (Jensen pp.124-126)")
+alertcondition(futiaOnAxis,
+     "Futia SQ9 Axis Alert",
+     "Price on SQ9 cardinal/ordinal axis (Futia formula) — Key S/R level (PDF 25)")
+alertcondition(rangeExpStrong,
+     "Range Expansion Alert",
+     "Range expansion > 1.2x — 75%+ continuation probability in bias direction (PDF 27)")
+alertcondition(triNearLevel,
+     "Triangular Number Alert",
+     "Price near triangular (summation) number — Natural S/R level (PDF 26 p.21)")
+alertcondition(planetaryHarmConf,
+     "Planetary Harmonic Alert",
+     "Price near planetary harmonic price level — Potential reversal (PDF 23)")

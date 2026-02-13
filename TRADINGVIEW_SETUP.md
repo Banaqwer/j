@@ -4,15 +4,15 @@
 
 | File | Components | Description |
 |------|-----------|-------------|
-| **`gann_complete_strategy.pine`** | **All 27** | Full algorithm — all PDF teachings implemented |
-| `gann_tradingview_strategy.pine` | 9 of 27 | Original version — core Gann methods only |
+| **`gann_complete_strategy.pine`** | **All 31** | Full algorithm — all PDF teachings implemented |
+| `gann_tradingview_strategy.pine` | 9 of 31 | Original version — core Gann methods only |
 
 > **Recommended**: Use `gann_complete_strategy.pine` for the most complete implementation.
 
-## Gann Complete Strategy — Pine Script v5 (27 Components)
+## Gann Complete Strategy — Pine Script v5 (31 Components)
 
-This Pine Script translates the **full** Python Gann algorithm (all 27 components from
-21 PDF documents) into a TradingView strategy that can be used for **live paper trading**
+This Pine Script translates the **full** Python Gann algorithm (all 31 components from
+27 PDF documents) into a TradingView strategy that can be used for **live paper trading**
 (demo account) on any asset (BTC, ETH, Gold, Forex, Stocks).
 
 ---
@@ -68,17 +68,22 @@ This Pine Script translates the **full** Python Gann algorithm (all 27 component
 | Aqua squares ■ | Aqua | Jensen critical time point (harmonic of 90°) |
 | Orange labels P5 | Orange | Jensen five-phase blowoff detected |
 | Lime crosses + | Lime | Vectorial projection price level |
+| Yellow diamonds FA | Yellow | Futia SQ9 cardinal/ordinal axis hit |
+| Green arrows RE ▲ | Green | Range expansion bullish (>1.2x) |
+| Red arrows RE ▼ | Red | Range expansion bearish (>1.2x) |
+| White circles Δ | White | Triangular (summation) number S/R |
+| Purple squares ☉ | Purple | Planetary harmonic price level |
 | Blue background | Light blue | Seasonal cardinal date (equinox/solstice) |
 | Purple background | Light purple | Seasonal octave date |
 | Green background | Light green | Bullish trend confirmed |
 | Red background | Light red | Bearish trend confirmed |
 
-## Info Panel (Top Right) — 24-Row Dashboard
+## Info Panel (Top Right) — 28-Row Dashboard
 
 The strategy displays a real-time info panel showing:
 - **Trend (C7)**: Gann angle trend direction
 - **Swing (C11)**: Mechanical HH/HL vs LH/LL trend
-- **Buy/Sell Confidence**: 0.00 to 1.00 score (19 scoring factors from 27 components)
+- **Buy/Sell Confidence**: 0.00 to 1.00 score (22 scoring factors from 31 components)
 - **Vibration (C3)**: Digit reduction (9 = change number)
 - **SQ9 (C2)**: Price near Square of 9 level
 - **Hexagon (C9)**: Price near hexagon 60° level
@@ -96,6 +101,10 @@ The strategy displays a real-time info panel showing:
 - **Daily/Annual Vol**: Volatility (SQ12 triggers at high vol)
 - **Buy/Sell R:R**: Current reward-to-risk ratios
 - **Bars Lo/Hi**: Bars since last swing low/high pivot
+- **Futia SQ9 (C28)**: Angular position on SQ9 + distance to nearest axis
+- **Range Exp (C29)**: Range expansion ratio + bullish/bearish bias
+- **Tri Num (C30)**: Nearest triangular number + distance
+- **Planet ☉ (C31)**: Sun longitude + planetary harmonic level status
 
 ---
 
@@ -143,12 +152,16 @@ The strategy displays a real-time info panel showing:
 | Use Jensen Critical (C24) | ✓ | Harmonics of 90° time cycle detection |
 | Use Five-Phase Trend (C25) | ✓ | Jensen intermediate trend phases |
 | Use Vectorial Proj. (C26) | ✓ | 45°+60° dual-angle exhaustion projection |
+| Use Futia SQ9 Angular (C28) | ✓ | SQ9 cardinal/ordinal axis detection |
+| Use Range Expansion (C29) | ✓ | Range expansion 75%+ continuation bias |
+| Use Triangular Numbers (C30) | ✓ | Summation number S/R levels |
+| Use Planetary Harmonic (C31) | ✓ | Sun longitude→price harmonic levels |
 
 ---
 
 ## Gann Components Implemented
 
-### `gann_complete_strategy.pine` — All 27 Components
+### `gann_complete_strategy.pine` — All 31 Components
 
 | # | Component | Source PDFs | Method |
 |---|-----------|-------------|--------|
@@ -178,7 +191,11 @@ The strategy displays a real-time info panel showing:
 | C24 | **Jensen Critical** | Jensen pp.108-113 | Harmonics of 90° + Mercury 88d |
 | C25 | **Five-Phase Trend** | Jensen pp.121-122 | 5-phase intermediate; Phase 5 = blowoff |
 | C26 | **Vectorial Projection** | Jensen pp.124-126 | 45°+60° dual-angle convergence |
-| C27 | **Confidence Scoring** | All PDFs | 19-factor scoring (0.0–1.0) |
+| C28 | **Futia SQ9 Angular** | PDF 25 (Spiral Chart) | A=MOD(180√(P-1)-225, 360) axis detection |
+| C29 | **Range Expansion** | PDF 27 (Crabel) | Today>yesterday range = 75%+ continuation |
+| C30 | **Triangular Number S/R** | PDF 26 (Adv Group p.21) | n(n+1)/2 summation numbers as S/R |
+| C31 | **Planetary Harmonic** | PDF 23 (Thomas Long) | Sun longitude→price harmonic levels |
+| C27 | **Confidence Scoring** | All PDFs | 22-factor scoring (0.0–1.0) |
 
 ---
 
@@ -204,11 +221,14 @@ The strategy displays a real-time info panel showing:
 | Five-phase blowoff (C25) | +0.05 | Phase 5 in intermediate trend |
 | Minor trend turn (C23) | +0.05 | Key day count from pivot (14, 21) |
 | Vectorial projection (C26) | +0.05 | Price near 45°/60° convergence |
+| Futia SQ9 on axis (C28) | +0.05 | Price on cardinal/ordinal SQ9 axis |
+| Triangular number S/R (C30) | +0.05 | Price near summation number |
+| Range expansion bias (C29) | +0.05 | Range expanding with matching bias |
 | R:R ≥ 2.5:1 | +0.15 | Good reward-to-risk |
 | R:R 1.5–2.5:1 | +0.05 | Acceptable reward-to-risk |
 | R:R < 1.5:1 | −0.10 | Poor reward-to-risk penalty |
 
-**Theoretical maximum: ~1.45 → capped at 1.00**
+**Theoretical maximum: ~1.60 → capped at 1.00**
 **Practical maximum: ~0.85–0.95** (some factors rarely align simultaneously)
 **Minimum to trade: 0.40** (configurable)
 
@@ -216,7 +236,7 @@ The strategy displays a real-time info panel showing:
 
 ## Alerts Setup
 
-The complete strategy includes **13 alert conditions**:
+The complete strategy includes **17 alert conditions**:
 1. **Gann BUY Signal** — All buy conditions met
 2. **Gann SELL Signal** — All sell conditions met
 3. **Vibration 9 Alert** — Price digit sum = 9 (reversal watch)
@@ -230,10 +250,14 @@ The complete strategy includes **13 alert conditions**:
 11. **Jensen Critical Point** — Harmonic of 90° time resistance
 12. **Five-Phase Blowoff Alert** — Phase 5 exhaustion detected
 13. **Vectorial Projection Alert** — Price near 45°/60° exhaustion convergence
+14. **Futia SQ9 Axis Alert** — Price on SQ9 cardinal/ordinal axis (key S/R)
+15. **Range Expansion Alert** — Range expanding >1.2x (75%+ continuation)
+16. **Triangular Number Alert** — Price near summation number S/R
+17. **Planetary Harmonic Alert** — Price near planetary harmonic level
 
 To set up alerts:
 1. Right-click on the chart → "Add Alert"
-2. Condition: Select "Gann Complete Strategy (27 Components)"
+2. Condition: Select "Gann Complete Strategy (31 Components)"
 3. Choose the alert type
 4. Set notification method (popup, email, webhook)
 

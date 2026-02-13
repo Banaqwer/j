@@ -1,8 +1,8 @@
 // ============================================================================
 // GANN UNIFIED TRADING STRATEGY — TradingView Pine Script v5 (9-Component)
 // ============================================================================
-// NOTE: A newer 27-component version is available: gann_complete_strategy.pine
-//       This file implements 9 of 27 components from the Python algorithm.
+// NOTE: A newer 31-component version is available: gann_complete_strategy.pine
+//       This file implements 9 of 31 components from the Python algorithm.
 //
 // Translates the Python Gann algorithm (gann_trading_algorithm.py) into a
 // live TradingView strategy for BTC/USD and ETH/USD.
