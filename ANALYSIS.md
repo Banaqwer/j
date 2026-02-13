@@ -399,6 +399,83 @@
 
 ---
 
+### PDF 22: "The Numbers Book" by Sephariel (67 pages, 320K chars)
+
+**About:** A complete numerology reference by Walter Gorn Old ("Sephariel"), one of the foundational texts Gann studied. Covers two systems: the unit system (1-9 mapped to planets) and the Hebrew Kabalistic system (1-22 mapped to zodiac signs).
+
+**Key Teachings (page references from extraction):**
+
+- **Unit System** (pp.4-10): Each digit 1-9 corresponds to a planet. 1/4=Sun, 2/7=Moon, 3=Jupiter, 5=Mercury, 6=Venus, 8=Saturn, 9=Mars. Positive (winning) numbers: 1,3,5,7,9. Negative (losing) numbers: 2,4,6,8.
+- **Kabalistic System** (pp.11-14): 22 Hebrew letters map numbers 1-22 to both planets AND zodiac signs, extending the system beyond single digits. Each has distinct character and vibration.
+- **Numbers and Speculation** (pp.60-66): Planetary rulership of market sectors — Sun=government/gold, Moon=silver/property, Mercury=transport, Venus=banks/copper, Mars=iron/steel, Jupiter=shipping, Saturn=coal/building, Uranus=electrical, Neptune=oils. Each share number 1-22 maps to specific sector recommendations.
+- **Winning vs Losing Numbers**: For speculation, odd numbers (1,3,5,7,9) are "winning" and even numbers (2,4,6,8) are "losing." This applies to date digit reduction, stock name vibration, and timing hour numbers.
+- **Implementation**: `SEPHARIEL_POSITIVE_NUMBERS`, `SEPHARIEL_NEGATIVE_NUMBERS`, `SEPHARIEL_SECTOR_NUMBERS` constants added. Informs the `number_vibration()` method's interpretation of whether a vibration digit signals strength or weakness.
+
+### PDF 23: "Using Planetary Harmonics to Find Key Reversals" by Thomas Long (8 pages, 31K chars)
+
+**About:** A practical guide to converting planetary longitude positions into price levels, developed from Jeanne Long's research building on Gann's methods.
+
+**Key Teachings (page references from extraction):**
+
+- **Longitude-to-Price Conversion** (pp.1-3): 1° of planetary longitude = a price unit scaled by market range (0.10 for $10-100 stocks, $1.00 for $100+ stocks, $10 for $1000+ markets). Example: planet at 187° = $18.70 (or $187, $1870 depending on scale).
+- **Conjunctions = Most Powerful Reversals** (pp.2-3): When two planetary price lines cross, it creates the most powerful reversal geometry. Mars-Node conjunction at 150° = $15.00 timed exact low of Teradyne.
+- **Mirror Lines** (pp.4-5): For downtrends, invert the planet position: Mirror = 360 - Longitude. This gives downward-sloping price lines. Example: conjunction at 150° → mirror at 210° → $21.00.
+- **Harmonic Divisions** (pp.6-7): 360/1=conjunction, 360/2=180°=opposition, 360/3=120°=trine, 360/4=90°=square. Most major reversals come from first four harmonics.
+- **Multiple Wheels** (pp.3, 8): Price levels repeat every 360° (i.e., every $36 for 0.10 scale). Support at $15.00, then $51.00 (+$36), then $87.00 (+$36).
+- **Implementation**: `HARMONIC_DIVISIONS` constant and `planetary_harmonic_price()` method convert any planetary degree to multi-harmonic price levels with mirror lines.
+
+### PDF 24: "Gann Wheel" by Dave "The Gann Wheel Man" (10 pages, 27K chars)
+
+**About:** Forum posts from a Gann practitioner emphasizing the absolute primacy of TIME over price. Includes a critical musical-scale-planet correspondence table.
+
+**Key Teachings (page references from extraction):**
+
+- **TIME IS PRICELESS** (pp.1-6): "Time is more important than price." "Trade TIME not PRICE in order to win!" "If you are in any market at the correct TIME you will never need a protective stop!" Every market turns at the same time aspects.
+- **The ONE Simple Cycle** (pp.3-5): "Every single market turns with the same exact cycle! Every single time!" The concept is: find the TIME WINDOW → find the TIME PATTERN → PRICE follows.
+- **Zero Drawdown Point** (pp.5-6): "There comes a point in time where the market has NO drawdown. This is the point I have found."
+- **Musical Scale Table** (p.7): Precise correspondence — Sun=C/Yellow/4/36, Moon=F/Violet/7/81, Mars=G/Red/9/25, Mercury=E/Orange/5/64, Jupiter=B/Blue/3/16, Venus=A/Green/6/49, Saturn=D/Indigo/8/9. Each planet's number squared gives its perfect square.
+- **45° and 144° on the Wheel** (p.8): "From 6/4 high date, going 45° clockwise = 6/19. Also 144° clockwise from 6/4 = 327! ONLY 1 NUMBER OFF from high price of 326.70!" This demonstrates converting between time-on-the-wheel and price.
+- **Implementation**: `MUSICAL_PLANET_TABLE` constant captures the complete correspondence. The musical-number-planet mapping enriches the number vibration analysis.
+
+### PDF 25: "Spiral Chart — Gann Mysteries" (1 page, 12K chars)
+
+**About:** A comprehensive reference page on the Square of Nine (originally called the "Spiral Chart"), including Futia's universal formula for computing any number's angular position.
+
+**Key Teachings (page references from extraction):**
+
+- **Futia's Universal Formula** (p.1): For any natural number P > 1: `A = MOD(180 × √(P-1) - 225, 360)`. This gives the angular position of P on the Square of Nine spiral. Verified: A(73) = 222.35° ≈ 225° (Octagon Chart value).
+- **Octagon Chart** (p.1): The SQ9 simplified to the 8 harmonic axes. Row I: 0°=2, 45°=3, 90°=4, ..., 315°=9. Each subsequent column adds the next ring.
+- **Zodiacal Overlay** (p.1): 0° axis (1→2→11→28) = 0° Aries (spring equinox). 90° axis (1→4→15→34) = 0° Cancer (summer solstice). 180° = 0° Libra. 270° = 0° Capricorn.
+- **Odd squares on 315°, even squares on 45°** (p.1): All odd perfect squares (9,25,49,81,...) converge along the 315° axis. Even squares converge along 45°.
+- **Implementation**: `FUTIA_OFFSET=225`, `FUTIA_SCALE=180` constants, and `futia_angular_position()` method. This provides the mathematically precise way to determine where any price sits on the SQ9, enabling angular distance calculations.
+
+### PDF 26: "Advanced WD Gann Group" (72 pages, 280K chars)
+
+**About:** A compilation of forum discussions from the Advanced WD Gann Yahoo Group, covering deep practical analysis of Gann's methods.
+
+**Key Teachings (page references from extraction):**
+
+- **SQ9 is a Square Root Calculator** (p.22): "The Square of 9 is a square root calculator. It converts numbers to angles and angles to numbers." This is the fundamental insight — the SQ9 mechanizes the √price transformation.
+- **Summation (Triangular) Numbers** (p.21): "561 is the SUMMATION of all numbers from 1 to 33. The formula is n/2 × (n+1)." These triangular numbers (1,3,6,10,15,21,28,36,45,55,...,561) act as natural support/resistance levels.
+- **Planetary Geocentric Averaging** (p.21): Take geocentric longitude of all planets, average them, and use that average for price/time analysis. Changes occur at 90°/180° angles.
+- **Price-Time Squaring as the ONLY Tool** (p.23): "Squaring price with time using the Square of 9 — this is the only tool you need to trade any market."
+- **Speed/Angle Relationship** (pp.1-2): 360/225 trading days = $1.60 per day. Venus speed = 580.64°/year, Mars speed varies. Each planet's speed creates a different angle on the price chart.
+- **Implementation**: `TRIANGULAR_NUMBERS` constant and `triangular_number_proximity()` method detect when price is near a natural summation number S/R level.
+
+### PDF 27: "Short-Term Market Forecasting via Astrology" (37 pages, 218K chars)
+
+**About:** A compilation of articles from Traders World magazine, including biblical cycle analysis, Gann-Fibonacci unification, and range expansion studies.
+
+**Key Teachings (page references from extraction):**
+
+- **Biblical Cycles** (pp.4-7): 1260 days = 3.5 × 360° = "a time, times, and half a time." 2520 = 7 × 360. When you multiply 1260 by 1.5 = 1890. The Saros eclipse cycle = 6585.33 days = 1260 years for a complete series.
+- **Saros Eclipse Timing** (pp.6-7): "Eclipses return to the exact location in each of the 12 signs of the zodiac every 6585⅓ days." The 1/3 day rotation causes stars to be "swept" from view, creating the 1260-year complete Saros series.
+- **Gann-Fibonacci Unification** (pp.8-10): Granville Cooley shows that "44 is a Fibonacci number. 67½° is a Fibonacci number. 266 is a Fibonacci number. 360° is a Fibonacci number." The 9 topics unifying Gann and Fibonacci: master numbers, angles, signs/seasons, signs/degrees, Stone of Simon, 8th square, death zone, wanderings/pyramid, Great Cycle of Enoch.
+- **Range Expansion** (pp.11-12): Toby Crabel's study: "Over 75% of the time, the price pattern showed a percentage profitability favoring the bias of the range expansion." When today's range exceeds yesterday's, next day continues in same direction 75%+ of the time.
+- **Implementation**: `SAROS_ECLIPSE_DAYS=6585.33`, `BIBLICAL_HALF_WEEK=1260`, `RANGE_EXPANSION_BIAS_PCT=75` constants. `range_expansion_check()` method detects range expansion and signals continuation bias.
+
+---
+
 ## Cross-Document Similarities
 
 ### 1. Time Dominance (PDFs 1, 4, 5, 7, 12, 13, 17, 18, 19)

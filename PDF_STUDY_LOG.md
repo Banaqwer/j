@@ -3,7 +3,7 @@
 > This document proves that every page of every PDF was studied in this repository.
 > Each PDF was processed in chunks of 5 pages as required.
 > Page numbers are cited for all findings. After each completed PDF, findings are summarized and implementation decisions documented.
-> Total PDFs studied: 21 | Total pages processed: 1,953
+> Total PDFs studied: 27 | Total pages processed: 2,148
 
 ## Full Page-by-Page Text Extractions
 
@@ -16,8 +16,9 @@ Every page of every text-extractable PDF has been extracted verbatim into the fo
 | [PDF_EXTRACTIONS_PART3.md](PDF_EXTRACTIONS_PART3.md) | Shephard Gann Cycles Course (148 pages) | 147 | 184,244 |
 | [PDF_EXTRACTIONS_PART4.md](PDF_EXTRACTIONS_PART4.md) | 1978 Astro-Cycles & George Bayer Book III | 276 | 591,308 |
 | [PDF_EXTRACTIONS_PART5.md](PDF_EXTRACTIONS_PART5.md) | Tunnel Thru the Air (432 pages) | 427 | 651,316 |
-| [PDF_EXTRACTIONS_PART6.md](PDF_EXTRACTIONS_PART6.md) | **Re-uploaded OCR-fixed docs:** Jensen Astro-Cycles (139p), Shephard re-upload (147p), Bayer re-upload (134p) | 420 | 848,022 |
-| **TOTAL** | **17 text-extractable PDFs + 3 re-uploads** | **1,439** | **2,604,339** |
+| [PDF_EXTRACTIONS_PART6.md](PDF_EXTRACTIONS_PART6.md) | Re-uploaded OCR-fixed docs: Jensen Astro-Cycles, Shephard, Bayer | 420 | 848,022 |
+| [PDF_EXTRACTIONS_PART7.md](PDF_EXTRACTIONS_PART7.md) | **NEW: 6 PDFs from pdf24_ocrPdf.zip** (Sephariel, Planetary Harmonics, Gann Wheel, Spiral Chart, Advanced Group, Astrology Forecasting) | 195 | 891,404 |
+| **TOTAL** | **23 text-extractable PDFs + 3 re-uploads + 6 new** | **1,634** | **3,495,743** |
 
 **4 image-only PDFs** (no extractable text — scanned pages only):
 

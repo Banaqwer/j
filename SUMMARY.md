@@ -155,7 +155,7 @@ The algorithm is a **multi-layer trading signal generator** that combines twenty
 
 ### 3.2 The Components
 
-The algorithm consists of 21 functional components plus a unified signal generator, each derived from specific PDFs:
+The algorithm consists of 24 functional components plus a unified signal generator, each derived from specific PDFs (27 total):
 
 ---
 
@@ -518,7 +518,48 @@ p.135: 1412 + 807 + 454 = 2673 = 2 × 1336
 
 ---
 
-#### Component 24: Unified Signal Generation
+#### Component 24: Futia SQ9 Angular Position (NEW — from PDF 25 "Spiral Chart")
+
+**What it does:** Calculates the precise angular position of any price on the Square of Nine spiral using Futia's universal formula: `A = MOD(180 × √(P-1) - 225, 360)`.
+
+**Why it matters:** This provides the mathematically exact way to determine where any price sits on the Gann wheel, enabling angular distance calculations between prices and detection of prices that lie on critical cardinal (0°/90°/180°/270°) or ordinal (45°/135°/225°/315°) axes.
+
+**How it works:**
+- Input: current price
+- Calculate angular position using Futia's formula
+- Check distance to nearest cardinal/ordinal axis
+- If within 5° of an axis → price is at a critical SQ9 level (+0.05 confidence)
+
+---
+
+#### Component 25: Range Expansion Check (NEW — from PDF 27, Toby Crabel pp.11-12)
+
+**What it does:** Detects when today's daily range exceeds yesterday's range, signaling increased energy and a 75%+ continuation bias.
+
+**Why it matters:** Range expansion is one of the simplest and most statistically robust short-term signals. Crabel's research showed "over 75% of the time, the price pattern showed a percentage profitability favoring the bias of the range expansion."
+
+**How it works:**
+- Compare current bar range (high - low) vs previous bar range
+- If ratio > 1.0 → expansion detected
+- Direction: bullish if close > prior close, bearish if below
+- If ratio > 1.2 → strong expansion (+0.05 confidence)
+
+---
+
+#### Component 26: Triangular Number Proximity (NEW — from PDF 26 "Advanced Group" p.21)
+
+**What it does:** Checks if current price is near a triangular (summation) number — numbers of the form n(n+1)/2 = 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, ..., 561.
+
+**Why it matters:** Triangular numbers represent the sum of all integers from 1 to n, connected to the Square of Nine's accumulation of complete "rings." They appear as natural market support/resistance levels.
+
+**How it works:**
+- Input: current price
+- Solve n(n+1)/2 ≈ price to find nearest triangular number
+- If price within 1% of a triangular number → potential S/R level (+0.05 confidence)
+
+---
+
+#### Component 27: Unified Signal Generation
 
 **What it does:** Combines ALL of the above into a single trading decision.
 
@@ -563,6 +604,15 @@ STEP 7a: Check Jensen critical time points (if date available)
 STEP 7b: Check Jensen five-phase intermediate trend
           → If in blowoff phase 5 (+0.05 confidence, caution flag)
 
+STEP 7c: Futia SQ9 angular position
+          → If price is within 5° of a cardinal/ordinal axis (+0.05 confidence)
+
+STEP 7d: Triangular number proximity
+          → If price is within 1% of a summation number (+0.05 confidence)
+
+STEP 7e: Range expansion check
+          → If range expansion ratio > 1.2 (+0.05 confidence, continuation bias)
+
 STEP 8: Output signal
          → Direction: BUY / SELL / NEUTRAL
          → Entry price, stop loss, up to 3 targets
@@ -584,7 +634,7 @@ FOR each bar in historical OHLC data:
         Check timeout → exit remaining position after 72 bars maximum
     
     IF no position AND enough history bars:
-        Generate unified signal (all 24 components)
+        Generate unified signal (all 27 components)
         IF signal ≠ NEUTRAL AND confidence ≥ 0.25 AND R:R ≥ 2.5:1:
             Calculate position size (max 10% account risk)
             ENTER trade with slippage applied

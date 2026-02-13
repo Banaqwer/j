@@ -2836,7 +2836,7 @@ class GannAnalyzer:
 
         nearest = min(candidates, key=lambda t: abs(price - t))
         dist = abs(price - nearest)
-        threshold = max(abs(price) * 0.01, 1.0)  # 1% or minimum 1
+        threshold = max(abs(price) * 0.01, 1.0)  # 1% of price, floor of 1.0 unit
 
         return TriangularNumberResult(
             price=price,
@@ -3166,14 +3166,15 @@ class GannAnalyzer:
 
         # --- NEW: Range Expansion (PDF 27) ---
         if prices_history and len(prices_history) >= 4:
-            # Approximate highs/lows from consecutive closes
+            # Pseudo highs/lows from consecutive closes (simplified
+            # approximation when actual OHLC data is unavailable)
             recent_closes = prices_history[-4:]
-            approx_highs = [max(recent_closes[i], recent_closes[i + 1])
+            pseudo_highs = [max(recent_closes[i], recent_closes[i + 1])
                             for i in range(len(recent_closes) - 1)]
-            approx_lows = [min(recent_closes[i], recent_closes[i + 1])
+            pseudo_lows = [min(recent_closes[i], recent_closes[i + 1])
                            for i in range(len(recent_closes) - 1)]
             rex = self.range_expansion_check(
-                approx_highs[-2:], approx_lows[-2:], recent_closes[-2:]
+                pseudo_highs[-2:], pseudo_lows[-2:], recent_closes[-2:]
             )
             if rex.is_expanding and rex.expansion_ratio > 1.2:
                 confidence += 0.05
