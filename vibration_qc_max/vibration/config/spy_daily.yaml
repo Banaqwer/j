@@ -1,0 +1,5 @@
+project: vibration_qc_max
+instrument: SPY
+timezone: America/New_York
+feature_time: "16:00"
+seed: 11
