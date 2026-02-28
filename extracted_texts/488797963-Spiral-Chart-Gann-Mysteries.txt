@@ -1,0 +1,468 @@
+================================================================================
+DOCUMENT: 488797963-Spiral-Chart-Gann-Mysteries.pdf
+Total Pages: 1
+================================================================================
+
+
+--- PAGE 1 of 1 ---
+
+Gann Mysteries
+WELCOME TO GANN
+MYSTERIES
+HEXAGON CHART
+SPIRAL CHART
+SITEMAP
+Spiral Chart
+The Square of Nine (originally called the Spiral Chart) is a tool of technical
+analysis which was first popularized by famous market forecaster W. D. Gann.
+[1][2][3] The chart first appeared in his corespondence course Master Charts[4],
+which is now a part of the W. D. Gann Master Commodities Course[5]. It is
+very similar to the Hexagon Chart[3], another chart described in the Master
+Charts course.
+It is worth noting that Gann’s original use of the term “Square of Nine” refers to
+a completely different chart, and he referred to what is now known as the
+Square of Nine today as the “Spiral Chart”[4]. However, for some reason, later
+authors mixed up the terms and the name “Spiral Chart” has become much
+less popular today[2].
+Construction
+The Square of Nine consists of the integers arranged in the form of a square
+spiral.[6] One can construct it using a spreadsheet or graph paper. Place the
+number 1 in a central cell; to its left place the number 2; below that is 3, to the
+right of 3 is 4 and 5, then above 5 is 6 and then 7. To the left of 7 is 8 and then
+9, which completes the first square. To the left of 9 place 10 to start a new
+square out, and below 10 place 11, and so on. Below is a simple example
+going up to 81:
+81
+80
+79
+78
+77
+76
+75
+74
+73
+50
+49
+48
+47
+46
+45
+44
+43
+72
+51
+26
+25
+24
+23
+22
+21
+42
+71
+52
+27
+10
+9
+8
+7
+20
+41
+70
+53
+28
+11
+2
+1
+6
+19
+40
+69
+54
+29
+12
+3
+4
+5
+18
+39
+68
+55
+30
+13
+14
+15
+16
+17
+38
+67
+56
+31
+32
+33
+34
+35
+36
+37
+66
+57
+58
+59
+60
+61
+62
+63
+64
+65
+Spiral direction
+Regarding the direction of the spiral, it appears clockwise in some books[3] and
+counterclockwise in others[7]. In the original chart used by Gann, the direction
+was counterclockwise[1]. Patrick Mikula explains that it is best to spin the
+numbers counterclockwise, because, onto the Square of Nine, Gann liked to
+overlay astrological charts, most of which spin counterclockwise[7].
+Angular value of each number
+Zodiacal relationship in the Square of Nine
+In the first volume of Gann Scientific Methods Unveiled[7], Patrick Mikula
+assigns the following method to overly the planetary positions on the chart:
+The axis going from 1 to 2,11, 28, and so on are 0° or 0° Aries, the spring
+equinox (in the Northern Hemisphere, same for below).
+The axis going from 1 to 4, 15, 34 and so on are 90° or 0° Cancer,
+the summer solstice.
+The axis going from 1 to 6, 19, 40, 69 and so on are 180° or 0° Libra,
+the autumn equinox.
+The axis going from 1 to 8, 23, 46, 77, etc. is 270° or 0° Capricorn,
+the winter solstice.
+SimpliÕed form and universal fomula
+In Predicting Market Trends with Periodic Number Cycles[8], Carl A. Futia
+simplified the Square of Nine into a form which he calls the Octagon Chart.
+Basically, the Octagon Chart only records the numbers on the Square of Nine
+lying on the angles of the 8th harmonic. Here is an example:
+I
+II
+III
+IV
+V
+VI
+VII
+VIII
+IX
+0°
+2
+11
+28
+53
+86
+127
+176
+233
+298
+45°
+3
+13
+31
+57
+91
+133
+183
+241
+307
+90°
+4
+15
+34
+61
+96
+139
+190
+249
+316
+135°
+5
+17
+37
+65
+101
+145
+197
+257
+325
+180°
+6
+19
+40
+69
+106
+151
+204
+265
+334
+225°
+7
+21
+43
+73
+111
+157
+211
+273
+343
+270°
+8
+23
+46
+77
+116
+163
+218
+281
+352
+315°
+9
+25
+49
+81
+121
+169
+225
+289
+361
+To calculate any number in between these angles, Futia[8] provided a simple
+formula, which is described in the following table:
+Futia’s Square of Nine Formula, Explained Step by Step
+Step
+Description
+Operation
+1
+Let P be the number of which the angle
+you are trying to find.
+P
+2
+Minus 1 from P
+P−1
+3
+Take the square root of (P−1).
+(P−1)½
+4
+Multiply (P−1)½ by 180, and then
+subtract 225 from it.
+180×(P−1)½−225
+5
+Divide the answer is Step 4 by 360 and
+find the remainder.
+MOD[180×(P−1)½−225,360]
+In all: for any natural number P>1, its approximate angular value A (in
+degrees) is given by:
+A = MOD[180×(P−1)½−225,360]
+For example, from the Octagon Chart, it is known that the angular value of 73
+is 225°. Substitute P with 73 into the above formula:
+A73 = MOD[180×(73−1)½−225,360] = MOD[180×8.4853−225,360] = 222.35,
+which is close to 225.
+In Microsoft Excel, if the value of P is input in the cell A1, then the formula to
+calculate the angle is MOD(SQRT(A1)*180-225,360). In OpenOffice Calc, the
+same formula could be used except that the comma has to be replaced by a
+colon. Below are some examples using the formula in Excel:
+A
+B
+(The formula in B)
+1
+10
+344.2099788
+<-- MOD(SQRT(A1)*180-225,360)
+2
+20
+219.9844719
+<-- MOD(SQRT(A2)*180-225,360)
+3
+30
+40.90060351
+<-- MOD(SQRT(A3)*180-225,360)
+Angular locations of perfect squares
+As easily seen from the above numbers, the odd squares (9, 25, 49, etc.)
+progress along the 315° line on the chart. Conversely, the even squares move
+closely along the 45° line, which is in the exact opposite direction. This is
+different from the Hexagon Chart, when the perfect squares are always 210°
+away from each other.
+References
+1. William Delbert, Gann (1951). How to Make Profits Trading in Commodities: A
+Study of the Commodity Market (Revised ed.). Pomeroy, WA: Lambert
+Gann. ISBN 0-939093-0-22.
+2. Ferrera, Daniel T. (2001). The Gann Pyramid: Square of Nine Essentials. Santa
+Barbara, CA: Scared Science Institute.
+3. Mikula, Patrick (2012). The Definitive Guide to Forecasting Using W. D. Gann’s
+Square of Nine (Revised ed.). Austin, TX: Mikula Forecasting
+Company. ISBN 978-0965051866.
+4. Gann, William Delbert (1976). Master Charts. Pomeroy, WA: Lambert-Gann.
+5. Gann, William Delbert (2004). Gillman, Damien, ed. The W. D. Gann Master
+Commodities Course. Wheels in the Sky.
+6. Goldberg, Gary (12 December 2003). "Gann's Square Of Nine". Working
+Money. Retrieved 17 February 2018.
+7. Mikula, Patrick (2012). Gann’s Scientific Methods Unveiled. I (Revised ed.).
+Austin, TX: Mikula Forecasting Company. ISBN 978-0965051880.
+8. Futia, Carl A. (1982). Predicting Market Trends with Periodic Number Cycles.
+Morris Plains, NJ: The Cyclic Forecast
+.
+Sign in | Recent Site Activity | Report Abuse | Print Page | Powered By  Google Sites
+Search this site
+Comments
+You do not have permission to add comments.
+G 
+a n n Myste 
+ri es 
+Search this site 
+WELCOME TO GANN 
+MYSTERIES 
+HEXAGON CHART 
+SPIRAL CHART 
+SITEMAP 
+Spiral Chart 
+The Square of Nine (originally called the Spiral Chart) is a tool of technical 
+analysis which was first popularized by famous market forecaster W. D. Gann. 
+["1l21[3] The chart first appeared in his corespondence course Master Charts!41, 
+which is now a part of the W. D. Gann Master Commodities Course!l. It is 
+very similar to the Hexagon Chart!*!, another chart described in the Master 
+Charts course. 
+It is worth noting that Gann’s original use of the term “Square of Nine” refers to 
+a completely different chart, and he referred to what is now known as the 
+Square of Nine today as the “Spiral Chart”!4]. However, for some reason, later 
+authors mixed up the terms and the name “Spiral Chart” has become much 
+less popular today!], 
+Construction 
+The Square of Nine consists of the integers arranged in the form of a square 
+spiral. 6] One can construct it using a spreadsheet or graph paper. Place the 
+number 1 in a central cell; to its left place the number 2; below that is 3, to the 
+right of 3 is 4 and 5, then above 5 is 6 and then 7. To the left of 7 is 8 and then 
+9, which completes the first square. To the left of 9 place 10 to start a new 
+square out, and below 10 place 11, and so on. Below is a simple example 
+going up to 81: 
+81 | 80 | 79 | 78 | 77 | 76 | 75 | 74 | 73 
+50 | 49 | 48 | 47 | 46 | 45 | 44 | 43 | 72 
+51 | 26 | 25 | 24 | 23 | 22 | 21 | 42 | 71 
+52 }27)10| 
+9 | 8 | 7 | 20 | 41 | 70 
+53} 
+28) 
+11) 
+2 | 1 | 6 | 19 | 40 | 69 
+54/29) 12) 
+3 | 4 | 5 | 18 | 39 | 68 
+55 | 30 | 13 | 14 | 15 | 16 | 17 | 38 | 67 
+56 | 31 | 32 | 33 | 34 | 35 | 36 | 37 | 66 
+57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 
+Spiral direction 
+Regarding the direction of the spiral, it appears clockwise in some books! and 
+counterclockwise in others!”!. In the original chart used by Gann, the direction 
+was counterclockwisel'], Patrick Mikula explains that it is best to spin the 
+numbers counterclockwise, because, onto the Square of Nine, Gann liked to 
+overlay astrological charts, most of which spin counterclockwisel”], 
+Angular value of each number 
+Zodiacal relationship in the Square of Nine 
+In the first volume of Gann Scientific Methods Unveiled, Patrick Mikula 
+assigns the following method to overly the planetary positions on the chart: 
+e The axis going from 1 to 2,11, 28, and so on are 0° or 0° Aries, the spring 
+equinox (in the Northern Hemisphere, same for below). 
+e The axis going from 1 to 4, 15, 34 and so on are 90° or 0° Cancer, 
+the summer solstice. 
+e The axis going from 1 to 6, 19, 40, 69 and so on are 180° or 0° Libra, 
+the autumn equinox. 
+e The axis going from 1 to 8, 23, 46, 77, etc. is 270° or 0° Capricorn, 
+the winter solstice. 
+Simplified form and universal fomula 
+In Predicting Market Trends with Periodic Number Cycles'®!, Carl A. Futia 
+simplified the Square of Nine into a form which he calls the Octagon Chart. 
+Basically, the Octagon Chart only records the numbers on the Square of Nine 
+lying on the angles of the 8th harmonic. Here is an example: 
+oi) MV 
+Ve) 
+Vi 
+Vit 
+Vil) 
+1x 
+0° 
+(2) 
+11) 
+28/53) 
+86) 127 | 176 | 233 | 298 
+45° 3/13) 31 > 57) 
+91 | 133 | 183 | 241 | 307 
+90° 4/15 | 34/61) 
+96 139 190 249 | 316 
+135° 5 17 37) 65} 101 | 145 | 197 | 257 | 325 
+180° 6 19 40) 69} 106 | 151 | 204 | 265 334 
+225° 7 21/43 > 73) 
+111) 
+157 | 211 | 273 | 343 
+270° 8 23 46 77) 
+116 163 | 218 | 281 | 352 
+315° 9 | 25 | 49 | 81 | 121 | 169 225 289 361 
+To calculate any number in between these angles, Futial®l provided a simple 
+formula, which is described in the following table: 
+Futia’s Square of Nine Formula, Explained Step by Step 
+Step 
+Description 
+Operation 
+1 
+Let P be the number of which the angle | P 
+you are trying to find. 
+2 
+Minus 1 from P 
+P-1 
+3 
+Take the square root of (P-1). 
+(P-1)” 
+4 
+Multiply (P-1)” by 180, and then 
+180x(P-1)7-225 
+subtract 225 from it. 
+5 
+Divide the answer is Step 4 by 360 and | MOD[180x(P-1 )?-225,360] 
+find the remainder. 
+In all: for any natural number P>1, its approximate angular value A (in 
+degrees) is given by: 
+A = MOD[180x(P-1)7-225,360] 
+For example, from the Octagon Chart, it is known that the angular value of 73 
+is 225°. Substitute P with 73 into the above formula: 
+A73 = MOD[180x(73-1)”#-225,360] = MOD[180x8.4853-225,360] = 222.35, 
+which is close to 225. 
+In Microsoft Excel, if the value of P is input in the cell A1, then the formula to 
+calculate the angle is MOD(SQRT(A1)*180-225,360). In OpenOffice Calc, the 
+same formula could be used except that the comma has to be replaced by a 
+colon. Below are some examples using the formula in Excel: 
+A 
+B 
+(The formula in B) 
+1/10 344.2099788 | <-- MOD(SQRT(A1)*180-225,360) 
+2 20 219.9844719 | <-- MOD(SQRT(A2)*180-225,360) 
+3 30 40.90060351 | <-- MOD(SQRT(A3)*180-225,360) 
+Angular locations of perfect squares 
+As easily seen from the above numbers, the odd squares (9, 25, 49, etc.) 
+progress along the 315° line on the chart. Conversely, the even squares move 
+closely along the 45° line, which is in the exact opposite direction. This is 
+different from the Hexagon Chart, when the perfect squares are always 210° 
+away from each other. 
+References 
+1. William Delbert, Gann (1951). How to Make Profits Trading in Commodities: 
+A 
+Study of the Commodity Market (Revised ed.). Pomeroy, WA: Lambert 
+Gann. ISBN 0-939093-0-22. 
+2. Ferrera, Daniel T. (2001). The Gann Pyramid: Square of Nine Essentials. Santa 
+Barbara, CA: Scared Science Institute. 
+3. Mikula, Patrick (2012). The Definitive Guide to Forecasting Using W. D. Gann’s 
+Square of Nine (Revised ed.). Austin, TX: Mikula Forecasting 
+Company. ISBN 978-0965051866. 
+4. Gann, William Delbert (1976). Master Charts. Pomeroy, WA: Lambert-Gann. 
+5. Gann, William Delbert (2004). Gillman, Damien, ed. The W. D. Gann Master 
+Commodities Course. Wheels in the Sky. 
+6. Goldberg, Gary (12 December 2003). "Gann's Square Of Nine". Working 
+Money. Retrieved 17 February 2018. 
+7. Mikula, Patrick (2012). Gann’s Scientific Methods Unveiled. | (Revised ed.). 
+Austin, TX: Mikula Forecasting Company. ISBN 978-0965051880. 
+8. Futia, Carl A. (1982). Predicting Market Trends with Periodic Number Cycles. 
+Morris Plains, NJ: The Cyclic Forecast 
+Comments 
+You do not have permission to add comments. 
+Signin 
+| Recent Site Activity 
+| 
+Report Abuse 
+| 
+Print Page 
+| Powered By Google Sites

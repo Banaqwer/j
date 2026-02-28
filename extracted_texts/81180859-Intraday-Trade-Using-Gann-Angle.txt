@@ -1,0 +1,1146 @@
+================================================================================
+DOCUMENT: 81180859-Intraday-Trade-Using-Gann-Angle.pdf
+Total Pages: 19
+================================================================================
+
+
+--- PAGE 1 of 19 ---
+
+Intraday Trading Technique 
+ 
+1. Download video lecture with live intraday trade proof 
+from below link open password smart5555 
+http://www.screencast.com/t/1qcoC0CmALLf 
+2. Free intraday trading gann angle calculator 
+http://www.smartfinancein.com/gann-angle-
+calculator.php  
+ 
+For product query, call Chennai 044-64995823/09840348971. 
+Mumbai  Mr Kedarnath 9702578013  
+ 
+Intraday trade using gann angle principle 
+ 
+In my book on “Gann Method” though I have explained 
+various principles of W.D.Gann’s method and  its 
+application on the stock market but the one which inspired 
+me a lot is  “Gann angle” principle. The Gann angle is 
+defined as the set of trend lines drawn from an individual 
+price point or from different price points (i.e. high, low, and 
+midpoint) in order to identify the supports and resistances 
+of a future price move.  At this stage, do not worry much 
+about this definition. It will become simpler as you proceed 
+to the next part of this article.  The next big thing about the 
+gann angle trend lines are that they are drawn at a particular 
+angle with respect to the X-axis or to the time line. This 
+concludes the basic formation of gann angle trend lines.  
+ 
+Now let me explain this concept with the help of an 
+example. Say I wish to draw a trend line at 1X1 (read it 
+“one by one”) gann angle. This means my trend line is a
+
+--- PAGE 2 of 19 ---
+
+straight line drawn in the price time chart which makes an 
+angle 45 degree with the X-axis.  You must ask me that 
+how I have derived the 45 degree. Quite simple! This is a 
+trend line drawn assuming 1 unit of price change happens 
+with 1 unit of time change. If I will plot 1 unit of price 
+change with respect to 1 unit of time change in a semi log 
+scale and measure the angle with the help of a protractor I 
+will get the angular measurement as 45 degrees.  
+ 
+ 
+For making an intraday trade decision we need a point to 
+make buy or sell entry. We need a stop loss point and 
+couple of target points. Though this job can be done with 
+any guess work but we need perfection. The perfection will 
+be achieved only through the mathematical calculation 
+which is accepted by the market. 
+ 
+W.D.Gann has given us 11 different trend lines which will 
+guide us in making a trade decision.  These trend lines are 
+drawn based on the geometrical angle proportion in X and 
+Y axis. For example the 2X1 (2 by 1) trend line is drawn 
+assuming the 2 unit of price raise or fall happens in 1 unit 
+of time.  This trend line makes geometrical angle of 63.75 
+degrees with X-axis when drawn from a lower price point 
+and projected towards the higher price points. Similarly this 
+trend line will make 26.25 degrees with respect to x axis 
+when it will be drawn from a higher price point and project 
+towards the lower price point. This is the mathematical 
+logic available in origin shifting, parallel line algorithm.
+
+--- PAGE 3 of 19 ---
+
+Now the 11 sets of trend lines from a lower price point 
+towards the higher price point are as follows  1X1, 1X2, 
+2X1, 1X3, 3X1, 1X4, 4X1, 1X8, 8X1, 1X16 and 16X1.  
+ 
+The geometrical angle made by these trend lines with the X 
+axis in an up move corresponding to 2X1= 63.75 degrees, 
+1X2= 26.25 degrees, 1X1= 45 degrees, 1X3= 18.75 
+degrees, 3X1= 71.25 degrees, 4X1= 75 degrees, 1X4= 15 
+degrees, 8X1= 82.5 degrees, 1X8= 7.5 degrees, 1X16= 
+3.75 degrees, 16X1= 86.25 degrees. 
+  
+The geometrical angle made by these trend lines with the X 
+axis in a down move corresponding to 1X2= 63.75 
+degrees, 2X1= 26.25 degrees, 1X1= 45 degrees,3X1= 
+18.75 degrees,1X3= 71.25 degrees,1X4= 75 degrees,4X1= 
+15 degrees, 1X8= 82.5 degrees,8X1= 7.5 degrees, 16X1= 
+3.75 degrees,1X16= 86.25 degrees. 
+ 
+Gann Formula for calculating the support and 
+resistance:  
+ 
+In gann study the 180 degree is considered as factor 1. This 
+is because between the sun rise to sun set the solar motion 
+happens approximately 180 degrees and it is considered as 
+1 day time.  
+ 
+The 2nd universal concept accepted by the financial analysts 
+is that the supports are always calculated in a falling trend 
+and it used to be calculated from the high.
+
+--- PAGE 4 of 19 ---
+
+The 3rd universal concept accepted by the financial analysts 
+is that the resistances are always calculated in a falling 
+trend and it used to be calculated from the low. 
+ 
+Gann formula for calculating the support and 
+resistance is as follows: 
+ 
+a. Support = (square root of (high)- Degree factor)^2 
+b. Resistance = (square root of (low) + Degree factor)^2 
+ 
+Trading Rules as per gann and as modified by me 
+(Soumya Ranjan Panda Author of this article) 
+ 
+a. The 3rd support or resistance of any price move is 
+important (as per W.D.Gann). 
+b. In intraday trade 45 degree support break (1X1 
+support) will favor sellers and 45 degree resistance 
+(1X1 resistance) break will support the buyers. 
+Provided the annual volatility of the trading 
+instrument  must be higher than 50% (as per my own 
+research ) 
+c. In low volatile or medium volatile market (i.e. the 
+annual volatility of the trading instrument is less than 
+50 %) the (1X4= 15 degree) resistance and (4X1=15 
+degree) support must be utilized for long and short 
+entry provided no congestion or entry error should be 
+present in the calculated price. (as per my own 
+research ) 
+ 
+d. If sell entry price at 15 degree or at 45 degree  greater 
+than buy entry price at 15 degree or 45 degree price
+
+--- PAGE 5 of 19 ---
+
+point then it is considered as error and rectified by 
+changing calculation procedure from the high and low 
+to mid point of high and low. This says that instead of 
+calculating the supports down from high and up from 
+low you can calculate the same from the mid point of 
+high and low (as per my own research ) 
+ 
+e. If the price unit of the trading instrument is a 4 digit 
+number then between the buy entry and sell entry 
+price at least 5 unit difference is required to take 
+unbiased decision as per this principle or else it is 
+considered as congestion and it is rectified by 
+changing the high and low to mid point. (as per my 
+own research ) 
+ 
+ 
+f. If the price unit of the trading instrument is a 3 digit 
+number then between the buy entry and sell entry 
+price at least 3.5 unit difference is required to take 
+unbiased decision as per this principle or else it is 
+considered as congestion and it is rectified by 
+changing the high and low to mid point. (as per my 
+own research ) 
+ 
+g. If the price unit of the trading instrument is a 2 digit or 
+single digit number then it must be converted to 4 digit 
+number by the way of multiplying it with 10 or 100 or 
+even with 1000 and the resistances and supports will 
+be derived from the 4 digit number. And the results 
+need to be dividing by the multiplier to reconvert it 
+back to its original form. (as per my own research )
+
+--- PAGE 6 of 19 ---
+
+h. The smallest time interval in which you can identify 
+the high and low is 5 minuets after the opening bell or 
+the highest time interval you can consider is the 1st 15 
+minute after the opening bell.  Any auction period 
+must be ignored. Like now in Indian market 9 a.m. to 
+9 :15 is considered as call auction period. Hence the 
+data from 9 a.m. to 9:15 a.m. must be ignored (as per 
+my own research ) 
+i. If any trade of yours triggers the stop loss or trailing 
+stop loss then do not reenter the  trade in the same 
+direction again. 
+ 
+As a day trader speculation is my profession and I will 
+follow these calculations like religious testimony.  
+ 
+Example:  on 11th November 2010 SBI between 9:15 
+to 9:30 a.m. made high 3238.35 at 9:16 a.m.  low 
+3214.10 at 9:27 a.m. below given the intraday chart 
+for your reference.
+
+--- PAGE 7 of 19 ---
+
+Below given are the calculation of resistances and supports 
+for reference. 
+  
+  
+  
+Low 
+  
+High 
+  
+  
+  
+  
+  
+3214.1   
+3238   
+  
+  
+Degree 
+Degree 
+Factor 
+Resistance   
+  
+Degree 
+Factor
+
+--- PAGE 8 of 19 ---
+
+(You can download a ready made free to use gann angle 
+calculator from our web site from the following link 
+http://www.smartfinancein.com/free-software.php . The 
+paid calculator which is given along with the master 
+course validates more number of logical conditions and 
+infuses more number of gann principles in the decision 
+making so as to give you greater success in intraday 
+trade.) 
+ 
+As per the above discussion and calculation procedure we 
+have made the calculation of resistances and supports. As 
+per the current volatility condition we are being advised to 
+buy the stock at 3223.5558 or sell at 3228.8725. This is 
+violating the point D trade principle and considered as an 
+entry error henceforth we will change the high and low to 
+its mid point and do the calculation from the mid point the 
+mid point of 3238.35 and 3214.10 is 3226.225 . The 
+modified calculation table is as follows. 
+ 
+  
+  
+  
+Low 
+  
+High 
+  
+  
+  
+  
+  
+3226.225 
+  
+3226.225 
+  
+  
+  
+Degree 
+Degree Factor 
+Resistance 
+  
+  
+Degree Factor 
+  
+16X1 
+86.25 
+0.479166667 
+3280.8878 
+1X16 
+86.25 
+0.479166667 
+3172.0214 
+16X1 
+86.25 
+0.479166667 
+3268.6604 1X16 
+86.25 
+0.479166667 3184.0442 
+8X1 
+82.5 
+0.458333333 
+3266.2787 1X8 
+82.5 
+0.458333333 3186.3958 
+4X1 
+75 
+0.416666667 
+3261.5178 1X4 
+75 
+0.416666667 3191.1015 
+3X1 
+71.25 
+0.395833333 
+3259.1387 1X3 
+71.25 
+0.395833333 3193.4557 
+2X1 
+63.75 
+0.354166667 
+3254.383 1X2 
+63.75 
+0.354166667 3198.1667 
+1X1 
+45 
+0.25 
+3242.509 1X1 
+45 
+0.25 3209.9592 
+1X2 
+26.25 
+0.145833333 
+3230.6567 2X1 
+26.25 
+0.145833333 3221.7735 
+1X3 
+18.75 
+0.104166667 
+3225.9219 3X1 
+18.75 
+0.104166667 3226.5053 
+1X4 
+15 
+0.083333333 
+3223.5558 4X1 
+15 
+0.083333333 3228.8725 
+1X8 
+7.5 
+0.041666667 
+3218.8262 8X1 
+7.5 
+0.041666667 3233.6095 
+1X16 
+3.75 
+0.020833333 
+3216.4626 16X1 
+3.75 
+0.020833333 3235.9793
+
+--- PAGE 9 of 19 ---
+
+8X1 
+82.5 
+0.458333333 
+3278.5016 
+1X8 
+82.5 
+0.458333333 
+3174.3685 
+4X1 
+75 
+0.416666667 
+3273.7318 
+1X4 
+75 
+0.416666667 
+3179.0654 
+3X1 
+71.25 
+0.395833333 
+3271.3482 
+1X3 
+71.25 
+0.395833333 
+3181.4151 
+2X1 
+63.75 
+0.354166667 
+3266.5837 
+1X2 
+63.75 
+0.354166667 
+3186.1172 
+1X1 
+45 
+0.25 
+3254.6874 
+1X1 
+45 
+0.25 
+3197.8876 
+1X2 
+26.25 
+0.145833333 
+3242.8129 
+2X1 
+26.25 
+0.145833333 
+3209.6796 
+1X3 
+18.75 
+0.104166667 
+3238.0692 
+3X1 
+18.75 
+0.104166667 
+3214.4025 
+1X4 
+15 
+0.083333333 
+3235.6986 
+4X1 
+15 
+0.083333333 
+3216.7653 
+1X8 
+7.5 
+0.041666667 
+3230.9601 
+8X1 
+7.5 
+0.041666667 
+3221.4934 
+1X16 
+3.75 
+0.020833333 
+3228.5921 
+16X1 
+3.75 
+0.020833333 
+3223.8588 
+ 
+As per the modified calculation we are advised to buy at 
+3235.6986 for final target 3280.8878 and sell at 3216.7653 
+for final target of 3172.0214 
+ 
+Trade outcome:  
+1. At 9:34 a.m. We got a chance to sell at 3217 and kept 
+out stop loss at 3235.70 this as per our calculation. Upon 
+achieving the 1st target 3214.4we trail to stop loss to 
+3216.80, then upon crossing the 2nd target we trail the stop 
+loss to 3214.40. Unfortunately after touching the low 3211 
+at 9:39 a.m. the trailing stop loss triggered at 3214.40 and 
+we just bagged less then +3 points. 
+2.  Considering our short trade adventure is wrong and as 
+per the last protocol set in the trade rule we waited for the 
+3235.70 to come which we have got a chance at 10:07 a.m. 
+and achieved till 3254 till 11:27 a.m. which is close near to 
+our 45 degree target point.  
+ 
+If you are not quick in changing the stop loss also it will 
+not dampen your trade performance.  
+In this case if my shell stop loss triggered at 3235.7 I will 
+accept close near to 18.9 point loss and be a buyer at this
+
+--- PAGE 10 of 19 ---
+
+point keeping the stop at 3235.7 and aim for the last target  
+3281 with some logical trailing stop loss.  
+ 
+ 
+ 
+ 
+ 
+ 
+This concept works in commodity, currency as well as in 
+stocks.  
+ 
+However the limitation of this article is that it does not 
+discuss all the trading rules and conditions which are being 
+researched by me. In the gann master course the supplied 
+software uses all the extended set of logics.  
+ 
+ 
+Day trading using Gann Angle dynamic approach: if we 
+will make use of the volatility along with the gann angle 
+then this concept will become dynamic and it will produce 
+great result. All the above process that I have explained in
+
+--- PAGE 11 of 19 ---
+
+the earlier section will remain same only additional 
+parameter daily volatility will be used with the gann angle. 
+In this method, we will calculate the daily volatility based 
+on the past 10 days last trade price of any instrument. 
+ 
+1. Daily volatility calculation:  
+a. Take past 10 days last trade price of any stock or index. 
+b. Calculate the absolute return by using the natural 
+logarithm function LN(). You will get 9 data points. 
+Formula:  
+Absolute return = LN (Current price/ Previous price) 
+c. Calculate the square absolute return for all 9 data  
+    points. 
+d.Calculate the average of absolute return and square 
+absolute return. 
+e. Calculate variance.  
+Formula: 
+Variance = square absolute return – (absolute return)2  
+f. Calculate daily volatility percentage. 
+ Formula: Daily Volatility percentage = square root of 
+(variance) X 100. 
+ 
+From the daily volatility percentage, we understood in the 
+coming day the stock or index whose daily volatility 
+percentage was calculated as per the above process would 
+fluctuate to the extent of daily volatility percentage. 
+ 
+I have taken the state bank of India 12 October to 25 
+October 2011 to predict the intraday level for next trading 
+session   using the gann angle and the volatility.
+
+--- PAGE 12 of 19 ---
+
+a. I have calculated the daily volatility as explained above for 
+sbi. 
+ 
+ 
+    
+Date 
+LTP-SBI 
+Absolute return 
+Square absolute return 
+12-Oct-11 
+1880 
+0 
+0 
+13-Oct-11 
+1875.35 
+-0.002476468 
+6.13289E-06 
+14-Oct-11 
+1883 
+0.004070941 
+1.65726E-05 
+17-Oct-11 
+1885.5 
+0.001326788 
+1.76037E-06 
+18-Oct-11 
+1885 
+-0.000265217 
+7.034E-08 
+19-Oct-11 
+1909.25 
+0.012782674 
+0.000163397 
+20-Oct-11 
+1933.9 
+0.012828195 
+0.000164563 
+21-Oct-11 
+1949 
+0.007777731 
+6.04931E-05 
+24-Oct-11 
+1911 
+-0.019689755 
+0.000387686 
+25-Oct-11 
+1842.25 
+-0.036639015 
+0.001342417 
+  
+Average 
+-0.002253792 
+0.000238121 
+  
+Variance 
+0.000233042 
+  
+Daily Volatility % 
+  
+1.526570684 
+  
+ 
+Above calculation says the daily volatility is 1.5266%. 
+Hence, the stock has the probability to fluctuate by 
+1.5266% in the coming day. Base on the above conclusion I 
+will see a price fluctuation of 28.1233 (i.e. 1842.25 x 
+1.5266/100) rupee in the sbi counter in future trading 
+session. 
+ 
+Hence my expected high is 1842.25+28.1233 =1870.3732 
+my expected low is 1842.25-28.1233=1814.1268. 
+ 
+Now in order to get the buy sell level in the gap up opening 
+with uptrend I will use the 1842.25 as low and 1870.3732 
+as high in the gann angle tool and follow all its rules to 
+derive the targets.  
+Using the above price points I observe that the trading 
+rule–d is being violated, hence I have done the changes in
+
+--- PAGE 13 of 19 ---
+
+the data point to 1856.32 (i.e. midpoint of the above data 
+points) and derive the following levels for the future 
+trading session. 
+ 
+ 
+  
+  
+  
+Low 
+  
+High 
+  
+  
+  
+  
+  
+1856.32 
+  
+1856.32 
+  
+  
+  
+Degree 
+Degree Factor 
+Resistance 
+  
+  
+Degree Factor 
+support 
+16X1 
+86.25 
+0.479166667 
+1897.8394 
+1X16 
+86.25 
+0.479166667 
+1815.2598 
+8X1 
+82.5 
+0.458333333 
+1896.0247 
+1X8 
+82.5 
+0.458333333 
+1817.0355 
+4X1 
+75 
+0.416666667 
+1892.3978 
+1X4 
+75 
+0.416666667 
+1820.5894 
+3X1 
+71.25 
+0.395833333 
+1890.5857 
+1X3 
+71.25 
+0.395833333 
+1822.3677 
+2X1 
+63.75 
+0.354166667 
+1886.964 
+1X2 
+63.75 
+0.354166667 
+1825.9269 
+1X1 
+45 
+0.25 
+1877.925 
+1X1 
+45 
+0.25 
+1834.84 
+1X2 
+26.25 
+0.145833333 
+1868.9077 
+2X1 
+26.25 
+0.145833333 
+1843.7748 
+1X3 
+18.75 
+0.104166667 
+1865.3069 
+3X1 
+18.75 
+0.104166667 
+1847.3548 
+1X4 
+15 
+0.083333333 
+1863.5078 
+4X1 
+15 
+0.083333333 
+1849.1461 
+1X8 
+7.5 
+0.041666667 
+1859.9122 
+8X1 
+7.5 
+0.041666667 
+1852.7313 
+1X16 
+3.75 
+0.020833333 
+1858.1156 
+16X1 
+3.75 
+0.020833333 
+1854.5252 
+ 
+In the future trading session which follows the 25th october 
+2011 any gap up opening above 1849.14 and below 
+1863.50, if the price cross over 1863.50 then I will buy sbi 
+for optimum target of 1898 and any gap up opening and 
+price below 1849 I will sell for target 1815.25. 
+ 
+Similarly, to get the buy sell levels in the gap down 
+opening and downtrend I will use the 1842.25 as high and 
+1814.1268 as low in gann angle tool and derive the targets. 
+ 
+Using the above price points I observe that the trading 
+rule–d is being violated, hence I have done the changes in 
+the data point to 1828.19 (i.e. midpoint of the above data 
+points) and derive the following levels for the future 
+trading session.
+
+--- PAGE 14 of 19 ---
+
+Low 
+  
+High 
+  
+  
+  
+  
+  
+1828.19 
+  
+1828.19 
+  
+  
+  
+Degree 
+Degree 
+Factor 
+Resistance 
+  
+  
+Degree 
+Factor 
+support 
+16X1 
+86.25 
+0.479166667 
+1869.3954 
+1X16 
+86.25 
+0.479166667 
+1787.4438 
+8X1 
+82.5 
+0.458333333 
+1867.5943 
+1X8 
+82.5 
+0.458333333 
+1789.2058 
+4X1 
+75 
+0.416666667 
+1863.9947 
+1X4 
+75 
+0.416666667 
+1792.7325 
+3X1 
+71.25 
+0.395833333 
+1862.1962 
+1X3 
+71.25 
+0.395833333 
+1794.4971 
+2X1 
+63.75 
+0.354166667 
+1858.6019 
+1X2 
+63.75 
+0.354166667 
+1798.029 
+1X1 
+45 
+0.25 
+1849.6312 
+1X1 
+45 
+0.25 
+1806.8738 
+1X2 
+26.25 
+0.145833333 
+1840.6822 
+2X1 
+26.25 
+0.145833333 
+1815.7404 
+1X3 
+18.75 
+0.104166667 
+1837.1086 
+3X1 
+18.75 
+0.104166667 
+1819.2931 
+1X4 
+15 
+0.083333333 
+1835.3232 
+4X1 
+15 
+0.083333333 
+1821.0707 
+1X8 
+7.5 
+0.041666667 
+1831.7548 
+8X1 
+7.5 
+0.041666667 
+1824.6286 
+1X16 
+3.75 
+0.020833333 
+1829.972 
+16X1 
+3.75 
+0.020833333 
+1826.4089 
+ 
+In the future trading session which follows the 25th october 
+2011 any gap down opening above 1821.07 and below 
+1835.32, if the price cross over 1835.32 then I will buy sbi 
+for optimum target of 1869.39 and any gap down opening 
+and price below 1821.07 I will sell for target 1787.44. 
+ 
+If  the price in future day may have a gap up opening 
+above 1863.5078 or below 1849.1461 or gap down 
+opening below 1821.0707 or above 1835.3232 then the 
+above calculation will not solve our requirement then we 
+need to take the opening price of that day into account for 
+calculation of volatility. We will use the opening price with 
+projected high and opening price with projected low in
+
+--- PAGE 15 of 19 ---
+
+gann angle tool to derive the entry levels. Say SBI open at 
+1870 on the future trading day which follows the   25th 
+october 2011 then in the volatility calculation replace the 
+1842.25 with 1870 and calculated the new volatility and 
+expected high and low. The new data points will be as 
+follows  
+ 
+Date 
+LTP-SBI 
+Absolute 
+return 
+Square absolute return 
+12-Oct-11 
+1880 
+0 
+0 
+13-Oct-11 
+1875.35 
+-0.002476468 
+6.13289E-06 
+14-Oct-11 
+1883 
+0.004070941 
+1.65726E-05 
+17-Oct-11 
+1885.5 
+0.001326788 
+1.76037E-06 
+18-Oct-11 
+1885 
+-0.000265217 
+7.034E-08 
+19-Oct-11 
+1909.25 
+0.012782674 
+0.000163397 
+20-Oct-11 
+1933.9 
+0.012828195 
+0.000164563 
+21-Oct-11 
+1949 
+0.007777731 
+6.04931E-05 
+24-Oct-11 
+1911 
+-0.019689755 
+0.000387686 
+25-Oct-11 
+1870 
+-0.021688234 
+0.00047038 
+  
+Average 
+-0.000592594 
+0.000141228 
+  
+Variance 
+0.000140877 
+  
+Daily Volatility 
+% 
+  
+1.186916667 
+  
+Expected high 
+  
+1892.195342 
+  
+Expected low 
+  
+1847.804658 
+  
+ 
+New trading levels in uptrend will be as given below. Since 
+the opening is gap up the uptrend, calculation will be 
+followed for trade decision. In this case, the downtrend 
+level calculation is not required. 
+  
+  
+  
+Low 
+  
+High 
+  
+  
+  
+  
+  
+1881.1 
+  
+1881.1 
+  
+  
+  
+Degree 
+Degree 
+Factor 
+Resistance 
+  
+  
+Degree 
+Factor 
+support 
+16X1 
+86.25 
+0.479166667 
+1922.8941 
+1X16 
+86.25 
+0.479166667 
+1839.7651 
+8X1 
+82.5 
+0.458333333 
+1921.0674 
+1X8 
+82.5 
+0.458333333 
+1841.5527 
+4X1 
+75 
+0.416666667 
+1917.4167 
+1X4 
+75 
+0.416666667 
+1845.1306 
+3X1 
+71.25 
+0.395833333 
+1915.5926 
+1X3 
+71.25 
+0.395833333 
+1846.9208 
+2X1 
+63.75 
+0.354166667 
+1911.947 
+1X2 
+63.75 
+0.354166667 
+1850.5038 
+1X1 
+45 
+0.25 
+1902.8483 
+1X1 
+45 
+0.25 
+1859.4767 
+1X2 
+26.25 
+0.145833333 
+1893.7713 
+2X1 
+26.25 
+0.145833333 
+1868.4712 
+1X3 
+18.75 
+0.104166667 
+1890.1466 
+3X1 
+18.75 
+0.104166667 
+1872.0751
+
+--- PAGE 16 of 19 ---
+
+1X4 
+15 
+0.083333333 
+1888.3356 
+4X1 
+15 
+0.083333333 
+1873.8783 
+1X8 
+7.5 
+0.041666667 
+1884.716 
+8X1 
+7.5 
+0.041666667 
+1877.4874 
+1X16 
+3.75 
+0.020833333 
+1882.9076 
+16X1 
+3.75 
+0.020833333 
+1879.2933 
+ 
+ 
+Trend termination point: Gann angle also helps us in 
+identifying the trend and the trend termination. 1 X 4 or the 
+4 X 1 angle price point cross over is known as the 
+preliminary trend confirmation points for uptrend or 
+downtrend. However, the 1 X 1 angle price resistance 
+crossover signals the strong up trend break out and the 1 X 
+1 angle price support break considered as strong down 
+trend break out. In gann angle concept we assume all the 
+trend action will terminate at 1 X 16 or 16 X 1 angle price 
+point.  
+ 
+Dynamic gann square of nine principles: Using the 
+volatility we can make any gann method dynamic. In gann 
+square of nine principle, we need to derive the uptrend 
+price points in the wheel by adding the step to the lowest 
+number and each higher number in the wheel will be its 
+preceding number added with the step. Similarly the 
+downtrend price points will be calculated by subtracting the 
+step from the highest number. Step is nothing but the high 
+to low price difference divided by 81 for square of nine 
+wheel. While using the gann square of nine for deriving the 
+short-term investment decision I found the principle yields 
+good result. However when applying the same concept in 
+the intraday trade I did not get the desired result which I 
+was expecting from the method.  This is the reason why I 
+have thought of to introduce the volatility in this method.
+
+--- PAGE 17 of 19 ---
+
+Now the key question is how the volatility will find a place 
+in this method. As I have explained before the daily 
+volatility, percentage is the expected price fluctuation. 
+Hence, now we will take the expected price fluctuation to 
+derive the steps. Consider the same example of SBI given 
+in page 105. The daily volatility percentage is 1.5266, 
+expected price range is Rs 28.12, and the last trade price is 
+1842.25. 
+ 
+Step will be 28.12/81=0.347160 
+Seed number will be 1842.25+0.347160 this will be the 1st 
+number in the square of nine wheel. Second number will be 
+1st number added with 0.347160 .Likewise the 81st   
+number will be 80th number added with the 0.347160 and 
+this must be equal to 1842.25+28.12=1870.3732 
+ 
+ 
+ 
+ 
+ 
+ 
+Dynamic gann square of twelve principles: The way i 
+have done the square of nine dynamic in the same way I
+
+--- PAGE 18 of 19 ---
+
+will make the square of 12 dynamic. I will use the daily 
+volatility percentage to find the price range for the day 
+followed with I will calculate the steps by dividing the 
+price range with 144. The seed number in the uptrend 
+will be the last trade price added with the step and the 
+144th number will be 143rd number added with the step. 
+However do remember the square of 12 wheel is a 
+different from the square of nine wheel in many aspects 
+the arrangement of numbers are also different. The 
+downtrend price points will be calculated by the way of 
+subtracting the step from the last trade price.  
+ 
+While using Dynamic Square of nine or dynamic square 
+of twelve wheels keep a close eye on the annual 
+volatility percentage. Annual volatility is nothing but the 
+daily volatility multiplied with square root of 365. If the 
+annual volatility is above 40% use the square of twelve 
+wheel else use the dynamic square of 9 for making the 
+intraday trade decision. 
+ 
+You can buy w.d. gann course with 34 intraday trade 
+technique along with intraday gann trading software 
+useful for stock, index, commodity, and currency at Rs 
+1500. Detail of the course you will find from the 
+following 
+link 
+http://www.smartfinancein.com/gann-
+course-offer.php  
+ 
+For 
+product 
+related 
+enquiry, 
+you 
+can 
+contact 
+09840348971 /044-64995823 we have the sales franchise 
+at Mumbai and office at Chennai for detail information 
+visit http://www.smartfinancein.com/contactus.php
+
+--- PAGE 19 of 19 ---
+
+[EMPTY PAGE]

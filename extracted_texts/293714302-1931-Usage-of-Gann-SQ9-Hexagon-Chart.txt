@@ -1,0 +1,166 @@
+================================================================================
+DOCUMENT: 293714302-1931-Usage-of-Gann-SQ9-Hexagon-Chart.pdf
+Total Pages: 7
+================================================================================
+
+
+--- PAGE 1 of 7 ---
+
+Square of Nine
+The Square of Nine can be considered as an exotic section in relation to Gann analysis.
+Square of Nine Structure
+Starting from the center(1) and following the numbers as they unwind, an infimite spiral becomes
+apparent. Looking at lower right corner of the grid, you see the squares of odd
+numbers...3,5,7,9,11..giving.. 9,25,49,81,121, with each square being a distinct Square within
+the structure.
+This tool is an effective marker of price support and resistance.
+
+--- PAGE 2 of 7 ---
+
+Here's how this structure becomes a calculator...
+Find the number 15 on the Square of Nine . If a stock was trading at a price of $15, what are the
+price objectives using a Gann Wheel? The number 15 is perfectly aligned under the zero and
+360 degree angle marked on the top of the Wheel. Because the number 15 is aligned with zero
+we need make no further adjustments, just read the Gann targets straight off the wheel. The 45
+degree price objective from 15 is 17. It is the next number that aligns with the 45 degree line that
+travels towards the top right corner. The number 19 crosses were the 90 degree line was drawn.
+We would use the phrase, "$19 is 90 degrees up from $15." Now skip over to 180 degrees and
+find $23 is directly opposite $15. We would still say, "23 is 180 degrees up from 15". At 270
+degrees $28 is the price objective. A full 360 degrees up from 15 is $34. That is how a Gann
+Wheel is used.
+Why did we skip the bottom right corner angle which would be 135 degrees? Because like
+Fibonacci, some calculations are more important than others. The Fibonacci ratios 0.382, 0.500.
+0.618, 1.000, and 1.618 are relationships we know are the critical ratios to identify. This is also
+how the various Gann angles are interpreted. We have a circle that is divided into quarters and
+sixths, but we also need to divide 360 degrees into thirds because 120 degrees and 240 are
+extremely important. The angles of greatest interest in financial markets are 45, 90, 120, 180,
+240, 270, 315, and 360.
+Sampels Usage of Square of 9
+(1) Find potential turning point dates: count the # of calendar days between significant
+A. high and low.
+B. high to high
+C. low to lwo .
+Find that number on the Sq. of 9. Now note the numbers which are on the same angle as your
+starting number, and watch for possible swings at those dates.
+Example: A move for low A to low B takes up 39 calendars days. You locate the number 39 on
+the square, and note the nubmers which are on the same angle. These would be:
+
+--- PAGE 3 of 7 ---
+
+67,105,150,201,262...
+Now go back to your original low; you would look for another swing point at 67 calendar days
+from this low, then 105 calendar days, etc.
+(2) Calculate potential turning point prices: take the price of a major high/low and locate that
+value on the Square. Note the values which are 45, 90, 120, 180, 240, 270, and 360 degrees on
+the Square. If you are using a major low, you would note the numbers on those angles which are
+greater than your starting value. If using a major high, you would use the numbers which are
+lower.
+Examples: S&P 500 07/24/2002 make a low at 775. You expect prices are going to rally and
+want to find potential points of resistance as price move higher. locate 775 on the Square of 9
+chart, and note the following angles:
+45 deg. = 909
+90 deg. = 909
+120 deg. = 815,933
+180 deg. = 832,952
+240 deg. = 853,974
+270 deg. = 861
+
+--- PAGE 4 of 7 ---
+
+©2002 Global View Technology (http://www.globalviewtech.com/onlinehelp)
+
+--- PAGE 5 of 7 ---
+
+Gann Hexagon Chart
+The Hexagon Chart Structure
+Let's see how Gann explains the Chart.
+"Since everything moves in a circle and nothing moves in straight lines , this chart is to show to
+you how the angles influence stocks at very low levels and very high levels and why stocks
+move faster the higher they get , because they have moved out to where the distance between
+the angles of 45* are so far apart that there is nothing to stop them and their moves are naturally
+rapid up and down ."
+We begin with a circle of “1” , yet the circle is 360* just the same . We then place a circle of
+circles around this circle and six circles complete the second circle , making a gain of 6 over the
+first one , ending the second circle at 7, making 7 on this angle a very important month, year ,
+and week as well as days , the seventh day being sacred and a day of rest . The third circle is
+completed at 19 . The fourth circle around is completed at 37 – a gain of 18 over the previous
+circle . The fifth circle is completed at 61 , a gain of 24 over the previous circle . The sixth circle
+is completed at 91 , a gain of 30 over the previous circle , and the seventh circle at 127 , a gain
+
+--- PAGE 6 of 7 ---
+
+of 36 over the last circle . Note that from the first the gain is 6 each time we go around . In other
+words, when ‘is’ have traveled six times around we have gained 36 . Note that this completes
+the first Hexagon and as this equals 127 months , shows why some campaigns will run 10 years
+and seven months , or until they reach a square of the Hexagon , or the important last angle of
+45* .
+The eighth circle around is completed at 169 , a gain of 42 over the first . This is a very important
+angle and an important time factor for more reasons than one . It is 14 years and one month , or
+double our cycle of 7 years . Important tops and bottoms culminate at this angle as you will see
+by going over your charts .
+The ninth circle is completed at 217 , a gain of 48 over the previous circle . The tenth circle is
+completed at 271 , a gain of 54 . Note that 271 is the ninth circle from the first , or is the third 90*
+angle or 270* , three fourths of a circle , a strong point .. All this is confirmed by the Master
+Twelve Chart , by the four seasons and by the Square of Nine Chart , and also confirmed by the
+Hexagon chart ., showing that mathematical proof is always exact no matter how many ways or
+from what directions you figure it .
+The eleventh circle is completed at 331 , a gain of 60 over the last circle . The twelfth circle is
+completed at 397 , which completes the Hexagon ., making a gain in 11 circles of 66 from the
+beginning .
+66 months , or 5 years and six months , marks the culmination of major campaigns in stocks .
+Note how often they culminate on the 60th month , then have a reaction , and make a second
+top or bottom in the 66th month . Note the number 66 on the Master Twelve Chart . Note it on
+the Square of Nine and note that 66 occurs on an angle of 180* on the Hexagon chart , all of
+which confirms the strong angle at this point .
+We have an angle of 66* , one of 67.5* and one at 68 , confirming this point to be doubly strong
+for tops and bottoms or space movements up or down .
+Note the number 360* on the Hexagon Chart . It completes a circle of 360* . From our beginning
+point this occurs at an angle of 180 * on the Hexagon Chart going around , but measuring from
+the center , it would equal an angle of 90* or 180* , making this a strong point , hard and difficult
+to pass, and the ending of one campaign and the beginning of another .
+Again with the center of the Hexagon Chart at “1” notice that 7, 19, 37, 61, 91, 127, 169, 217,
+271, 331, and 397 are all on this direct angle and are important points in time measurement .
+Beginning with “1” and following the other angle , note that 2,9,22,41,66,97,134,177,226,281,
+and 342 are all on a same angle of 90*, or an angle of 60* and 240* as measured by the
+Hexagon Chart .
+Go over this Chart and the important angles each way and you will see why the resistance is
+met either on days , weeks, months or years, and why stocks stop and make tops and bottoms
+at these strong important points according to time .
+When any stock has passed out above 120* or especially above 127* or 127 points and gone
+out of the square of the first Hexagon , its fluctuations will be more rapid and it will move faster
+up and down . Notice near the center that in traveling from 66 to 7 you strike the angle of 180* or
+90* , but when the stock gets out to 162, it can travel up to 169 before striking another strong
+angle . That is why fast moves occur up and down as stocks get higher and as they move from a
+center of time .
+
+--- PAGE 7 of 7 ---
+
+Remember that everything seeks the center of gravity and important tops and bottoms are
+formed according to centers and measurements of time from a center , base or beginning point ,
+either top or bottom . The angles formed going straight up and across , ‘may a com’ just the
+same going across as the stock travels over for days,weeks,months or years . Thus , a stock
+going up to 22.5 would strike an angle of 22.5 * . If it moves over 22.5 days it would strike the
+angle or 22.5 weeks or 22.5 months , it would also strike an angle of 22.5 * , and the higher it is
+when those angles are struck and the angle it hits going up , the greater the resistance to be
+met. Reverse that rule going down .
+Market movements are made just the same as any other thing which is constructed . It is just the
+same as constructing a building . First the foundation has to be laid down and then the four walls
+have to be completed and last , but not least of all , the top has to be put on . The cube or
+hexagon proves exactly the law which works because of time and space in the market . When a
+building is put up it is built according to a square or hexagon. It has four walls or four sides , a
+bottom and a top ; therefore , it is a cube .
+In working out the 20- year Cycle in the stock market , the first 60* or 5 years , from the
+beginning forms the bottom of the cube . The second 60* , running to 120* , completes the first
+angle or the first side and runs out the 10 year Cycle . The third 60 * or the second side , ends
+15 years or 180 *. It is very important because we have the building half completed and must
+meet the strongest resistance at this point . The fourth 60 * , or at the end of 20 yrs or 240
+months , completes the third side . We are now two thirds around the building , a very strong
+point which culminates and completes our 20 – year Cycle . The fifth 60 * , or 300 * point ,days
+,weeks , or months completes 25 years , a repetition of the first five years , but it completes the
+fourth side of our building and is a very important angle . The sixth 60 * , or 360 * , completing
+the circle and ending 30 years as measured by our Time Factor , which runs 1* per month on an
+angle of 45 * , completes the top .This is a complete cube and we begin over again . "
+"Study this in connection with the Hexagon Chart . It will help you . "
+Jan 1931
+WD Gann.
+©2002 Global View Technology (http://www.globalviewtech.com/onlinehelp)

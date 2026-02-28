@@ -1,0 +1,1916 @@
+================================================================================
+DOCUMENT: 582126927-jenkinsUnEncrypted_compressed.pdf
+Total Pages: 287
+================================================================================
+
+
+--- PAGE 1 of 287 ---
+
+~"==F"!"-==':;;:=:=";;;';;';=';=;;':;:-:=':::'::"':=-1'·.l < 
+f'~.1" 
+Michael S. Jenkins 
+Complete Stock Market Trading 
+And Forecasting Course 
+Authentication No . 
+. ~-----
+
+--- PAGE 2 of 287 ---
+
+Acknowledgments 
+I wish to thank the following chart services for use of their charts in the various 
+illustrations: 
+Daily Graphs 
+P.P. Box 66919 
+Los Angles, CA 90066-0919 
+Trendline 
+Standard & Poor's 
+25 Broadway, New York, N.r 10004 
+MetaStock 
+Equis International, Inc. 
+3950 South 700 East 
+Salt Lake City, DT 84107 
+Copyright 1999 by Michael S. Jenkins
+
+--- PAGE 3 of 287 ---
+
+Table of Contents 
+Introduction 
+Basics 
+Charts 
+Reversal of Trend 
+Volume 
+Hourly Charts 
+Time and Price Squared 
+Angles 
+Arcs 
+Support & Resistance 
+Gann Square of Nine 
+Gann's Astrological Methods 
+Time Cycles 
+Mirror Image F oldbacks 
+Waves 
+Day Trading Theory and 
+Practice 
+Setups 
+Advanced Applications 
+Review 
+............................................ 1 
+............................................ 8 
+.......................................... 11 
+.......................................... 19 
+.......................................... 24 
+.......................................... 29 
+.......................................... 38 
+.......................................... 52 
+.......................................... 80 
+.......................................... 97 
+........................................ 115 
+........................................ 133 
+........................................ 176 
+........................................ 209 
+........................................ 222 
+........................................ 232 
+........................................ 252 
+........................................ 263 
+........................................ 283
+
+--- PAGE 4 of 287 ---
+
+Introduction 
+For the past several years many people who have read my two previous books; 
+"Geometry of the Stock Market a Guide to Professional Trading for a Living" and 
+"Chart Reading for Professional Traders", have written urftg me to either write a 
+course of instructions, or to put on more seminars to teach I my methods of trading and 
+stock market forecasting. This course of instruction is written to fulfill that need. By the 
+time you finish reading this material, I expect you to have learned how to determine the 
+true trend of any market, stock, or commodity on any world market, to forecast 
+approximately how long a trend will persist and what the ultimate price targets are, and 
+also to be able to successfully day trade the market. In short, this is a course of 
+instruction on how to professionally take money out of the market and make a living 
+doing so. 
+What this course is not designed to do is to teach you the basics of what a stock is, 
+or how to open a brokerage account, or any other such rudimentary, basic endeavors. 
+There are books available in any library on those subjects. This material is for the person 
+who wishes to make a career of professionally trading the market, and has put in 
+sufficient time and effort to begin serious study. 
+My perspective in this material is that of a technician and not a fundamentalist. 
+Technical analysis is the study of the market with the underlying assumption that 
+everything there is to know about the market or a stock is already reflected in the price 
+and volume of the individual stock. No matter what the fundamentals are, or how they 
+are changing, it takes buying and selling to move stock prices and without that, no 
+investment will make any money. Even if a compfY has a hidden gold mine on its 
+property, the stock won't go up until the insiders ~cretly start buying. The price action 
+will inform the astute technician that a purchase i1 suitable, and the fundamentalist will 
+~ften not get wind of the real news for months, 01 until the stock has had a tremendous 
+nse.
+
+--- PAGE 5 of 287 ---
+
+This course, and my whole trading experience, has been developed around the 
+principles of technical analysis, which forecast price trends and probabilities so that you 
+can anticipate the big moves long before the fundamentals really develop. Of course, 
+investing this way doesn't exclude using fundamental research in addition, but I only use 
+that after the fact to better understand the true dynamics of the move. The price itself is 
+the only real truth. If it goes up I want to buy, if it goes down I want to sell. 
+The art of speculation has often been likened to gambling, but there is a real 
+difference between the two. In gambling, the house sets the rules and those rules favor 
+the house. In speculation, like trading stocks, you set the rules. You decide when to buy 
+or sell, how much to buy or sell, how much leverage to use and what your stop out pOint 
+will be. You also have technical tools at your disposal, which will be covered in this 
+course, and which can increase the odds of your being right in the trade by as much as 80 
+to 90%. This applies to both direction of the move and also the extent of the move. 
+Speculation, then, is clearly different from gambling, and it can therefore be said that 
+speculation can be a profitable profession, and you can professionally trade to make a 
+living as in any business. 
+Fundamentalists are those who invest by looking at the economic facts and profit 
+and loss statements of investment issues. Ninety percent of all the players in the market 
+are fundamentalists, being either bank trust departments, mutual funds, pensions funds or 
+wealthy individuals. Wall Street caters exclusively to this crowd because of the huge 
+amounts of commissions involved and so technical analysis is often given a bad name and 
+derided as not being worthwhile. "Market Timers" are always being criticized, but the 
+facts are that the fundamentalists simply don't know how to forecast the market and 
+would rather say it's impossible to do than give business away. There are many wealthy 
+individual investors who have had books written about their successes in the market, and 
+they frequently say that they bought a good stock and held on without market timing. 
+That's certainly true, but those books are rare since they don't spend time writing about 
+the millions and millions of investors who bought and held onto the wrong stock and 
+broke even, lost money, or got wiped out. In short it sounds good to see that Coca Cola 
+always went up, but I can show you many a chart book from 10 to 20 years ago where 
+Michael s. JenIdus Complete Stock Marbt Trading And Forecasting Course 
+2
+
+--- PAGE 6 of 287 ---
+
+10% of the big winners have disappeared and are simply not in the current books any 
+more. In 1966 the big name stocks were General Motors and AT&T. If you held onto 
+those names you only got back to the 1966 levels again by the mid 1980's. You would 
+have been much better off selling and going to the bank or buying something else. For 
+me, the long tenn buy and hold idea only works if your stock is perpetually going up. It 
+doesn't make any sense to hold onto an asset that is in a long term downtrend, no matter 
+how good the name is. This course will infonn you, with 100% certainty, what the trend 
+is and what you should do. Whether you are disciplined enough to do what the charts tell 
+you is another matter. Some long term investors made out very well because they held 
+on through thick and thin, while some traders jumped out but were afraid to jump back 
+in even though the trend was up. In theory the trader who follows the rules or uses a 
+mechanical system will always do better than the fundamental buy and hold investor if he 
+follows the rules. 
+I'm constantly being asked the question as to whether someone can master day 
+trading and make a business out of it. I always answer in two ways. First, I can teach you 
+how. That's simple. The information for detennining the trend and forecasting is readily 
+available and not terribly difficult to learn. Second, I always say that trading is like 
+dieting. Information on diets is plentiful and is a billion dollar a year business. But how 
+many people go on a diet and keep the weight off! If you are disciplined enough to 
+maintain a diet then you can easily become a successful stock trader. 
+In the final analysis there are four main driving factors in the human condition. 
+These are Money, Sex, Power, and Religion, and perhaps a fifth, Art. These are what 
+motivate people. All of these motivators are often found in the U.S. Congress to greater 
+or lesser degrees, but in the area of money, the brightest minds in the world are either on 
+Wall Street or Las Vegas. Note however, that all these bright minded individuals aren't 
+all rich. Wall Street routinely pays millions of dollars a year in salaries to individuals, but 
+most of that is for sales, not trading skills. You see, the market is fueled by the emotions 
+of greed and fear. People who are attracted to the market, are attracted out of an 
+emotional base of greed, and they use their rational mind to justifY what they do. Since 
+it's an emotional basis, however, they will always respond in an emotional way at 
+Michael S. Jenkios Complete Stock Market Tmding And Forecasting Course 
+3
+
+--- PAGE 7 of 287 ---
+
+precisely the wrong time and therefore lose money. This is why trading is like dieting. 
+The principles in this course have been developed to strengthen your rational mind and 
+mental skills to be able to control your emotions. You will be taught how to wait at 
+emotional times to counter-trade the market against the emotional public and how to 
+know when the trend is reversing, even though it looks emotionally scary. Technical 
+analysis tools are objective measures that tell us without emotional involvement just what 
+is to be expected. It has nothing to do with reading the newspaper or watching TV, 
+thinking that news will make our stock go up or down. Perhaps for one day it might, but 
+most of the time it's just random noise. In the cycle business we say If the news breaks 
+with the cycle", which means it is the cycle that causes the news and not the other way 
+around. This is simple enough to prove by just looking at the three or four big cycles that 
+repeat all the time. These are 10 years, 20 years, 60 years and 100 years. The Kennedy-
+Lincoln 100 year cycle is well known, as is the decennial 10 year pattern. But the 60 year 
+cycle has always been the key and since ages past, when the days of the week were 
+named for the seven visible planets, it was known that those seven planets returned 
+altogether to the same positions again each 60 years, and so that cycle has always been 
+observed, from time immemorial. Currently, in the late 90's, we are replaying the late 
+1930's as to currencies, dictators, threats of world war and the rise of conservative 
+governments and dictators (in a sense Churchill and Roosevelt were dictators relatively 
+speaking). rn discuss cycles more in detail in the following chapters, but for now bear in 
+mind that if cyclic influences exist, and the evidence is overwhelming that they do, then 
+fundamental cycles will return and prices will return to past habits. Technical analysis of 
+those past patterns will be of great value to the professional trader. 
+Who Was W.D. Gaoo? 
+Much of my perspective in this material comes from the great master w.n. Gann, 
+who died in the mid '50's, but was a major influence in forecasting and trading since the 
+tum of the century. Perhaps no one before or after has ever been able to forecast as 
+Michael S. Jenkins Complete Stock Maricet Trading And Forecasting Course 
+4
+
+--- PAGE 8 of 287 ---
+
+accurately or trade as well. While there are many Gann courses around, most are 
+incomplete, as Gann wrote only a few that were not deliberately encrypted. Gann was a 
+Mason and studied numerology, the planets, the Bible and other esoterica, and believed 
+that the student must put in the time and effort and prove himself worthy before he could 
+obtain the key. His thinking was similar to the Pythagorean school, which made new 
+initiates prove themselves by taking a vow of absolute silence, without uttering a single 
+word for a period of three years. In the Gann material there are deliberate "smoke 
+screens" set up to distract the casual reader, but after years of study the more advanced 
+student will find all kinds of esoteric and astrological truths hidden in his papers. I will 
+try to reveal some of these methods in this course, but truthfully, many of these are 
+simply too advanced for a course for the general public and I'll leave that for another 
+time and place. Gann basically used angles, numbers and astrology to forecast and he 
+developed dozens of number squares that were used for trading individual stocks and 
+commodities. The Square of Nine is the most famous, and is used by as much as 20% of 
+the pit in Chicago every day, so Gann still does exert a great influence. Most computer 
+programs now routinely include Gann angles and cardinal cross numbers for the square 
+of nine. I will mention these in the following chapters. You should at some point study 
+Gann independently from my works, but be advised that most of the available courses 
+and books in print tell only half of the story. I have been privileged to have spent nearly 
+thirty years working in the market now, and over twenty years studying Gann, and over 
+the years I have come to know well perhaps a dozen of the world's finest practitioner's of 
+Gann's methods. I mention this only to warn you about the charlatans in the Gann 
+business these days (and it is a real business!). The truth is more subtle and is not yet in 
+print to my knowledge, although several recent books point in the right direction. My 
+advice is to first master the basic principles of angles, cycles, numerology, charting, and 
+then spend a good ten years on basic astrology and then you can attempt some of the 
+Gann Bible interpretations as they relate to stock trading. Conversion of planetary 
+longitudes into stock prices, and Biblical stories and age longevities converted into 
+longitudes on the globe for commodity conditions are part of the key. There is much 
+more, but none of that is needed to trade effectively and to make a living doing so. It's 
+Michael S. Jeukins Complete Stock Market Trading And Forecasting Course 
+S
+
+--- PAGE 9 of 287 ---
+
+more of a spiritual discipline for later life. Suffice it to say Gann was a one of a kind 
+genius who went "to the grave with his secrets, but his writings offer clues as to how 
+precise forecasting can actually be. Much of my perspective in this work is the same as 
+Gann's and I will try to explain much of it as we go along. One final interesting note is 
+perhaps in order. Gann became famous in the 1920's and 1930's when he accurately 
+forecasted the 1929 top almost to the day and the ensuing great depression. Looking 
+back with what we know about his methods utilizing astrology, numbers and cycles, it's 
+easy to replicate that forecast, but Gann said he did it by another means. He said he read 
+about it in the Bible. He often remarked that the Bible was the greatest book ever written 
+and he read it over and over again and urged others to do the same. Perhaps this was his 
+religion speaking, but a recent N.Y. Times best seller "The Bible Code" perhaps provides 
+an answer that shows Gann's true genius. The Bible Code is based on a fantastic and 
+ingenious idea that God encrypted all knowledge and future events in the Bible. The 
+original Hebrew version of the Old Testament that has been hand copied down through 
+the ages, with not one letter altered, has been tested in a high-speed, super computer, 
+with regards to trying to identifY letter sequences that might spell out words or 
+sentences. Every letter in the Bible was strung out in a long sequence of hundreds of 
+thousands ofletters and then the computer compared every 2nd, every 3rd, every 4th 
+every 5th, etc. letter combinations until it found "crossword puzzle like" sequences of 
+phrases and names. Now, any big book will sooner or later comes up with random 
+sequences of famous names like J.F. Kennedy or the like, but significant, non-random 
+sequences would prove that the Bible was some sort of encrypted code that could 
+contain an infinite amount of data, if these sequences were laid out in multi-directions 
+and different dimensions. Indeed the size of the Bible, when comparing every nth letter, 
+would be enough to include every name of every person on the earth today and facts 
+about what would happen to them. In the Bible code book, huge military computers 
+were used because of the enormity of the task, and it was indeed found that when 100 
+names and birth places of famous religious figures who came after the Bible was written 
+were entered into the computer, all 100 came out in sequences that made complete 
+reading sense as to their names and places of birth. Other names like Einstein being 
+Michael s. Jenkins Complete Stock Market Trading And Forecasting Course 
+6
+
+--- PAGE 10 of 287 ---
+
+"brainy" or the Kennedy assassination and the names ofRuby and Oswald were also 
+discovered. The purpose ofthis paragraph, however, concerns the computer discovery of 
+a phrase similar to "1929 stock market crash and Great Depression. II That's a paraphrase 
+since I read the book briefly, long ago, but it stuck in my mind because ofsome study I 
+was doing on Gann at the time. The essence ofthe Bible Code book is that it is only 
+now, in the current generation, with high-speed, super computers that we can "crack" 
+this Bible code and find the key to the coming purported, final millennium conflagration 
+before it's too late. This was not available in prior ages since the technology wasn't 
+developed. Only by having preserved the original Bible for four thousand years has this 
+project been possible. Anyway, getting back to Gann, he didn't have access to a 
+high-speed computer but he was a master numerologist and Mason. He also said he liked 
+Isaiah the most ofall the Bible chapters and religious scholars have told me that Isaiah is 
+a miniature Bible in and ofitself: mirroring each chapter in the Bible in its structure. My 
+guess is that Gann found a master key in Isaiah that allowed him to interpret portions of 
+text and come up with many ofhis prophetic forecasts. Perhaps a little Bible study could 
+help us all. 
+Midtael S. Jeokins Complete Stock Mruket Trading And Forecasting CoUllle 
+7
+
+--- PAGE 11 of 287 ---
+
+Basics 
+Trading, as opposed to investing, consists of buying and selling the same stock many 
+times in an effort to capture more price fluctuations than just holding on for the long 
+term. Many stocks appreciate 20 to 50% or more each year, but these same stocks can 
+often swing through these ranges several times over the year. Just catching one or two 
+complete swings will usually double the return ofthe trader over the simple buy and hold 
+investor. Technical analysis tools like charts and trendlines combined with timing 
+methods are what allow us to exploit these daily and weekly fluctuations to our 
+betterment. But before we start using charts to examine price action, let's review the 
+typical investment cycle and discover who the players are that make the market move. 
+The big money in the market comes from institutional investors like pension funds 
+and mutual funds, or bank trust departments. Some wealthy individuals affect some stock 
+prices, but it usually takes the 10 million share institutional buyers to make stocks move. 
+Without institutional support most stocks languish in long term flats with little significant 
+price movement. In the past, economic cycle swings in the economy greatly affected 
+companies' earnings and the price ofthese issues were quite volatile. Over the past ten to 
+fifteen years however, the massive amounts ofmoney going into institutional coffers has 
+created an environment where there are consistent buyers almost every day, regardless of 
+fundamentals. Price earnings ratios have climbed from 12 to 14 times to over 30 times. 
+Some "go-go" stocks have P.E. ratios of70 or more. This is more a sign ofpopularity 
+and anticipated growth than actual economic prowess. Just before the Japanese bubble 
+imploded in 1990, typical stocks had P.E. ratios of70 or as much as 125! Even today 
+with that market still down 50% for the past eight years, the P.E.'s remain near 30 times. 
+In these times of somewhat irrational fundamental valuations, technical analysis ofprice 
+movement is even more important than ever before. There will come a day when these 
+P.E.'s will start to shrink for years and years and people will buy into such declines 
+believing that they are bargains. Only an objective analysis ofthe price action at that time 
+will save investors and traders. Because the money flows into the large institutions have 
+Michael S. Jenkins Complete Stock Market Trading And FOI'eCaSting COur.Je 
+8
+
+--- PAGE 12 of 287 ---
+
+been so big, the mutual funds industry has grown from some 700 funds in 1980 to over 
+8,000 at present. Keeping in mind that the entire NYSE has only 3000 listed issues, you 
+can see the effect on stock prices of the growth If these investing behemoths. For them 
+the strategy has simply been buy and keep buyin, the fastest growing companies and 
+never sell. Because they have had perpetual cashlinflows, they always bought dips each 
+year as the market had corrections, and as a result always showed perfomtance figures 
+I 
+twice that of the general market appreciation dutjing the year. If the Dow Jones went up 
+10% during the year, but had three dips of 5% atng the way, and they added on every 
+dip, their average cost would be such that if the rarket closed at the high of the year 
+(and it always did) their return would usually be ~0-30% or more. This was not due to 
+any great investment philosophy or method, but imply the fact that if a market goes 
+straight up and closes at the high each year and ou add money, you will out-perform 
+that average. The shock will be great the first ye 
+that the market closes at the low and 
+the funds have added all year long. 
+Another "strategy" the funds have used is 
+e diversified portfolio idea of buying at 
+least 200 individual issues that were growing at 
+eat rates and to just keep buying. That 
+way no one issue would account for more than 12 of a percent of the portfolio and even 
+if that stock went to zero, the hit to the fund wo d only be 1/2 %. The result of this 
+strategy is that when earning expectations disap oint, there is the wholesale dumping of 
+entire investment positions of millions of shares 
+d individual issues can and do drop 
+50% or more in a single dayl This is insanity fro an investment point of view, since no 
+earnings fluctuation should have that kind of effi 
+,but nevertheless that is the current 
+strategy and one must adapt a trading plan arou d such outcomes, like avoiding stocks 
+about to release earnings, or "piling on" once th break starts. 
+Institutional investors sell in an eyeblink on bad news, but they often buy quietly at 
+limit prices over very great periods of time. To ccumulate a 10 million share position or 
+more in a stock that trades 300,000 shares a da might take six months. The rule of 
+thumb has been that for every institutional orde on the floor, that order will generate 3 
+times that volume by others "front running" the rder and trying to jump in first. This is 
+illegal, but it is a fact of life and most day trade make most of their incomes by jumping 
+Michael S. Jenkins Complete Stock Market 
+. 
+And Forecasting Course 
+9
+
+--- PAGE 13 of 287 ---
+
+in front of big orders and making the institution pay up. The beauty of charts, however, 
+is that these big orders show up in chart patterns as higher bottom patterns, where a level 
+is held for several days and the volume increases, and then the stock moves up to another 
+level slightly higher. The fund will often wait there for a few weeks and then if not 
+satisfied will move up yet again. This is a sign of accumulation and is a sure sign of 
+higher prices. As long as the price is creeping higher week after week, and each 
+correction only goes back to a prior support level without breaking, that indicates the big 
+money is not finished buying and is still there to catch the stock. A good strategy for day 
+traders, is to identify such long term up trending patterns and buy into dips back to those 
+known support levels. This can only be done through the use of a chart or log of stock 
+prices over time, to record the various levels of price and volume transactions. 
+A declining phase will show a similar pattern only in reverse. The funds will start 
+selling a few thousand shares every day using a limit order, and after a few hours to days 
+of not being able to sell, they lower the price to another slightly lower limit for a few 
+days. These walk down stair steps show downtrends and are used to sell short and only 
+cover if the stock regains a prior high. Individual institutional positions can usually affect 
+a stock's price for months at a time. At the end of an economic cycle, as the economy 
+turns down into a recession, numerous institutions need money as investors pull out, and 
+the massive liquidations create a bear market that can last for two to five years at a time. 
+Individual stocks often go down for five years and can frequently stay out of favor for 
+ten years before coming back. Only charts will help you decide at what point in the cycle 
+a given stock finds itself and whether it should be bought or sold. So we begin our 
+course in trading stocks with the study of price patterns, as seen on charts, in order to 
+quickly identify trends to decide whether the stock in question should be bought or sold. 
+Michael S. Jenkins Complete Stock Market Trading And Forecasting Course 
+10
+
+--- PAGE 14 of 287 ---
+
+Charts 
+There are many types of charts that traders have used over the years, such as line 
+charts which connect the dots of hourly or daily closes, bar charts which show a vertical 
+line to represent the open, high, low, and close for each time period, and point and 
+figure charts, which only record reversals in trends, such as every $3 movement in a 
+direction. These point and figure charts are very good at showing long tenn swings and 
+trend but they do not have a time element, so they can often show potential, but it may 
+lie donnant for months or years. Japanese candlesticks are more visual and attempt to 
+show reversals and volume by visually changing the size and shape of the daily bar. 
+Thicker bars can show more volume, reversal bars have "tails" pointing in up or down 
+directions, and colored bars (black or white) show the current trend compared with the 
+prior bar. These visual bars are probably the best ones to use, but require much study 
+and most chart services in this country don't always support them. Logarithmic bar 
+charts show percentage moves on the vertical price scale, while the standard bar chart 
+shows unadjusted time and price scales. Each of the various chart styles have something 
+to say and can be used, but to start in a simple manner and demonstrate the beauty of 
+price and volume patterns, we will start with the standard bar chart in this course. Later 
+you may want to switch to other charts, but the principles will always remain the same 
+no matter what chart we use. Basically, we just need a price history that easily shows us 
+whether or not the price is going up, and enables us to overlay some trendlines and time 
+cycle counts. 
+This first chart on the next page is a typical bar chart on a daily basis (one bar for 
+each day) for an individual stock. The price is shown on the vertical scale and along the 
+bottom are bars representing volume for each day and the time axis in days. We clearly 
+see that this is an up trend, with few breaks to the downside that lasted more than a 
+couple of days. Volume has been relatively consistent and low so that nothing appears to 
+be happening here to change the present forces in play. Ifwe were bullish on the outlook 
+for the market we would make up a list of such issues and buy them on pull backs to past 
+support levels. 
+Michael S. Jenkins Complete Stock M8l'iu!t Trading And Forecasting Course 
+11
+
+--- PAGE 15 of 287 ---
+
+At right is a daily chart ofthe 
+S&P 500 Index showing a 
+downtrend into the October '98 
+low and an uptrend coming out. If 
+one were to draw parallel channels 
+around the highs and lows you 
+could clearly see the directions of 
+the trends. The width ofthe daily 
+.. 
+u .... 
+UII•••
+....." 
+u_.• 
+£~ •• 
+......
+......
+......-.. -..
+_".iII
+.......-..
+".....
+......-.. 
+-
+l.V1Iwn 
+u,q·"
+"'.... 
+n'.,11 ....... 
+I ..t.1I 
+n .... 
+u ••.• 
+_R_.O 
+1.:11•• 0 
+lMIIo.'
+,,,iII.II.....,.....,. 
+.'.,­
+... > •• 
+bars is usually fairly constant, or 
+when it's not, it usually is a multiple 
+ofthe average move, so ifthe normal day's movement is 10 to 15 points, a big day would 
+be twice that, or three times that amount. Later we'll learn about "measured moves", 
+which are standard fluctuations that most patterns exhibit and are very useful for 
+forecasting price targets. 
+Michael S. Jenkins Complete Stock Market Trading And Forecasting Course 
+12
+
+--- PAGE 16 of 287 ---
+
+This 
+next chart of 
+the Dow 
+Jones shows 
+individual 
+bars of 
+about the 
+same 
+magnitude, 
+but also note 
+that the 
+highs and 
+lows ofeach 
+_1. 
+_WI H 
+u·o:o.o 
+....0 •• 
+flOO .0 :::::::::::~:::::: ::::::l::::::::::::~:::::::: :~::~::::::::::::~::::::::::::1::::::::::::~::: :::::::::~::::::::::: :t::::::::::::~ :::::: 
+UIO .• 
+'&00 .0 
+,oso ,0 
+toOO •• 
+••so .0
+.,.0.0
+,,,o.0
+••oo~o 
+."•• ,0' 
+'700 •• ill:lli,jiri,illf:lllllllll[lll: !II
+_UO.O
+.'.0'.0 
+'.'•.0
+'100.0 
+••s•.o 
+,"00'.0 
+,.;;,11111111 1;;, 
+:::: 
+.110.0 
+'.00.0 
+,tlO
+_*.0' 
+.•.• 
+.no.o 
+• lGG.O !r····••!·I.·.!fl FUI,I·I' •••••••••.•!••••.•..••!..••••.•• !.,••••••••••• :1~1
+lose .• 
+,GOO •• 
+7'••.• 
+7'00 •• 
+7'50.0 
+7'0'0,. 
+l 
+".0
+",.•••.•
+0 
+7SS•• 0 
+".00.0 11;1:'II!jlliil,i'! 
+~!
+7SIG.0 
+".00.0 
+" ••0 •• 
+7"00' .• 
+. ,., ..... ":. ,~ .........: ....... ,.••• : .••.....•. ": .... ~ ......,!, ......, ....: ............. :' ••..••• , ...! .......... , .~.".......... 
+''''00'.0' 
+7'••.• 
+7100' .• 
+:::::::::::~:::::: ~: ::::~:::: ::::::::l:::::::: :::~1::::::::::::1:::::::::: ::~:::: ~:~:::::1::::::::::::~ :::: :::::~: :i:::::::::: ::: ::::::
+71.0 •• 
+at.
+I.. 
+.. 
+.. 
+•• 
+.. 
+day don't greatly exceed the highs and lows ofsurrounding days except during times of 
+"runaway" momentum moves. Most bars overlap the prior day's high or low by slight 
+amounts and then fall back into the trading range. The most common error in all of 
+trading comes from the tendency to buy or sell the "breakouts" thinking a big move is 
+underway only to see it fail and later fall back into the middle ofthe range. Many day 
+trading mechanical systems use this idea to scalp trades going against the move in the 
+first 30 minutes of each day ifthere's a small overlap without much momentum. The 
+ideal buying strategy is to wait to buy at a pullback point near the prior day's low, plus or 
+minus a small percent and buy with a stop. Ninety percent ofthe time ifyou are 
+disciplined enough to do this you will have a very good trade going for the next day. The 
+emotional difficulty here is that usually the market opens up overlapping the prior day's 
+high slightly and gradually trades down to the low ofthe day, which is the perfect buy 
+point, but traders are so emotionally afraid that the trend is reversing, that they won't 
+make the trade at the end ofthe day and cany it overnight. When that happens the buyer 
+oflast resort is ofcourse the specialist, and he buys cheap stock and marks it up the next 
+morning. Sometimes the best trades are ones we put in to buy with stop orders, or limit 
+orders at a set price detennined the night before, in the calmness oflooking over the 
+Michael S. 1enkins Complete Stock Market Tnu:Iing And Forecasting Coun;e 
+13
+
+--- PAGE 17 of 287 ---
+
+charts at the end ofthe trading day. Ifthe charts truly don't lie, then those objective 
+decisions made with careful calculations and protective stops, are the best ones and our 
+emotions shouldn't override those decisions. Here again it's like dieting. Ifyou're afraid 
+to trade because you might lose money, you're trading with the emotion offear and 
+similarly you probably only buyout ofgreed to make money. This is not the way to beat 
+an emotionally driven creature like the stock market. We must buy when we feel we 
+must sell, and vice versa. We just can't be stupid and buy into a panic free fall or 
+avalanche ofsell orders on a bad earnings report. Interpreting the bar chart can help us 
+determine the trend and the support and resistance levels we should trade near. 
+Let's start with the simple trend. The trend is up ifthe low ofthe daily bar on our 
+chart makes a higher bottom than the previous low on the preceding bar. This trend can 
+extend for long periods oftime depending on how it is defined on a longer term chart. 
+For instance, an hourly bar that's higher than a prior hour is up for that hour, but says 
+nothing about the day or week's trend. Whereas a weekly bar on a chart composed of 5 
+days activity compressed into a single bar, will show trends lasting a week to three 
+weeks at a minimum. When a market reverses it is similar to a series ofChinese nested 
+boxes that fit one within the other. In other words, a turn on a 15 minute chart as it 
+extends, usually turns the hourly chart, and after a few hours the hourly chart turns the 
+daily chart and finally, after a few days the daily chart can turn the weekly chart. Big 
+moves come when all these time frames cluster tightly together and all turn 
+simultaneously. Oftentimes that's just after a very narrow flat with little price movement. 
+~~,... I
+I II 
+1/l1=~~  
+Traders love to jump aboard a flat breakout, since a big move comes very fast. 
+Micl!ael S. 1enkins CooJplele StocIc Market Trading And Forecasting Course 
+14
+
+--- PAGE 18 of 287 ---
+
+Basic Trends 
+.. 
+Ihl liji-
+11111' 
+111_-
+II 1IIItiit · ==~,.. 
+1 
+III 
+11 
+3
+JI llllill SwiIt,J~wiIh""'lDpIl.2,.h..d"""IowwA.a.C 
+C 
+Trends usually persist or else they wouldn't be ofhelp in trading. The persistence of 
+trend is usually at least three bars at a minimum. This is the rule ofthree, or three day 
+rule, or three week trend, or three month trend. Ifthe trend lasts more than three 
+consecutive bars it will usually go a Fibonacci number ofbars such as 3, 5, 8, 13,21,34, 
+55 etc. (The Fibonacci ratio 1.618 is achieved by an additive series ofadding each 
+number to its neighbor to get the next and is found in all aspects ofnature. Here we have 
+1 and 1 to get 2,2 plus 1 to get 3,3 plus 2 to get 5, 5 plus 3 to get 8. etc.). On hourly 
+charts a five hour advance is usually a sign ofan uptrend, and we then look at 8 hours, 
+13 hours and 21 hours for reversal points. 
+The bar chart examples shown above show simple trends and we need to know 
+more about the volume traded each day and some long term perspective, but before we 
+can do that, we need to examine reversals in trend and define just what that is. Since 
+trends manifest to greater or lesser degrees, such as hourly, daily, weekly, and monthly, 
+we will often get reversals ofa minor nature, that will not change the main trend. In the 
+final analysis, this confusion ofwhich trend is the dominant one is the key that separates 
+good traders from everyone else. For instance, over the past decade each time the Dow 
+Michael S. Jenkins Complete Stook Market Trading And Forecasting Course 
+1:5
+
+--- PAGE 19 of 287 ---
+
+Jones averages dropped a few hundred points, it looked like the long term trend had 
+turned down. Certainly the hourly, daily and even weekly bar charts showed lower 
+bottoms and lower tops, but the yearly chart never broke a low from the prior bar (year) 
+and neither did the quarterly chart (3 months to a bar). In most cases the monthly bar 
+chart only broke the low ofone bar and not three months, to show a persistent trend that 
+would define a long term decline. For traders, the trade turned bearish with the hourly 
+chart breakdown and the daily chart breakdown, but when the bottom was made the 
+hourly chart and daily turned up before the monthly turned down again. Long term 
+investors, like mutual funds never sold, since the breaks were so short lived, but it was 
+scary to hold positions through 200 to 500 point Dow Jones drops ifyou didn't really 
+know what the trend was. At the end ofthis lesson you will know. 
+The uptrend is defined as a bar chart that makes higher bottoms, or the lows on 
+each bar are higher than the prior bar's low price. Note that this definition says nothing 
+about the highs on the bars. Uptrends are caused by accumulation by big institutions, 
+who buy at the bid side ofthe market on limit orders and don't chase prices. As long as 
+the bid side holds and goes up it shows unsatisfied buyers in competition with each 
+other, so they keep raising prices to higher levels creating the higher bottoms pattern. 
+Day traders and the inexperienced public often chase stocks up on good news, creating 
+the high tick on the daily bar chart and are forced out at a loss as soon as the price drifts 
+down. Usually the low that they sell out at is slightly higher than the last low and the 
+perfect place to buy, not sell This points out the emotionalism ofthe market. When 
+people buyout ofgreed, they chase stocks and buy high to later sell low. We want to 
+buy low to sell high. That's impossible ifyou buy when everyone else is doing so and the 
+stock looks good. We want to make note ofthe prior day's low, or better yet the prior 
+week's low, and be prepared to buy at that point with a trailing sell stop ifwe're wrong. 
+To summarize again, the rising trend shows a series ofhigher bottoms on bars on each of 
+the various time periods traded. 
+The downtrend needs two criteria to validate the trend. It needs a series oflower 
+lows or bottoms, and a series oflower tops or highs. Each low should be lower than the 
+prior low and each high should also be lower than the preceding high. Note that this is a 
+Michael S. Jenkins Complete Stock Marlc.et Trading And Forecasting Course 
+16
+
+--- PAGE 20 of 287 ---
+
+pattern. The most important idea in all of the discussion about trend is that trends are 
+defined by patterns. In up trends it's simply higher bottoms. In downtrends it's both lower 
+highs and lower lows. 
+Keep in mind the process of selling or liquidation. Investors are in competition with 
+each other to sell out because of bad news, or need for funds, and if the volume doesn't 
+support the selling they must lower their prices to get out. The only buyers are usually 
+bargain hunters, who only show up at new lows for a scalp, or the buyers are shorts who 
+are covering at a profit. This creates the pattern oflower lows and lower tops, as people 
+continuously lower their expectations. 
+Basic Uptrend: 
+Trend is up. Bottoms are all higher or at the same level. 
+Small breakdown in October during crash, but lows are quickly regained 
+which is a classic sign of another buy signal. 
+Michael S. Jenkins Complete Stock Market Trading And Forecasting Course 
+17
+
+--- PAGE 21 of 287 ---
+
+Trend is down. 
+Series of lower 
+tops and lower 
+bottoms. Only 
+one small 
+exception of 
+lower tops in 
+entire move and 
+that is quickly 
+erased. Also 
+note that this is 
+an identical time 
+period to chart 
+before, 
+demonstrating 
+two very 
+different 
+investments. 
+These two examples of trend clearly demonstrate the importance of trading each 
+stock individually and not as part of a general market theme. Usually stocks will follow 
+the main trend of the market averages, but there are many exceptions, and if you just 
+held onto this declining example you could have lost a lot of money waiting for it to tum 
+around. Trends persist, and I have seen past leaders tum sickly and go continuously 
+down for three to five years before attempting a comeback. You must therefore be 
+objective and trade the patterns and not use guesses. 
+Michael S. Jenkins Complete Stock Market Trading And Forecasting Course 
+18
+
+--- PAGE 22 of 287 ---
+
+Reversal of Trend  
+We know that an uptrend is a series ofhigher bottoms and a downtrend is a series of 
+both lower tops and lower bottoms, but what indicates a reversal? In its simplest form a 
+reversal on a bar chart occurs when the extreme bar is identified as being the prior bar 
+and the opposite extreme ofthat bar is exceeded on the next bar. In other words, in an 
+uptrend you find the high day bar where the high was the highest price for the move and 
+you note the low ofthat bar, not the high. Most technicians will tell you to watch the 
+high, but that's not what happens in real time. At the high, the reversal is made when 
+exhaustion sets in, and since the big buyers are always on the bid side ofthe market, the 
+penetration ofthe low is the sign that the buyers are gone. Sometimes the penetration of 
+that high bar low won't occur for several days and the price will be in a narrow range, 
+neither taking out the high nor the low, but once the low is taken out, the sell signal is 
+given. 
+The reversal of a downtrend occurs the same way. You identify the low bar ofthe 
+move and note the high of that bar. When that high is subsequently exceeded, the trend 
+turns up and you can go long with a stop at the low ofthe move, which would negate 
+the buy signal ifit went back down to that low. Again, keep in mind that the sellers use 
+Reversal Bar Signal Pattern 
+II 
+Buy Signal 
+B~mpti 
+generated at
+II 
+1I-\--fo41==---
+this point
+HiP oflow bar 
+Michael S. Jenkins Complete Stock Market Trading And Forecasting Course 
+19
+
+--- PAGE 23 of 287 ---
+
+limits and are working the offer side of the bar, so that when that is exceeded the sellers 
+are gone, at least for the time being. The illustration above shows examples of both 
+signals. 
+These are simple buy and sell reversals and if taken indiscriminately will lead to swift 
+and sure bankruptcy. What is needed is some judgment as to how long a trend has been 
+in effect and whether a normal measured move in some direction has occurred, which 
+usually ends the move. Trendlines breaking, combined with time cycle counts coming to 
+an end, are usually helpful. High volume is usually indicative of reversals and price 
+reversal momentum is also often a key. In big moves like the endings of bull markets, the 
+first few weeks can often reverse the entire gains of the past year or two. But no matter 
+what happens, the first sign will be a reversal of an individual bar and that should be 
+noted for reversals on all next larger size time scales, like hourly turning to daily, weekly, 
+etc. The next page shows two examples of several simple buy / sell signals. Not all of 
+them are shown, but as you can see, the ones that came at the end of extended moves 
+were good for several points at a minimum and often went weeks before reversing out. 
+I've used the term "measured move" before and we'll see examples of it later on, but 
+the concept is basically that over a given time period like six months to three years, the 
+players in the market are the same. Over long time periods their composition may vary, 
+but for the intermediate term they exhibit the same buy and sell habits and their reactions 
+to extremes don't change very much. Ifwe examine a chart over a few months to a 
+couple of years and note the extremes, we will notice that each stock or commodity has 
+an extreme bullish and an extreme bearish phase and these can be "measured" with a 
+ruler, compass, or even our fingers on the chart. The idea is simply that once a trading 
+move has reached this usual extreme, a reversal in trend is expected. Looking for 
+reversal bars can be beneficial if they fall at one of these normal extremes or "measured 
+moves" (see page 28). 
+Michael S. Jenkins Complete Stock Market Trading And FOI'eC3Sting Course 
+20
+
+--- PAGE 24 of 287 ---
+
+Simple buy and sell signals 
+Michael S. Jenkins Complete Stock Market Trading And Forecasting Course 
+21
+
+--- PAGE 25 of 287 ---
+
+Tests of prior buy or sell reversal bars usually come at the point the original signal 
+was generated. 
+Michael S. Jenkins Complete Stock Market Trading And Forecasting Course 
+22
+
+--- PAGE 26 of 287 ---
+
+An adjunct to the simple buy I sell reversal bar idea is that once the signal has been 
+generated and you later get a counter trend movement back to where the signal was 
+given, that movement will usually fail exactly at the point of the original signal. 
+Ninety-nine percent of all other books on technical analysis erroneously tell you to 
+expect a test of the high or low and that's what all traders watch for. It hardly ever 
+happens, however, as these charts indicate (page 22). The move will stop before the 
+extreme, at the place where the buy or sell signal was given, In a long tenn trend that is 
+one way to validate that the long tenn trend is still operative. For example, if you get a 
+buy signal and six weeks later on a correction you go back down to the lit est " area and 
+then generate another buy signal, the second signal confirms the first as being long tenn 
+valid. It's quite possible to see a string of such signals stretched over a year just pulling 
+back to prior signals and confirming their initial ruling. 
+Michael S. Jenkins Complete Stock Market Trading And Forecasting Course 
+23
+
+--- PAGE 27 of 287 ---
+
+. Volume 
+No basic discussion of chart patterns is complete without examining volume 
+patterns. Unfortunately, little is written about volume, although it is one of the most 
+important considerations to the trader. No significant move can ever take place without 
+some heavy volume being done, but in the middle of most moves, volume dries up. It is 
+imperative therefore, that in examining charts that you notice where the very heavy early 
+accumulation took place. Big volume starts as the move is just beginning, because the 
+big institutions take large positions and it may last several months to a year or more 
+before it subsides. After that the stock may rise another year or two before seeing big 
+volume again, this time on the sell side, as they start to get out. In general, it is said that 
+volume is positively correlated, or that the heavy volume goes with the direction of the 
+primary move and especially in the bull move, the volume goes up as the stock goes up. 
+This is the only time that volume is really bullish - when the move is just getting started. 
+Most of the time volume is negative, in that when it shows up, buying and selling are 
+matched and a top is made. A decline then usually results until the volume dries up to the 
+lowest reading of the move and then when it increases, the buyers are back and the 
+advance starts again. Some technicians use a simple general market sell signal tied to 
+three day or five day moving averages of the volume. After a high volume reading, as 
+soon as the moving average turns down, the market tops out. 
+You must pay attention to the pattern of volume over a several week period. During 
+that period you will note the normal spikes of volume that are usually found within a day 
+or two of all the swing highs and lows. If an advance has been underway for three 
+weeks, and then the biggest volume of the month is recorded, it is a certain sign ofa 
+coming correction. Likewise, when you are day trading and buying into a three day dip, 
+you are likely to see increasing volume with little price movement. That usually means 
+the seller is getting "cleaned up" and the stock is about to reverse. I once learned this 
+from an old professional, who pointed out to me a stock that was doing about 6 million 
+shares that day when the average volume was 1.2 million. I was bearish and the stock 
+was down 50 cents on the day on that heavy volume, but he correctly inquired of me 
+why it wasn't down a lot more if the volume was really selling and not scale buying. Of 
+Michael S. Jenkins Complete Stock Market Trading And Forecasting Course 
+24
+
+--- PAGE 28 of 287 ---
+
+course he was right and the stock reversed up on the close and quickly ran about $10 
+over the next three days. I now make it a point to match my predicted lows and highs 
+with exceptional volume. Cycles also bring in the volume and in the general market you 
+111+-+--+"'-­
+.,H--Jf-:£~ 
+Houston Indu8 CHOU) 
+l TO S67II5. PIlI .01 Oom 296.I 
+. 
+eeo·uIIty Ndg _T.,... 
+564ln11i1u11on1 Hok:I13l3 MIl SIn (44.3%) 
+:tt~l===~~~~~~~==~zc====~~~~~~~~ 
+:...~.: :~~:~; :", . ~<~::~:HJ~J~.r }·:iIT·~it:nIiLU. i:l:. 1' 
+Michael S. Jenkins Coolplcl.e Stock Market Trading And Forecasting Course 
+25
+
+--- PAGE 29 of 287 ---
+
+Dell Computer Corp (DELL) 
+"lTD $512.0 Pfd No Com 1274. 
+DvIpImlr IBM ~lIbIe PC', 
+908 institutions Hold 558.2 MIl Shrs (43.8%) 
+70 
+... ! ... : 
+60 
+40 
+! 
+i. 
+30 
+20 
+Michael S. Jenkins Complete Stock Market Trading And Forecasting Course 
+26
+
+--- PAGE 30 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 31 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 32 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 33 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 34 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 35 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 36 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 37 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 38 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 39 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 40 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 41 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 42 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 43 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 44 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 45 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 46 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 47 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 48 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 49 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 50 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 51 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 52 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 53 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 54 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 55 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 56 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 57 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 58 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 59 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 60 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 61 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 62 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 63 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 64 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 65 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 66 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 67 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 68 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 69 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 70 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 71 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 72 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 73 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 74 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 75 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 76 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 77 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 78 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 79 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 80 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 81 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 82 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 83 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 84 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 85 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 86 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 87 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 88 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 89 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 90 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 91 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 92 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 93 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 94 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 95 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 96 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 97 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 98 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 99 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 100 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 101 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 102 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 103 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 104 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 105 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 106 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 107 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 108 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 109 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 110 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 111 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 112 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 113 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 114 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 115 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 116 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 117 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 118 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 119 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 120 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 121 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 122 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 123 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 124 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 125 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 126 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 127 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 128 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 129 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 130 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 131 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 132 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 133 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 134 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 135 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 136 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 137 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 138 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 139 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 140 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 141 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 142 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 143 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 144 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 145 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 146 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 147 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 148 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 149 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 150 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 151 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 152 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 153 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 154 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 155 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 156 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 157 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 158 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 159 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 160 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 161 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 162 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 163 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 164 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 165 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 166 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 167 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 168 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 169 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 170 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 171 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 172 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 173 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 174 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 175 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 176 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 177 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 178 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 179 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 180 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 181 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 182 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 183 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 184 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 185 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 186 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 187 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 188 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 189 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 190 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 191 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 192 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 193 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 194 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 195 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 196 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 197 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 198 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 199 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 200 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 201 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 202 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 203 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 204 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 205 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 206 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 207 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 208 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 209 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 210 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 211 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 212 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 213 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 214 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 215 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 216 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 217 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 218 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 219 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 220 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 221 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 222 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 223 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 224 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 225 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 226 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 227 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 228 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 229 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 230 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 231 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 232 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 233 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 234 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 235 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 236 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 237 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 238 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 239 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 240 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 241 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 242 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 243 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 244 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 245 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 246 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 247 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 248 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 249 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 250 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 251 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 252 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 253 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 254 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 255 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 256 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 257 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 258 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 259 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 260 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 261 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 262 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 263 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 264 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 265 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 266 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 267 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 268 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 269 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 270 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 271 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 272 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 273 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 274 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 275 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 276 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 277 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 278 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 279 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 280 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 281 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 282 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 283 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 284 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 285 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 286 of 287 ---
+
+[EMPTY PAGE]
+
+--- PAGE 287 of 287 ---
+
+[EMPTY PAGE]
