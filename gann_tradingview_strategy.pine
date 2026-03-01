@@ -636,8 +636,8 @@ isNearRangeProj   = isNearRangeProjUp or isNearRangeProjDn
 //   √2 = 1.4142 (diagonal of unit square), √3 = 1.732 (diagonal of unit cube)
 // Formula: level_up = swingLow × constant; level_dn = swingHigh ÷ constant
 
-phiConst   = (1.0 + math.sqrt(5.0)) / 2.0  // Golden ratio (exact)
-phi2Const  = phiConst + 1.0                // Phi² = phi + 1
+phiConst   = (1.0 + math.sqrt(5.0)) / 2.0  // φ = 1.618... Golden ratio (φ² = φ + 1 ≈ 2.618)
+phi2Const  = phiConst + 1.0                // φ² = 2.618 (special property of phi: φ²=φ+1)
 sqrt2Const = math.sqrt(2.0)               // √2 (exact)
 sqrt3Const = math.sqrt(3.0)               // √3 (exact)
 
@@ -1061,8 +1061,8 @@ if barstate.islast
 
     table.cell(infoTable, 0, 22, "Bars Lo/Hi", text_color=color.gray, text_size=size.small)
     table.cell(infoTable, 1, 22,
-               (not na(barsSinceLo) ? str.tostring(math.round(barsSinceLo)) + "Lo " : "—") +
-               (not na(barsSinceHi) ? str.tostring(math.round(barsSinceHi)) + "Hi"  : ""),
+               (not na(barsSinceLo) ? str.tostring(math.round(barsSinceLo)) + "Lo" : "—") +
+               (not na(barsSinceHi) ? " / " + str.tostring(math.round(barsSinceHi)) + "Hi" : ""),
                text_color=color.white, text_size=size.small)
 
     table.cell(infoTable, 0, 23, "Range Proj$", text_color=color.gray, text_size=size.small)
