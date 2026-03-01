@@ -1,0 +1,961 @@
+// ============================================================================
+// GANN-HURST MASTER COMMODITY STRATEGY — Pine Script v5
+// ============================================================================
+// Comprehensive multi-timeframe trading algorithm synthesizing ALL methods from
+// 30 documents on W.D. Gann, J.M. Hurst, and astrological/planetary cycles.
+//
+// Sources synthesized:
+//   - Gann Angle S/R (11 angles, correct degree factors from PDFs)
+//   - Square of 9 Price Levels (spiral chart, cardinal/ordinal crosses)
+//   - Hurst Cycle Analysis (DMA envelopes, FLD, nest-of-lows)
+//   - Gann Time Cycles (192-day Master Factor, seasonal cardinal dates)
+//   - Price-Time Balance (P = T², squaring price and time)
+//   - Gann/Fibonacci Retracements (merged 17-level grid)
+//   - Number Vibration Analysis (digit reduction, 3-6-9 symmetry)
+//   - Multi-Timeframe Direction Filter (weekly bias)
+//   - Composite Scoring Engine (weighted confluence of all modules)
+//
+// Target: Commodities (Gold, Wheat, Crude Oil, Silver, etc.)
+// Approach: Multi-timeframe — Weekly for direction, Daily for timing
+// ============================================================================
+
+//@version=5
+strategy("Gann-Hurst Master Strategy",
+     overlay          = true,
+     default_qty_type = strategy.percent_of_equity,
+     default_qty_value= 100,
+     initial_capital  = 100000,
+     commission_type  = strategy.commission.percent,
+     commission_value = 0.05,
+     slippage         = 2,
+     pyramiding       = 0,
+     calc_on_every_tick = false)
+
+// ============================================================================
+// SECTION 1: INPUT PARAMETERS
+// ============================================================================
+
+// --- Core Settings ---
+grp_core = "Core Settings"
+i_pivotLen    = input.int(10,    "Pivot Lookback Bars",       minval=3,  maxval=50,   group=grp_core)
+i_minSwing    = input.float(0.5, "Min Swing Size (%)",        minval=0.1,maxval=10.0, step=0.1, group=grp_core)
+i_atrLen      = input.int(14,   "ATR Length",                 minval=5,  maxval=50,   group=grp_core)
+
+// --- Gann Angle Settings ---
+grp_angle = "Gann Angles"
+i_angleScale  = input.float(1.0, "Angle Price/Time Scale",    minval=0.01, maxval=100.0, step=0.1, group=grp_angle, tooltip="Price units per bar. Adjust for instrument. Gold~1.0, Wheat~0.5, Oil~0.5")
+i_showAngles  = input.bool(true, "Show Gann Angle Levels",    group=grp_angle)
+
+// --- Square of 9 Settings ---
+grp_sq9 = "Square of 9"
+i_sq9Levels   = input.int(4,     "SQ9 Levels Above/Below",    minval=1, maxval=8,     group=grp_sq9)
+i_sq9Tol      = input.float(0.5, "SQ9 Proximity Tolerance %", minval=0.1,maxval=3.0,  step=0.1, group=grp_sq9)
+i_showSQ9     = input.bool(true, "Show SQ9 Levels",           group=grp_sq9)
+
+// --- Hurst Cycle Settings ---
+grp_hurst = "Hurst Cycles"
+i_hurstC1     = input.int(5,    "Cycle 1 Period",              minval=3,  maxval=20,   group=grp_hurst)
+i_hurstC2     = input.int(20,   "Cycle 2 Period",              minval=10, maxval=50,   group=grp_hurst)
+i_hurstC3     = input.int(40,   "Cycle 3 Period",              minval=20, maxval=100,  group=grp_hurst)
+i_hurstC4     = input.int(80,   "Cycle 4 Period",              minval=40, maxval=200,  group=grp_hurst)
+i_hurstDisp   = input.float(0.25,"DMA Displacement Fraction",  minval=0.1,maxval=0.5,  step=0.05,group=grp_hurst)
+i_nestTol     = input.int(3,    "Nest-of-Lows Tolerance Bars", minval=1,  maxval=10,   group=grp_hurst)
+i_showHurst   = input.bool(true,"Show Hurst Envelopes",        group=grp_hurst)
+
+// --- Time Cycle Settings ---
+grp_time = "Time Cycles"
+i_timeTol     = input.int(3,    "Time Cycle Tolerance (±bars)",minval=1,  maxval=10,   group=grp_time)
+i_showTimeCyc = input.bool(true,"Show Time Cycle Markers",     group=grp_time)
+
+// --- Scoring Weights ---
+grp_score = "Scoring Weights"
+i_wAngle      = input.float(0.20,"Gann Angle Weight",     minval=0.0,maxval=1.0,step=0.05,group=grp_score)
+i_wSQ9        = input.float(0.15,"Square of 9 Weight",    minval=0.0,maxval=1.0,step=0.05,group=grp_score)
+i_wHurst      = input.float(0.25,"Hurst Cycle Weight",    minval=0.0,maxval=1.0,step=0.05,group=grp_score)
+i_wTime       = input.float(0.20,"Time Cycle Weight",     minval=0.0,maxval=1.0,step=0.05,group=grp_score)
+i_wPTBal      = input.float(0.10,"Price-Time Balance Wt", minval=0.0,maxval=1.0,step=0.05,group=grp_score)
+i_wRetrace    = input.float(0.10,"Retracement Weight",    minval=0.0,maxval=1.0,step=0.05,group=grp_score)
+i_strongThresh= input.float(0.65,"Strong Signal Threshold",minval=0.3,maxval=0.95,step=0.05,group=grp_score)
+i_modThresh   = input.float(0.45,"Moderate Signal Threshold",minval=0.2,maxval=0.8,step=0.05,group=grp_score)
+
+// --- Trade Management ---
+grp_trade = "Trade Management"
+i_riskPct     = input.float(1.5, "Risk Per Trade (%)",      minval=0.1,maxval=5.0, step=0.1, group=grp_trade)
+i_rrRatio     = input.float(2.5, "Reward:Risk Ratio",       minval=1.0,maxval=5.0, step=0.5, group=grp_trade)
+i_atrSLMult   = input.float(1.5, "Stop Loss ATR Multiplier",minval=0.5,maxval=4.0, step=0.25,group=grp_trade)
+i_trailPct    = input.float(2.0, "Trailing Stop %",         minval=0.5,maxval=10.0,step=0.5, group=grp_trade)
+i_maxBars     = input.int(80,    "Max Bars in Trade",        minval=10, maxval=500,  group=grp_trade)
+i_cooldown    = input.int(5,     "Re-entry Cooldown Bars",   minval=1,  maxval=20,   group=grp_trade)
+
+// --- Multi-Timeframe ---
+grp_mtf = "Multi-Timeframe"
+i_weeklyTF    = input.timeframe("W", "Weekly Timeframe",     group=grp_mtf)
+
+// ============================================================================
+// SECTION 2: HELPER FUNCTIONS
+// ============================================================================
+
+// --- Square root price level calculation ---
+// Core Gann formula: level = (√base ± offset)²
+f_sqrtLevel(float base, float offset, bool isUp) =>
+    sq = math.sqrt(math.max(base, 0.01))
+    adj = isUp ? sq + offset : sq - offset
+    adj > 0 ? adj * adj : na
+
+// --- Gann degree factors (from "Intraday Trade Using Gann Angle" PDF) ---
+// These are the CORRECT factors extracted from the documents:
+// 16x1=0.479, 8x1=0.458, 4x1=0.417, 3x1=0.396, 2x1=0.354,
+// 1x1=0.250, 1x2=0.146, 1x3=0.104, 1x4=0.083, 1x8=0.042, 1x16=0.021
+f_gannDegFactor(int idx) =>
+    idx == 0  ? 0.479 :   // 16x1 (86.25°)
+    idx == 1  ? 0.458 :   // 8x1  (82.50°)
+    idx == 2  ? 0.417 :   // 4x1  (75.00°)
+    idx == 3  ? 0.396 :   // 3x1  (71.25°)
+    idx == 4  ? 0.354 :   // 2x1  (63.75°)
+    idx == 5  ? 0.250 :   // 1x1  (45.00°) — KEY ANGLE
+    idx == 6  ? 0.146 :   // 1x2  (26.25°)
+    idx == 7  ? 0.104 :   // 1x3  (18.75°)
+    idx == 8  ? 0.083 :   // 1x4  (15.00°)
+    idx == 9  ? 0.042 :   // 1x8  (7.50°)
+    idx == 10 ? 0.021 :   // 1x16 (3.75°)
+    0.250
+
+// --- Square of 9 level calculation ---
+// Formula: next_level = (√price ± N/4)² where N = number of 90° increments
+f_sq9Level(float price, int nQuarters) =>
+    sq = math.sqrt(math.max(price, 0.01))
+    result = sq + nQuarters / 4.0
+    result > 0 ? result * result : na
+
+// --- Square of 9 angular value ---
+// Formula: Angular Value = MOD(180 × √(P-1) - 225, 360)
+f_sq9Angle(float price) =>
+    raw = 180.0 * math.sqrt(math.max(price - 1, 0)) - 225.0
+    raw % 360.0
+
+// --- Digit reduction (number vibration) ---
+f_digitReduce(int val) =>
+    n = math.abs(val)
+    s = 0
+    s := n % 10
+    n := int(math.floor(n / 10))
+    s += n % 10
+    n := int(math.floor(n / 10))
+    s += n % 10
+    n := int(math.floor(n / 10))
+    s += n % 10
+    n := int(math.floor(n / 10))
+    s += n % 10
+    n := int(math.floor(n / 10))
+    s += n % 10
+    n := int(math.floor(n / 10))
+    s += n % 10
+    // reduce to single digit
+    while s >= 10
+        s2 = s % 10 + int(math.floor(s / 10)) % 10 + int(math.floor(s / 100))
+        s := s2
+    s
+
+// --- Check if value is near target within tolerance % ---
+f_isNear(float val, float target, float tolPct) =>
+    math.abs(val - target) / math.max(math.abs(target), 0.0001) * 100.0 < tolPct
+
+// --- Check cardinal date proximity (equinoxes/solstices) ---
+f_isCardinalDate(int tolDays) =>
+    m = month
+    d = dayofmonth
+    // Mar 20-21, Jun 20-21, Sep 22-23, Dec 21-22
+    (m == 3  and math.abs(d - 21) <= tolDays) or
+     (m == 6  and math.abs(d - 21) <= tolDays) or
+     (m == 9  and math.abs(d - 22) <= tolDays) or
+     (m == 12 and math.abs(d - 21) <= tolDays)
+
+// ============================================================================
+// SECTION 3: GANN ANGLE MODULE
+// ============================================================================
+
+// --- Detect true swing pivots ---
+pvtHi = ta.pivothigh(high, i_pivotLen, i_pivotLen)
+pvtLo = ta.pivotlow(low,   i_pivotLen, i_pivotLen)
+
+// Store most recent pivot high and low
+var float lastPvtHi     = na
+var int   lastPvtHiBar  = na
+var float lastPvtLo     = na
+var int   lastPvtLoBar  = na
+var float prevPvtHi     = na
+var int   prevPvtHiBar  = na
+var float prevPvtLo     = na
+var int   prevPvtLoBar  = na
+
+if not na(pvtHi)
+    prevPvtHi    := lastPvtHi
+    prevPvtHiBar := lastPvtHiBar
+    lastPvtHi    := pvtHi
+    lastPvtHiBar := bar_index - i_pivotLen
+
+if not na(pvtLo)
+    prevPvtLo    := lastPvtLo
+    prevPvtLoBar := lastPvtLoBar
+    lastPvtLo    := pvtLo
+    lastPvtLoBar := bar_index - i_pivotLen
+
+// --- Calculate 11 resistance levels from pivot low (price going up) ---
+res_16x1 = f_sqrtLevel(nz(lastPvtLo), f_gannDegFactor(0),  true)
+res_8x1  = f_sqrtLevel(nz(lastPvtLo), f_gannDegFactor(1),  true)
+res_4x1  = f_sqrtLevel(nz(lastPvtLo), f_gannDegFactor(2),  true)
+res_3x1  = f_sqrtLevel(nz(lastPvtLo), f_gannDegFactor(3),  true)
+res_2x1  = f_sqrtLevel(nz(lastPvtLo), f_gannDegFactor(4),  true)
+res_1x1  = f_sqrtLevel(nz(lastPvtLo), f_gannDegFactor(5),  true)  // KEY 45°
+res_1x2  = f_sqrtLevel(nz(lastPvtLo), f_gannDegFactor(6),  true)
+res_1x3  = f_sqrtLevel(nz(lastPvtLo), f_gannDegFactor(7),  true)
+res_1x4  = f_sqrtLevel(nz(lastPvtLo), f_gannDegFactor(8),  true)
+res_1x8  = f_sqrtLevel(nz(lastPvtLo), f_gannDegFactor(9),  true)
+res_1x16 = f_sqrtLevel(nz(lastPvtLo), f_gannDegFactor(10), true)
+
+// --- Calculate 11 support levels from pivot high (price going down) ---
+sup_16x1 = f_sqrtLevel(nz(lastPvtHi), f_gannDegFactor(0),  false)
+sup_8x1  = f_sqrtLevel(nz(lastPvtHi), f_gannDegFactor(1),  false)
+sup_4x1  = f_sqrtLevel(nz(lastPvtHi), f_gannDegFactor(2),  false)
+sup_3x1  = f_sqrtLevel(nz(lastPvtHi), f_gannDegFactor(3),  false)
+sup_2x1  = f_sqrtLevel(nz(lastPvtHi), f_gannDegFactor(4),  false)
+sup_1x1  = f_sqrtLevel(nz(lastPvtHi), f_gannDegFactor(5),  false)  // KEY 45°
+sup_1x2  = f_sqrtLevel(nz(lastPvtHi), f_gannDegFactor(6),  false)
+sup_1x3  = f_sqrtLevel(nz(lastPvtHi), f_gannDegFactor(7),  false)
+sup_1x4  = f_sqrtLevel(nz(lastPvtHi), f_gannDegFactor(8),  false)
+sup_1x8  = f_sqrtLevel(nz(lastPvtHi), f_gannDegFactor(9),  false)
+sup_1x16 = f_sqrtLevel(nz(lastPvtHi), f_gannDegFactor(10), false)
+
+// --- Gann Angle Trend Detection ---
+// Price above 1x1 from low = bullish, below 1x1 from high = bearish
+aboveRes1x1 = not na(res_1x1) and close > res_1x1
+belowSup1x1 = not na(sup_1x1) and close < sup_1x1
+aboveRes2x1 = not na(res_2x1) and close > res_2x1
+belowSup2x1 = not na(sup_2x1) and close < sup_2x1
+
+// Detect angle breaks (crossing events)
+var bool prevAboveRes1x1 = false
+var bool prevBelowSup1x1 = false
+angleBreakUp   = aboveRes1x1 and not prevAboveRes1x1
+angleBreakDown = belowSup1x1 and not prevBelowSup1x1
+prevAboveRes1x1 := aboveRes1x1
+prevBelowSup1x1 := belowSup1x1
+
+// --- Angle proximity cluster detection ---
+atr_val = ta.atr(i_atrLen)
+angleClusterBull = 0
+if not na(res_1x1) and math.abs(close - res_1x1) < atr_val
+    angleClusterBull += 1
+if not na(res_2x1) and math.abs(close - res_2x1) < atr_val
+    angleClusterBull += 1
+if not na(res_1x2) and math.abs(close - res_1x2) < atr_val
+    angleClusterBull += 1
+
+angleClusterBear = 0
+if not na(sup_1x1) and math.abs(close - sup_1x1) < atr_val
+    angleClusterBear += 1
+if not na(sup_2x1) and math.abs(close - sup_2x1) < atr_val
+    angleClusterBear += 1
+if not na(sup_1x2) and math.abs(close - sup_1x2) < atr_val
+    angleClusterBear += 1
+
+// --- GANN ANGLE SCORE (-1.0 to +1.0) ---
+gann_angle_score = 0.0
+// Bullish components
+gann_angle_score += aboveRes1x1 ? 0.35 : 0.0
+gann_angle_score += aboveRes2x1 ? 0.20 : 0.0
+gann_angle_score += angleBreakUp ? 0.25 : 0.0
+gann_angle_score += angleClusterBull >= 2 ? 0.20 : 0.0
+// Bearish components
+gann_angle_score -= belowSup1x1 ? 0.35 : 0.0
+gann_angle_score -= belowSup2x1 ? 0.20 : 0.0
+gann_angle_score -= angleBreakDown ? 0.25 : 0.0
+gann_angle_score -= angleClusterBear >= 2 ? 0.20 : 0.0
+gann_angle_score := math.max(-1.0, math.min(1.0, gann_angle_score))
+
+// ============================================================================
+// SECTION 4: SQUARE OF 9 MODULE
+// ============================================================================
+
+// --- Calculate SQ9 levels from last pivot low (resistance) and pivot high (support) ---
+// Using 90° increments: (√price ± N/4)²
+sq9_r1 = f_sq9Level(nz(lastPvtLo), 1)    // +90°
+sq9_r2 = f_sq9Level(nz(lastPvtLo), 2)    // +180°
+sq9_r3 = f_sq9Level(nz(lastPvtLo), 3)    // +270°
+sq9_r4 = f_sq9Level(nz(lastPvtLo), 4)    // +360° (full rotation)
+sq9_r5 = f_sq9Level(nz(lastPvtLo), 5)    // +450°
+sq9_r6 = f_sq9Level(nz(lastPvtLo), 6)    // +540°
+sq9_r7 = f_sq9Level(nz(lastPvtLo), 7)    // +630°
+sq9_r8 = f_sq9Level(nz(lastPvtLo), 8)    // +720° (2 full rotations)
+
+sq9_s1 = f_sq9Level(nz(lastPvtHi), -1)   // -90°
+sq9_s2 = f_sq9Level(nz(lastPvtHi), -2)   // -180°
+sq9_s3 = f_sq9Level(nz(lastPvtHi), -3)   // -270°
+sq9_s4 = f_sq9Level(nz(lastPvtHi), -4)   // -360°
+sq9_s5 = f_sq9Level(nz(lastPvtHi), -5)   // -450°
+sq9_s6 = f_sq9Level(nz(lastPvtHi), -6)   // -540°
+sq9_s7 = f_sq9Level(nz(lastPvtHi), -7)   // -630°
+sq9_s8 = f_sq9Level(nz(lastPvtHi), -8)   // -720°
+
+// --- 45° increment levels for finer resolution ---
+sq9_45_r1 = f_sq9Level(nz(lastPvtLo, close), 0.5)   // +45°
+sq9_45_r2 = f_sq9Level(nz(lastPvtLo, close), 1.5)   // +135°
+sq9_45_s1 = f_sq9Level(nz(lastPvtHi, close), -0.5)  // -45°
+sq9_45_s2 = f_sq9Level(nz(lastPvtHi, close), -1.5)  // -135°
+
+// --- Natural square detection (1,4,9,16,25,...,144,...) near current price ---
+sqrtClose = math.sqrt(close)
+nearestSqBelow = math.floor(sqrtClose) * math.floor(sqrtClose)
+nearestSqAbove = math.ceil(sqrtClose) * math.ceil(sqrtClose)
+atNaturalSquare = f_isNear(close, nearestSqBelow, i_sq9Tol) or f_isNear(close, nearestSqAbove, i_sq9Tol)
+
+// --- Cardinal cross check (0°, 90°, 180°, 270° on the wheel) ---
+sq9AngVal = f_sq9Angle(close)
+atCardinal = math.abs(sq9AngVal) < 10 or math.abs(sq9AngVal - 90) < 10 or
+             math.abs(sq9AngVal - 180) < 10 or math.abs(sq9AngVal - 270) < 10
+
+// --- SQ9 proximity scoring ---
+sq9NearRes = 0
+sq9NearRes += f_isNear(close, nz(sq9_r1), i_sq9Tol) ? 1 : 0
+sq9NearRes += f_isNear(close, nz(sq9_r2), i_sq9Tol) ? 1 : 0
+sq9NearRes += f_isNear(close, nz(sq9_r3), i_sq9Tol) ? 1 : 0
+sq9NearRes += f_isNear(close, nz(sq9_r4), i_sq9Tol) ? 1 : 0
+
+sq9NearSup = 0
+sq9NearSup += f_isNear(close, nz(sq9_s1), i_sq9Tol) ? 1 : 0
+sq9NearSup += f_isNear(close, nz(sq9_s2), i_sq9Tol) ? 1 : 0
+sq9NearSup += f_isNear(close, nz(sq9_s3), i_sq9Tol) ? 1 : 0
+sq9NearSup += f_isNear(close, nz(sq9_s4), i_sq9Tol) ? 1 : 0
+
+// --- SQ9 SCORE (-1.0 to +1.0) ---
+sq9_score = 0.0
+// At resistance → bearish pressure
+sq9_score -= sq9NearRes >= 2 ? 0.5 : sq9NearRes >= 1 ? 0.3 : 0.0
+// At support → bullish support
+sq9_score += sq9NearSup >= 2 ? 0.5 : sq9NearSup >= 1 ? 0.3 : 0.0
+// Cardinal cross bonus
+sq9_score += atCardinal ? (close > nz(lastPvtLo) ? -0.2 : 0.2) : 0.0
+// Natural square bonus
+sq9_score += atNaturalSquare ? (close > close[1] ? -0.15 : 0.15) : 0.0
+sq9_score := math.max(-1.0, math.min(1.0, sq9_score))
+
+// ============================================================================
+// SECTION 5: HURST CYCLE MODULE
+// ============================================================================
+
+// --- Displaced Moving Averages (DMA) ---
+// Hurst's key insight: a cycle's DMA, displaced forward by period/4,
+// represents the cycle's "current value line"
+sma_c1 = ta.sma(close, i_hurstC1)
+sma_c2 = ta.sma(close, i_hurstC2)
+sma_c3 = ta.sma(close, i_hurstC3)
+sma_c4 = ta.sma(close, i_hurstC4)
+
+// Displaced versions (look back to get the displaced forward effect)
+disp1 = int(math.round(i_hurstC1 * i_hurstDisp))
+disp2 = int(math.round(i_hurstC2 * i_hurstDisp))
+disp3 = int(math.round(i_hurstC3 * i_hurstDisp))
+disp4 = int(math.round(i_hurstC4 * i_hurstDisp))
+
+dma_c1 = sma_c1[disp1]
+dma_c2 = sma_c2[disp2]
+dma_c3 = sma_c3[disp3]
+dma_c4 = sma_c4[disp4]
+
+// --- Cyclic Envelopes ---
+// Amplitude estimated from ATR of each cycle period
+amp_c2 = ta.atr(i_hurstC2) * 1.0
+amp_c4 = ta.atr(i_hurstC4) * 1.0
+
+env_c2_upper = nz(dma_c2) + amp_c2
+env_c2_lower = nz(dma_c2) - amp_c2
+env_c4_upper = nz(dma_c4) + amp_c4
+env_c4_lower = nz(dma_c4) - amp_c4
+
+// --- Detrended Price Oscillator for cycle phase ---
+// Detrend by subtracting DMA
+detrend_c1 = close - nz(dma_c1, close)
+detrend_c2 = close - nz(dma_c2, close)
+detrend_c3 = close - nz(dma_c3, close)
+detrend_c4 = close - nz(dma_c4, close)
+
+// Cycle phase: rising (detrended crossing above zero) = bullish
+c1_rising = detrend_c1 > 0 and detrend_c1 > detrend_c1[1]
+c2_rising = detrend_c2 > 0 and detrend_c2 > detrend_c2[1]
+c3_rising = detrend_c3 > 0 and detrend_c3 > detrend_c3[1]
+c4_rising = detrend_c4 > 0 and detrend_c4 > detrend_c4[1]
+
+// --- Cycle trough detection ---
+// A trough = detrended price crosses above zero from below
+c1_trough = ta.crossover(detrend_c1, 0.0)
+c2_trough = ta.crossover(detrend_c2, 0.0)
+c3_trough = ta.crossover(detrend_c3, 0.0)
+c4_trough = ta.crossover(detrend_c4, 0.0)
+
+// Track recent trough bar indices
+var int c1_lastTrough = 0
+var int c2_lastTrough = 0
+var int c3_lastTrough = 0
+var int c4_lastTrough = 0
+if c1_trough
+    c1_lastTrough := bar_index
+if c2_trough
+    c2_lastTrough := bar_index
+if c3_trough
+    c3_lastTrough := bar_index
+if c4_trough
+    c4_lastTrough := bar_index
+
+// --- NEST-OF-LOWS DETECTION ---
+// Multiple cycle troughs aligning within tolerance = powerful buy signal
+// (Hurst's most important concept for entry timing)
+troughsNear = 0
+if bar_index - c1_lastTrough <= i_nestTol
+    troughsNear += 1
+if bar_index - c2_lastTrough <= i_nestTol
+    troughsNear += 1
+if bar_index - c3_lastTrough <= i_nestTol
+    troughsNear += 1
+if bar_index - c4_lastTrough <= i_nestTol
+    troughsNear += 1
+nest_of_lows = troughsNear >= 3
+
+// --- FLD (Future Line of Demarcation) ---
+// Close displaced forward by half-period; cross = signal
+// For current bar, compare close to close[halfPeriod] (the FLD value)
+fld_c2 = close[int(math.round(i_hurstC2 / 2.0))]
+fld_c4 = close[int(math.round(i_hurstC4 / 2.0))]
+fld_c2_bull = ta.crossover(close, nz(fld_c2, close))
+fld_c2_bear = ta.crossunder(close, nz(fld_c2, close))
+fld_c4_bull = ta.crossover(close, nz(fld_c4, close))
+fld_c4_bear = ta.crossunder(close, nz(fld_c4, close))
+
+// --- HURST CYCLE SCORE (-1.0 to +1.0) ---
+hurst_score = 0.0
+// Nest-of-lows is the strongest signal
+hurst_score += nest_of_lows ? 0.60 : (troughsNear >= 2 ? 0.30 : 0.0)
+// FLD crosses
+hurst_score += fld_c2_bull ? 0.15 : (fld_c2_bear ? -0.15 : 0.0)
+hurst_score += fld_c4_bull ? 0.15 : (fld_c4_bear ? -0.15 : 0.0)
+// Cycle phase majority
+risingCount = (c1_rising ? 1 : 0) + (c2_rising ? 1 : 0) + (c3_rising ? 1 : 0) + (c4_rising ? 1 : 0)
+hurst_score += risingCount >= 3 ? 0.20 : (risingCount <= 1 ? -0.20 : 0.0)
+// Envelope extremes
+hurst_score += close < env_c4_lower and detrend_c4 > detrend_c4[1] ? 0.25 : 0.0
+hurst_score -= close > env_c4_upper and detrend_c4 < detrend_c4[1] ? 0.25 : 0.0
+hurst_score := math.max(-1.0, math.min(1.0, hurst_score))
+
+// ============================================================================
+// SECTION 6: TIME CYCLE MODULE
+// ============================================================================
+
+// --- Key Gann time cycle counts (bars from pivot) ---
+// From "Master Time Factor" (Flanagan), "Gann Cycles Course" (Shephard),
+// "20 Years of Studying Gann", and "143611217-Krausz" documents
+// Key counts: 7, 30, 45, 60, 90, 120, 144, 180, 192, 240, 270, 360
+// 192-day Master Factor octaves: 24, 48, 96, 120, 144, 168, 192
+
+// Check if bars from a pivot match any key cycle count
+f_checkTimeCycle(int pivotBar, int tol) =>
+    dist = bar_index - pivotBar
+    hit = 0
+    // Primary Gann cycles
+    hit += math.abs(dist - 7)   <= tol ? 1 : 0
+    hit += math.abs(dist - 30)  <= tol ? 1 : 0
+    hit += math.abs(dist - 45)  <= tol ? 1 : 0
+    hit += math.abs(dist - 60)  <= tol ? 1 : 0
+    hit += math.abs(dist - 90)  <= tol ? 1 : 0
+    hit += math.abs(dist - 120) <= tol ? 1 : 0
+    hit += math.abs(dist - 144) <= tol ? 1 : 0
+    hit += math.abs(dist - 180) <= tol ? 1 : 0
+    hit += math.abs(dist - 192) <= tol ? 1 : 0
+    hit += math.abs(dist - 240) <= tol ? 1 : 0
+    hit += math.abs(dist - 270) <= tol ? 1 : 0
+    hit += math.abs(dist - 360) <= tol ? 1 : 0
+    // 192-day octaves
+    hit += math.abs(dist - 24)  <= tol ? 1 : 0
+    hit += math.abs(dist - 48)  <= tol ? 1 : 0
+    hit += math.abs(dist - 96)  <= tol ? 1 : 0
+    hit += math.abs(dist - 168) <= tol ? 1 : 0
+    // Weekly counts (converted to daily)
+    hit += math.abs(dist - 35)  <= tol ? 1 : 0   // 5 weeks
+    hit += math.abs(dist - 65)  <= tol ? 1 : 0   // ~9 weeks
+    hit += math.abs(dist - 91)  <= tol ? 1 : 0   // 13 weeks
+    hit += math.abs(dist - 130) <= tol ? 1 : 0   // ~18.5 weeks (Hurst)
+    hit += math.abs(dist - 182) <= tol ? 1 : 0   // 26 weeks
+    hit += math.abs(dist - 273) <= tol ? 1 : 0   // 39 weeks
+    hit += math.abs(dist - 365) <= tol ? 1 : 0   // 52 weeks (anniversary)
+    hit
+
+// Count time cycle hits from all stored pivots
+tcHits = 0
+tcHits += not na(lastPvtHiBar)  ? f_checkTimeCycle(lastPvtHiBar,  i_timeTol) : 0
+tcHits += not na(lastPvtLoBar)  ? f_checkTimeCycle(lastPvtLoBar,  i_timeTol) : 0
+tcHits += not na(prevPvtHiBar)  ? f_checkTimeCycle(prevPvtHiBar,  i_timeTol) : 0
+tcHits += not na(prevPvtLoBar)  ? f_checkTimeCycle(prevPvtLoBar,  i_timeTol) : 0
+
+// --- Time-Price Squaring ---
+// T = √Range → expected bars for reversal
+lastRange     = math.abs(nz(lastPvtHi) - nz(lastPvtLo))
+tpSquareT     = math.sqrt(lastRange)
+pivotRefBar   = nz(lastPvtHi) > nz(lastPvtLo) ? nz(lastPvtHiBar) : nz(lastPvtLoBar)
+barsFromRef   = bar_index - nz(pivotRefBar)
+timePriceSq   = math.abs(barsFromRef - tpSquareT) <= i_timeTol
+
+// --- Seasonal cardinal date check ---
+atCardinalDate = f_isCardinalDate(3)
+
+// --- 192-day Master Time Factor special check ---
+masterTimeFactor = false
+if not na(lastPvtHiBar)
+    d1 = bar_index - lastPvtHiBar
+    masterTimeFactor := masterTimeFactor or math.abs(d1 - 192) <= i_timeTol
+if not na(lastPvtLoBar)
+    d2 = bar_index - lastPvtLoBar
+    masterTimeFactor := masterTimeFactor or math.abs(d2 - 192) <= i_timeTol
+
+// --- TIME CYCLE SCORE (-1.0 to +1.0) ---
+time_cycle_active = tcHits >= 1
+cycles_converging = tcHits
+
+time_score = 0.0
+time_score += tcHits >= 4 ? 0.60 : tcHits >= 2 ? 0.40 : tcHits >= 1 ? 0.20 : 0.0
+time_score += masterTimeFactor ? 0.15 : 0.0
+time_score += atCardinalDate ? 0.10 : 0.0
+time_score += timePriceSq ? 0.20 : 0.0
+// Direction: if coming from a low pivot cycle hit → bullish; from high → bearish
+hiCycleHits = (not na(lastPvtHiBar) ? f_checkTimeCycle(lastPvtHiBar, i_timeTol) : 0) +
+              (not na(prevPvtHiBar) ? f_checkTimeCycle(prevPvtHiBar, i_timeTol) : 0)
+loCycleHits = (not na(lastPvtLoBar) ? f_checkTimeCycle(lastPvtLoBar, i_timeTol) : 0) +
+              (not na(prevPvtLoBar) ? f_checkTimeCycle(prevPvtLoBar, i_timeTol) : 0)
+// Time cycles from pivot highs suggest new low → bearish
+// Time cycles from pivot lows suggest new high → bullish
+if hiCycleHits > loCycleHits
+    time_score := -time_score
+time_score := math.max(-1.0, math.min(1.0, time_score))
+
+// ============================================================================
+// SECTION 7: PRICE-TIME BALANCE MODULE
+// ============================================================================
+
+// --- P = T² check ---
+// When price range equals time squared (or time equals √price), expect reversal
+ptBalance_range  = math.abs(nz(lastPvtHi) - nz(lastPvtLo))
+ptBalance_time   = math.abs(nz(lastPvtHiBar) - nz(lastPvtLoBar))
+ptBalance_active = ptBalance_time > 0 and math.abs(ptBalance_range - ptBalance_time * ptBalance_time) / math.max(ptBalance_range, 1) < 0.15
+
+// --- Price window check ---
+// Divide significant price by key Gann circle divisions
+priceDiv90  = close / 90.0
+priceDiv120 = close / 120.0
+priceDiv180 = close / 180.0
+priceDiv360 = close / 360.0
+
+// Check if any division is near an integer (price at harmonic node)
+fracNear = (priceDiv90 - math.floor(priceDiv90) < 0.05 or priceDiv90 - math.floor(priceDiv90) > 0.95) ? 1 : 0
+fracNear += (priceDiv120 - math.floor(priceDiv120) < 0.05 or priceDiv120 - math.floor(priceDiv120) > 0.95) ? 1 : 0
+fracNear += (priceDiv180 - math.floor(priceDiv180) < 0.05 or priceDiv180 - math.floor(priceDiv180) > 0.95) ? 1 : 0
+fracNear += (priceDiv360 - math.floor(priceDiv360) < 0.05 or priceDiv360 - math.floor(priceDiv360) > 0.95) ? 1 : 0
+
+priceWindowActive = fracNear >= 1
+
+// --- PRICE-TIME BALANCE SCORE (-1.0 to +1.0) ---
+pt_balance_score = 0.0
+pt_balance_score += ptBalance_active ? 0.40 : 0.0
+pt_balance_score += timePriceSq ? 0.30 : 0.0
+pt_balance_score += priceWindowActive ? 0.30 : 0.0
+// Direction: if price is below midpoint of range → bullish reversal expected
+midPoint = (nz(lastPvtHi) + nz(lastPvtLo)) / 2.0
+if close < midPoint
+    pt_balance_score := math.abs(pt_balance_score)   // bullish
+else
+    pt_balance_score := -math.abs(pt_balance_score)   // bearish
+pt_balance_score := math.max(-1.0, math.min(1.0, pt_balance_score))
+
+// ============================================================================
+// SECTION 8: RETRACEMENT MODULE
+// ============================================================================
+
+// --- Calculate Gann + Fibonacci merged retracement levels ---
+swingRange = nz(lastPvtHi) - nz(lastPvtLo)
+isUpswing  = nz(lastPvtLoBar) < nz(lastPvtHiBar)  // low came before high
+
+// Gann retracement levels (from "Understanding Gann Price and Time Cycle")
+ret_125  = isUpswing ? nz(lastPvtHi) - swingRange * 0.125 : nz(lastPvtLo) + swingRange * 0.125
+ret_250  = isUpswing ? nz(lastPvtHi) - swingRange * 0.250 : nz(lastPvtLo) + swingRange * 0.250
+ret_333  = isUpswing ? nz(lastPvtHi) - swingRange * 0.333 : nz(lastPvtLo) + swingRange * 0.333
+ret_375  = isUpswing ? nz(lastPvtHi) - swingRange * 0.375 : nz(lastPvtLo) + swingRange * 0.375
+ret_500  = isUpswing ? nz(lastPvtHi) - swingRange * 0.500 : nz(lastPvtLo) + swingRange * 0.500  // CENTER OF GRAVITY
+ret_625  = isUpswing ? nz(lastPvtHi) - swingRange * 0.625 : nz(lastPvtLo) + swingRange * 0.625
+ret_667  = isUpswing ? nz(lastPvtHi) - swingRange * 0.667 : nz(lastPvtLo) + swingRange * 0.667
+ret_750  = isUpswing ? nz(lastPvtHi) - swingRange * 0.750 : nz(lastPvtLo) + swingRange * 0.750
+ret_875  = isUpswing ? nz(lastPvtHi) - swingRange * 0.875 : nz(lastPvtLo) + swingRange * 0.875
+
+// Fibonacci levels
+ret_236  = isUpswing ? nz(lastPvtHi) - swingRange * 0.236 : nz(lastPvtLo) + swingRange * 0.236
+ret_382  = isUpswing ? nz(lastPvtHi) - swingRange * 0.382 : nz(lastPvtLo) + swingRange * 0.382
+ret_618  = isUpswing ? nz(lastPvtHi) - swingRange * 0.618 : nz(lastPvtLo) + swingRange * 0.618
+ret_786  = isUpswing ? nz(lastPvtHi) - swingRange * 0.786 : nz(lastPvtLo) + swingRange * 0.786
+
+// --- Proximity check ---
+retTol = i_sq9Tol  // reuse SQ9 tolerance for retracements
+
+at_ret_500  = f_isNear(close, nz(ret_500), retTol)
+at_ret_333  = f_isNear(close, nz(ret_333), retTol)
+at_ret_667  = f_isNear(close, nz(ret_667), retTol)
+at_ret_382  = f_isNear(close, nz(ret_382), retTol)
+at_ret_618  = f_isNear(close, nz(ret_618), retTol)
+at_ret_250  = f_isNear(close, nz(ret_250), retTol)
+at_ret_750  = f_isNear(close, nz(ret_750), retTol)
+at_any_ret  = at_ret_500 or at_ret_333 or at_ret_667 or at_ret_382 or at_ret_618 or at_ret_250 or at_ret_750
+
+// --- RETRACEMENT SCORE (-1.0 to +1.0) ---
+retrace_score = 0.0
+// 50% is the most powerful (Gann's "center of gravity")
+retrace_score += at_ret_500 ? 0.50 : 0.0
+// 33.3% and 66.7% (Gann's thirds)
+retrace_score += at_ret_333 ? 0.30 : 0.0
+retrace_score += at_ret_667 ? 0.30 : 0.0
+// Fibonacci levels
+retrace_score += at_ret_382 ? 0.25 : 0.0
+retrace_score += at_ret_618 ? 0.25 : 0.0
+// 25% and 75%
+retrace_score += at_ret_250 ? 0.20 : 0.0
+retrace_score += at_ret_750 ? 0.20 : 0.0
+
+// Direction: if we're retracing a downswing (isUpswing=false), support = bullish
+// If retracing an upswing, support = bearish (expecting further decline)
+if isUpswing
+    retrace_score := retrace_score   // retracement support on upswing = potential bullish bounce
+else
+    retrace_score := -retrace_score  // retracement resistance on downswing = bearish
+retrace_score := math.max(-1.0, math.min(1.0, retrace_score))
+
+// ============================================================================
+// SECTION 9: NUMBER VIBRATION MODULE
+// ============================================================================
+
+priceVibration = f_digitReduce(int(math.round(close)))
+isVibration9   = priceVibration == 9  // "change number" → reversal likely
+isVibration369 = priceVibration == 3 or priceVibration == 6 or priceVibration == 9
+
+// 144-cycle levels (Gann's master number)
+cycle144_base  = math.floor(close / 144.0) * 144.0
+cycle144_below = cycle144_base
+cycle144_above = cycle144_base + 144.0
+near144Level   = math.min(math.abs(close - cycle144_below), math.abs(close - cycle144_above)) / close * 100.0 < 1.0
+
+// ============================================================================
+// SECTION 10: MULTI-TIMEFRAME DIRECTION FILTER
+// ============================================================================
+
+// --- Weekly Gann angle position ---
+[wkHigh, wkLow, wkClose] = request.security(syminfo.tickerid, i_weeklyTF, [high, low, close])
+wkSwingHi = request.security(syminfo.tickerid, i_weeklyTF, ta.highest(high, 20))
+wkSwingLo = request.security(syminfo.tickerid, i_weeklyTF, ta.lowest(low, 20))
+
+wk_res_1x1 = f_sqrtLevel(wkSwingLo, 0.250, true)
+wk_sup_1x1 = f_sqrtLevel(wkSwingHi, 0.250, false)
+
+wkAbove1x1 = not na(wk_res_1x1) and wkClose > wk_res_1x1
+wkBelow1x1 = not na(wk_sup_1x1) and wkClose < wk_sup_1x1
+
+// --- Weekly Hurst DMA (80-day ≈ 16 weekly bars) ---
+wkSma16     = request.security(syminfo.tickerid, i_weeklyTF, ta.sma(close, 16))
+wkDma16     = request.security(syminfo.tickerid, i_weeklyTF, ta.sma(close, 16)[4])
+wkAboveDMA  = wkClose > nz(wkDma16, wkClose)
+
+// --- Weekly trend (SMA slope) ---
+wkSma20     = request.security(syminfo.tickerid, i_weeklyTF, ta.sma(close, 20))
+wkTrendUp   = nz(wkSma20) > nz(wkSma20[1])
+
+// --- WEEKLY BIAS ---
+wkBullCount = (wkAbove1x1 ? 1 : 0) + (wkAboveDMA ? 1 : 0) + (wkTrendUp ? 1 : 0)
+weekly_bias = wkBullCount >= 3 ? 1 : wkBullCount <= 0 ? -1 : 0
+// +1 = long only, -1 = short only, 0 = both directions (half size)
+
+// ============================================================================
+// SECTION 11: COMPOSITE SCORING ENGINE
+// ============================================================================
+
+// --- Weighted composite ---
+composite_raw = (gann_angle_score * i_wAngle) +
+                (sq9_score         * i_wSQ9) +
+                (hurst_score       * i_wHurst) +
+                (time_score        * i_wTime) +
+                (pt_balance_score  * i_wPTBal) +
+                (retrace_score     * i_wRetrace)
+
+// --- Count modules agreeing on direction ---
+bullModules = (gann_angle_score > 0.1 ? 1 : 0) +
+              (sq9_score > 0.1 ? 1 : 0) +
+              (hurst_score > 0.1 ? 1 : 0) +
+              (time_score > 0.1 ? 1 : 0) +
+              (pt_balance_score > 0.1 ? 1 : 0) +
+              (retrace_score > 0.1 ? 1 : 0)
+bearModules = (gann_angle_score < -0.1 ? 1 : 0) +
+              (sq9_score < -0.1 ? 1 : 0) +
+              (hurst_score < -0.1 ? 1 : 0) +
+              (time_score < -0.1 ? 1 : 0) +
+              (pt_balance_score < -0.1 ? 1 : 0) +
+              (retrace_score < -0.1 ? 1 : 0)
+
+// Confluence bonus: 4+ modules agreeing adds conviction
+confluenceBonus = bullModules >= 4 ? 0.15 : bearModules >= 4 ? -0.15 : 0.0
+
+composite = composite_raw + confluenceBonus
+
+// --- Special pattern overrides ---
+// Nest-of-lows + angle break up = very high conviction
+if nest_of_lows and angleBreakUp
+    composite := math.max(composite, 0.85)
+// 50% retracement + time cycle cluster = high conviction
+if at_ret_500 and cycles_converging >= 3
+    composite := close < midPoint ? math.max(composite, 0.80) : math.min(composite, -0.80)
+// Vibration 9 at extreme = extra caution (potential reversal)
+if isVibration9 and (close > env_c4_upper or close < env_c4_lower)
+    composite := composite * 0.5  // reduce conviction, expect reversal
+
+// Apply weekly direction filter
+compositeFiltered = composite
+if weekly_bias == 1 and composite < 0
+    compositeFiltered := composite * 0.3   // dampen shorts in weekly uptrend
+if weekly_bias == -1 and composite > 0
+    compositeFiltered := composite * 0.3   // dampen longs in weekly downtrend
+
+// --- Signal Generation ---
+strong_long   = compositeFiltered >= i_strongThresh
+strong_short  = compositeFiltered <= -i_strongThresh
+mod_long      = compositeFiltered >= i_modThresh and not strong_long
+mod_short     = compositeFiltered <= -i_modThresh and not strong_short
+
+go_long  = strong_long or (mod_long and nest_of_lows)
+go_short = strong_short or (mod_short and time_cycle_active and cycles_converging >= 3)
+
+// ============================================================================
+// SECTION 12: STRATEGY ENTRY/EXIT LOGIC
+// ============================================================================
+
+// --- Stop Loss Calculation ---
+longSL  = nz(lastPvtLo, close * 0.95) - atr_val * i_atrSLMult
+shortSL = nz(lastPvtHi, close * 1.05) + atr_val * i_atrSLMult
+
+// --- Take Profit Calculation ---
+longRisk   = close - longSL
+longTP     = close + longRisk * i_rrRatio
+shortRisk  = shortSL - close
+shortTP    = close - shortRisk * i_rrRatio
+
+// --- Position Sizing (risk-based) ---
+riskAmt   = strategy.equity * i_riskPct / 100.0
+longQty   = longRisk > 0 ? riskAmt / longRisk : 0
+shortQty  = shortRisk > 0 ? riskAmt / shortRisk : 0
+
+// Half size when weekly bias is neutral
+if weekly_bias == 0
+    longQty  := longQty * 0.5
+    shortQty := shortQty * 0.5
+
+// --- Cooldown tracking ---
+var int lastExitBar    = 0
+var int lastExitDir    = 0   // 1 = was long, -1 = was short
+var int barsInTrade    = 0
+
+if strategy.position_size != 0
+    barsInTrade += 1
+else
+    if barsInTrade > 0
+        lastExitBar := bar_index
+        lastExitDir := strategy.position_size[1] > 0 ? 1 : -1
+    barsInTrade := 0
+
+cooldownActive_long  = lastExitDir == 1  and (bar_index - lastExitBar) < i_cooldown
+cooldownActive_short = lastExitDir == -1 and (bar_index - lastExitBar) < i_cooldown
+
+// --- Entry execution ---
+if go_long and strategy.position_size <= 0 and not cooldownActive_long and longRisk > 0
+    strategy.entry("Long", strategy.long, qty=longQty)
+
+if go_short and strategy.position_size >= 0 and not cooldownActive_short and shortRisk > 0
+    strategy.entry("Short", strategy.short, qty=shortQty)
+
+// --- Exit management ---
+// Stop loss + take profit + trailing stop
+if strategy.position_size > 0
+    trailOffset = longRisk
+    trailPts    = close * i_trailPct / 100.0
+    strategy.exit("Long Exit", "Long", stop=longSL, limit=longTP,
+                  trail_offset=trailOffset, trail_points=trailPts)
+
+if strategy.position_size < 0
+    trailOffset = shortRisk
+    trailPts    = close * i_trailPct / 100.0
+    strategy.exit("Short Exit", "Short", stop=shortSL, limit=shortTP,
+                  trail_offset=trailOffset, trail_points=trailPts)
+
+// --- Time-based exit: close after maxBars if no new signal ---
+if barsInTrade >= i_maxBars and strategy.position_size != 0
+    strategy.close_all("Time Exit")
+
+// --- Opposite signal exit ---
+if strategy.position_size > 0 and strong_short
+    strategy.close("Long", "Opposite Signal")
+if strategy.position_size < 0 and strong_long
+    strategy.close("Short", "Opposite Signal")
+
+// ============================================================================
+// SECTION 13: VISUAL OVERLAYS
+// ============================================================================
+
+// --- Gann Angle Levels ---
+plot(i_showAngles and not na(res_1x1) ? res_1x1 : na, "1x1 Res (45°)",   color=color.new(color.lime, 40),  linewidth=2)
+plot(i_showAngles and not na(res_2x1) ? res_2x1 : na, "2x1 Res (63.75°)",color=color.new(color.green, 60))
+plot(i_showAngles and not na(res_1x2) ? res_1x2 : na, "1x2 Res (26.25°)",color=color.new(color.green, 70))
+plot(i_showAngles and not na(sup_1x1) ? sup_1x1 : na, "1x1 Sup (45°)",   color=color.new(color.red, 40),   linewidth=2)
+plot(i_showAngles and not na(sup_2x1) ? sup_2x1 : na, "2x1 Sup (63.75°)",color=color.new(color.orange, 60))
+plot(i_showAngles and not na(sup_1x2) ? sup_1x2 : na, "1x2 Sup (26.25°)",color=color.new(color.orange, 70))
+
+// --- SQ9 Levels ---
+plot(i_showSQ9 ? sq9_r1 : na, "SQ9 +90°",  color=color.new(color.blue, 60), style=plot.style_circles)
+plot(i_showSQ9 ? sq9_r2 : na, "SQ9 +180°", color=color.new(color.blue, 50), style=plot.style_circles)
+plot(i_showSQ9 ? sq9_s1 : na, "SQ9 -90°",  color=color.new(color.purple, 60), style=plot.style_circles)
+plot(i_showSQ9 ? sq9_s2 : na, "SQ9 -180°", color=color.new(color.purple, 50), style=plot.style_circles)
+
+// --- Hurst DMA Envelopes ---
+p_env4u = plot(i_showHurst ? env_c4_upper : na, "80d Env Upper", color=color.new(color.teal, 70))
+p_env4l = plot(i_showHurst ? env_c4_lower : na, "80d Env Lower", color=color.new(color.teal, 70))
+fill(p_env4u, p_env4l, color=color.new(color.teal, 92), title="80d Hurst Envelope")
+plot(i_showHurst ? nz(dma_c2) : na, "20d DMA", color=color.new(color.aqua, 50), linewidth=1)
+plot(i_showHurst ? nz(dma_c4) : na, "80d DMA", color=color.new(color.teal, 30), linewidth=2)
+
+// --- 50% Retracement Level ---
+plot(not na(ret_500) ? ret_500 : na, "50% Retrace", color=color.new(color.yellow, 50), style=plot.style_cross, linewidth=2)
+
+// --- Signal Arrows ---
+plotshape(go_long  and strategy.position_size <= 0 and not cooldownActive_long, "BUY",
+          style=shape.triangleup, location=location.belowbar,
+          color=strong_long ? color.lime : color.green,
+          size=strong_long ? size.normal : size.small,
+          text=strong_long ? "STRONG" : "BUY")
+plotshape(go_short and strategy.position_size >= 0 and not cooldownActive_short, "SELL",
+          style=shape.triangledown, location=location.abovebar,
+          color=strong_short ? color.red : color.orange,
+          size=strong_short ? size.normal : size.small,
+          text=strong_short ? "STRONG" : "SELL")
+
+// --- Nest-of-Lows Marker ---
+plotshape(nest_of_lows, "Nest of Lows", style=shape.diamond,
+          location=location.belowbar, color=color.new(color.aqua, 0),
+          size=size.tiny, text="NOL")
+
+// --- Time Cycle Cluster Marker ---
+plotshape(cycles_converging >= 3 and i_showTimeCyc, "Time Cluster",
+          style=shape.xcross, location=location.abovebar,
+          color=color.new(color.yellow, 0), size=size.tiny, text="TC")
+
+// --- Background Color ---
+bgColor = strong_long  ? color.new(color.green, 92) :
+          strong_short ? color.new(color.red, 92) :
+          mod_long     ? color.new(color.green, 96) :
+          mod_short    ? color.new(color.red, 96) :
+          na
+bgcolor(bgColor, title="Signal Background")
+
+// ============================================================================
+// SECTION 14: DASHBOARD TABLE
+// ============================================================================
+
+var table dash = table.new(position.top_right, 3, 13, bgcolor=color.new(color.black, 80), border_width=1)
+
+f_scoreColor(float score) =>
+    score > 0.3 ? color.lime : score > 0.1 ? color.green : score < -0.3 ? color.red : score < -0.1 ? color.orange : color.gray
+
+f_signalText(float score) =>
+    score > 0.3 ? "BULL" : score > 0.1 ? "bull" : score < -0.3 ? "BEAR" : score < -0.1 ? "bear" : "FLAT"
+
+if barstate.islast
+    // Header
+    table.cell(dash, 0, 0, "GANN-HURST MASTER",  text_color=color.white, text_size=size.small)
+    table.cell(dash, 1, 0, "Score", text_color=color.gray, text_size=size.tiny)
+    table.cell(dash, 2, 0, "Signal", text_color=color.gray, text_size=size.tiny)
+
+    // Weekly Bias
+    table.cell(dash, 0, 1, "Weekly Bias", text_color=color.gray, text_size=size.tiny)
+    table.cell(dash, 1, 1, weekly_bias == 1 ? "+1" : weekly_bias == -1 ? "-1" : "0", text_color=weekly_bias > 0 ? color.lime : weekly_bias < 0 ? color.red : color.gray, text_size=size.tiny)
+    table.cell(dash, 2, 1, weekly_bias == 1 ? "LONG ONLY" : weekly_bias == -1 ? "SHORT ONLY" : "BOTH", text_color=weekly_bias > 0 ? color.lime : weekly_bias < 0 ? color.red : color.yellow, text_size=size.tiny)
+
+    // Gann Angles
+    table.cell(dash, 0, 2, "Gann Angles", text_color=color.gray, text_size=size.tiny)
+    table.cell(dash, 1, 2, str.tostring(gann_angle_score, "#.##"), text_color=f_scoreColor(gann_angle_score), text_size=size.tiny)
+    table.cell(dash, 2, 2, f_signalText(gann_angle_score), text_color=f_scoreColor(gann_angle_score), text_size=size.tiny)
+
+    // Square of 9
+    table.cell(dash, 0, 3, "Square of 9", text_color=color.gray, text_size=size.tiny)
+    table.cell(dash, 1, 3, str.tostring(sq9_score, "#.##"), text_color=f_scoreColor(sq9_score), text_size=size.tiny)
+    table.cell(dash, 2, 3, atCardinal ? "CARDINAL" : (at_any_ret ? "NEAR S/R" : f_signalText(sq9_score)), text_color=f_scoreColor(sq9_score), text_size=size.tiny)
+
+    // Hurst Cycles
+    table.cell(dash, 0, 4, "Hurst Cycles", text_color=color.gray, text_size=size.tiny)
+    table.cell(dash, 1, 4, str.tostring(hurst_score, "#.##"), text_color=f_scoreColor(hurst_score), text_size=size.tiny)
+    table.cell(dash, 2, 4, nest_of_lows ? "NEST-OF-LOWS" : (str.tostring(risingCount) + "/4 rising"), text_color=nest_of_lows ? color.aqua : f_scoreColor(hurst_score), text_size=size.tiny)
+
+    // Time Cycles
+    table.cell(dash, 0, 5, "Time Cycles", text_color=color.gray, text_size=size.tiny)
+    table.cell(dash, 1, 5, str.tostring(time_score, "#.##"), text_color=f_scoreColor(time_score), text_size=size.tiny)
+    table.cell(dash, 2, 5, str.tostring(cycles_converging) + " ACTIVE" + (masterTimeFactor ? " [192]" : ""), text_color=cycles_converging >= 3 ? color.yellow : f_scoreColor(time_score), text_size=size.tiny)
+
+    // Price-Time Balance
+    table.cell(dash, 0, 6, "P-T Balance", text_color=color.gray, text_size=size.tiny)
+    table.cell(dash, 1, 6, str.tostring(pt_balance_score, "#.##"), text_color=f_scoreColor(pt_balance_score), text_size=size.tiny)
+    table.cell(dash, 2, 6, ptBalance_active ? "SQUARED" : (priceWindowActive ? "P-WINDOW" : f_signalText(pt_balance_score)), text_color=f_scoreColor(pt_balance_score), text_size=size.tiny)
+
+    // Retracements
+    table.cell(dash, 0, 7, "Retracement", text_color=color.gray, text_size=size.tiny)
+    table.cell(dash, 1, 7, str.tostring(retrace_score, "#.##"), text_color=f_scoreColor(retrace_score), text_size=size.tiny)
+    table.cell(dash, 2, 7, at_ret_500 ? "AT 50%" : (at_any_ret ? "AT LEVEL" : f_signalText(retrace_score)), text_color=at_ret_500 ? color.yellow : f_scoreColor(retrace_score), text_size=size.tiny)
+
+    // Separator
+    table.cell(dash, 0, 8, "────────────", text_color=color.gray, text_size=size.tiny)
+    table.cell(dash, 1, 8, "──────", text_color=color.gray, text_size=size.tiny)
+    table.cell(dash, 2, 8, "──────", text_color=color.gray, text_size=size.tiny)
+
+    // COMPOSITE
+    table.cell(dash, 0, 9, "COMPOSITE", text_color=color.white, text_size=size.small)
+    table.cell(dash, 1, 9, str.tostring(compositeFiltered, "#.###"), text_color=f_scoreColor(compositeFiltered), text_size=size.small)
+    compSignal = strong_long ? "STRONG LONG" : strong_short ? "STRONG SHORT" : mod_long ? "MOD LONG" : mod_short ? "MOD SHORT" : "NO SIGNAL"
+    compColor  = strong_long ? color.lime : strong_short ? color.red : mod_long ? color.green : mod_short ? color.orange : color.gray
+    table.cell(dash, 2, 9, compSignal, text_color=compColor, text_size=size.small)
+
+    // Vibration
+    table.cell(dash, 0, 10, "Vibration", text_color=color.gray, text_size=size.tiny)
+    table.cell(dash, 1, 10, str.tostring(priceVibration), text_color=isVibration9 ? color.yellow : color.white, text_size=size.tiny)
+    table.cell(dash, 2, 10, isVibration9 ? "CHANGE!" : (isVibration369 ? "3-6-9" : "normal"), text_color=isVibration9 ? color.yellow : isVibration369 ? color.aqua : color.gray, text_size=size.tiny)
+
+    // Confluence
+    table.cell(dash, 0, 11, "Confluence", text_color=color.gray, text_size=size.tiny)
+    table.cell(dash, 1, 11, str.tostring(math.max(bullModules, bearModules)) + "/6", text_color=math.max(bullModules, bearModules) >= 4 ? color.lime : color.gray, text_size=size.tiny)
+    table.cell(dash, 2, 11, bullModules >= 4 ? "BULL CONF" : bearModules >= 4 ? "BEAR CONF" : "mixed", text_color=bullModules >= 4 ? color.lime : bearModules >= 4 ? color.red : color.gray, text_size=size.tiny)
+
+    // 144 Cycle
+    table.cell(dash, 0, 12, "144 Cycle", text_color=color.gray, text_size=size.tiny)
+    table.cell(dash, 1, 12, str.tostring(cycle144_near, "#.#"), text_color=near144Level ? color.yellow : color.gray, text_size=size.tiny)
+    table.cell(dash, 2, 12, near144Level ? "NEAR 144" : "away", text_color=near144Level ? color.yellow : color.gray, text_size=size.tiny)
+
+// ============================================================================
+// SECTION 15: ALERT CONDITIONS
+// ============================================================================
+
+alertcondition(strong_long,  "Strong Long Signal",  "GANN-HURST: STRONG LONG — Composite score ≥ threshold")
+alertcondition(strong_short, "Strong Short Signal",  "GANN-HURST: STRONG SHORT — Composite score ≤ -threshold")
+alertcondition(mod_long,     "Moderate Long Signal", "GANN-HURST: Moderate Long signal detected")
+alertcondition(mod_short,    "Moderate Short Signal","GANN-HURST: Moderate Short signal detected")
+alertcondition(nest_of_lows, "Nest of Lows",        "HURST: Nest-of-Lows detected — 3+ cycle troughs aligned")
+alertcondition(cycles_converging >= 3, "Time Cycle Cluster", "GANN: 3+ time cycles converging — reversal window")
+alertcondition(ptBalance_active, "Price-Time Balance", "GANN: Price-Time squared — balance point reached")
+alertcondition(isVibration9, "Vibration 9 Alert",    "GANN: Price vibration = 9 (CHANGE NUMBER)")
+alertcondition(angleBreakUp, "Angle Break Up",       "GANN: Price broke above 1x1 angle — bullish break")
+alertcondition(angleBreakDown, "Angle Break Down",   "GANN: Price broke below 1x1 angle — bearish break")
+
+// ============================================================================
+// END OF STRATEGY
+// ============================================================================
