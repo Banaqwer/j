@@ -245,24 +245,40 @@ sq9Confluence = useDynamic ? sq12Near : sq9Near   // SQ12 when high vol; SQ9 oth
 // ============================================================================
 // COMPONENT 4: HURST CYCLIC ANALYSIS  [PDFs 14, 15]
 // ============================================================================
-// Hurst's Nominal Cyclic Model (daily bars):
-//   Cycle periods: ~5d, ~10d, ~20d, ~40d, ~80d
-//   Harmonicity: adjacent periods ratio ≈ 2 (5→10→20→40→80)
+// Hurst Nominal Cyclic Model (Profit Magic, Table II-1; Cyclic Analysis 1974, p.17):
+//   Daily periods: ~5d, ~10d, ~20d, ~40d (~6wk), ~126d (~18wk), ~270d (~9mo),
+//                  ~540d (~18mo), ~1620d (~54mo)
+//   Harmonicity: adjacent periods ratio ≈ 2 (5→10→20→40→80→126→270→540);
+//                exception: 18mo→54mo = ratio 3 (Cyclic Analysis 1974, p.17)
 //   Proportionality: amplitude ∝ period
-//   Synchronicity: troughs coincide (Nests-of-Lows → optimal buy timing)
+//   Synchronicity: troughs coincide → Nests-of-Lows = optimal BUY timing (1974, p.17)
+//   "The number of wave troughs involved in a nest-of-lows provides immediate indication
+//    of the potential strength of the reversal." — Cyclic Analysis 1974, p.25
 //
-// Implementation using Half-Span Simple Moving Averages:
-//   Half-span MA for N-day cycle = SMA(close, N÷2)
-//   Acts as the trend axis (Hurst envelope center line)
-//   When all shorter-cycle half-spans simultaneously trough → Nest-of-Lows
-//   Buy at Nest-of-Lows; Sell at Nest-of-Highs
+// Half-Span MA (Profit Magic, ch.6):
+//   Half-span MA for N-day cycle = SMA(close, N÷2), plotted N÷4 bars in the PAST
+//   "The half-span average tops out when the stock price has dropped 50% of the 20-week
+//    fluctuation amount" — precisely marking the mid-channel price point
+//   Full-span MA = SMA(close, N) — peaks at cycle high, troughs at cycle low
 //
-// Hurst Cycle 5 sub-periods derived from inputs:
+// FLD = Future Line of Demarcation (Cyclic Analysis 1974, pp.29-34):
+//   FLD for N-period cycle = close[N÷2]  (price from N÷2 bars ago)
+//   "When a wave intersects its FLD, that wave is one-half of the way along its move"
+//   FLD upward cross → bullish (50% of upswing already complete, confirms move)
+//   FLD cascade: all shorter-period FLDs above price simultaneously → strong bull signal
+//   FLD price target: target = current_price + (current_price - last_trough)
+//
+// VTL = Valid Trend Line (Profit Magic, ch.4-5):
+//   Buy signal: price breaks ABOVE steepest valid downtrend line during a decline
+//   Simplified in Pine: price crosses above half-span MA (c2 level) during declining phase
+//   "The very next day prices traded completely above our valid trend line — buy at market!"
+//
+// Hurst Cycle 5 sub-periods (all derived from user inputs):
 //   Cycle 1: hurstC3 / 4  (fastest)
-//   Cycle 2: hurstC3 / 2
-//   Cycle 3: hurstC3       (dominant cycle)
-//   Cycle 4: hurstC4       (primary cycle)
-//   Cycle 5: hurstC5       (grand cycle)
+//   Cycle 2: hurstC3 / 2  (half-span period for dominant cycle)
+//   Cycle 3: hurstC3       (dominant cycle, default 20d)
+//   Cycle 4: hurstC4       (primary cycle, default 40d)
+//   Cycle 5: hurstC5       (grand cycle,   default 80d)
 
 c1 = math.max(math.round(i_hurstC3 / 4), 2)
 c2 = math.max(math.round(i_hurstC3 / 2), 3)
@@ -270,15 +286,15 @@ c3 = i_hurstC3
 c4 = i_hurstC4
 c5 = i_hurstC5
 
-hurstHS1 = ta.sma(close, c1)    // Half-span proxy for c1×2 cycle
-hurstHS2 = ta.sma(close, c2)    // Half-span proxy for c2×2 cycle
-hurstHS3 = ta.sma(close, c3)    // Half-span proxy for dominant cycle
-hurstHS4 = ta.sma(close, c4)    // Half-span proxy for primary cycle
-hurstHS5 = ta.sma(close, c5)    // Half-span proxy for grand cycle
+// Half-span MAs (period = half the cycle they track; each is also full-span for the shorter cycle)
+hurstHS1 = ta.sma(close, c1)    // half-span of c1×2 cycle; full-span of c1 cycle
+hurstHS2 = ta.sma(close, c2)    // half-span of dominant cycle (c3); full-span of c2 cycle
+hurstHS3 = ta.sma(close, c3)    // half-span of primary cycle  (c4); full-span of dominant c3
+hurstHS4 = ta.sma(close, c4)    // half-span of grand cycle    (c5); full-span of primary c4
+hurstHS5 = ta.sma(close, c5)    // full-span of grand cycle
 
 // Detect local trough: MA turned up from recent bottom
-// Lookback = half the cycle period; derived from Hurst harmonicity (adjacent ratio ≈ 2)
-// e.g. 20d cycle → 10-bar lookback; 5d cycle → 3-bar lookback (floor c1×2/3)
+// Lookback derived from Hurst harmonicity (ratio ≈ 2 between adjacent cycles)
 hurstLB1 = math.max(math.round(c1 * 2 / 3), 2)   // lookback for fastest cycle MA
 hurstLB2 = math.max(math.round(c2 * 2 / 3), 3)   // lookback for 2nd cycle MA
 hurstLB3 = math.max(math.round(c3 / 3), 4)        // lookback for dominant cycle MA
@@ -296,7 +312,7 @@ hurstPeak2   = hurstHS2[1] > hurstHS2[hurstLB2] and hurstHS2 <= hurstHS2[1]
 hurstPeak3   = hurstHS3[1] > hurstHS3[hurstLB3] and hurstHS3 <= hurstHS3[1]
 hurstPeak4   = hurstHS4[1] > hurstHS4[hurstLB4] and hurstHS4 <= hurstHS4[1]
 
-// Nest-of-Lows classification
+// Nest-of-Lows classification (synchronicity principle — 1974 PDF, p.17)
 hurstMinorNest = hurstTrough1 and hurstTrough2                   // 2 cycles trough together
 hurstMajorNest = hurstMinorNest and hurstTrough3                 // 3 cycles trough together
 hurstGrandNest = hurstMajorNest and hurstTrough4                 // 4 cycles trough together (rare)
@@ -313,6 +329,58 @@ hurstOsc3 = hurstHS3 > 0.0 ? (close - hurstHS3) / hurstHS3 * 100.0 : 0.0
 
 hurstAllBull = hurstOsc1 > 0.0 and hurstOsc2 > 0.0 and hurstOsc3 > 0.0
 hurstAllBear = hurstOsc1 < 0.0 and hurstOsc2 < 0.0 and hurstOsc3 < 0.0
+
+// ── FLD (Future Line of Demarcation)  [Hurst Cyclic Analysis 1974, pp.29-34] ──
+// FLD for cycle N = close[N/2]   (price from N/2 bars ago)
+// "When price crosses FLD upward → first half of upswing is complete → bullish confirmation"
+// "FLD cascade: when price is above all shorter-period FLDs → strongly bullish"
+fldShift1 = math.max(math.round(c1 / 2), 1)
+fldShift2 = math.max(math.round(c2 / 2), 1)
+fldShift3 = math.max(math.round(c3 / 2), 1)
+fldShift4 = math.max(math.round(c4 / 2), 1)
+
+fldC1 = close[fldShift1]
+fldC2 = close[fldShift2]
+fldC3 = close[fldShift3]
+fldC4 = close[fldShift4]
+
+// FLD direction status
+fldBullC1 = close > fldC1
+fldBullC2 = close > fldC2
+fldBullC3 = close > fldC3
+fldBullC4 = close > fldC4
+fldBearC1 = close < fldC1
+fldBearC2 = close < fldC2
+fldBearC3 = close < fldC3
+fldBearC4 = close < fldC4
+
+// FLD cascade: all shorter-period FLDs confirm direction (Cyclic Analysis 1974, p.35)
+// "As a price-reversal point is neared, the FLD cascade appears — powerful directional signal"
+fldCascadeBull = fldBullC1 and fldBullC2 and fldBullC3 and fldBullC4
+fldCascadeBear = fldBearC1 and fldBearC2 and fldBearC3 and fldBearC4
+
+// FLD crossover signals — the actual entry triggers from Hurst's system
+fldCrossUp2  = ta.crossover(close, fldC2)     // dominant-cycle FLD upward cross → buy entry
+fldCrossDown2 = ta.crossunder(close, fldC2)   // dominant-cycle FLD downward cross → sell entry
+fldCrossUp3  = ta.crossover(close, fldC3)     // primary-cycle FLD upward cross
+fldCrossDown3 = ta.crossunder(close, fldC3)
+
+// FLD price target (Profit Magic, ch.6 "intersection method"):
+// target = current_price + (current_price - last_trough)
+// Approximation: target = close + |close - fldC3|
+fldBuyTarget  = fldC3 > 0.0 ? close + math.abs(close - fldC3) : na
+fldSellTarget = fldC3 > 0.0 ? close - math.abs(close - fldC3) : na
+
+// ── VTL (Valid Trend Line)  [Profit Magic, ch.4-5] ────────────────────────────
+// "Buy signal = price breaks ABOVE steepest valid downtrend line from below"
+// Pine approximation: price crosses above the half-span MA of dominant cycle (c2 halfspan)
+// while the primary cycle is declining (hurstOsc3 < threshold) → VTL break
+// "Do not commit dollars until price actually crosses above valid trend line"
+vtlBuySignal  = ta.crossover(close, hurstHS2) and hurstOsc3 < 3.0   // break above c2 HSMA in decline
+vtlSellSignal = ta.crossunder(close, hurstHS2) and hurstOsc3 > -3.0  // break below c2 HSMA in rally
+
+// NOTE: hurstPhase3 / hurstInBuyZone / hurstInSellZone are calculated AFTER Component 5
+// because they depend on barsSinceLo (defined in Component 5's pivot tracking).
 
 // ============================================================================
 // COMPONENT 5: PRICE-TIME SQUARING  [PDFs 04, 11, 23]
@@ -343,6 +411,14 @@ ptWindow = not na(ptRange) and ptRange > 0.0 ? math.sqrt(ptRange) : na
 
 barsSinceLo = not na(ptLoBar) ? float(bar_index - ptLoBar) : na
 barsSinceHi = not na(ptHiBar) ? float(bar_index - ptHiBar) : na
+
+// ── Hurst Phase Position  [Cyclic Analysis 1974, p.28] ────────────────────
+// Phase = bars since last identified trough / average cycle period × 100%
+// "Current cyclic model table shows phase in terms of time elapsed since last trough"
+// Buy zone: 0-25% (fresh trough); Sell zone: 65-100% (approaching peak/next trough)
+hurstPhase3     = not na(barsSinceLo) ? math.min(barsSinceLo / float(c3) * 100.0, 150.0) : na
+hurstInBuyZone  = not na(hurstPhase3) and hurstPhase3 <= 25.0
+hurstInSellZone = not na(hurstPhase3) and hurstPhase3 >= 65.0
 
 ptAtT(float bSince, float win) =>
     not na(bSince) and not na(win) and
@@ -556,6 +632,10 @@ sapBearish = not na(sapLevel) and close < sapLevel
 //   +0.10  SQ9/SQ12 confluence — near cardinal level (PDFs 04, 05, 10)
 //   +0.05  Vibration 9 detected (PDF 06)
 //   +0.10  Hurst Grand/Major Nest (+0.07) / Minor Nest (+0.04) (PDFs 14, 15)
+//   +0.10  FLD Cascade: all shorter FLDs confirm direction (PDF 14, pp.35-36)
+//   +0.05  FLD crossover signal on dominant cycle (PDF 14, pp.29-34)
+//   +0.05  VTL break: price breaks half-span MA during decline/rally (PDF 15, ch.4-5)
+//   +0.05  Phase in buy/sell zone: 0-25% = fresh trough, 65-100% = near peak (PDF 14, p.28)
 //   +0.05  Price-Time Squaring active from relevant pivot (PDFs 04, 11, 23)
 //   +0.05  Master Time Cycle window active (PDFs 01, 07, 12, 23)
 //   +0.05  Near natural odd square S/R (PDFs 04, 09, 12)
@@ -572,9 +652,11 @@ buyStop   = not na(r_1x1) ? math.min(r_1x1, close * 0.95) : close * 0.95
 sellEntry = not na(sellEntryAngle) ? sellEntryAngle : close
 sellStop  = not na(s_1x1) ? math.max(s_1x1, close * 1.05) : close * 1.05
 
-// Targets: SQ9 or SQ12 depending on vol regime
-buyTarget  = useDynamic ? dynSQ12_up2 : sq9_180up
-sellTarget = useDynamic ? dynSQ12_dn2 : sq9_180dn
+// Targets: SQ9/SQ12 as primary, blended with FLD price objective (PDF 14) if available
+fldBuyTgt  = not na(fldBuyTarget)  and fldBuyTarget  > close ? fldBuyTarget  : na
+fldSellTgt = not na(fldSellTarget) and fldSellTarget < close ? fldSellTarget : na
+buyTarget  = useDynamic ? dynSQ12_up2 : (not na(fldBuyTgt) ? (sq9_180up + fldBuyTgt) / 2.0 : sq9_180up)
+sellTarget = useDynamic ? dynSQ12_dn2 : (not na(fldSellTgt) ? (sq9_180dn + fldSellTgt) / 2.0 : sq9_180dn)
 
 // Risk-Reward
 buyRisk    = math.abs(buyEntry  - buyStop)
@@ -591,6 +673,14 @@ buyConf := buyConf + (trendBull  ? 0.25 : prelimBull ? 0.15 : 0.0)
 buyConf := buyConf + (sq9Confluence ? 0.10 : 0.0)
 buyConf := buyConf + (isVibration9  ? 0.05 : 0.0)
 buyConf := buyConf + (hurstGrandNest ? 0.10 : hurstMajorNest ? 0.07 : hurstMinorNest ? 0.04 : 0.0)
+// FLD: cascade (all 4 FLDs confirm) → +0.10; partial (c3 alone) → +0.05 (PDF 14, p.35)
+// Note: cascade implies c3, so only the first matching ternary branch fires (no double-count)
+buyConf := buyConf + (fldCascadeBull  ? 0.10 : fldBullC3 ? 0.05 : 0.0)
+buyConf := buyConf + (fldCrossUp2     ? 0.05 : 0.0)                        // FLD crossover (PDF 14)
+buyConf := buyConf + (vtlBuySignal    ? 0.05 : 0.0)                        // VTL break (PDF 15)
+// Phase zone: buy zone (0-25%) → +0.05; sell zone (65-100%) → −0.05 (intentionally symmetric)
+// Being near a trough increases buy confidence; being near a peak reduces it (PDF 14, p.28)
+buyConf := buyConf + (hurstInBuyZone  ? 0.05 : hurstInSellZone ? -0.05 : 0.0)
 buyConf := buyConf + (ptSquaringFromLo ? 0.05 : 0.0)
 buyConf := buyConf + (masterCycFromLo  ? 0.05 : 0.0)
 buyConf := buyConf + (isNearOddSq  ? 0.05 : 0.0)
@@ -608,6 +698,14 @@ sellConf := sellConf + (trendBear  ? 0.25 : prelimBear ? 0.15 : 0.0)
 sellConf := sellConf + (sq9Confluence ? 0.10 : 0.0)
 sellConf := sellConf + (isVibration9  ? 0.05 : 0.0)
 sellConf := sellConf + (hurstGrandPeak ? 0.10 : hurstMajorPeak ? 0.07 : hurstMinorPeak ? 0.04 : 0.0)
+// FLD: cascade (all 4 FLDs confirm) → +0.10; partial (c3 alone) → +0.05 (PDF 14, p.35)
+// Note: cascade implies c3, so only the first matching ternary branch fires (no double-count)
+sellConf := sellConf + (fldCascadeBear  ? 0.10 : fldBearC3 ? 0.05 : 0.0)
+sellConf := sellConf + (fldCrossDown2   ? 0.05 : 0.0)                       // FLD crossover (PDF 14)
+sellConf := sellConf + (vtlSellSignal   ? 0.05 : 0.0)                       // VTL break (PDF 15)
+// Phase zone: sell zone (65-100%) → +0.05; buy zone (0-25%) → −0.05 (intentionally symmetric)
+// Being near a peak increases sell confidence; being near a trough reduces it (PDF 14, p.28)
+sellConf := sellConf + (hurstInSellZone ? 0.05 : hurstInBuyZone ? -0.05 : 0.0)
 sellConf := sellConf + (ptSquaringFromHi ? 0.05 : 0.0)
 sellConf := sellConf + (masterCycFromHi  ? 0.05 : 0.0)
 sellConf := sellConf + (isNearOddSq  ? 0.05 : 0.0)
@@ -698,9 +796,19 @@ plot(i_showHex ? hexL7 : na, "Hex 169K", color=color.new(color.fuchsia, 60), sty
 plot(i_showHex ? hexL8 : na, "Hex 217K", color=color.new(color.fuchsia, 60), style=plot.style_circles)
 
 // ── Hurst Cycle Moving Averages ────────────────────────────────────────────
-plot(i_showHurst ? hurstHS3 : na, "Hurst 20d MA", color=color.new(color.teal, 50), linewidth=1)
-plot(i_showHurst ? hurstHS4 : na, "Hurst 40d MA", color=color.new(color.teal, 30), linewidth=2)
-plot(i_showHurst ? hurstHS5 : na, "Hurst 80d MA", color=color.new(color.teal, 20), linewidth=3)
+plot(i_showHurst ? hurstHS2 : na, "Hurst HS c2 (half-span)",  color=color.new(color.teal, 70), linewidth=1)
+plot(i_showHurst ? hurstHS3 : na, "Hurst HS c3 (full/half)",  color=color.new(color.teal, 50), linewidth=1)
+plot(i_showHurst ? hurstHS4 : na, "Hurst HS c4 (primary MA)", color=color.new(color.teal, 30), linewidth=2)
+plot(i_showHurst ? hurstHS5 : na, "Hurst HS c5 (grand MA)",   color=color.new(color.teal, 20), linewidth=3)
+
+// ── FLD (Future Line of Demarcation)  [Hurst Cyclic Analysis 1974] ─────────
+// FLD = close[N/2] — the price this many bars ago, representing the "halfway" level
+plot(i_showHurst ? fldC2 : na, "FLD c2",
+     color=color.new(color.yellow, 60), style=plot.style_line, linewidth=1)
+plot(i_showHurst ? fldC3 : na, "FLD c3 (dominant)",
+     color=color.new(color.yellow, 40), style=plot.style_line, linewidth=2)
+plot(i_showHurst ? fldC4 : na, "FLD c4 (primary)",
+     color=color.new(color.yellow, 20), style=plot.style_line, linewidth=1)
 
 // ── Dynamic Expected Range ─────────────────────────────────────────────────
 p_expHi = plot(useDynamic ? expectedHigh : na, "Expected High", color=color.new(color.teal, 80))
@@ -727,6 +835,23 @@ plotshape(hurstMajorPeak, "Hurst Nest High",
           style=shape.diamond, location=location.abovebar,
           color=color.orange, size=size.small, text="N↓")
 
+// ── FLD Crossover Markers  [Hurst Cyclic Analysis 1974, pp.29-34] ──────────
+// FLD upward cross = first half of upswing complete; FLD downward cross = first half down
+plotshape(i_showHurst and fldCrossUp2,   "FLD Cross Up",
+          style=shape.circle, location=location.belowbar,
+          color=color.yellow, size=size.tiny, text="F↑")
+plotshape(i_showHurst and fldCrossDown2, "FLD Cross Down",
+          style=shape.circle, location=location.abovebar,
+          color=color.yellow, size=size.tiny, text="F↓")
+
+// ── VTL (Valid Trend Line) Break Markers  [Profit Magic, ch.4-5] ───────────
+plotshape(vtlBuySignal,  "VTL Buy Break",
+          style=shape.arrowup,   location=location.belowbar,
+          color=color.lime, size=size.tiny, text="VTL")
+plotshape(vtlSellSignal, "VTL Sell Break",
+          style=shape.arrowdown, location=location.abovebar,
+          color=color.red, size=size.tiny, text="VTL")
+
 // ── Price-Time Squaring Marker ─────────────────────────────────────────────
 plotshape(ptSquaringActive, "P-T Square",
           style=shape.xcross, location=location.belowbar,
@@ -738,7 +863,7 @@ plotshape(masterCycActive, "Master Cycle",
           color=color.purple, size=size.tiny, text="C")
 
 // ── Info Table (top-right) ─────────────────────────────────────────────────
-var table infoTable = table.new(position.top_right, 2, 15,
+var table infoTable = table.new(position.top_right, 2, 18,
                                 bgcolor=color.new(color.black, 80), border_width=1)
 
 if barstate.islast
@@ -811,6 +936,29 @@ if barstate.islast
     table.cell(infoTable, 1, 14, str.tostring(sellRR, "#.#") + ":1",
                text_color=sellRR >= i_rrRatio ? color.red : color.gray, text_size=size.small)
 
+    // ── New rows: FLD status, VTL, phase ──────────────────────────────────────
+    table.cell(infoTable, 0, 15, "FLD Status", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 15,
+               fldCascadeBull ? "⚡CASCADE↑" : fldCascadeBear ? "⚡CASCADE↓" :
+               fldBullC3 ? "c3↑" : fldBearC3 ? "c3↓" : "—",
+               text_color=fldCascadeBull ? color.yellow : fldCascadeBear ? color.yellow :
+               fldBullC3 ? color.lime : fldBearC3 ? color.red : color.gray,
+               text_size=size.small)
+
+    table.cell(infoTable, 0, 16, "VTL Signal", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 16,
+               vtlBuySignal ? "BUY break" : vtlSellSignal ? "SELL break" : "—",
+               text_color=vtlBuySignal ? color.lime : vtlSellSignal ? color.red : color.gray,
+               text_size=size.small)
+
+    table.cell(infoTable, 0, 17, "Hurst Phase", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 17,
+               not na(hurstPhase3) ?
+               str.tostring(hurstPhase3, "#") + "%" +
+               (hurstInBuyZone ? " BUY" : hurstInSellZone ? " SELL" : "") : "—",
+               text_color=hurstInBuyZone ? color.lime : hurstInSellZone ? color.red : color.gray,
+               text_size=size.small)
+
 // ── Background color ───────────────────────────────────────────────────────
 bgcolor(trendBull ? color.new(color.green, 95) : trendBear ? color.new(color.red, 95) : na,
         title="Trend Background")
@@ -839,3 +987,15 @@ alertcondition(masterCycActive,
 alertcondition(isVibration9,
                "Vibration 9 Alert",
                "Price vibration = 9 (CHANGE NUMBER) — watch for reversal")
+alertcondition(fldCrossUp2,
+               "Hurst FLD Cross Up",
+               "FLD (c2 cycle) crossed upward — 50% of upswing complete, confirms bullish")
+alertcondition(fldCrossDown2,
+               "Hurst FLD Cross Down",
+               "FLD (c2 cycle) crossed downward — 50% of downswing complete, confirms bearish")
+alertcondition(fldCascadeBull,
+               "Hurst FLD Cascade Bullish",
+               "Hurst FLD Cascade: all shorter-period FLDs above price — strong bull signal")
+alertcondition(vtlBuySignal,
+               "VTL Buy Break",
+               "VTL (Valid Trend Line) broken upward — buy entry signal per Profit Magic ch.4")
