@@ -1,318 +1,793 @@
 // ============================================================================
-// GANN UNIFIED TRADING STRATEGY — TradingView Pine Script v5
+// GANN-HURST INSTITUTIONAL BITCOIN STRATEGY — TradingView Pine Script v5
 // ============================================================================
-// Translates the Python Gann algorithm (gann_trading_algorithm.py) into a
-// live TradingView strategy for BTC/USD and ETH/USD.
+// Full institutional-grade strategy synthesized from 24 PDF source documents.
+// VERSION 3: Added Seasonal Dates, Range Projections, Phi/√2/√3 Levels,
+//            Angle Break Escalation, extended 7-series time cycles.
 //
-// Based on W.D. Gann's methods decoded from:
-//   - "20 Years of Studying Gann" (cycles, Law of Vibration)
-//   - "Intraday Trade Using Gann Angle" (11 angle lines, SQ9)
-//   - "Gann through My Lens" (price-time squaring, SAP)
-//   - "WD GANN Number Vibrations" (digit reduction, 144 cycles)
-//   - "Tunnel Thru the Air" (decoded cycle intervals)
+// PDF SOURCE INVENTORY (24 documents):
+//   PDF 01: "20 Years of Studying Gann"            → Law of Vibration, cycle inversions
+//   PDF 02: "Super Timing" (Walker Myles Wilson)   → Astrological timing proxy
+//   PDF 03: "WD Gann Astro Cycles" (77pp)          → Planetary cycle lengths
+//   PDF 04: "Gann Through My Lens" (Chowksey)      → SQ9, P-T squaring, SAP, Da Vinci
+//   PDF 05: "Intraday Trade Using Gann Angle"       → 11 angles, vol regime, SQ9/SQ12
+//   PDF 06: "WD GANN Number Vibrations"            → Digit reduction, 3-6-9, 144 cycle
+//   PDF 07: "Tunnel Thru the Air" (Gann novel)     → Encoded cycles: 30,36,45,60,90,144d
+//   PDF 08: "Krausz: WD Gann Treasure Discovered"  → Angle confirmation, pivot quality
+//   PDF 09: "144 Square"                           → 144 master square, Jupiter synodic
+//   PDF 10: "1931: Usage of Gann SQ9 / Hexagon"   → SQ9 spiral, Hexagon chart S/R
+//   PDF 11: "Understanding Gann Price & Time"      → 3rd-test rule, 50% level, P=T²
+//   PDF 12: "Gann Master Mathematical Formula"     → March 21 annual square, SQ9/SQ12/144
+//   PDF 13: "Gann Master Time Factor" (Flanagan)   → 4 seasonal turning pts, annual forecast
+//   PDF 14: "Hurst: Cyclic Analysis" (1974)        → Wave theory, nests-of-lows model
+//   PDF 15: "Hurst: Profit Magic of Stock Timing"  → Envelope method, half-span MA
+//   PDF 16: "George Bayer Book III"                → Planetary vibration methods
+//   PDF 17: "Moon Beam Thru the Tunnel" (Amundsen) → Extended Tunnel decryption
+//   PDF 18: "Jenkins: Complete Stock Market Course"→ √price levels, geometric mean S/R
+//   PDF 19: "1953 Mathematical Formula" (Gann)     → Sq of 7(49,98,147,196), sq of 5(25,50,75)
+//   PDF 20: "WD Gann Astro Cycles" (512-series)    → Astro cycle structure
+//   PDF 21: "Book 1978 Gann Astro Cycles"          → Extended cycle timing
+//   PDF 22: "Plummer: Law of Vibration"            → Phi (1.618) as universal growth ratio
+//   PDF 23: "Charles Shephard: Gann Cycles Course" → Range projections 50/100/150/200%
+//   PDF 24: "WD Gann: Basis of My Forecasting"     → Foundation principles
 //
-// HOW TO USE:
-//   1. Open TradingView → Pine Editor
-//   2. Paste this entire script
-//   3. Click "Add to Chart"
-//   4. Select BTCUSD or ETHUSD on daily timeframe
-//   5. Open Strategy Tester tab to see backtest results
-//   6. For demo trading: Enable "Paper Trading" in TradingView
-//
-// Components implemented:
-//   1. Gann Angle Support/Resistance (11 angles)
-//   2. Square of 9 Price Levels
-//   3. Number Vibration Analysis
-//   4. Daily Volatility Calculation
-//   5. Dynamic Gann Levels (volatility-adjusted)
-//   6. 144-Cycle Price Zones
-//   7. Trend Confirmation from Angles
-//   8. Confidence Scoring System
-//   9. Strategy Entries/Exits with SL and TP
+// COMPONENT SUMMARY (16 modules):
+//   1.  Volatility Regime         — SQ9 vs SQ12 switch; 1×4 vs 1×1 angle regime
+//   2.  Gann Angles (11)          — (√base ± df)² for all 11 angles; angle break escalation
+//   3.  Square of 9 (SQ9/SQ12)   — Cardinal price levels; 45°/90°/120°/180°/270°/360°
+//   4.  Hurst Cyclic Analysis     — 5-cycle model; nests-of-lows; nests-of-highs
+//   5.  Price-Time Squaring       — T = √Range; flag at 1×T, 2×T, 3×T from pivot
+//   6.  Master Time Cycle Windows — 30,36,45,49,60,72,90,98,120,144,147,180,196,343 bars
+//   7.  Natural Odd Squares S/R   — 9,25,49,81,121,169... × scale (price structure)
+//   8.  Hexagon Chart Levels      — 1,7,19,37,61,91,127... × scale (ring structure)
+//   9.  Number Vibration          — Digit reduction; vibration 9 = change number
+//  10.  144 Cycle Levels          — Multiples of 144 (master square) as S/R
+//  11.  Semi-Annual Pivot (SAP)   — Jan/Jul directional bias calculation
+//  12.  Gann Seasonal Dates       — Equinoxes, solstices, Oct/Nov special dates  [NEW v3]
+//  13.  Range Projections         — 50%, 100%, 150%, 200% range extensions       [NEW v3]
+//  14.  Phi/√2/√3 Price Levels    — 1.618×, 2.618×, √2×, √3× from swing         [NEW v3]
+//  15.  Multi-Factor Confidence   — All 16 components → scored 0.0–1.0            [v3: +4]
+//  16.  Risk Management           — Entry, SL, TP, partial exit, trail, timeout
 // ============================================================================
 
 //@version=5
-strategy("Gann Unified Strategy", overlay=true, default_qty_type=strategy.percent_of_equity, default_qty_value=100, initial_capital=10000, commission_type=strategy.commission.percent, commission_value=0.1, slippage=2, pyramiding=0)
+strategy("Gann-Hurst BTC Institutional v3",
+         overlay=true,
+         default_qty_type=strategy.percent_of_equity,
+         default_qty_value=100,
+         initial_capital=10000,
+         commission_type=strategy.commission.percent,
+         commission_value=0.1,
+         slippage=2,
+         pyramiding=0)
 
 // ============================================================================
 // INPUTS
 // ============================================================================
-grp_main    = "Main Settings"
-i_riskPct   = input.float(1.5,   "Risk Per Trade (%)",     minval=0.1, maxval=10.0, step=0.1, group=grp_main)
-i_rrRatio   = input.float(2.5,   "Reward:Risk Ratio",      minval=1.0, maxval=10.0, step=0.5, group=grp_main)
-i_confMin   = input.float(0.45,  "Min Confidence to Trade", minval=0.1, maxval=1.0,  step=0.05, group=grp_main)
-i_volLen    = input.int(20,      "Volatility Lookback",     minval=5,   maxval=100,  group=grp_main)
-i_swingLen  = input.int(50,      "Swing High/Low Lookback", minval=10,  maxval=200,  group=grp_main)
+grp_main      = "Main Settings"
+i_riskPct     = input.float(1.5,   "Risk Per Trade (%)",       minval=0.1, maxval=10.0, step=0.1,  group=grp_main)
+i_rrRatio     = input.float(2.5,   "Reward:Risk Ratio",        minval=1.0, maxval=10.0, step=0.5,  group=grp_main)
+i_confMin     = input.float(0.45,  "Min Confidence to Trade",  minval=0.1, maxval=1.0,  step=0.05, group=grp_main)
+i_volLen      = input.int(20,      "Volatility Lookback",      minval=5,   maxval=100,             group=grp_main)
+i_swingLen    = input.int(20,      "Swing High/Low Lookback",  minval=5,   maxval=100,             group=grp_main,
+                         tooltip="20 bars matches the dominant Hurst cycle (20d). PDF 05 Rule e/f use intraday H/L.")
 
-grp_gann    = "Gann Settings"
-i_showAngles = input.bool(true,  "Show Gann Angle Levels",  group=grp_gann)
-i_showSQ9    = input.bool(true,  "Show Square of 9 Levels", group=grp_gann)
-i_show144    = input.bool(false, "Show 144-Cycle Levels",   group=grp_gann)
-i_sq9Tol     = input.float(0.5,  "SQ9 Confluence (%)",     minval=0.1, maxval=2.0, step=0.1, group=grp_gann)
-i_dynVolThresh = input.float(40.0, "Dynamic SQ12 Trigger (Ann.Vol%)", minval=10.0, maxval=100.0, step=5.0, group=grp_gann)
+grp_gann      = "Gann Settings"
+i_showAngles  = input.bool(true,   "Show Gann Angle Levels",   group=grp_gann)
+i_showSQ9     = input.bool(true,   "Show Square of 9 Levels",  group=grp_gann)
+i_show144     = input.bool(false,  "Show 144-Cycle Levels",    group=grp_gann)
+i_showHex     = input.bool(false,  "Show Hexagon Levels",      group=grp_gann)
+i_sq9Tol      = input.float(0.5,   "Level Proximity (%)",      minval=0.1, maxval=2.0, step=0.1,  group=grp_gann,
+                         tooltip="Used for SQ9/SQ12, Odd Squares, Hexagon, Range Proj, Phi proximity checks.")
+i_dynVolThresh = input.float(40.0, "SQ12 Trigger (Ann.Vol%)",  minval=10.0, maxval=100.0, step=5.0, group=grp_gann)
+i_priceScale  = input.float(1000.0,"Price Scale Factor",        minval=1.0,  maxval=100000.0, step=100.0, group=grp_gann,
+                         tooltip="Scale factor for Odd Square and Hexagon levels. BTC: 1000 gives 7k,19k,37k,61k,91k,127k...")
 
-grp_trade   = "Trade Management"
-i_partialPct = input.float(50.0, "Partial Exit (%)",       minval=0.0, maxval=100.0, step=10.0, group=grp_trade)
-i_trailPct   = input.float(2.0,  "Trailing Stop (%)",      minval=0.5, maxval=10.0,  step=0.5, group=grp_trade)
-i_maxBars    = input.int(60,     "Max Bars in Trade",       minval=10,  maxval=200,  group=grp_trade)
+grp_hurst     = "Hurst Cycle Settings"
+i_showHurst   = input.bool(true,   "Show Hurst Cycle MAs",     group=grp_hurst)
+i_hurstC3     = input.int(20,      "Hurst Dominant Cycle",     minval=10,  maxval=60,              group=grp_hurst)
+i_hurstC4     = input.int(40,      "Hurst Primary Cycle",      minval=20,  maxval=120,             group=grp_hurst)
+i_hurstC5     = input.int(80,      "Hurst Grand Cycle",        minval=40,  maxval=200,             group=grp_hurst)
+
+grp_pt        = "Price-Time Squaring"
+i_ptTol       = input.int(2,       "P-T Squaring Tolerance (bars)", minval=1, maxval=5,            group=grp_pt)
+i_pivotLen    = input.int(5,       "Pivot Detection Length",   minval=2,   maxval=20,              group=grp_pt)
+
+grp_trade     = "Trade Management"
+i_partialPct  = input.float(50.0,  "Partial Exit (%)",         minval=0.0, maxval=100.0, step=10.0, group=grp_trade)
+i_trailPct    = input.float(2.0,   "Trailing Stop (%)",        minval=0.5, maxval=10.0,  step=0.5,  group=grp_trade)
+i_maxBars     = input.int(60,      "Max Bars in Trade",        minval=10,  maxval=200,             group=grp_trade)
+
+grp_v3        = "v3 Enhancements"
+i_showSeasonal  = input.bool(true,  "Show Seasonal Date Markers", group=grp_v3,
+                              tooltip="Flags equinoxes, solstices, Oct 7-14, Nov 8-10 per PDFs 12/13/07")
+i_showRangeProj = input.bool(true,  "Show Range Projection Levels", group=grp_v3,
+                              tooltip="50%/100%/150%/200% of last swing range per PDF 23 (Shephard)")
+i_showPhiLvls   = input.bool(false, "Show Phi/√2/√3 Price Levels",  group=grp_v3,
+                              tooltip="Multiplicative S/R: ×1.618, ×2.618, ×√2, ×√3 from swing per PDFs 18/22")
 
 // ============================================================================
-// COMPONENT 1: GANN ANGLE SUPPORT/RESISTANCE
+// COMPONENT 1: VOLATILITY REGIME  [PDFs 05, 11]
 // ============================================================================
-// The 11 Gann angles from "Intraday Trade Using Gann Angle" PDF
-// Formula: level = (sqrt(base) ± degree_factor)²
-// Degree factors: [0.125, 0.25, 0.333, 0.5, 1.0, 2.0, 3.0, 4.0, 8.0, 12.0, 16.0]
+// PDF 05: Annual vol > 50% → 1×1 angle regime; SQ9→SQ12 when vol > 40%
 
-gannAngleLevel(float base, float degFactor, bool isUp) =>
-    sq = math.sqrt(base)
-    adjusted = isUp ? sq + degFactor : sq - degFactor
-    adjusted > 0 ? adjusted * adjusted : na
+logReturn    = math.log(close / close[1])
+dailyVol     = ta.stdev(logReturn, i_volLen) * 100
+annualVol    = dailyVol * math.sqrt(365)
+useDynamic   = annualVol > i_dynVolThresh    // SQ9 → SQ12 switch
+highVolRegime = annualVol > 50.0             // 1×1 angle regime
+expectedHigh = close * (1.0 + dailyVol / 100.0)
+expectedLow  = close * (1.0 - dailyVol / 100.0)
 
-// Get swing high and swing low for Gann angle base
+// ============================================================================
+// COMPONENT 2: GANN ANGLE SUPPORT/RESISTANCE  [PDFs 04, 05, 08, 23]
+// ============================================================================
+// 11 Gann Angles from PDF 05, Table 1. Formula: Resistance = (√low + df)², Support = (√high − df)²
+// ANGLE BREAK ESCALATION (v3 — PDFs 05, 08):
+//   "When price breaks below 45° (1×1) angle line, signifies weak position →
+//    decline to next angle (1×2)." — PDF 05 Rule; confirmed PDF 08 Krausz.
+//   angleBrokenDown = price crosses below 1×1 from above → bearish momentum
+//   angleBrokenUp   = price crosses above 1×1 support from below → bullish momentum
+
+gannLevel(float base, float df, bool up) =>
+    sq  = math.sqrt(math.max(base, 0.001))
+    adj = up ? sq + df : sq - df
+    adj > 0.0 ? adj * adj : na
+
 swingHi = ta.highest(high, i_swingLen)
 swingLo = ta.lowest(low,   i_swingLen)
 
-// 11 Gann Angle Resistance levels (from swing low)
-r_1x16 = gannAngleLevel(swingLo, 0.125, true)
-r_1x8  = gannAngleLevel(swingLo, 0.25,  true)
-r_1x6  = gannAngleLevel(swingLo, 0.333, true)
-r_1x4  = gannAngleLevel(swingLo, 0.5,   true)  // Buy entry
-r_1x1  = gannAngleLevel(swingLo, 1.0,   true)  // Key 45° angle
-r_4x1  = gannAngleLevel(swingLo, 2.0,   true)
-r_6x1  = gannAngleLevel(swingLo, 3.0,   true)
-r_8x1_r = gannAngleLevel(swingLo, 4.0,   true)
+// Resistance from swing low
+r_1x16 = gannLevel(swingLo, 0.125, true)
+r_1x8  = gannLevel(swingLo, 0.25,  true)
+r_1x6  = gannLevel(swingLo, 0.333, true)
+r_1x4  = gannLevel(swingLo, 0.5,   true)   // low-vol buy entry
+r_1x2  = gannLevel(swingLo, 0.75,  true)
+r_1x1  = gannLevel(swingLo, 1.0,   true)   // 45° key angle
+r_2x1  = gannLevel(swingLo, 1.5,   true)
+r_4x1  = gannLevel(swingLo, 2.0,   true)
+r_6x1  = gannLevel(swingLo, 3.0,   true)
+r_8x1  = gannLevel(swingLo, 4.0,   true)
+r_16x1 = gannLevel(swingLo, 8.0,   true)
 
-// 11 Gann Angle Support levels (from swing high)
-s_1x16 = gannAngleLevel(swingHi, 0.125, false)
-s_1x8  = gannAngleLevel(swingHi, 0.25,  false)
-s_1x6  = gannAngleLevel(swingHi, 0.333, false)
-s_1x4  = gannAngleLevel(swingHi, 0.5,   false)
-s_1x1  = gannAngleLevel(swingHi, 1.0,   false)  // Key 45° angle
-s_4x1  = gannAngleLevel(swingHi, 2.0,   false)  // Sell entry
-s_6x1  = gannAngleLevel(swingHi, 3.0,   false)
-s_8x1_s = gannAngleLevel(swingHi, 4.0,   false)
+// Support from swing high
+s_1x16 = gannLevel(swingHi, 0.125, false)
+s_1x8  = gannLevel(swingHi, 0.25,  false)
+s_1x6  = gannLevel(swingHi, 0.333, false)
+s_1x4  = gannLevel(swingHi, 0.5,   false)
+s_1x2  = gannLevel(swingHi, 0.75,  false)
+s_1x1  = gannLevel(swingHi, 1.0,   false)  // 45° key angle
+s_2x1  = gannLevel(swingHi, 1.5,   false)
+s_4x1  = gannLevel(swingHi, 2.0,   false)  // low-vol sell entry
+s_6x1  = gannLevel(swingHi, 3.0,   false)
+s_8x1  = gannLevel(swingHi, 4.0,   false)
+s_16x1 = gannLevel(swingHi, 8.0,   false)
 
-// ============================================================================
-// COMPONENT 2: SQUARE OF 9 PRICE LEVELS
-// ============================================================================
-// SQ9 cardinal degrees: 0°, 45°, 90°, 135°, 180°, 225°, 270°, 315°, 360°
-// Formula: level = (sqrt(price) + n * degree/360)²
+// Adaptive entry angle (PDF 05 Rules b & c)
+buyEntryAngle  = highVolRegime ? r_1x1 : r_1x4
+sellEntryAngle = highVolRegime ? s_1x1 : s_4x1
 
-sq9Level(float price, int n, float degree) =>
-    sq = math.sqrt(price)
-    result = sq + n * degree / 360.0
-    result * result
-
-// Calculate SQ9 levels at key cardinal crosses (1 rotation up and down)
-sq9_90_up   = sq9Level(close, 1, 90)
-sq9_180_up  = sq9Level(close, 1, 180)
-sq9_270_up  = sq9Level(close, 1, 270)
-sq9_360_up  = sq9Level(close, 1, 360)
-sq9_90_dn   = sq9Level(close, -1, 90)
-sq9_180_dn  = sq9Level(close, -1, 180)
-sq9_270_dn  = sq9Level(close, -1, 270)
-sq9_360_dn  = sq9Level(close, -1, 360)
-
-// Check if price is near any SQ9 cardinal level (within tolerance)
-isNearSQ9(float price, float tol) =>
-    near = false
-    near := near or math.abs(price - sq9_90_up)  / price * 100 < tol
-    near := near or math.abs(price - sq9_180_up) / price * 100 < tol
-    near := near or math.abs(price - sq9_270_up) / price * 100 < tol
-    near := near or math.abs(price - sq9_360_up) / price * 100 < tol
-    near := near or math.abs(price - sq9_90_dn)  / price * 100 < tol
-    near := near or math.abs(price - sq9_180_dn) / price * 100 < tol
-    near := near or math.abs(price - sq9_270_dn) / price * 100 < tol
-    near := near or math.abs(price - sq9_360_dn) / price * 100 < tol
-    near
-
-sq9Confluence = isNearSQ9(close, i_sq9Tol)
-
-// ============================================================================
-// COMPONENT 3: NUMBER VIBRATION ANALYSIS
-// ============================================================================
-// Digit reduction: sum digits until single digit
-// Vibration 9 = "change number" (reversal likely)
-
-// Handles up to 9-digit numbers (covers all crypto prices including BTC > $100K)
-digitSum(int val) =>
-    n = math.abs(val)
-    sum = 0
-    sum := n % 10
-    n := math.floor(n / 10)
-    sum += n % 10
-    n := math.floor(n / 10)
-    sum += n % 10
-    n := math.floor(n / 10)
-    sum += n % 10
-    n := math.floor(n / 10)
-    sum += n % 10
-    n := math.floor(n / 10)
-    sum += n % 10
-    n := math.floor(n / 10)
-    sum += n % 10
-    n := math.floor(n / 10)
-    sum += n % 10
-    n := math.floor(n / 10)
-    sum += n % 10
-    // Reduce to single digit
-    while sum >= 10
-        s2 = 0
-        s2 := sum % 10
-        sum := math.floor(sum / 10)
-        s2 += sum % 10
-        sum := math.floor(sum / 10)
-        s2 += sum
-        sum := s2
-    sum
-
-priceVibration = digitSum(math.round(close))
-isVibration9 = priceVibration == 9
-
-// ============================================================================
-// COMPONENT 4: DAILY VOLATILITY
-// ============================================================================
-// Log-return based volatility (matches Python implementation)
-logReturn    = math.log(close / close[1])
-dailyVol     = ta.stdev(logReturn, i_volLen) * 100  // as percentage
-annualVol    = dailyVol * math.sqrt(365)             // annualized for crypto
-
-// ============================================================================
-// COMPONENT 5: DYNAMIC GANN LEVELS (Volatility-Adjusted)
-// ============================================================================
-// When annual vol > threshold, use SQ12 (12 divisions of 360° = 30° each)
-// Expected high/low = price ± (dailyVol% × price)
-
-useDynamic   = annualVol > i_dynVolThresh
-expectedHigh = close * (1 + dailyVol / 100)
-expectedLow  = close * (1 - dailyVol / 100)
-
-// Dynamic SQ12 levels (30° intervals around current price)
-dynSQ12_up1 = sq9Level(close, 1, 30)
-dynSQ12_up2 = sq9Level(close, 2, 30)
-dynSQ12_up3 = sq9Level(close, 3, 30)
-dynSQ12_dn1 = sq9Level(close, -1, 30)
-dynSQ12_dn2 = sq9Level(close, -2, 30)
-dynSQ12_dn3 = sq9Level(close, -3, 30)
-
-// ============================================================================
-// COMPONENT 6: 144-CYCLE PRICE ZONES
-// ============================================================================
-// Gann's master cycle number = 144
-// Price levels at multiples of 144 from a base
-
-cycle144_base  = math.floor(close / 144) * 144
-cycle144_below = cycle144_base
-cycle144_above = cycle144_base + 144
-cycle144_near  = math.abs(close - cycle144_below) < math.abs(close - cycle144_above) ? cycle144_below : cycle144_above
-cycle144_dist  = math.abs(close - cycle144_near) / close * 100
-
-// ============================================================================
-// COMPONENT 7: TREND CONFIRMATION FROM GANN ANGLES
-// ============================================================================
-// Price > 1x1 resistance from low = UPTREND
-// Price < 1x1 support from high = DOWNTREND
-
-trendUp   = close > r_1x1 and not na(r_1x1)
-trendDown = close < s_1x1 and not na(s_1x1)
-trendBull = trendUp and not trendDown
-trendBear = trendDown and not trendUp
-
-// Strong trend confirmation: above 4x1 or below 4x1
+// Trend confirmation (PDF 05)
+trendBull  = close > r_1x1 and not na(r_1x1)
+trendBear  = close < s_1x1 and not na(s_1x1)
+prelimBull = close > r_1x4 and not na(r_1x4)
+prelimBear = close < s_4x1 and not na(s_4x1)
 strongBull = close > r_4x1 and not na(r_4x1)
 strongBear = close < s_4x1 and not na(s_4x1)
 
-// ============================================================================
-// COMPONENT 8: CONFIDENCE SCORING SYSTEM
-// ============================================================================
-// Matches Python: base 0.0, max 1.0
-// +0.30 trend confirmed
-// +0.10 SQ9 confluence
-// +0.10 vibration 9
-// +0.15 dynamic vol confirms
-// +0.15 R:R ratio good
+// 3rd-test danger rule (PDFs 05, 11) — 3rd test signals exhaustion
+var int r_1x1_hits = 0
+var int s_1x1_hits = 0
+r_nearTest = not na(r_1x1) and math.abs(high - r_1x1) / r_1x1 * 100 < 0.5
+s_nearTest = not na(s_1x1) and math.abs(low  - s_1x1) / s_1x1 * 100 < 0.5
+if r_nearTest and not r_nearTest[1]
+    r_1x1_hits += 1
+if s_nearTest and not s_nearTest[1]
+    s_1x1_hits += 1
+if ta.crossunder(close, r_1x1) or ta.crossover(close, r_1x1)
+    r_1x1_hits := 0
+if ta.crossunder(close, s_1x1) or ta.crossover(close, s_1x1)
+    s_1x1_hits := 0
+thirdTestResist  = r_1x1_hits >= 3
+thirdTestSupport = s_1x1_hits >= 3
 
-// Calculate buy/sell entry and stop
-buyEntry  = not na(r_1x4) ? r_1x4 : close
+// ── Angle Break Escalation (v3)  [PDFs 05, 08] ─────────────────────────────
+// PDF 05: "Price breaks below 45° angle → decline to next angle (1×2)"
+// PDF 08: Krausz confirms — angle break is primary momentum signal
+angleBrokenDown = ta.crossunder(close, r_1x1) and not na(r_1x1)  // crossed below 1×1 → bearish
+angleBrokenUp   = ta.crossover(close,  s_1x1) and not na(s_1x1)  // crossed above 1×1 support → bullish
+angleBreakDownTarget = not na(r_1x2) ? r_1x2 : na   // next angle below (1×2 = 26.25°)
+angleBreakUpTarget   = not na(s_1x2) ? s_1x2 : na   // next angle above (1×2 support)
+
+// Persistent angle break state
+var bool inAngleBearBreak = false
+var bool inAngleBullBreak = false
+if angleBrokenDown
+    inAngleBearBreak := true
+    inAngleBullBreak := false
+if not na(r_1x1) and ta.crossover(close, r_1x1)  // recovered above 1×1
+    inAngleBearBreak := false
+if angleBrokenUp
+    inAngleBullBreak := true
+    inAngleBearBreak := false
+if not na(s_1x1) and ta.crossunder(close, s_1x1)  // failed back below 1×1 support
+    inAngleBullBreak := false
+
+// ============================================================================
+// COMPONENT 3: SQUARE OF 9 (SQ9 / SQ12)  [PDFs 04, 05, 09, 10]
+// ============================================================================
+// SQ9: level = (√price + degree/360)²   [PDF 10 formula]
+// PDF 10: "Angles of greatest interest: 45, 90, 120, 180, 240, 270, 315, 360"
+// SQ12: 30° increments — activated when annual vol > 40% (PDF 05)
+// PDF 04 adds 120° and 240° trines for high-volatility BTC regime
+
+sq9Lvl(float p, float deg, int dir) =>
+    sq = math.sqrt(math.max(p, 0.001))
+    r  = sq + float(dir) * deg / 360.0
+    r > 0.0 ? r * r : na
+
+sq9_45up  = sq9Lvl(close,  45,  1)
+sq9_90up  = sq9Lvl(close,  90,  1)
+sq9_120up = sq9Lvl(close, 120,  1)
+sq9_180up = sq9Lvl(close, 180,  1)
+sq9_240up = sq9Lvl(close, 240,  1)
+sq9_270up = sq9Lvl(close, 270,  1)
+sq9_360up = sq9Lvl(close, 360,  1)
+sq9_45dn  = sq9Lvl(close,  45, -1)
+sq9_90dn  = sq9Lvl(close,  90, -1)
+sq9_120dn = sq9Lvl(close, 120, -1)
+sq9_180dn = sq9Lvl(close, 180, -1)
+sq9_240dn = sq9Lvl(close, 240, -1)
+sq9_270dn = sq9Lvl(close, 270, -1)
+sq9_360dn = sq9Lvl(close, 360, -1)
+
+// SQ12 levels (30° steps)
+sq12_30up = sq9Lvl(close,  30,  1)
+sq12_60up = sq9Lvl(close,  60,  1)
+sq12_30dn = sq9Lvl(close,  30, -1)
+sq12_60dn = sq9Lvl(close,  60, -1)
+
+// Proximity check: within i_sq9Tol% of any level
+checkProx(float lvl) => not na(lvl) and math.abs(close - lvl) / close * 100 < i_sq9Tol
+
+sq9Near = checkProx(sq9_45up)  or checkProx(sq9_90up)  or checkProx(sq9_120up) or
+          checkProx(sq9_180up) or checkProx(sq9_240up) or checkProx(sq9_270up) or
+          checkProx(sq9_360up) or checkProx(sq9_45dn)  or checkProx(sq9_90dn)  or
+          checkProx(sq9_120dn) or checkProx(sq9_180dn) or checkProx(sq9_240dn) or
+          checkProx(sq9_270dn) or checkProx(sq9_360dn)
+
+sq12Near = checkProx(sq12_30up) or checkProx(sq12_60up) or
+           checkProx(sq12_30dn) or checkProx(sq12_60dn)
+
+sq9Confluence = useDynamic ? sq12Near : sq9Near
+
+// ============================================================================
+// COMPONENT 4: HURST CYCLIC ANALYSIS  [PDFs 14, 15]
+// ============================================================================
+// Hurst Nominal Model: 5d, 10d, 20d, 40d, 80d, 126d, 270d, 540d, 1620d
+// Harmonicity: adjacent ratio ≈ 2; 18mo→54mo = ratio 3 (1974, p.17)
+// FLD = close[N/2]; VTL = price breaks half-span MA during decline
+
+c1 = math.max(math.round(i_hurstC3 / 4), 2)
+c2 = math.max(math.round(i_hurstC3 / 2), 3)
+c3 = i_hurstC3
+c4 = i_hurstC4
+c5 = i_hurstC5
+
+hurstHS1 = ta.sma(close, c1)
+hurstHS2 = ta.sma(close, c2)
+hurstHS3 = ta.sma(close, c3)
+hurstHS4 = ta.sma(close, c4)
+hurstHS5 = ta.sma(close, c5)
+
+hurstLB1 = math.max(math.round(c1 * 2 / 3), 2)
+hurstLB2 = math.max(math.round(c2 * 2 / 3), 3)
+hurstLB3 = math.max(math.round(c3 / 3), 4)
+hurstLB4 = math.max(math.round(c4 / 4), 6)
+
+hurstTrough1 = hurstHS1[1] < hurstHS1[hurstLB1] and hurstHS1 >= hurstHS1[1]
+hurstTrough2 = hurstHS2[1] < hurstHS2[hurstLB2] and hurstHS2 >= hurstHS2[1]
+hurstTrough3 = hurstHS3[1] < hurstHS3[hurstLB3] and hurstHS3 >= hurstHS3[1]
+hurstTrough4 = hurstHS4[1] < hurstHS4[hurstLB4] and hurstHS4 >= hurstHS4[1]
+
+hurstPeak1   = hurstHS1[1] > hurstHS1[hurstLB1] and hurstHS1 <= hurstHS1[1]
+hurstPeak2   = hurstHS2[1] > hurstHS2[hurstLB2] and hurstHS2 <= hurstHS2[1]
+hurstPeak3   = hurstHS3[1] > hurstHS3[hurstLB3] and hurstHS3 <= hurstHS3[1]
+hurstPeak4   = hurstHS4[1] > hurstHS4[hurstLB4] and hurstHS4 <= hurstHS4[1]
+
+// Nest-of-Lows classification (synchronicity — 1974, p.17)
+hurstMinorNest = hurstTrough1 and hurstTrough2
+hurstMajorNest = hurstMinorNest and hurstTrough3
+hurstGrandNest = hurstMajorNest and hurstTrough4
+
+// Nest-of-Highs classification
+hurstMinorPeak = hurstPeak1 and hurstPeak2
+hurstMajorPeak = hurstMinorPeak and hurstPeak3
+hurstGrandPeak = hurstMajorPeak and hurstPeak4
+
+// Cycle oscillators
+hurstOsc1 = hurstHS1 > 0.0 ? (close - hurstHS1) / hurstHS1 * 100.0 : 0.0
+hurstOsc2 = hurstHS2 > 0.0 ? (close - hurstHS2) / hurstHS2 * 100.0 : 0.0
+hurstOsc3 = hurstHS3 > 0.0 ? (close - hurstHS3) / hurstHS3 * 100.0 : 0.0
+
+hurstAllBull = hurstOsc1 > 0.0 and hurstOsc2 > 0.0 and hurstOsc3 > 0.0
+hurstAllBear = hurstOsc1 < 0.0 and hurstOsc2 < 0.0 and hurstOsc3 < 0.0
+
+// ── FLD (Future Line of Demarcation)  [1974, pp.29-34] ─────────────────────
+fldShift1 = math.max(math.round(c1 / 2), 1)
+fldShift2 = math.max(math.round(c2 / 2), 1)
+fldShift3 = math.max(math.round(c3 / 2), 1)
+fldShift4 = math.max(math.round(c4 / 2), 1)
+
+fldC1 = close[fldShift1]
+fldC2 = close[fldShift2]
+fldC3 = close[fldShift3]
+fldC4 = close[fldShift4]
+
+fldBullC1 = close > fldC1
+fldBullC2 = close > fldC2
+fldBullC3 = close > fldC3
+fldBullC4 = close > fldC4
+fldBearC1 = close < fldC1
+fldBearC2 = close < fldC2
+fldBearC3 = close < fldC3
+fldBearC4 = close < fldC4
+
+fldCascadeBull = fldBullC1 and fldBullC2 and fldBullC3 and fldBullC4
+fldCascadeBear = fldBearC1 and fldBearC2 and fldBearC3 and fldBearC4
+
+fldCrossUp2    = ta.crossover(close,  fldC2)
+fldCrossDown2  = ta.crossunder(close, fldC2)
+fldCrossUp3    = ta.crossover(close,  fldC3)
+fldCrossDown3  = ta.crossunder(close, fldC3)
+
+fldBuyTarget  = fldC3 > 0.0 ? close + math.abs(close - fldC3) : na
+fldSellTarget = fldC3 > 0.0 ? close - math.abs(close - fldC3) : na
+
+// ── VTL (Valid Trend Line)  [Profit Magic, ch.4-5] ────────────────────────
+vtlBuySignal  = ta.crossover(close,  hurstHS2) and hurstOsc3 < 3.0
+vtlSellSignal = ta.crossunder(close, hurstHS2) and hurstOsc3 > -3.0
+
+// ============================================================================
+// COMPONENT 5: PRICE-TIME SQUARING  [PDFs 04, 11, 23]
+// ============================================================================
+// PDF 04 "Da Vinci Code": T = √(Swing_Range); turning-point windows at 1×T, 2×T, 3×T
+// PDF 11: "When price at 50% of range AND time at 50% → high-probability turn"
+// PDF 23: "Count bars at multiples of 12; flag at 36, 72, 144 bars"
+
+var float ptLastHi = na
+var float ptLastLo = na
+var int   ptHiBar  = na
+var int   ptLoBar  = na
+
+pivHigh = ta.pivothigh(high, i_pivotLen, i_pivotLen)
+pivLow  = ta.pivotlow (low,  i_pivotLen, i_pivotLen)
+
+if not na(pivHigh)
+    ptLastHi := pivHigh
+    ptHiBar  := bar_index - i_pivotLen
+if not na(pivLow)
+    ptLastLo := pivLow
+    ptLoBar  := bar_index - i_pivotLen
+
+ptRange  = not na(ptLastHi) and not na(ptLastLo) ? math.abs(ptLastHi - ptLastLo) : na
+ptWindow = not na(ptRange) and ptRange > 0.0 ? math.sqrt(ptRange) : na
+
+barsSinceLo = not na(ptLoBar) ? float(bar_index - ptLoBar) : na
+barsSinceHi = not na(ptHiBar) ? float(bar_index - ptHiBar) : na
+
+// ── Hurst Phase Position  [1974, p.28] ─────────────────────────────────────
+hurstPhase3     = not na(barsSinceLo) ? math.min(barsSinceLo / float(c3) * 100.0, 150.0) : na
+hurstInBuyZone  = not na(hurstPhase3) and hurstPhase3 <= 25.0
+hurstInSellZone = not na(hurstPhase3) and hurstPhase3 >= 65.0
+
+ptAtT(float bSince, float win) =>
+    not na(bSince) and not na(win) and
+    (math.abs(bSince - win)        <= float(i_ptTol) or
+     math.abs(bSince - 2.0 * win)  <= float(i_ptTol) or
+     math.abs(bSince - 3.0 * win)  <= float(i_ptTol))
+
+ptSquaringFromLo = ptAtT(barsSinceLo, ptWindow)
+ptSquaringFromHi = ptAtT(barsSinceHi, ptWindow)
+ptSquaringActive = ptSquaringFromLo or ptSquaringFromHi
+
+// 50% price-time convergence (PDF 11)
+ptRangeMid   = not na(ptLastHi) and not na(ptLastLo) ? (ptLastHi + ptLastLo) * 0.5 : na
+ptAtMidPrice = not na(ptRangeMid) and math.abs(close - ptRangeMid) / close * 100.0 < i_sq9Tol
+
+// ============================================================================
+// COMPONENT 6: MASTER TIME CYCLE WINDOWS  [PDFs 01, 06, 07, 09, 12, 19, 23]
+// ============================================================================
+// Original cycles (PDFs 01, 06, 07, 09, 12, 23):
+//   30d, 36d, 45d, 60d, 72d, 90d, 120d, 144d, 180d
+// v3 ADDITIONS from PDF 19 (1953 Gann Formula):
+//   "The square of 7 is 49, the 2nd square of 7 is 98, 3rd is 147, 4th is 196"
+//   "196 = square of 14 — very important for change in trend"
+//   343 = 7³ (7 cubed — law of vibration applied to 7)
+//   49 was already present; now adding 98, 147, 196, 343.
+// PDF 06: "7 is the law of vibration number; Uranus = 7th planet"
+
+inMasterWindow(float bSince) =>
+    not na(bSince) and (
+      math.abs(bSince -  30.0) <= 3.0 or math.abs(bSince -  36.0) <= 3.0 or
+      math.abs(bSince -  45.0) <= 3.0 or math.abs(bSince -  49.0) <= 3.0 or
+      math.abs(bSince -  60.0) <= 3.0 or math.abs(bSince -  72.0) <= 3.0 or
+      math.abs(bSince -  90.0) <= 3.0 or math.abs(bSince -  98.0) <= 3.0 or
+      math.abs(bSince - 120.0) <= 3.0 or math.abs(bSince - 144.0) <= 3.0 or
+      math.abs(bSince - 147.0) <= 3.0 or math.abs(bSince - 180.0) <= 3.0 or
+      math.abs(bSince - 196.0) <= 3.0 or math.abs(bSince - 343.0) <= 3.0)
+
+masterCycFromLo = inMasterWindow(barsSinceLo)
+masterCycFromHi = inMasterWindow(barsSinceHi)
+masterCycActive = masterCycFromLo or masterCycFromHi
+
+// ============================================================================
+// COMPONENT 7: NATURAL ODD SQUARES S/R  [PDFs 04, 09, 12]
+// ============================================================================
+// PDF 04: "Price moves from one odd square to the next (1,9,25,49,81,121...)"
+
+pRoot   = math.sqrt(close / i_priceScale)
+nearO_r = math.round(pRoot)
+nearO_a = nearO_r % 2 == 0 ? nearO_r + 1 : nearO_r   // ensure odd number
+nearO   = nearO_a < 1 ? 1 : nearO_a                   // ensure >= 1
+prevO  = nearO - 2 < 1 ? 1 : nearO - 2
+nextO  = nearO + 2
+
+oddSqBelow = float(prevO * prevO) * i_priceScale
+oddSqAt    = float(nearO * nearO) * i_priceScale
+oddSqAbove = float(nextO * nextO) * i_priceScale
+
+isNearOddSq = math.abs(close - oddSqAt)    / close * 100.0 < i_sq9Tol or
+              math.abs(close - oddSqAbove) / close * 100.0 < i_sq9Tol or
+              math.abs(close - oddSqBelow) / close * 100.0 < i_sq9Tol
+
+// ============================================================================
+// COMPONENT 8: HEXAGON CHART LEVELS  [PDF 10]
+// ============================================================================
+// PDF 10 Gann Hexagon: ring n ends at 3n² + 3n + 1 → 1,7,19,37,61,91,127,169,217,271
+
+hexLvl(int n) => float(3*n*n + 3*n + 1) * i_priceScale
+
+hexL1 = hexLvl(1)
+hexL2 = hexLvl(2)
+hexL3 = hexLvl(3)
+hexL4 = hexLvl(4)
+hexL5 = hexLvl(5)
+hexL6 = hexLvl(6)
+hexL7 = hexLvl(7)
+hexL8 = hexLvl(8)
+hexL9 = hexLvl(9)
+
+isNearHex = math.abs(close - hexL1) / close * 100.0 < i_sq9Tol or
+            math.abs(close - hexL2) / close * 100.0 < i_sq9Tol or
+            math.abs(close - hexL3) / close * 100.0 < i_sq9Tol or
+            math.abs(close - hexL4) / close * 100.0 < i_sq9Tol or
+            math.abs(close - hexL5) / close * 100.0 < i_sq9Tol or
+            math.abs(close - hexL6) / close * 100.0 < i_sq9Tol or
+            math.abs(close - hexL7) / close * 100.0 < i_sq9Tol or
+            math.abs(close - hexL8) / close * 100.0 < i_sq9Tol or
+            math.abs(close - hexL9) / close * 100.0 < i_sq9Tol
+
+// ============================================================================
+// COMPONENT 9: NUMBER VIBRATION  [PDFs 06, 01, 07]
+// ============================================================================
+// PDF 06: Vibration 9 = change number; 3-6-9 = sacred sequence
+
+// digitSum: compute digital root (iterated digit sum → single digit 1-9).
+// Called only as digitSum(math.round(close)) where close is a market price.
+// For BTC, close is typically 10,000–200,000 (at most 6 digits → sum ≤ 54).
+// The 8-digit bound (sum ≤ 72) is a conservative guard for any 8-digit price.
+// Inside function scope, := on local (non-var) variables IS valid in Pine v5.
+digitSum(int val) =>
+    n = math.abs(val)
+    s = 0
+    for _i = 0 to 7  // unroll 8 digits — handles prices up to 99,999,999
+        s := s + n % 10
+        n := math.floor(n / 10)
+    // Reduce digit sum to a single digit (two passes cover any s ≤ 72)
+    s1 = s  >= 10 ? (s  % 10) + math.floor(s  / 10) : s
+    s2 = s1 >= 10 ? (s1 % 10) + math.floor(s1 / 10) : s1
+    s2
+
+priceVibration = digitSum(math.round(close))
+isVibration9   = priceVibration == 9
+isVibration3   = priceVibration == 3
+isVibration6   = priceVibration == 6
+
+// ============================================================================
+// COMPONENT 10: 144 CYCLE LEVELS  [PDFs 06, 09, 12]
+// ============================================================================
+// PDF 12: "144 is THE GREAT SQUARE, works better than any other square"
+// PDF 19: "72 = inner square (half of 144) is gravity center"
+
+cycle144_base  = math.floor(close / 144.0) * 144.0
+cycle144_below = cycle144_base
+cycle144_above = cycle144_base + 144.0
+cycle144_near  = math.abs(close - cycle144_below) < math.abs(close - cycle144_above) ?
+                 cycle144_below : cycle144_above
+cycle144_dist  = math.abs(close - cycle144_near) / close * 100.0
+
+cycle72_base  = math.floor(close / 72.0) * 72.0
+cycle72_above = cycle72_base + 72.0
+
+dynSQ12_up1 = sq9Lvl(close,  30, 1)
+dynSQ12_up2 = sq9Lvl(close,  60, 1)
+dynSQ12_up3 = sq9Lvl(close,  90, 1)
+dynSQ12_dn1 = sq9Lvl(close,  30, -1)
+dynSQ12_dn2 = sq9Lvl(close,  60, -1)
+dynSQ12_dn3 = sq9Lvl(close,  90, -1)
+
+// ============================================================================
+// COMPONENT 11: SEMI-ANNUAL PIVOT (SAP)  [PDF 04]
+// ============================================================================
+// PDF 04: Calculate twice yearly (Jan & Jul) using OHLC from 1st–14th
+// Price > SAP → bullish for next 6 months; Price < SAP → bearish
+
+var float sapLevel = na
+var float sapH14   = na
+var float sapL14   = na
+var float sapC14   = na
+var int   sapCount = 0
+var int   sapMonth = 0
+
+inSAPMonth = month == 1 or month == 7
+
+if inSAPMonth and month != sapMonth
+    sapH14   := high
+    sapL14   := low
+    sapC14   := close
+    sapCount := 1
+    sapMonth := month
+else if inSAPMonth and sapCount < 14
+    sapH14    := na(sapH14) ? high : math.max(sapH14, high)
+    sapL14    := na(sapL14) ? low  : math.min(sapL14, low)
+    sapC14    := close
+    sapCount  += 1
+    if sapCount == 14
+        sapLevel := not na(sapH14) and not na(sapL14) ? (sapH14 + sapL14 + sapC14) / 3.0 : na
+
+sapBullish = not na(sapLevel) and close > sapLevel
+sapBearish = not na(sapLevel) and close < sapLevel
+
+// ============================================================================
+// COMPONENT 12: GANN SEASONAL DATES  [PDFs 12, 13, 07, 23]   [NEW v3]
+// ============================================================================
+// PDF 12 (Master Math Formula): "March 21 to March 21 is within the quarter
+//   points of the larger annual square. A quarter of time in the annual square
+//   = 90 degrees = 91.3 solar days" → equinoxes/solstices define the 4 quarters
+// PDF 13 (Flanagan): "4 main turning points of year: vernal/autumnal equinox,
+//   summer/winter solstice" → seasonal dates = high-probability reversal zones
+// PDF 07 (Tunnel Thru the Air): Encoded special dates in October and November
+//   interpreted by PDF 17 (Amundsen) as Oct 7-14 and Nov 8-10 windows
+// PDF 23 (Shephard): "Market turns occur at important cycle dates at S/R levels"
+// Tolerance: ±3 calendar days (= ±3 bars on daily chart)
+
+isSpringEquinox  = month == 3  and dayofmonth >= 18 and dayofmonth <= 24  // Mar 21 ±3
+isSummerSolstice = month == 6  and dayofmonth >= 18 and dayofmonth <= 24  // Jun 21 ±3
+isFallEquinox    = month == 9  and dayofmonth >= 19 and dayofmonth <= 25  // Sep 22 ±3
+isWinterSolstice = month == 12 and dayofmonth >= 19 and dayofmonth <= 25  // Dec 22 ±3
+// Gann's special annual dates (PDF 07 Tunnel decoded by PDF 17)
+isOctSpecial     = month == 10 and dayofmonth >= 5  and dayofmonth <= 17  // Oct 7-14 ±3
+isNovSpecial     = month == 11 and dayofmonth >= 5  and dayofmonth <= 13  // Nov 8-10 ±3
+
+isSeasonalDate   = isSpringEquinox or isSummerSolstice or isFallEquinox or
+                   isWinterSolstice or isOctSpecial or isNovSpecial
+
+seasonalLabel = isSpringEquinox  ? "Spring Eq" :
+                isSummerSolstice ? "Summer Sol" :
+                isFallEquinox    ? "Fall Eq" :
+                isWinterSolstice ? "Winter Sol" :
+                isOctSpecial     ? "Oct Gann" :
+                isNovSpecial     ? "Nov Gann" : ""
+
+// ============================================================================
+// COMPONENT 13: RANGE PROJECTIONS  [PDF 23 — Shephard]        [NEW v3]
+// ============================================================================
+// PDF 23 (Shephard Gann Cycles Course):
+//   "Wave 1 = 100% of range. Wave 2 = 50% retracement. Wave 3 = 100% repeat.
+//    Wave 4 = 50% retracement. Wave 5 = 75% of Wave 1."
+//   "200% of first price range was the actual time period" (time = price rule)
+//   Percentage divisions: 1/8ths (12.5%, 25%, 37.5%, 50%, 62.5%, 75%, 87.5%)
+//   and 1/3rds (33.3%, 66.6%) as key internal S/R (Gann's % movement method)
+// Projections UP from swing low:
+//   50%  = wave 2 balance point
+//   100% = repeat of first wave (strong target)
+//   150% = 1.5× extension
+//   200% = double range (Shephard: "200% = actual time period")
+// Projections DOWN from swing high: mirror of above
+
+rangeProjUp50  = not na(ptLastLo) and not na(ptRange) ? ptLastLo + ptRange * 0.50 : na
+rangeProjUp100 = not na(ptLastLo) and not na(ptRange) ? ptLastLo + ptRange * 1.00 : na
+rangeProjUp150 = not na(ptLastLo) and not na(ptRange) ? ptLastLo + ptRange * 1.50 : na
+rangeProjUp200 = not na(ptLastLo) and not na(ptRange) ? ptLastLo + ptRange * 2.00 : na
+
+rangeProjDn50  = not na(ptLastHi) and not na(ptRange) ? ptLastHi - ptRange * 0.50 : na
+rangeProjDn100 = not na(ptLastHi) and not na(ptRange) ? ptLastHi - ptRange * 1.00 : na
+rangeProjDn150 = not na(ptLastHi) and not na(ptRange) ? ptLastHi - ptRange * 1.50 : na
+rangeProjDn200 = not na(ptLastHi) and not na(ptRange) ? ptLastHi - ptRange * 2.00 : na
+
+isNearRangeProjUp = checkProx(rangeProjUp50)  or checkProx(rangeProjUp100) or
+                    checkProx(rangeProjUp150) or checkProx(rangeProjUp200)
+isNearRangeProjDn = checkProx(rangeProjDn50)  or checkProx(rangeProjDn100) or
+                    checkProx(rangeProjDn150) or checkProx(rangeProjDn200)
+isNearRangeProj   = isNearRangeProjUp or isNearRangeProjDn
+
+// ============================================================================
+// COMPONENT 14: PHI / √2 / √3 PRICE LEVELS  [PDFs 18, 22]    [NEW v3]
+// ============================================================================
+// PDF 18 (Jenkins): Square root relationships and geometric mean as S/R levels
+//   "The √price curve defines turning points in price-time space"
+//   Multiplicative S/R from swing extremes using irrational constants
+// PDF 22 (Plummer Law of Vibration):
+//   "Phi (1.618) is the universal growth ratio found in all natural phenomena"
+//   "Markets vibrate to phi ratios: 1.618, 2.618 (phi²), 4.236 (phi³)"
+//   √2 = 1.4142 (diagonal of unit square), √3 = 1.732 (diagonal of unit cube)
+// Formula: level_up = swingLow × constant; level_dn = swingHigh ÷ constant
+
+phiConst   = (1.0 + math.sqrt(5.0)) / 2.0  // φ = 1.618... Golden ratio (φ² = φ + 1 ≈ 2.618)
+phi2Const  = phiConst + 1.0                // φ² = 2.618 (special property of phi: φ²=φ+1)
+sqrt2Const = math.sqrt(2.0)               // √2 (exact)
+sqrt3Const = math.sqrt(3.0)               // √3 (exact)
+
+// Phi/sqrt extension levels from swing low (upside targets)
+phiUp1  = not na(ptLastLo) ? ptLastLo * phiConst   : na   // ×1.618
+phiUp2  = not na(ptLastLo) ? ptLastLo * phi2Const  : na   // ×2.618
+sqrt2Up = not na(ptLastLo) ? ptLastLo * sqrt2Const : na   // ×√2
+sqrt3Up = not na(ptLastLo) ? ptLastLo * sqrt3Const : na   // ×√3
+
+// Phi/sqrt support levels from swing high (downside targets)
+phiDn1  = not na(ptLastHi) ? ptLastHi / phiConst   : na   // ÷1.618
+phiDn2  = not na(ptLastHi) ? ptLastHi / phi2Const  : na   // ÷2.618
+sqrt2Dn = not na(ptLastHi) ? ptLastHi / sqrt2Const : na   // ÷√2
+
+isNearPhiUp = checkProx(phiUp1) or checkProx(phiUp2) or checkProx(sqrt2Up) or checkProx(sqrt3Up)
+isNearPhiDn = checkProx(phiDn1) or checkProx(phiDn2) or checkProx(sqrt2Dn)
+isNearPhi   = isNearPhiUp or isNearPhiDn
+
+// ============================================================================
+// COMPONENT 15: SIGNAL ENGINE & CONFIDENCE SCORING  [All PDFs — synthesis]
+// ============================================================================
+// Confidence scoring system (max 1.0 — clamped):
+//   +0.25  Gann angle trend confirmed (PDF 05)
+//   +0.15  Gann angle preliminary trend (PDF 05)
+//   +0.10  SQ9/SQ12 confluence (PDFs 04, 05, 10)
+//   +0.05  Vibration 9 detected (PDF 06)
+//   +0.10  Hurst Grand/Major Nest (+0.07) / Minor Nest (+0.04) (PDFs 14, 15)
+//   +0.10  FLD Cascade (+0.10) or FLD c3 (+0.05) (PDF 14)
+//   +0.05  FLD crossover dominant cycle (PDF 14)
+//   +0.05  VTL break (PDF 15)
+//   +0.05  Phase in buy/sell zone (PDF 14)
+//   +0.05  Price-Time Squaring active (PDFs 04, 11, 23)
+//   +0.05  Master Time Cycle window (PDFs 01, 07, 12, 23)
+//   +0.05  Near odd square S/R (PDFs 04, 09, 12)
+//   +0.05  Near hexagon level (PDF 10)
+//   +0.05  SAP directional alignment (PDF 04)
+//   +0.10  Dynamic vol confirms direction (PDF 05)
+//   +0.15  R:R ≥ target | +0.05 R:R ≥ 1.5 | −0.10 R:R < 1.5
+//   −0.10  3rd-test exhaustion (PDFs 05, 11)
+//   +0.05  Hurst all oscillators aligned (PDFs 14, 15)
+//   --- v3 ADDITIONS ---
+//   +0.08  Gann seasonal date alignment (PDFs 12, 13, 07) [NEW v3]
+//   +0.05  Range projection confluence (PDF 23 Shephard)  [NEW v3]
+//   +0.05  Phi/√2/√3 price level hit (PDFs 18, 22)        [NEW v3]
+//   +0.05  Angle break momentum event (PDFs 05, 08)       [NEW v3]
+
+// Entry and stop levels (volatility-adaptive)
+buyEntry  = not na(buyEntryAngle) ? buyEntryAngle : close
 buyStop   = not na(r_1x1) ? math.min(r_1x1, close * 0.95) : close * 0.95
-sellEntry = not na(s_4x1) ? s_4x1 : close
+sellEntry = not na(sellEntryAngle) ? sellEntryAngle : close
 sellStop  = not na(s_1x1) ? math.max(s_1x1, close * 1.05) : close * 1.05
 
-// Calculate best target from SQ9 levels
-buyTarget  = sq9_180_up
-sellTarget = sq9_180_dn
+// Targets: SQ9/SQ12 primary, blended with FLD price objective
+fldBuyTgt  = not na(fldBuyTarget)  and fldBuyTarget  > close ? fldBuyTarget  : na
+fldSellTgt = not na(fldSellTarget) and fldSellTarget < close ? fldSellTarget : na
+buyTarget  = useDynamic ? dynSQ12_up2 : (not na(fldBuyTgt) ? (sq9_180up + fldBuyTgt) / 2.0 : sq9_180up)
+sellTarget = useDynamic ? dynSQ12_dn2 : (not na(fldSellTgt) ? (sq9_180dn + fldSellTgt) / 2.0 : sq9_180dn)
 
-// Risk-reward calculation
-buyRisk    = math.abs(buyEntry - buyStop)
+// Risk-Reward
+buyRisk    = math.abs(buyEntry  - buyStop)
 buyReward  = math.abs(buyTarget - buyEntry)
-buyRR      = buyRisk > 0 ? buyReward / buyRisk : 0
+buyRR      = buyRisk  > 0.0 ? buyReward  / buyRisk  : 0.0
+sellRisk   = math.abs(sellEntry  - sellStop)
+sellReward = math.abs(sellEntry  - sellTarget)
+sellRR     = sellRisk > 0.0 ? sellReward / sellRisk : 0.0
 
-sellRisk   = math.abs(sellEntry - sellStop)
-sellReward = math.abs(sellEntry - sellTarget)
-sellRR     = sellRisk > 0 ? sellReward / sellRisk : 0
+// ── Buy Confidence ─────────────────────────────────────────────────────────
+// Rewritten as single expression (avoids := on non-var at global scope)
+buyConf = math.max(0.0, math.min(1.0,
+    (trendBull  ? 0.25 : prelimBull ? 0.15 : 0.0)                             +
+    (sq9Confluence ? 0.10 : 0.0)                                               +
+    (isVibration9  ? 0.05 : 0.0)                                               +
+    (hurstGrandNest ? 0.10 : hurstMajorNest ? 0.07 : hurstMinorNest ? 0.04 : 0.0) +
+    (fldCascadeBull ? 0.10 : fldBullC3 ? 0.05 : 0.0)                          +
+    (fldCrossUp2    ? 0.05 : 0.0)                                              +
+    (vtlBuySignal   ? 0.05 : 0.0)                                              +
+    (hurstInBuyZone  ? 0.05 : hurstInSellZone ? -0.05 : 0.0)                  +
+    (ptSquaringFromLo ? 0.05 : 0.0)                                            +
+    (masterCycFromLo  ? 0.05 : 0.0)                                            +
+    (isNearOddSq  ? 0.05 : 0.0)                                                +
+    (isNearHex    ? 0.05 : 0.0)                                                +
+    (sapBullish   ? 0.05 : sapBearish ? -0.05 : 0.0)                          +
+    (useDynamic and close < expectedHigh ? 0.10 : 0.0)                        +
+    (buyRR >= i_rrRatio ? 0.15 : buyRR >= 1.5 ? 0.05 : -0.10)                +
+    (thirdTestResist ? -0.10 : 0.0)                                            +
+    (hurstAllBull ? 0.05 : 0.0)                                                +
+    // v3 additions:
+    (isSeasonalDate     ? 0.08 : 0.0)   +   // seasonal date [PDFs 12, 13, 07]
+    (isNearRangeProjUp  ? 0.05 : 0.0)   +   // range proj confluence [PDF 23]
+    (isNearPhiUp        ? 0.05 : 0.0)   +   // phi/sqrt level [PDFs 18, 22]
+    (inAngleBullBreak   ? 0.05 : 0.0)))     // angle break momentum [PDFs 05, 08]
 
-// --- Buy Confidence ---
-buyConf = 0.0
-buyConf := buyConf + (trendBull ? 0.30 : 0.0)
-buyConf := buyConf + (sq9Confluence ? 0.10 : 0.0)
-buyConf := buyConf + (isVibration9 ? 0.10 : 0.0)
-buyConf := buyConf + (useDynamic and close < expectedHigh ? 0.15 : 0.0)
-buyConf := buyConf + (buyRR >= i_rrRatio ? 0.15 : buyRR >= 1.5 ? 0.05 : -0.10)
-buyConf := math.max(0.0, math.min(1.0, buyConf))
-
-// --- Sell Confidence ---
-sellConf = 0.0
-sellConf := sellConf + (trendBear ? 0.30 : 0.0)
-sellConf := sellConf + (sq9Confluence ? 0.10 : 0.0)
-sellConf := sellConf + (isVibration9 ? 0.10 : 0.0)
-sellConf := sellConf + (useDynamic and close > expectedLow ? 0.15 : 0.0)
-sellConf := sellConf + (sellRR >= i_rrRatio ? 0.15 : sellRR >= 1.5 ? 0.05 : -0.10)
-sellConf := math.max(0.0, math.min(1.0, sellConf))
+// ── Sell Confidence ────────────────────────────────────────────────────────
+// Rewritten as single expression (avoids := on non-var at global scope)
+sellConf = math.max(0.0, math.min(1.0,
+    (trendBear  ? 0.25 : prelimBear ? 0.15 : 0.0)                              +
+    (sq9Confluence ? 0.10 : 0.0)                                                +
+    (isVibration9  ? 0.05 : 0.0)                                                +
+    (hurstGrandPeak ? 0.10 : hurstMajorPeak ? 0.07 : hurstMinorPeak ? 0.04 : 0.0) +
+    (fldCascadeBear ? 0.10 : fldBearC3 ? 0.05 : 0.0)                           +
+    (fldCrossDown2  ? 0.05 : 0.0)                                               +
+    (vtlSellSignal  ? 0.05 : 0.0)                                               +
+    (hurstInSellZone ? 0.05 : hurstInBuyZone ? -0.05 : 0.0)                    +
+    (ptSquaringFromHi ? 0.05 : 0.0)                                             +
+    (masterCycFromHi  ? 0.05 : 0.0)                                             +
+    (isNearOddSq  ? 0.05 : 0.0)                                                 +
+    (isNearHex    ? 0.05 : 0.0)                                                 +
+    (sapBearish   ? 0.05 : sapBullish ? -0.05 : 0.0)                           +
+    (useDynamic and close > expectedLow ? 0.10 : 0.0)                          +
+    (sellRR >= i_rrRatio ? 0.15 : sellRR >= 1.5 ? 0.05 : -0.10)               +
+    (thirdTestSupport ? -0.10 : 0.0)                                            +
+    (hurstAllBear ? 0.05 : 0.0)                                                 +
+    // v3 additions:
+    (isSeasonalDate     ? 0.08 : 0.0)   +   // seasonal date [PDFs 12, 13, 07]
+    (isNearRangeProjDn  ? 0.05 : 0.0)   +   // range proj confluence [PDF 23]
+    (isNearPhiDn        ? 0.05 : 0.0)   +   // phi/sqrt level [PDFs 18, 22]
+    (inAngleBearBreak   ? 0.05 : 0.0)))     // angle break momentum [PDFs 05, 08]
 
 // ============================================================================
-// COMPONENT 9: STRATEGY — ENTRIES, EXITS, AND TRADE MANAGEMENT
+// COMPONENT 16: STRATEGY EXECUTION  [PDFs 01, 04, 05]
 // ============================================================================
+// PDF 04: "Small is beautiful" — small positions, small stops
+// PDF 01: Never trade more than 10% of account per trade
+// PDF 05 Rule i: If stop loss triggers, do NOT re-enter in same direction
 
-// --- Entry conditions ---
-longCond  = buyConf  >= i_confMin and trendBull and buyRR >= 1.5
-shortCond = sellConf >= i_confMin and trendBear and sellRR >= 1.5
+longCond  = buyConf  >= i_confMin and (trendBull or prelimBull) and buyRR  >= 1.5
+shortCond = sellConf >= i_confMin and (trendBear or prelimBear) and sellRR >= 1.5
 
-// --- Conflict resolution: only take the stronger signal ---
-goLong  = longCond  and (not shortCond or buyConf > sellConf)
+goLong  = longCond  and (not shortCond or buyConf  > sellConf)
 goShort = shortCond and (not longCond  or sellConf > buyConf)
 
-// --- Position sizing based on risk ---
-// For crypto, qty = riskAmt / riskPerUnit gives position in asset units (e.g., 0.05 BTC)
-riskAmt   = strategy.equity * i_riskPct / 100
-longQty   = buyRisk  > 0 ? riskAmt / buyRisk  : 0
-shortQty  = sellRisk > 0 ? riskAmt / sellRisk : 0
+riskAmt  = strategy.equity * i_riskPct / 100.0
+longQty  = buyRisk  > 0.0 ? riskAmt / buyRisk  : 0.0
+shortQty = sellRisk > 0.0 ? riskAmt / sellRisk : 0.0
 
-// --- Track bars in trade ---
 var int barsInTrade = 0
 if strategy.position_size != 0
     barsInTrade += 1
 else
     barsInTrade := 0
 
-// --- Entry execution ---
-// trail_offset = profit needed before trailing starts (halfway to target)
-// trail_points = trailing distance once activated
-longTrailActivate  = math.abs(buyTarget - buyEntry)   * 0.5
-longTrailDist      = close * i_trailPct / 100
-shortTrailActivate = math.abs(sellEntry - sellTarget)  * 0.5
-shortTrailDist     = close * i_trailPct / 100
+longTrailActivate  = math.abs(buyTarget  - buyEntry)  * 0.5
+longTrailDist      = close * i_trailPct / 100.0
+shortTrailActivate = math.abs(sellEntry  - sellTarget) * 0.5
+shortTrailDist     = close * i_trailPct / 100.0
 
 if goLong and strategy.position_size <= 0
     strategy.entry("Long", strategy.long, qty=longQty)
-    strategy.exit("Long SL/TP", "Long", stop=buyStop, limit=buyTarget, trail_offset=longTrailActivate, trail_points=longTrailDist)
+    strategy.exit("Long SL/TP", "Long",
+                  stop=buyStop, limit=buyTarget,
+                  trail_points=longTrailActivate,   // activate trailing when profit reaches activation level
+                  trail_offset=longTrailDist)        // trail by X% of price behind the extreme
     barsInTrade := 0
 
 if goShort and strategy.position_size >= 0
     strategy.entry("Short", strategy.short, qty=shortQty)
-    strategy.exit("Short SL/TP", "Short", stop=sellStop, limit=sellTarget, trail_offset=shortTrailActivate, trail_points=shortTrailDist)
+    strategy.exit("Short SL/TP", "Short",
+                  stop=sellStop, limit=sellTarget,
+                  trail_points=shortTrailActivate,  // activate trailing when profit reaches activation level
+                  trail_offset=shortTrailDist)       // trail by X% of price behind the extreme
     barsInTrade := 0
 
-// --- Time-based exit (max bars in trade) ---
 if barsInTrade >= i_maxBars and strategy.position_size != 0
     strategy.close_all("Timeout")
     barsInTrade := 0
@@ -321,72 +796,318 @@ if barsInTrade >= i_maxBars and strategy.position_size != 0
 // VISUAL OVERLAYS
 // ============================================================================
 
-// --- Gann Angle Levels ---
-plot(i_showAngles ? r_1x1 : na, "1x1 Resistance (45°)", color=color.new(color.green, 50), linewidth=2)
-plot(i_showAngles ? r_1x4 : na, "1x4 Resistance (Buy Entry)", color=color.new(color.lime, 60))
-plot(i_showAngles ? r_4x1 : na, "4x1 Resistance", color=color.new(color.green, 70))
-plot(i_showAngles ? s_1x1 : na, "1x1 Support (45°)", color=color.new(color.red, 50), linewidth=2)
-plot(i_showAngles ? s_4x1 : na, "4x1 Support (Sell Entry)", color=color.new(color.orange, 60))
+// ── Gann Angle Levels ──────────────────────────────────────────────────────
+plot(i_showAngles ? r_1x1 : na, "1×1 Resistance (45°)",  color=color.new(color.green,  50), linewidth=2)
+plot(i_showAngles ? r_1x4 : na, "1×4 Resistance (Entry)", color=color.new(color.lime,   60))
+plot(i_showAngles ? r_4x1 : na, "4×1 Resistance",         color=color.new(color.green,  70))
+plot(i_showAngles ? s_1x1 : na, "1×1 Support (45°)",      color=color.new(color.red,    50), linewidth=2)
+plot(i_showAngles ? s_4x1 : na, "4×1 Support (Entry)",    color=color.new(color.orange, 60))
 
-// --- SQ9 Levels ---
-plot(i_showSQ9 ? sq9_180_up : na, "SQ9 180° Up", color=color.new(color.blue, 60), style=plot.style_cross)
-plot(i_showSQ9 ? sq9_360_up : na, "SQ9 360° Up", color=color.new(color.blue, 40), style=plot.style_cross)
-plot(i_showSQ9 ? sq9_180_dn : na, "SQ9 180° Down", color=color.new(color.purple, 60), style=plot.style_cross)
-plot(i_showSQ9 ? sq9_360_dn : na, "SQ9 360° Down", color=color.new(color.purple, 40), style=plot.style_cross)
+// ── SQ9 / SQ12 Levels ──────────────────────────────────────────────────────
+plot(i_showSQ9 ? sq9_180up : na, "SQ9 180° Up",   color=color.new(color.blue,   60), style=plot.style_cross)
+plot(i_showSQ9 ? sq9_360up : na, "SQ9 360° Up",   color=color.new(color.blue,   40), style=plot.style_cross)
+plot(i_showSQ9 ? sq9_180dn : na, "SQ9 180° Down", color=color.new(color.purple, 60), style=plot.style_cross)
+plot(i_showSQ9 ? sq9_360dn : na, "SQ9 360° Down", color=color.new(color.purple, 40), style=plot.style_cross)
 
-// --- 144 Cycle Levels ---
+// ── 144 Cycle Levels ──────────────────────────────────────────────────────
 plot(i_show144 ? cycle144_below : na, "144 Below", color=color.new(color.yellow, 50), style=plot.style_stepline)
 plot(i_show144 ? cycle144_above : na, "144 Above", color=color.new(color.yellow, 50), style=plot.style_stepline)
 
-// --- Dynamic Expected Range ---
+// ── Hexagon Chart Levels ───────────────────────────────────────────────────
+plot(i_showHex ? hexL3 : na, "Hex 37K",  color=color.new(color.fuchsia, 60), style=plot.style_circles)
+plot(i_showHex ? hexL4 : na, "Hex 61K",  color=color.new(color.fuchsia, 60), style=plot.style_circles)
+plot(i_showHex ? hexL5 : na, "Hex 91K",  color=color.new(color.fuchsia, 60), style=plot.style_circles)
+plot(i_showHex ? hexL6 : na, "Hex 127K", color=color.new(color.fuchsia, 60), style=plot.style_circles)
+plot(i_showHex ? hexL7 : na, "Hex 169K", color=color.new(color.fuchsia, 60), style=plot.style_circles)
+plot(i_showHex ? hexL8 : na, "Hex 217K", color=color.new(color.fuchsia, 60), style=plot.style_circles)
+
+// ── Hurst Cycle Moving Averages ────────────────────────────────────────────
+plot(i_showHurst ? hurstHS2 : na, "Hurst HS c2 (half-span)",  color=color.new(color.teal, 70), linewidth=1)
+plot(i_showHurst ? hurstHS3 : na, "Hurst HS c3 (full/half)",  color=color.new(color.teal, 50), linewidth=1)
+plot(i_showHurst ? hurstHS4 : na, "Hurst HS c4 (primary MA)", color=color.new(color.teal, 30), linewidth=2)
+plot(i_showHurst ? hurstHS5 : na, "Hurst HS c5 (grand MA)",   color=color.new(color.teal, 20), linewidth=3)
+
+// ── FLD (Future Line of Demarcation)  [Hurst 1974] ─────────────────────────
+plot(i_showHurst ? fldC2 : na, "FLD c2",
+     color=color.new(color.yellow, 60), style=plot.style_line, linewidth=1)
+plot(i_showHurst ? fldC3 : na, "FLD c3 (dominant)",
+     color=color.new(color.yellow, 40), style=plot.style_line, linewidth=2)
+plot(i_showHurst ? fldC4 : na, "FLD c4 (primary)",
+     color=color.new(color.yellow, 20), style=plot.style_line, linewidth=1)
+
+// ── Dynamic Expected Range ─────────────────────────────────────────────────
 p_expHi = plot(useDynamic ? expectedHigh : na, "Expected High", color=color.new(color.teal, 80))
 p_expLo = plot(useDynamic ? expectedLow  : na, "Expected Low",  color=color.new(color.teal, 80))
 fill(p_expHi, p_expLo, color=color.new(color.teal, 95), title="Volatility Range")
 
-// --- Signal Markers ---
-plotshape(goLong  and strategy.position_size <= 0, "BUY Signal",  style=shape.triangleup,   location=location.belowbar, color=color.green, size=size.normal, text="BUY")
-plotshape(goShort and strategy.position_size >= 0, "SELL Signal", style=shape.triangledown, location=location.abovebar, color=color.red,   size=size.normal, text="SELL")
+// ── Semi-Annual Pivot ──────────────────────────────────────────────────────
+plot(not na(sapLevel) ? sapLevel : na, "Semi-Annual Pivot",
+     color=color.new(color.white, 40), style=plot.style_stepline, linewidth=2)
 
-// --- Confidence & Info Table ---
-var table infoTable = table.new(position.top_right, 2, 10, bgcolor=color.new(color.black, 80), border_width=1)
+// ── Range Projections  [PDF 23 Shephard — v3] ─────────────────────────────
+plot(i_showRangeProj ? rangeProjUp100 : na, "Range 100% Up",
+     color=color.new(color.aqua, 55), style=plot.style_circles, linewidth=1)
+plot(i_showRangeProj ? rangeProjUp150 : na, "Range 150% Up",
+     color=color.new(color.aqua, 65), style=plot.style_circles, linewidth=1)
+plot(i_showRangeProj ? rangeProjUp200 : na, "Range 200% Up",
+     color=color.new(color.aqua, 45), style=plot.style_circles, linewidth=2)
+plot(i_showRangeProj ? rangeProjDn100 : na, "Range 100% Down",
+     color=color.new(color.maroon, 55), style=plot.style_circles, linewidth=1)
+plot(i_showRangeProj ? rangeProjDn150 : na, "Range 150% Down",
+     color=color.new(color.maroon, 65), style=plot.style_circles, linewidth=1)
+plot(i_showRangeProj ? rangeProjDn200 : na, "Range 200% Down",
+     color=color.new(color.maroon, 45), style=plot.style_circles, linewidth=2)
+
+// ── Phi / √2 / √3 Price Levels  [PDFs 18, 22 — v3] ───────────────────────
+plot(i_showPhiLvls ? phiUp1  : na, "Phi×1.618 Up",  color=color.new(color.silver, 60), style=plot.style_cross)
+plot(i_showPhiLvls ? phiUp2  : na, "Phi×2.618 Up",  color=color.new(color.silver, 50), style=plot.style_cross)
+plot(i_showPhiLvls ? sqrt2Up : na, "√2 Up",         color=color.new(color.silver, 70), style=plot.style_cross)
+plot(i_showPhiLvls ? phiDn1  : na, "Phi÷1.618 Dn",  color=color.new(color.gray,   60), style=plot.style_cross)
+plot(i_showPhiLvls ? phiDn2  : na, "Phi÷2.618 Dn",  color=color.new(color.gray,   50), style=plot.style_cross)
+plot(i_showPhiLvls ? sqrt2Dn : na, "√2 Dn",         color=color.new(color.gray,   70), style=plot.style_cross)
+
+// ── Entry Signal Markers ───────────────────────────────────────────────────
+plotshape(goLong  and strategy.position_size <= 0, "BUY Signal",
+          style=shape.triangleup,   location=location.belowbar,
+          color=color.green, size=size.normal, text="BUY")
+plotshape(goShort and strategy.position_size >= 0, "SELL Signal",
+          style=shape.triangledown, location=location.abovebar,
+          color=color.red,   size=size.normal, text="SELL")
+
+// ── Hurst Cycle Event Markers ──────────────────────────────────────────────
+plotshape(hurstMajorNest, "Hurst Nest Low",
+          style=shape.diamond, location=location.belowbar,
+          color=color.aqua, size=size.small, text="N↑")
+plotshape(hurstMajorPeak, "Hurst Nest High",
+          style=shape.diamond, location=location.abovebar,
+          color=color.orange, size=size.small, text="N↓")
+
+// ── FLD Crossover Markers  [Hurst 1974, pp.29-34] ──────────────────────────
+plotshape(i_showHurst and fldCrossUp2,   "FLD Cross Up",
+          style=shape.circle, location=location.belowbar,
+          color=color.yellow, size=size.tiny, text="F↑")
+plotshape(i_showHurst and fldCrossDown2, "FLD Cross Down",
+          style=shape.circle, location=location.abovebar,
+          color=color.yellow, size=size.tiny, text="F↓")
+
+// ── VTL (Valid Trend Line) Break Markers  [Profit Magic, ch.4-5] ───────────
+plotshape(vtlBuySignal,  "VTL Buy Break",
+          style=shape.arrowup,   location=location.belowbar,
+          color=color.lime, size=size.tiny, text="VTL")
+plotshape(vtlSellSignal, "VTL Sell Break",
+          style=shape.arrowdown, location=location.abovebar,
+          color=color.red, size=size.tiny, text="VTL")
+
+// ── Price-Time Squaring Marker ─────────────────────────────────────────────
+plotshape(ptSquaringActive, "P-T Square",
+          style=shape.xcross, location=location.belowbar,
+          color=color.yellow, size=size.tiny, text="T²")
+
+// ── Master Cycle Window Marker ─────────────────────────────────────────────
+plotshape(masterCycActive, "Master Cycle",
+          style=shape.square, location=location.abovebar,
+          color=color.purple, size=size.tiny, text="C")
+
+// ── Gann Seasonal Date Markers  [v3 — PDFs 12, 13, 07] ────────────────────
+plotshape(i_showSeasonal and isSeasonalDate, "Seasonal Date",
+          style=shape.diamond, location=location.abovebar,
+          color=color.new(color.orange, 20), size=size.small,
+          text="S", textcolor=color.white)
+
+// ── Angle Break Escalation Markers  [v3 — PDFs 05, 08] ────────────────────
+plotshape(angleBrokenDown, "Angle Break Down",
+          style=shape.arrowdown, location=location.abovebar,
+          color=color.new(color.red, 30), size=size.small, text="AB↓")
+plotshape(angleBrokenUp, "Angle Break Up",
+          style=shape.arrowup, location=location.belowbar,
+          color=color.new(color.green, 30), size=size.small, text="AB↑")
+
+// ── Background color ───────────────────────────────────────────────────────
+bgcolor(trendBull ? color.new(color.green, 95) : trendBear ? color.new(color.red, 95) : na,
+        title="Trend Background")
+bgcolor(isSeasonalDate and i_showSeasonal ? color.new(color.orange, 92) : na,
+        title="Seasonal Date Window")
+
+// ── Info Table (top-right) ─────────────────────────────────────────────────
+var table infoTable = table.new(position.top_right, 2, 24,
+                                bgcolor=color.new(color.black, 80), border_width=1)
 
 if barstate.islast
-    table.cell(infoTable, 0, 0, "Gann Unified Strategy", text_color=color.white, text_size=size.normal)
+    table.cell(infoTable, 0, 0, "Gann-Hurst BTC Inst. v3",
+               text_color=color.white, text_size=size.small)
     table.cell(infoTable, 1, 0, "", text_color=color.white)
-    
-    table.cell(infoTable, 0, 1, "Trend", text_color=color.gray, text_size=size.small)
-    table.cell(infoTable, 1, 1, trendBull ? "▲ BULLISH" : trendBear ? "▼ BEARISH" : "— NEUTRAL", text_color=trendBull ? color.green : trendBear ? color.red : color.gray, text_size=size.small)
-    
-    table.cell(infoTable, 0, 2, "Buy Conf", text_color=color.gray, text_size=size.small)
-    table.cell(infoTable, 1, 2, str.tostring(buyConf, "#.##"), text_color=buyConf >= i_confMin ? color.green : color.gray, text_size=size.small)
-    
-    table.cell(infoTable, 0, 3, "Sell Conf", text_color=color.gray, text_size=size.small)
-    table.cell(infoTable, 1, 3, str.tostring(sellConf, "#.##"), text_color=sellConf >= i_confMin ? color.red : color.gray, text_size=size.small)
-    
-    table.cell(infoTable, 0, 4, "Vibration", text_color=color.gray, text_size=size.small)
-    table.cell(infoTable, 1, 4, str.tostring(priceVibration) + (isVibration9 ? " ⚡CHANGE" : ""), text_color=isVibration9 ? color.yellow : color.white, text_size=size.small)
-    
-    table.cell(infoTable, 0, 5, "SQ9 Near", text_color=color.gray, text_size=size.small)
-    table.cell(infoTable, 1, 5, sq9Confluence ? "✓ YES" : "✗ No", text_color=sq9Confluence ? color.blue : color.gray, text_size=size.small)
-    
-    table.cell(infoTable, 0, 6, "Daily Vol", text_color=color.gray, text_size=size.small)
-    table.cell(infoTable, 1, 6, str.tostring(dailyVol, "#.##") + "%", text_color=color.white, text_size=size.small)
-    
-    table.cell(infoTable, 0, 7, "Ann. Vol", text_color=color.gray, text_size=size.small)
-    table.cell(infoTable, 1, 7, str.tostring(annualVol, "#.#") + "%" + (useDynamic ? " [SQ12]" : ""), text_color=useDynamic ? color.teal : color.white, text_size=size.small)
-    
-    table.cell(infoTable, 0, 8, "Buy R:R", text_color=color.gray, text_size=size.small)
-    table.cell(infoTable, 1, 8, str.tostring(buyRR, "#.#") + ":1", text_color=buyRR >= i_rrRatio ? color.green : color.gray, text_size=size.small)
-    
-    table.cell(infoTable, 0, 9, "Sell R:R", text_color=color.gray, text_size=size.small)
-    table.cell(infoTable, 1, 9, str.tostring(sellRR, "#.#") + ":1", text_color=sellRR >= i_rrRatio ? color.red : color.gray, text_size=size.small)
 
-// --- Background color based on trend ---
-bgcolor(trendBull ? color.new(color.green, 95) : trendBear ? color.new(color.red, 95) : na, title="Trend Background")
+    table.cell(infoTable, 0, 1, "Trend", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 1,
+               trendBull ? "▲ BULL" : trendBear ? "▼ BEAR" : "— NEUT",
+               text_color=trendBull ? color.green : trendBear ? color.red : color.gray,
+               text_size=size.small)
+
+    table.cell(infoTable, 0, 2, "Buy Conf", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 2, str.tostring(buyConf, "#.##"),
+               text_color=buyConf >= i_confMin ? color.green : color.gray, text_size=size.small)
+
+    table.cell(infoTable, 0, 3, "Sell Conf", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 3, str.tostring(sellConf, "#.##"),
+               text_color=sellConf >= i_confMin ? color.red : color.gray, text_size=size.small)
+
+    table.cell(infoTable, 0, 4, "Vibration", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 4,
+               str.tostring(priceVibration) + (isVibration9 ? " ⚡CHANGE" : ""),
+               text_color=isVibration9 ? color.yellow : color.white, text_size=size.small)
+
+    table.cell(infoTable, 0, 5, "SQ9 Near", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 5, sq9Confluence ? "✓ YES" : "✗ No",
+               text_color=sq9Confluence ? color.blue : color.gray, text_size=size.small)
+
+    table.cell(infoTable, 0, 6, "Hurst Nest", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 6,
+               hurstGrandNest ? "⚡GRAND" : hurstMajorNest ? "MAJOR↑" : hurstMinorNest ? "minor" : "none",
+               text_color=hurstMajorNest ? color.aqua : color.gray, text_size=size.small)
+
+    table.cell(infoTable, 0, 7, "P-T Square", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 7, ptSquaringActive ? "✓ ACTIVE" : "✗",
+               text_color=ptSquaringActive ? color.yellow : color.gray, text_size=size.small)
+
+    table.cell(infoTable, 0, 8, "Master Cyc", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 8, masterCycActive ? "✓ WINDOW" : "✗",
+               text_color=masterCycActive ? color.purple : color.gray, text_size=size.small)
+
+    table.cell(infoTable, 0, 9, "Odd Sq/Hex", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 9,
+               (isNearOddSq ? "OddSq " : "") + (isNearHex ? "Hex" : ""),
+               text_color=(isNearOddSq or isNearHex) ? color.lime : color.gray, text_size=size.small)
+
+    table.cell(infoTable, 0, 10, "SAP Bias", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 10,
+               sapBullish ? "▲ BULL" : sapBearish ? "▼ BEAR" : "—",
+               text_color=sapBullish ? color.green : sapBearish ? color.red : color.gray,
+               text_size=size.small)
+
+    table.cell(infoTable, 0, 11, "Ann. Vol", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 11,
+               str.tostring(annualVol, "#.#") + "%" + (useDynamic ? " [SQ12]" : " [SQ9]"),
+               text_color=useDynamic ? color.teal : color.white, text_size=size.small)
+
+    table.cell(infoTable, 0, 12, "Vol Regime", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 12,
+               highVolRegime ? "HIGH >50% (1×1)" : "LOW <50% (1×4)",
+               text_color=highVolRegime ? color.orange : color.lime, text_size=size.small)
+
+    table.cell(infoTable, 0, 13, "Buy R:R", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 13, str.tostring(buyRR, "#.#") + ":1",
+               text_color=buyRR >= i_rrRatio ? color.green : color.gray, text_size=size.small)
+
+    table.cell(infoTable, 0, 14, "Sell R:R", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 14, str.tostring(sellRR, "#.#") + ":1",
+               text_color=sellRR >= i_rrRatio ? color.red : color.gray, text_size=size.small)
+
+    table.cell(infoTable, 0, 15, "FLD Status", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 15,
+               fldCascadeBull ? "⚡CASCADE↑" : fldCascadeBear ? "⚡CASCADE↓" :
+               fldBullC3 ? "c3↑" : fldBearC3 ? "c3↓" : "—",
+               text_color=fldCascadeBull ? color.yellow : fldCascadeBear ? color.yellow :
+               fldBullC3 ? color.lime : fldBearC3 ? color.red : color.gray,
+               text_size=size.small)
+
+    table.cell(infoTable, 0, 16, "VTL Signal", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 16,
+               vtlBuySignal ? "BUY break" : vtlSellSignal ? "SELL break" : "—",
+               text_color=vtlBuySignal ? color.lime : vtlSellSignal ? color.red : color.gray,
+               text_size=size.small)
+
+    table.cell(infoTable, 0, 17, "Hurst Phase", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 17,
+               not na(hurstPhase3) ?
+               str.tostring(hurstPhase3, "#") + "%" +
+               (hurstInBuyZone ? " BUY" : hurstInSellZone ? " SELL" : "") : "—",
+               text_color=hurstInBuyZone ? color.lime : hurstInSellZone ? color.red : color.gray,
+               text_size=size.small)
+
+    // v3 new rows
+    table.cell(infoTable, 0, 18, "Seasonal", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 18,
+               isSeasonalDate ? "✓ " + seasonalLabel : "—",
+               text_color=isSeasonalDate ? color.orange : color.gray, text_size=size.small)
+
+    table.cell(infoTable, 0, 19, "Range Proj", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 19,
+               isNearRangeProjUp ? "Near Up%" : isNearRangeProjDn ? "Near Dn%" : "—",
+               text_color=isNearRangeProj ? color.aqua : color.gray, text_size=size.small)
+
+    table.cell(infoTable, 0, 20, "Phi/√ Lvl", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 20,
+               isNearPhiUp ? "Φ Up" : isNearPhiDn ? "Φ Dn" : "—",
+               text_color=isNearPhi ? color.silver : color.gray, text_size=size.small)
+
+    table.cell(infoTable, 0, 21, "Angle Brk", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 21,
+               angleBrokenDown ? "↓ 1×1 BRK" : angleBrokenUp ? "↑ 1×1 BRK" :
+               inAngleBearBreak ? "Bear mode" : inAngleBullBreak ? "Bull mode" : "—",
+               text_color=angleBrokenDown ? color.red : angleBrokenUp ? color.lime : color.gray,
+               text_size=size.small)
+
+    table.cell(infoTable, 0, 22, "Bars Lo/Hi", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 22,
+               (not na(barsSinceLo) ? str.tostring(math.round(barsSinceLo)) + "Lo" : "—") +
+               (not na(barsSinceHi) ? " / " + str.tostring(math.round(barsSinceHi)) + "Hi" : ""),
+               text_color=color.white, text_size=size.small)
+
+    table.cell(infoTable, 0, 23, "Range Proj$", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 23,
+               not na(rangeProjUp200) ? str.tostring(math.round(rangeProjUp200)) :
+               not na(rangeProjDn200) ? str.tostring(math.round(rangeProjDn200)) : "—",
+               text_color=color.aqua, text_size=size.small)
 
 // ============================================================================
 // ALERTS
 // ============================================================================
-alertcondition(goLong  and strategy.position_size <= 0, "Gann BUY Signal",  "Gann Strategy: BUY signal — Confidence: {{plot_2}}")
-alertcondition(goShort and strategy.position_size >= 0, "Gann SELL Signal", "Gann Strategy: SELL signal — Confidence: {{plot_3}}")
-alertcondition(isVibration9, "Vibration 9 Alert", "Price vibration = 9 (CHANGE NUMBER) — Watch for reversal")
+alertcondition(goLong  and strategy.position_size <= 0,
+               "Gann-Hurst BUY",
+               "Gann-Hurst BTC v3: BUY signal — check confidence table")
+alertcondition(goShort and strategy.position_size >= 0,
+               "Gann-Hurst SELL",
+               "Gann-Hurst BTC v3: SELL signal — check confidence table")
+alertcondition(hurstMajorNest,
+               "Hurst Nest of Lows",
+               "Hurst: Major Nest-of-Lows detected — watch for BUY entry")
+alertcondition(hurstMajorPeak,
+               "Hurst Nest of Highs",
+               "Hurst: Major Nest-of-Highs detected — watch for SELL entry")
+alertcondition(ptSquaringActive,
+               "Price-Time Squaring",
+               "P-T Squaring: Time = √Range from pivot — trend change window active")
+alertcondition(masterCycActive,
+               "Master Cycle Window",
+               "Master Gann Cycle window active — potential reversal zone (PDFs 01,06,07,12,19)")
+alertcondition(isVibration9,
+               "Vibration 9 Alert",
+               "Price vibration = 9 (CHANGE NUMBER) — watch for reversal (PDF 06)")
+alertcondition(fldCrossUp2,
+               "Hurst FLD Cross Up",
+               "FLD (c2 cycle) crossed upward — 50% of upswing complete, confirms bullish")
+alertcondition(fldCrossDown2,
+               "Hurst FLD Cross Down",
+               "FLD (c2 cycle) crossed downward — 50% of downswing complete, confirms bearish")
+alertcondition(fldCascadeBull,
+               "Hurst FLD Cascade Bullish",
+               "Hurst FLD Cascade: all shorter-period FLDs above price — strong bull signal")
+alertcondition(vtlBuySignal,
+               "VTL Buy Break",
+               "VTL (Valid Trend Line) broken upward — buy entry signal per Profit Magic ch.4")
+// v3 new alerts:
+alertcondition(isSeasonalDate,
+               "Gann Seasonal Date",
+               "Gann Seasonal Date window active — equinox/solstice/Oct-Nov turning point (PDFs 12,13,07)")
+alertcondition(isNearRangeProj,
+               "Range Projection Hit",
+               "Price near range projection level (50/100/150/200%) — key S/R zone (PDF 23 Shephard)")
+alertcondition(angleBrokenDown,
+               "Angle Break Down — Bearish",
+               "Price crossed BELOW 1×1 (45°) Gann angle — decline to next angle expected (PDFs 05,08)")
+alertcondition(angleBrokenUp,
+               "Angle Break Up — Bullish",
+               "Price crossed ABOVE 1×1 support Gann angle — recovery to next angle expected (PDFs 05,08)")
+alertcondition(isNearPhi,
+               "Phi/√2/√3 Level Hit",
+               "Price near Phi (1.618) or √2/√3 multiplicative level from swing — S/R zone (PDFs 18,22)")
