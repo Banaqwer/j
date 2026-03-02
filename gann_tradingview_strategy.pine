@@ -426,10 +426,10 @@ masterCycActive = masterCycFromLo or masterCycFromHi
 // ============================================================================
 // PDF 04: "Price moves from one odd square to the next (1,9,25,49,81,121...)"
 
-pRoot  = math.sqrt(close / i_priceScale)
-nearO  = math.round(pRoot)
-nearO  := nearO % 2 == 0 ? nearO + 1 : nearO
-nearO  := nearO < 1 ? 1 : nearO
+pRoot   = math.sqrt(close / i_priceScale)
+nearO_r = math.round(pRoot)
+nearO_a = nearO_r % 2 == 0 ? nearO_r + 1 : nearO_r   // ensure odd number
+nearO   = nearO_a < 1 ? 1 : nearO_a                   // ensure >= 1
 prevO  = nearO - 2 < 1 ? 1 : nearO - 2
 nextO  = nearO + 2
 
@@ -473,33 +473,21 @@ isNearHex = math.abs(close - hexL1) / close * 100.0 < i_sq9Tol or
 // ============================================================================
 // PDF 06: Vibration 9 = change number; 3-6-9 = sacred sequence
 
+// digitSum: compute digital root (iterated digit sum → single digit 1-9).
+// Called only as digitSum(math.round(close)) where close is a market price.
+// For BTC, close is typically 10,000–200,000 (at most 6 digits → sum ≤ 54).
+// The 8-digit bound (sum ≤ 72) is a conservative guard for any 8-digit price.
+// Inside function scope, := on local (non-var) variables IS valid in Pine v5.
 digitSum(int val) =>
-    n   = math.abs(val)
-    s   = 0
-    s   += n % 10
-    n   := math.floor(n / 10)
-    s   += n % 10
-    n   := math.floor(n / 10)
-    s   += n % 10
-    n   := math.floor(n / 10)
-    s   += n % 10
-    n   := math.floor(n / 10)
-    s   += n % 10
-    n   := math.floor(n / 10)
-    s   += n % 10
-    n   := math.floor(n / 10)
-    s   += n % 10
-    n   := math.floor(n / 10)
-    s   += n % 10
-    while s >= 10
-        s2  = 0
-        s2  += s % 10
-        s   := math.floor(s / 10)
-        s2  += s % 10
-        s   := math.floor(s / 10)
-        s2  += s
-        s   := s2
-    s
+    n = math.abs(val)
+    s = 0
+    for _i = 0 to 7  // unroll 8 digits — handles prices up to 99,999,999
+        s := s + n % 10
+        n := math.floor(n / 10)
+    // Reduce digit sum to a single digit (two passes cover any s ≤ 72)
+    s1 = s  >= 10 ? (s  % 10) + math.floor(s  / 10) : s
+    s2 = s1 >= 10 ? (s1 % 10) + math.floor(s1 / 10) : s1
+    s2
 
 priceVibration = digitSum(math.round(close))
 isVibration9   = priceVibration == 9
@@ -705,56 +693,56 @@ sellReward = math.abs(sellEntry  - sellTarget)
 sellRR     = sellRisk > 0.0 ? sellReward / sellRisk : 0.0
 
 // ── Buy Confidence ─────────────────────────────────────────────────────────
-buyConf = 0.0
-buyConf := buyConf + (trendBull  ? 0.25 : prelimBull ? 0.15 : 0.0)
-buyConf := buyConf + (sq9Confluence ? 0.10 : 0.0)
-buyConf := buyConf + (isVibration9  ? 0.05 : 0.0)
-buyConf := buyConf + (hurstGrandNest ? 0.10 : hurstMajorNest ? 0.07 : hurstMinorNest ? 0.04 : 0.0)
-buyConf := buyConf + (fldCascadeBull ? 0.10 : fldBullC3 ? 0.05 : 0.0)
-buyConf := buyConf + (fldCrossUp2    ? 0.05 : 0.0)
-buyConf := buyConf + (vtlBuySignal   ? 0.05 : 0.0)
-buyConf := buyConf + (hurstInBuyZone  ? 0.05 : hurstInSellZone ? -0.05 : 0.0)
-buyConf := buyConf + (ptSquaringFromLo ? 0.05 : 0.0)
-buyConf := buyConf + (masterCycFromLo  ? 0.05 : 0.0)
-buyConf := buyConf + (isNearOddSq  ? 0.05 : 0.0)
-buyConf := buyConf + (isNearHex    ? 0.05 : 0.0)
-buyConf := buyConf + (sapBullish   ? 0.05 : sapBearish ? -0.05 : 0.0)
-buyConf := buyConf + (useDynamic and close < expectedHigh ? 0.10 : 0.0)
-buyConf := buyConf + (buyRR >= i_rrRatio ? 0.15 : buyRR >= 1.5 ? 0.05 : -0.10)
-buyConf := buyConf + (thirdTestResist ? -0.10 : 0.0)
-buyConf := buyConf + (hurstAllBull ? 0.05 : 0.0)
-// v3 additions:
-buyConf := buyConf + (isSeasonalDate       ? 0.08 : 0.0)    // seasonal date [PDFs 12, 13, 07]
-buyConf := buyConf + (isNearRangeProjUp   ? 0.05 : 0.0)    // range proj confluence [PDF 23]
-buyConf := buyConf + (isNearPhiUp         ? 0.05 : 0.0)    // phi/sqrt level [PDFs 18, 22]
-buyConf := buyConf + (inAngleBullBreak    ? 0.05 : 0.0)    // angle break momentum (persistent) [PDFs 05, 08]
-buyConf := math.max(0.0, math.min(1.0, buyConf))
+// Rewritten as single expression (avoids := on non-var at global scope)
+buyConf = math.max(0.0, math.min(1.0,
+    (trendBull  ? 0.25 : prelimBull ? 0.15 : 0.0)                             +
+    (sq9Confluence ? 0.10 : 0.0)                                               +
+    (isVibration9  ? 0.05 : 0.0)                                               +
+    (hurstGrandNest ? 0.10 : hurstMajorNest ? 0.07 : hurstMinorNest ? 0.04 : 0.0) +
+    (fldCascadeBull ? 0.10 : fldBullC3 ? 0.05 : 0.0)                          +
+    (fldCrossUp2    ? 0.05 : 0.0)                                              +
+    (vtlBuySignal   ? 0.05 : 0.0)                                              +
+    (hurstInBuyZone  ? 0.05 : hurstInSellZone ? -0.05 : 0.0)                  +
+    (ptSquaringFromLo ? 0.05 : 0.0)                                            +
+    (masterCycFromLo  ? 0.05 : 0.0)                                            +
+    (isNearOddSq  ? 0.05 : 0.0)                                                +
+    (isNearHex    ? 0.05 : 0.0)                                                +
+    (sapBullish   ? 0.05 : sapBearish ? -0.05 : 0.0)                          +
+    (useDynamic and close < expectedHigh ? 0.10 : 0.0)                        +
+    (buyRR >= i_rrRatio ? 0.15 : buyRR >= 1.5 ? 0.05 : -0.10)                +
+    (thirdTestResist ? -0.10 : 0.0)                                            +
+    (hurstAllBull ? 0.05 : 0.0)                                                +
+    // v3 additions:
+    (isSeasonalDate     ? 0.08 : 0.0)   +   // seasonal date [PDFs 12, 13, 07]
+    (isNearRangeProjUp  ? 0.05 : 0.0)   +   // range proj confluence [PDF 23]
+    (isNearPhiUp        ? 0.05 : 0.0)   +   // phi/sqrt level [PDFs 18, 22]
+    (inAngleBullBreak   ? 0.05 : 0.0)))     // angle break momentum [PDFs 05, 08]
 
 // ── Sell Confidence ────────────────────────────────────────────────────────
-sellConf = 0.0
-sellConf := sellConf + (trendBear  ? 0.25 : prelimBear ? 0.15 : 0.0)
-sellConf := sellConf + (sq9Confluence ? 0.10 : 0.0)
-sellConf := sellConf + (isVibration9  ? 0.05 : 0.0)
-sellConf := sellConf + (hurstGrandPeak ? 0.10 : hurstMajorPeak ? 0.07 : hurstMinorPeak ? 0.04 : 0.0)
-sellConf := sellConf + (fldCascadeBear ? 0.10 : fldBearC3 ? 0.05 : 0.0)
-sellConf := sellConf + (fldCrossDown2  ? 0.05 : 0.0)
-sellConf := sellConf + (vtlSellSignal  ? 0.05 : 0.0)
-sellConf := sellConf + (hurstInSellZone ? 0.05 : hurstInBuyZone ? -0.05 : 0.0)
-sellConf := sellConf + (ptSquaringFromHi ? 0.05 : 0.0)
-sellConf := sellConf + (masterCycFromHi  ? 0.05 : 0.0)
-sellConf := sellConf + (isNearOddSq  ? 0.05 : 0.0)
-sellConf := sellConf + (isNearHex    ? 0.05 : 0.0)
-sellConf := sellConf + (sapBearish   ? 0.05 : sapBullish ? -0.05 : 0.0)
-sellConf := sellConf + (useDynamic and close > expectedLow ? 0.10 : 0.0)
-sellConf := sellConf + (sellRR >= i_rrRatio ? 0.15 : sellRR >= 1.5 ? 0.05 : -0.10)
-sellConf := sellConf + (thirdTestSupport ? -0.10 : 0.0)
-sellConf := sellConf + (hurstAllBear ? 0.05 : 0.0)
-// v3 additions:
-sellConf := sellConf + (isSeasonalDate       ? 0.08 : 0.0)    // seasonal date [PDFs 12, 13, 07]
-sellConf := sellConf + (isNearRangeProjDn   ? 0.05 : 0.0)    // range proj confluence [PDF 23]
-sellConf := sellConf + (isNearPhiDn         ? 0.05 : 0.0)    // phi/sqrt level [PDFs 18, 22]
-sellConf := sellConf + (inAngleBearBreak    ? 0.05 : 0.0)    // angle break momentum (persistent) [PDFs 05, 08]
-sellConf := math.max(0.0, math.min(1.0, sellConf))
+// Rewritten as single expression (avoids := on non-var at global scope)
+sellConf = math.max(0.0, math.min(1.0,
+    (trendBear  ? 0.25 : prelimBear ? 0.15 : 0.0)                              +
+    (sq9Confluence ? 0.10 : 0.0)                                                +
+    (isVibration9  ? 0.05 : 0.0)                                                +
+    (hurstGrandPeak ? 0.10 : hurstMajorPeak ? 0.07 : hurstMinorPeak ? 0.04 : 0.0) +
+    (fldCascadeBear ? 0.10 : fldBearC3 ? 0.05 : 0.0)                           +
+    (fldCrossDown2  ? 0.05 : 0.0)                                               +
+    (vtlSellSignal  ? 0.05 : 0.0)                                               +
+    (hurstInSellZone ? 0.05 : hurstInBuyZone ? -0.05 : 0.0)                    +
+    (ptSquaringFromHi ? 0.05 : 0.0)                                             +
+    (masterCycFromHi  ? 0.05 : 0.0)                                             +
+    (isNearOddSq  ? 0.05 : 0.0)                                                 +
+    (isNearHex    ? 0.05 : 0.0)                                                 +
+    (sapBearish   ? 0.05 : sapBullish ? -0.05 : 0.0)                           +
+    (useDynamic and close > expectedLow ? 0.10 : 0.0)                          +
+    (sellRR >= i_rrRatio ? 0.15 : sellRR >= 1.5 ? 0.05 : -0.10)               +
+    (thirdTestSupport ? -0.10 : 0.0)                                            +
+    (hurstAllBear ? 0.05 : 0.0)                                                 +
+    // v3 additions:
+    (isSeasonalDate     ? 0.08 : 0.0)   +   // seasonal date [PDFs 12, 13, 07]
+    (isNearRangeProjDn  ? 0.05 : 0.0)   +   // range proj confluence [PDF 23]
+    (isNearPhiDn        ? 0.05 : 0.0)   +   // phi/sqrt level [PDFs 18, 22]
+    (inAngleBearBreak   ? 0.05 : 0.0)))     // angle break momentum [PDFs 05, 08]
 
 // ============================================================================
 // COMPONENT 16: STRATEGY EXECUTION  [PDFs 01, 04, 05]
@@ -788,16 +776,16 @@ if goLong and strategy.position_size <= 0
     strategy.entry("Long", strategy.long, qty=longQty)
     strategy.exit("Long SL/TP", "Long",
                   stop=buyStop, limit=buyTarget,
-                  trail_offset=longTrailActivate,
-                  trail_points=longTrailDist)
+                  trail_points=longTrailActivate,   // activate trailing when profit reaches activation level
+                  trail_offset=longTrailDist)        // trail by X% of price behind the extreme
     barsInTrade := 0
 
 if goShort and strategy.position_size >= 0
     strategy.entry("Short", strategy.short, qty=shortQty)
     strategy.exit("Short SL/TP", "Short",
                   stop=sellStop, limit=sellTarget,
-                  trail_offset=shortTrailActivate,
-                  trail_points=shortTrailDist)
+                  trail_points=shortTrailActivate,  // activate trailing when profit reaches activation level
+                  trail_offset=shortTrailDist)       // trail by X% of price behind the extreme
     barsInTrade := 0
 
 if barsInTrade >= i_maxBars and strategy.position_size != 0
