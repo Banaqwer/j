@@ -1,0 +1,1535 @@
+// ============================================================================
+// GANN COMPLETE UNIFIED STRATEGY — TradingView Pine Script v5
+// ============================================================================
+// Full translation of gann_trading_algorithm.py (all 31 components) into a
+// live TradingView strategy for any market (BTC, ETH, Gold, Forex, Stocks).
+//
+// Based on W.D. Gann's methods decoded from 27 PDF documents:
+//   PDFs 1-7:   Core Gann methods (angles, SQ9, vibration, cycles)
+//   PDFs 8-11:  144 Square, Hexagon, Price-Time Vector, Master Formula
+//   PDFs 12-14: Range divisions, Master Time Factor, George Bayer
+//   PDFs 15-17: Moon Beam, Jenkins, 1953 Mathematical Formula
+//   PDFs 18-21: Shephard Course, Astro-Cycles, Basis of Forecasting, Law of Vibration
+//   PDFs 22-27: Sephariel Numbers, Planetary Harmonics, Gann Wheel,
+//               Spiral Chart/Futia, Advanced Group, Short-Term Astrology
+//
+// 31 Components Implemented:
+//   C1:  Gann Angle Support/Resistance (11 angles)
+//   C2:  Square of 9 Price Levels
+//   C3:  Number Vibration Analysis (digit reduction)
+//   C4:  Daily Volatility Calculation
+//   C5:  Dynamic Gann Levels (volatility-adjusted SQ9/SQ12)
+//   C6:  144-Cycle Price Zones
+//   C7:  Trend Confirmation from Gann Angles
+//   C8:  Price-Time Squaring
+//   C9:  Hexagon Chart Levels (60° angles)
+//   C10: Range Percentage Divisions (1/8th & 1/3rd)
+//   C11: Swing Chart Trend Analysis (HH/HL/LH/LL)
+//   C12: Master 144 Square / Great Cycle (20,736)
+//   C13: Seasonal Cardinal Timing (equinox/solstice)
+//   C14: Fatal Number Analysis (49 and multiples)
+//   C15: Shephard Key Cycles (631/668/840/1260/1290/1336)
+//   C16: Planetary Cycle Windows (Mars 687d, Venus 224d)
+//   C17: Cumulative Range Analysis
+//   C18: Master Time Factor (7/10/20/30/60-year)
+//   C19: Range Extension Levels
+//   C20: Multi-Timeframe Confluence
+//   C21: 192-Day Master Time Factor / Diatonic Octave (PDF 6, pp.5-8)
+//   C22: Third-Time Test Rule (PDF 10, p.2)
+//   C23: Minor Trend Turn Analysis (PDFs 10, 16)
+//   C24: Jensen Critical Points — harmonics of 90° (Jensen, pp.108-113)
+//   C25: Jensen Five-Phase Trend (Jensen, pp.121-122)
+//   C26: Vectorial Projection — 45°+60° exhaustion (Jensen, pp.124-126)
+//   C28: Futia SQ9 Angular Position (PDF 25, Spiral Chart formula)
+//   C29: Range Expansion Check (PDF 27, Crabel 75%+ continuation)
+//   C30: Triangular Number S/R (PDF 26, summation formula)
+//   C31: Planetary Harmonic Price Levels (PDF 23, longitude→price)
+//   C27: Confidence Scoring & Signal Generation (22-factor)
+//
+// HOW TO USE:
+//   1. Open TradingView → Pine Editor
+//   2. Paste this entire script
+//   3. Click "Add to Chart"
+//   4. Select any asset on daily timeframe
+//   5. Open Strategy Tester tab to see backtest results
+//   6. For demo trading: Enable "Paper Trading" in TradingView
+// ============================================================================
+
+//@version=5
+strategy("Gann Complete Strategy (31 Components)", overlay=true,
+     default_qty_type=strategy.percent_of_equity, default_qty_value=100,
+     initial_capital=10000, commission_type=strategy.commission.percent,
+     commission_value=0.1, slippage=2, pyramiding=0)
+
+// ============================================================================
+// INPUTS
+// ============================================================================
+grp_main     = "Main Settings"
+i_riskPct    = input.float(1.5,   "Risk Per Trade (%)",       minval=0.1, maxval=10.0, step=0.1, group=grp_main)
+i_rrRatio    = input.float(2.5,   "Reward:Risk Ratio",        minval=1.0, maxval=10.0, step=0.5, group=grp_main)
+i_confMin    = input.float(0.40,  "Min Confidence to Trade",  minval=0.1, maxval=1.0,  step=0.05, group=grp_main)
+i_volLen     = input.int(20,      "Volatility Lookback",       minval=5,   maxval=100,  group=grp_main)
+i_swingLen   = input.int(50,      "Swing High/Low Lookback",   minval=10,  maxval=200,  group=grp_main)
+
+grp_gann     = "Gann Settings"
+i_showAngles = input.bool(true,   "Show Gann Angle Levels",    group=grp_gann)
+i_showSQ9    = input.bool(true,   "Show Square of 9 Levels",   group=grp_gann)
+i_show144    = input.bool(false,  "Show 144-Cycle Levels",     group=grp_gann)
+i_showRange  = input.bool(true,   "Show Range % Levels",       group=grp_gann)
+i_showHex    = input.bool(false,  "Show Hexagon Levels",       group=grp_gann)
+i_sq9Tol     = input.float(0.5,   "SQ9 Confluence (%)",       minval=0.1, maxval=2.0, step=0.1, group=grp_gann)
+i_dynVolThresh = input.float(40.0,"Dynamic SQ12 Trigger (Ann.Vol%)", minval=10.0, maxval=100.0, step=5.0, group=grp_gann)
+
+grp_trade    = "Trade Management"
+i_partialPct = input.float(50.0,  "Partial Exit (%)",         minval=0.0, maxval=100.0, step=10.0, group=grp_trade)
+i_trailPct   = input.float(2.0,   "Trailing Stop (%)",        minval=0.5, maxval=10.0,  step=0.5, group=grp_trade)
+i_maxBars    = input.int(60,      "Max Bars in Trade",         minval=10,  maxval=200,  group=grp_trade)
+
+grp_adv      = "Advanced — New Components"
+i_useFatal   = input.bool(true,   "Use Fatal Number (49)",     group=grp_adv)
+i_useSwing   = input.bool(true,   "Use Swing Trend Analysis",  group=grp_adv)
+i_useSeasonal= input.bool(true,   "Use Seasonal Cardinal",     group=grp_adv)
+i_useRangePct= input.bool(true,   "Use Range % Confidence",    group=grp_adv)
+i_useHexConf = input.bool(true,   "Use Hexagon Confidence",    group=grp_adv)
+i_swingTrendLen = input.int(5,    "Swing Trend Bars",          minval=3, maxval=20, group=grp_adv)
+i_use192     = input.bool(true,   "Use 192-Day Octave (C21)",  group=grp_adv)
+i_use3rdTest = input.bool(true,   "Use Third-Time Test (C22)", group=grp_adv)
+i_useMinorTurn = input.bool(true, "Use Minor Trend Turn (C23)",group=grp_adv)
+i_useJensen  = input.bool(true,   "Use Jensen Critical (C24)", group=grp_adv)
+i_use5Phase  = input.bool(true,   "Use Five-Phase Trend (C25)",group=grp_adv)
+i_useVectorial = input.bool(true, "Use Vectorial Proj. (C26)", group=grp_adv)
+i_useFutia     = input.bool(true, "Use Futia SQ9 Angular (C28)",group=grp_adv)
+i_useRangeExp  = input.bool(true, "Use Range Expansion (C29)",  group=grp_adv)
+i_useTriangular= input.bool(true, "Use Triangular Numbers (C30)",group=grp_adv)
+i_usePlanHarm  = input.bool(true, "Use Planetary Harmonic (C31)",group=grp_adv)
+
+// ============================================================================
+// C1: GANN ANGLE SUPPORT/RESISTANCE (11 angles)
+// ============================================================================
+// Formula: level = (sqrt(base) ± degree_factor)²
+// Degree factors: [0.125, 0.25, 0.333, 0.5, 1.0, 2.0, 3.0, 4.0, 8.0, 12.0, 16.0]
+// Source: PDF 5 "Intraday Trade Using Gann Angle"
+
+gannAngleLevel(float base, float degFactor, bool isUp) =>
+    sq = math.sqrt(base)
+    adjusted = isUp ? sq + degFactor : sq - degFactor
+    adjusted > 0 ? adjusted * adjusted : na
+
+swingHi = ta.highest(high, i_swingLen)
+swingLo = ta.lowest(low,   i_swingLen)
+
+// Resistance levels (from swing low, going up)
+r_1x16  = gannAngleLevel(swingLo, 0.125, true)
+r_1x8   = gannAngleLevel(swingLo, 0.25,  true)
+r_1x6   = gannAngleLevel(swingLo, 0.333, true)
+r_1x4   = gannAngleLevel(swingLo, 0.5,   true)   // Buy entry
+r_1x1   = gannAngleLevel(swingLo, 1.0,   true)   // Key 45° angle
+r_4x1   = gannAngleLevel(swingLo, 2.0,   true)
+r_6x1   = gannAngleLevel(swingLo, 3.0,   true)
+r_8x1_r = gannAngleLevel(swingLo, 4.0,   true)
+
+// Support levels (from swing high, going down)
+s_1x16  = gannAngleLevel(swingHi, 0.125, false)
+s_1x8   = gannAngleLevel(swingHi, 0.25,  false)
+s_1x6   = gannAngleLevel(swingHi, 0.333, false)
+s_1x4   = gannAngleLevel(swingHi, 0.5,   false)
+s_1x1   = gannAngleLevel(swingHi, 1.0,   false)   // Key 45° angle
+s_4x1   = gannAngleLevel(swingHi, 2.0,   false)   // Sell entry
+s_6x1   = gannAngleLevel(swingHi, 3.0,   false)
+s_8x1_s = gannAngleLevel(swingHi, 4.0,   false)
+
+// ============================================================================
+// C2: SQUARE OF 9 PRICE LEVELS
+// ============================================================================
+// SQ9 cardinal degrees: 90°, 180°, 270°, 360°
+// Formula: level = (sqrt(price) + n * degree/360)²
+// Source: PDFs 4, 5
+
+sq9Level(float price, int n, float degree) =>
+    sq = math.sqrt(price)
+    result = sq + n * degree / 360.0
+    result * result
+
+sq9_90_up   = sq9Level(close, 1, 90)
+sq9_180_up  = sq9Level(close, 1, 180)
+sq9_270_up  = sq9Level(close, 1, 270)
+sq9_360_up  = sq9Level(close, 1, 360)
+sq9_90_dn   = sq9Level(close, -1, 90)
+sq9_180_dn  = sq9Level(close, -1, 180)
+sq9_270_dn  = sq9Level(close, -1, 270)
+sq9_360_dn  = sq9Level(close, -1, 360)
+
+// Check if price is near any SQ9 cardinal level (within tolerance)
+isNearSQ9(float price, float tol) =>
+    near = false
+    near := near or math.abs(price - sq9_90_up)  / price * 100 < tol
+    near := near or math.abs(price - sq9_180_up) / price * 100 < tol
+    near := near or math.abs(price - sq9_270_up) / price * 100 < tol
+    near := near or math.abs(price - sq9_360_up) / price * 100 < tol
+    near := near or math.abs(price - sq9_90_dn)  / price * 100 < tol
+    near := near or math.abs(price - sq9_180_dn) / price * 100 < tol
+    near := near or math.abs(price - sq9_270_dn) / price * 100 < tol
+    near := near or math.abs(price - sq9_360_dn) / price * 100 < tol
+    near
+
+sq9Confluence = isNearSQ9(close, i_sq9Tol)
+
+// ============================================================================
+// C3: NUMBER VIBRATION ANALYSIS
+// ============================================================================
+// Digit reduction: sum digits until single digit
+// Vibration 9 = "change number" (reversal likely)
+// Source: PDF 6 "WD GANN Number Vibrations"
+
+digitSum(int val) =>
+    n = math.abs(val)
+    sum = 0
+    sum := n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    n := math.floor(n / 10)
+    sum += n % 10
+    // Reduce to single digit
+    while sum >= 10
+        s2 = 0
+        s2 := sum % 10
+        sum := math.floor(sum / 10)
+        s2 += sum % 10
+        sum := math.floor(sum / 10)
+        s2 += sum
+        sum := s2
+    sum
+
+priceVibration = digitSum(math.round(close))
+isVibration9   = priceVibration == 9
+
+// ============================================================================
+// C4: DAILY VOLATILITY CALCULATION
+// ============================================================================
+// Log-return based volatility (matches Python implementation)
+// Source: PDF 5
+
+logReturn  = math.log(close / close[1])
+dailyVol   = ta.stdev(logReturn, i_volLen) * 100   // percentage
+annualVol  = dailyVol * math.sqrt(365)              // annualized for crypto (24/7)
+
+// ============================================================================
+// C5: DYNAMIC GANN LEVELS (Volatility-Adjusted)
+// ============================================================================
+// When annual vol > threshold → use SQ12 (12 divisions of 360° = 30° each)
+// Expected high/low = price ± (dailyVol% × price)
+// Source: PDF 5
+
+useDynamic   = annualVol > i_dynVolThresh
+expectedHigh = close * (1 + dailyVol / 100)
+expectedLow  = close * (1 - dailyVol / 100)
+
+// Dynamic SQ12 levels (30° intervals around current price)
+dynSQ12_up1  = sq9Level(close, 1, 30)
+dynSQ12_up2  = sq9Level(close, 2, 30)
+dynSQ12_up3  = sq9Level(close, 3, 30)
+dynSQ12_dn1  = sq9Level(close, -1, 30)
+dynSQ12_dn2  = sq9Level(close, -2, 30)
+dynSQ12_dn3  = sq9Level(close, -3, 30)
+
+// ============================================================================
+// C6: 144-CYCLE PRICE ZONES
+// ============================================================================
+// Gann's master cycle number = 144; price levels at multiples of 144
+// Source: PDF 6, PDF 17 (Great Cycle = 144² = 20,736)
+
+cycle144_base  = math.floor(close / 144) * 144
+cycle144_below = cycle144_base
+cycle144_above = cycle144_base + 144
+cycle144_near  = math.abs(close - cycle144_below) < math.abs(close - cycle144_above) ? cycle144_below : cycle144_above
+cycle144_dist  = math.abs(close - cycle144_near) / close * 100
+
+// ============================================================================
+// C7: TREND CONFIRMATION FROM GANN ANGLES
+// ============================================================================
+// Price > 1x1 resistance from low = UPTREND
+// Price < 1x1 support from high = DOWNTREND
+// Source: PDF 5
+
+trendUp    = close > r_1x1 and not na(r_1x1)
+trendDown  = close < s_1x1 and not na(s_1x1)
+trendBull  = trendUp and not trendDown
+trendBear  = trendDown and not trendUp
+
+// Strong trend confirmation: above/below 4x1
+strongBull = close > r_4x1 and not na(r_4x1)
+strongBear = close < s_4x1 and not na(s_4x1)
+
+// ============================================================================
+// C9: HEXAGON CHART LEVELS
+// ============================================================================
+// The Hexagon chart places numbers in concentric 6-fold rings.
+// Key angle levels at 60°, 120°, 180°, 240°, 300°, 360°
+// Formula: level = (sqrt(seed) ± deg/180)²
+// Source: PDF 9 "1931 SQ9 Hexagon Chart"
+
+hexAngleLevel(float seed, float deg, bool isUp) =>
+    sq = math.sqrt(seed)
+    offset = deg / 180.0
+    adj = isUp ? sq + offset : sq - offset
+    adj > 0 ? adj * adj : na
+
+// Calculate hexagon levels from swing low (support seed)
+hex_60_up   = hexAngleLevel(swingLo, 60,  true)
+hex_120_up  = hexAngleLevel(swingLo, 120, true)
+hex_180_up  = hexAngleLevel(swingLo, 180, true)
+hex_240_up  = hexAngleLevel(swingLo, 240, true)
+hex_300_up  = hexAngleLevel(swingLo, 300, true)
+hex_360_up  = hexAngleLevel(swingLo, 360, true)
+
+hex_60_dn   = hexAngleLevel(swingHi, 60,  false)
+hex_120_dn  = hexAngleLevel(swingHi, 120, false)
+hex_180_dn  = hexAngleLevel(swingHi, 180, false)
+hex_240_dn  = hexAngleLevel(swingHi, 240, false)
+hex_300_dn  = hexAngleLevel(swingHi, 300, false)
+hex_360_dn  = hexAngleLevel(swingHi, 360, false)
+
+// Check if price near any hexagon level
+isNearHex(float price, float tol) =>
+    near = false
+    near := near or (not na(hex_60_up)  and math.abs(price - hex_60_up)  / price * 100 < tol)
+    near := near or (not na(hex_120_up) and math.abs(price - hex_120_up) / price * 100 < tol)
+    near := near or (not na(hex_180_up) and math.abs(price - hex_180_up) / price * 100 < tol)
+    near := near or (not na(hex_240_up) and math.abs(price - hex_240_up) / price * 100 < tol)
+    near := near or (not na(hex_300_up) and math.abs(price - hex_300_up) / price * 100 < tol)
+    near := near or (not na(hex_360_up) and math.abs(price - hex_360_up) / price * 100 < tol)
+    near := near or (not na(hex_60_dn)  and math.abs(price - hex_60_dn)  / price * 100 < tol)
+    near := near or (not na(hex_120_dn) and math.abs(price - hex_120_dn) / price * 100 < tol)
+    near := near or (not na(hex_180_dn) and math.abs(price - hex_180_dn) / price * 100 < tol)
+    near
+
+hexConfluence = isNearHex(close, i_sq9Tol)
+
+// ============================================================================
+// C10: RANGE PERCENTAGE DIVISIONS (1/8th & 1/3rd)
+// ============================================================================
+// Gann percentages: 12.5%, 25%, 33.3%, 37.5%, 50%, 62.5%, 66.6%, 75%, 87.5%
+// Applied to the current swing range to find S/R levels
+// "The 50% level is the center of gravity" — Gann
+// Source: PDFs 12, 17, 18
+
+priceRange   = swingHi - swingLo
+
+// Support levels (from high, retracing down into range)
+range_125    = swingHi - priceRange * 0.125    // 12.5% — 1/8
+range_250    = swingHi - priceRange * 0.250    // 25%   — 2/8
+range_333    = swingHi - priceRange * 0.333    // 33.3% — 1/3
+range_375    = swingHi - priceRange * 0.375    // 37.5% — 3/8
+range_500    = swingHi - priceRange * 0.500    // 50%   — center of gravity
+range_625    = swingHi - priceRange * 0.625    // 62.5% — 5/8
+range_666    = swingHi - priceRange * 0.666    // 66.6% — 2/3
+range_750    = swingHi - priceRange * 0.750    // 75%   — 6/8
+range_875    = swingHi - priceRange * 0.875    // 87.5% — 7/8
+
+// Extension levels (projecting above the high)
+ext_125      = swingHi + priceRange * 0.125
+ext_250      = swingHi + priceRange * 0.250
+ext_500      = swingHi + priceRange * 0.500
+ext_1000     = swingHi + priceRange * 1.000
+
+// Check if price is near any range percentage level
+isNearRange(float price, float tol) =>
+    near = false
+    near := near or math.abs(price - range_125) / price * 100 < tol
+    near := near or math.abs(price - range_250) / price * 100 < tol
+    near := near or math.abs(price - range_333) / price * 100 < tol
+    near := near or math.abs(price - range_375) / price * 100 < tol
+    near := near or math.abs(price - range_500) / price * 100 < tol
+    near := near or math.abs(price - range_625) / price * 100 < tol
+    near := near or math.abs(price - range_666) / price * 100 < tol
+    near := near or math.abs(price - range_750) / price * 100 < tol
+    near := near or math.abs(price - range_875) / price * 100 < tol
+    near
+
+rangeConfluence = isNearRange(close, 0.3)   // 0.3% tolerance for range levels
+
+// ============================================================================
+// C11: SWING CHART TREND ANALYSIS (Mechanical)
+// ============================================================================
+// Count higher highs / higher lows vs lower highs / lower lows
+// If majority are HH + HL → uptrend; LH + LL → downtrend
+// Source: PDF 18 "Charles Shephard Gann Cycles Course"
+
+swingTrendLen = i_swingTrendLen
+
+// Count higher highs and higher lows over last N bars
+hhCount = 0
+hlCount = 0
+lhCount = 0
+llCount = 0
+for i = 1 to swingTrendLen
+    if high[i-1] > high[i]
+        hhCount += 1
+    if high[i-1] < high[i]
+        lhCount += 1
+    if low[i-1] > low[i]
+        hlCount += 1
+    if low[i-1] < low[i]
+        llCount += 1
+
+swingBullish = hhCount > swingTrendLen / 2 and hlCount > swingTrendLen / 2
+swingBearish = lhCount > swingTrendLen / 2 and llCount > swingTrendLen / 2
+
+// ============================================================================
+// C12: MASTER 144 SQUARE / GREAT CYCLE (20,736)
+// ============================================================================
+// Great Cycle = 144² = 20,736 (days, degrees, or price units)
+// Master Numbers: 3, 5, 7, 9, 12
+// Key resistance fractions: 1/3, 1/2, 2/3, 3/4 of Great Cycle
+// Source: PDF 17 "1953 Mathematical Formula"
+
+greatCycle      = 20736.0
+gc_third        = greatCycle / 3.0     // 6912
+gc_half         = greatCycle / 2.0     // 10368
+gc_twoThird     = greatCycle * 2 / 3   // 13824
+gc_threeFourth  = greatCycle * 3 / 4   // 15552
+
+// Count bars from first bar (proxy for days elapsed)
+var int totalBarsElapsed = 0
+totalBarsElapsed += 1
+
+// Check if total elapsed bars aligns with Great Cycle fractions (within 2%)
+isNearGC(int bars) =>
+    near = false
+    near := near or (gc_third  > 0 and math.abs(bars - gc_third)  / gc_third  * 100 < 2)
+    near := near or (gc_half   > 0 and math.abs(bars - gc_half)   / gc_half   * 100 < 2)
+    near := near or (gc_twoThird > 0 and math.abs(bars - gc_twoThird) / gc_twoThird * 100 < 2)
+    near
+
+gcAlignment = isNearGC(totalBarsElapsed)
+
+// ============================================================================
+// C13: SEASONAL CARDINAL TIMING
+// ============================================================================
+// Year begins March 21 (spring equinox); cardinal points:
+//   March 21, June 21, September 21, December 21
+// Octave points (from Square of 52):
+//   Feb 5, May 6, Aug 5, Nov 5
+// Source: PDFs 11, 12, 19
+
+currentMonth = month
+currentDay   = dayofmonth
+
+// Check if today is within ±3 days of a cardinal date
+isNearCardinal(int m, int d) =>
+    isNear = false
+    // March 21 (spring equinox)
+    isNear := isNear or (m == 3 and d >= 18 and d <= 24)
+    // June 21 (summer solstice)
+    isNear := isNear or (m == 6 and d >= 18 and d <= 24)
+    // September 21 (autumn equinox)
+    isNear := isNear or (m == 9 and d >= 18 and d <= 24)
+    // December 21 (winter solstice)
+    isNear := isNear or (m == 12 and d >= 18 and d <= 24)
+    isNear
+
+isNearOctave(int m, int d) =>
+    isNear = false
+    // Feb 5
+    isNear := isNear or (m == 2 and d >= 2 and d <= 8)
+    // May 6
+    isNear := isNear or (m == 5 and d >= 3 and d <= 9)
+    // Aug 5
+    isNear := isNear or (m == 8 and d >= 2 and d <= 8)
+    // Nov 5
+    isNear := isNear or (m == 11 and d >= 2 and d <= 8)
+    isNear
+
+isCardinalDate = isNearCardinal(currentMonth, currentDay)
+isOctaveDate   = isNearOctave(currentMonth, currentDay)
+isSeasonalDate = isCardinalDate or isOctaveDate
+
+// ============================================================================
+// C14: FATAL NUMBER ANALYSIS (Gann's Fatal 49)
+// ============================================================================
+// "49 was often quoted by WD Gann as the Fatal Number" (PDF 18, p.86)
+// Fatal multiples: 49, 98, 147, 196, 245, 294, 343, 392, 441, 490
+// Check if price is near a multiple of 49
+// Source: PDF 18 pp.86, 100; PDF 12 p.6
+
+fatalNumber = 49.0
+
+isNearFatal(float price) =>
+    if price <= 0
+        false
+    else
+        // Find nearest multiple of 49
+        nearestMult = math.round(price / fatalNumber) * fatalNumber
+        deviation = math.abs(price - nearestMult) / price * 100
+        deviation < 3.0    // within 3%
+
+fatalConfluence = i_useFatal ? isNearFatal(close) : false
+
+// Also check bars since last swing pivot against fatal multiples
+var int barsSinceSwingLo = 0
+var int barsSinceSwingHi = 0
+if low == swingLo
+    barsSinceSwingLo := 0
+else
+    barsSinceSwingLo += 1
+if high == swingHi
+    barsSinceSwingHi := 0
+else
+    barsSinceSwingHi += 1
+
+isTimeFatal(int bars) =>
+    if bars <= 0
+        false
+    else
+        bars % 49 == 0 or bars % 98 == 0 or bars % 147 == 0 or bars % 196 == 0
+
+timeFatalLo = isTimeFatal(barsSinceSwingLo)
+timeFatalHi = isTimeFatal(barsSinceSwingHi)
+
+// ============================================================================
+// C15: SHEPHARD KEY CYCLES
+// ============================================================================
+// Key cycle numbers from Shephard: 631, 668, 840, 1260, 1262, 1290, 1336
+// Also: Mars=687, Venus=224, Week=168, Wheel=2520
+// When bars from a pivot match these, reversal is likely
+// Source: PDF 18 pp.85-86, 130, 148
+
+isShephardCycle(int bars) =>
+    if bars <= 0
+        false
+    else
+        tol = bars * 0.02  // 2% tolerance
+        near = false
+        near := near or math.abs(bars - 168)  <= tol
+        near := near or math.abs(bars - 224)  <= tol
+        near := near or math.abs(bars - 343)  <= tol
+        near := near or math.abs(bars - 490)  <= tol
+        near := near or math.abs(bars - 631)  <= tol
+        near := near or math.abs(bars - 668)  <= tol
+        near := near or math.abs(bars - 687)  <= tol
+        near := near or math.abs(bars - 840)  <= tol
+        near := near or math.abs(bars - 1260) <= tol
+        near := near or math.abs(bars - 1262) <= tol
+        near := near or math.abs(bars - 1290) <= tol
+        near := near or math.abs(bars - 1336) <= tol
+        near
+
+shepherdCycleLo = isShephardCycle(barsSinceSwingLo)
+shepherdCycleHi = isShephardCycle(barsSinceSwingHi)
+shepherdAlert   = shepherdCycleLo or shepherdCycleHi
+
+// ============================================================================
+// C16: PLANETARY CYCLE WINDOWS
+// ============================================================================
+// Mars orbit = 687 days; Venus synodic = 224 days; Week = 168 hours
+// Check if bars from pivot align with planetary cycles or their Gann divisions
+// Source: PDF 18 pp.67, 71, 75, 108
+
+isPlanetaryCycle(int bars) =>
+    if bars <= 0
+        false
+    else
+        tol = bars * 0.02
+        near = false
+        // Mars cycle divisions
+        near := near or math.abs(bars - 687)  <= tol      // Full Mars
+        near := near or math.abs(bars - 344)  <= tol      // 50% Mars
+        near := near or math.abs(bars - 229)  <= tol      // 33% Mars
+        near := near or math.abs(bars - 172)  <= tol      // 25% Mars
+        // Venus cycle divisions
+        near := near or math.abs(bars - 224)  <= tol      // Full Venus
+        near := near or math.abs(bars - 112)  <= tol      // 50% Venus
+        near := near or math.abs(bars - 75)   <= tol      // 33% Venus
+        // Week hour applied as days
+        near := near or math.abs(bars - 168)  <= tol      // 168 (hours in week)
+        near := near or math.abs(bars - 336)  <= tol      // 2 × 168
+        near := near or math.abs(bars - 504)  <= tol      // 3 × 168
+        near
+
+planetaryCycleLo = isPlanetaryCycle(barsSinceSwingLo)
+planetaryCycleHi = isPlanetaryCycle(barsSinceSwingHi)
+
+// ============================================================================
+// C17: CUMULATIVE RANGE ANALYSIS
+// ============================================================================
+// Sum consecutive daily ranges; when cumulative sum matches a key cycle
+// number, hidden reversal signal emerges
+// Source: PDF 18 pp.96, 110, 135
+
+dailyRange    = high - low
+cumRange3     = dailyRange + dailyRange[1] + dailyRange[2]
+cumRange5     = cumRange3 + dailyRange[3] + dailyRange[4]
+
+// Check if cumulative range is near a significant number
+isSignificantCumRange(float cumR) =>
+    if cumR <= 0
+        false
+    else
+        near = false
+        near := near or math.abs(cumR - 144) / 144 * 100 < 5
+        near := near or math.abs(cumR - 168) / 168 * 100 < 5
+        near := near or math.abs(cumR - 224) / 224 * 100 < 5
+        near := near or math.abs(cumR - 360) / 360 * 100 < 5
+        near := near or math.abs(cumR - 687) / 687 * 100 < 5
+        near
+
+cumRangeSignal = isSignificantCumRange(cumRange3) or isSignificantCumRange(cumRange5)
+
+// ============================================================================
+// C18: MASTER TIME FACTOR (7/10/20/30/60-year cycles)
+// ============================================================================
+// Check if current year aligns with major cycle years from key historical dates
+// BTC genesis: 2009; Gold 1980; Major crash: 1929
+// Source: PDF 13 (Flanagan), PDF 16 (Jenkins)
+
+currentYear = year
+
+isMasterTimeYear(int yr) =>
+    near = false
+    // 7-year cycles from 2009 (BTC genesis)
+    near := near or (yr - 2009) % 7 == 0
+    // 10-year decennial
+    near := near or yr % 10 == 9 or yr % 10 == 0
+    // 20-year Jupiter-Saturn
+    near := near or (yr - 2000) % 20 == 0
+    // 30-year (360 months)
+    near := near or (yr - 1929) % 30 == 0
+    // 60-year master (all planets return)
+    near := near or (yr - 1929) % 60 == 0
+    near
+
+masterTimeYear = isMasterTimeYear(currentYear)
+
+// ============================================================================
+// C19: RANGE EXTENSION LEVELS
+// ============================================================================
+// Extension projections above the high (for targets)
+// Source: PDFs 12, 17, 18
+
+// Already computed above as ext_125, ext_250, ext_500, ext_1000
+
+// ============================================================================
+// C20: MULTI-TIMEFRAME CONFLUENCE
+// ============================================================================
+// Weekly and monthly trend context for daily signals
+// Source: General Gann principle — weekly overrides daily
+
+weeklyHigh = request.security(syminfo.tickerid, "W", high)
+weeklyLow  = request.security(syminfo.tickerid, "W", low)
+weeklyClose = request.security(syminfo.tickerid, "W", close)
+weeklyTrendUp   = weeklyClose > (weeklyHigh + weeklyLow) / 2
+weeklyTrendDown = weeklyClose < (weeklyHigh + weeklyLow) / 2
+
+// ============================================================================
+// C21: 192-DAY MASTER TIME FACTOR / DIATONIC OCTAVE
+// ============================================================================
+// The 192-day cycle subdivides into musical notes (diatonic scale):
+//   Do=0, Re=24, Mi=48, Fa=72, So=96, La=120, Ti=144, Do2=168
+// "Fa" (day 72) and "La" (day 120) are SHOCK POINTS where trend may invert.
+// Source: PDF 6 "144 Square" (pp.5-8)
+
+// Position in 192-day cycle from chart's first bar
+octavePosition  = totalBarsElapsed % 192
+octaveFraction  = octavePosition / 192.0
+
+// Determine the diatonic note
+diatonicNote    = octaveFraction < 0.125 ? "Do" :
+                  octaveFraction < 0.250 ? "Re" :
+                  octaveFraction < 0.375 ? "Mi" :
+                  octaveFraction < 0.500 ? "Fa" :
+                  octaveFraction < 0.625 ? "So" :
+                  octaveFraction < 0.750 ? "La" :
+                  octaveFraction < 0.875 ? "Ti" : "Do2"
+
+// Shock points: Fa (3/8 = day 72) and La (5/8 = day 120)
+isShockPoint    = (diatonicNote == "Fa" or diatonicNote == "La") and i_use192
+
+// Also check if bars from swing pivot are near 192-day multiples
+isNear192(int bars) =>
+    if bars <= 0
+        false
+    else
+        near = false
+        near := near or math.abs(bars - 192)  <= 3
+        near := near or math.abs(bars - 384)  <= 3
+        near := near or math.abs(bars - 576)  <= 3
+        near := near or math.abs(bars - 768)  <= 3
+        near := near or math.abs(bars - 960)  <= 3
+        near := near or math.abs(bars - 1152) <= 3
+        near
+
+mtfOctaveLo  = isNear192(barsSinceSwingLo)
+mtfOctaveHi  = isNear192(barsSinceSwingHi)
+
+// ============================================================================
+// C22: THIRD-TIME TEST RULE
+// ============================================================================
+// "The third time against any support or resistance zone is the dangerous time."
+// Count how many times price has tested a zone (within 0.5% tolerance).
+// Consecutive touches within the zone count as one test.
+// Source: PDF 10 "Understanding Gann Price & Time Cycle" (page 2)
+
+// Test the 50% range level (center of gravity) as the key zone
+thirdTestZone = range_500
+thirdTestTol  = thirdTestZone * 0.005  // 0.5% tolerance
+
+// Count distinct touches of the zone over lookback period
+var int zoneTestCount = 0
+var bool wasInZone    = false
+
+inZone = math.abs(close - thirdTestZone) <= thirdTestTol
+if inZone and not wasInZone
+    zoneTestCount += 1
+wasInZone := inZone
+
+// Pre-compute ta.change() at global scope so it runs on every bar.
+// Calling ta.change() inside an `if` can cause inconsistent results
+// because the function depends on prior-bar history.
+_thirdTestZoneChg = ta.change(thirdTestZone)
+
+// Reset if zone moves significantly (new swing)
+if _thirdTestZoneChg != 0 and not na(_thirdTestZoneChg)
+    zoneTestCount := inZone ? 1 : 0
+
+isThirdTest   = zoneTestCount >= 3 and i_use3rdTest
+isDangerZone  = zoneTestCount == 3 and i_use3rdTest
+
+// Also check significant squares of the low (1st, 2nd, 3rd, 4th, 7th, 9th, 12th)
+// Source: PDF 10 "Understanding Gann" (page 2)
+isNearSqOfLow(float price, float lo) =>
+    near = false
+    near := near or math.abs(price - lo * 1)  / price * 100 < 0.5
+    near := near or math.abs(price - lo * 2)  / price * 100 < 0.5
+    near := near or math.abs(price - lo * 3)  / price * 100 < 0.5
+    near := near or math.abs(price - lo * 4)  / price * 100 < 0.5
+    near := near or math.abs(price - lo * 7)  / price * 100 < 0.5
+    near := near or math.abs(price - lo * 9)  / price * 100 < 0.5
+    near := near or math.abs(price - lo * 12) / price * 100 < 0.5
+    near
+
+sqOfLowNear = isNearSqOfLow(close, swingLo)
+
+// ============================================================================
+// C23: MINOR TREND TURN ANALYSIS
+// ============================================================================
+// Watch the 3rd/4th day from an important top/bottom for change in minor trend.
+// 14th day is most significant, 21 the next. Also: 7, 42, 45, 49.
+// Source: PDF 10 "Understanding Gann" (p.2), PDF 16 "Shephard" (p.50)
+
+isMinorTurnDay(int bars) =>
+    if bars <= 0
+        false
+    else
+        near = false
+        near := near or math.abs(bars - 3)  <= 1
+        near := near or math.abs(bars - 4)  <= 1
+        near := near or math.abs(bars - 7)  <= 1
+        near := near or math.abs(bars - 14) <= 1
+        near := near or math.abs(bars - 21) <= 1
+        near := near or math.abs(bars - 42) <= 1
+        near := near or math.abs(bars - 45) <= 1
+        near := near or math.abs(bars - 49) <= 1
+        near
+
+minorTurnLo = isMinorTurnDay(barsSinceSwingLo) and i_useMinorTurn
+minorTurnHi = isMinorTurnDay(barsSinceSwingHi) and i_useMinorTurn
+minorTurnActive = minorTurnLo or minorTurnHi
+
+// Significance level: 14 and 21 are highest
+isHighSigTurn(int bars) =>
+    math.abs(bars - 14) <= 1 or math.abs(bars - 21) <= 1
+
+highSigMinorTurn = (isHighSigTurn(barsSinceSwingLo) or isHighSigTurn(barsSinceSwingHi)) and i_useMinorTurn
+
+// ============================================================================
+// C24: JENSEN CRITICAL POINTS — Harmonics of 90°
+// ============================================================================
+// "In measuring time count from a major hi or low in calendar days, weeks or
+// months for critical areas in time."
+// Critical points: 7.5, 11.25, 15, 22.5, 30, 45, 60, 67.5, 75, 90,
+//   105, 120, 135, 150, 165, 180, 225, 270, 315, 360
+// Also Mercury 88-day cycle ≈ 90° harmonic
+// Source: Jensen "Astro-Cycles" (1978), Section III, pp.108-113
+
+isJensenCritical(int bars) =>
+    if bars <= 0
+        false
+    else
+        near = false
+        // Primary cardinal harmonics (strongest)
+        near := near or math.abs(bars - 90)  <= 2
+        near := near or math.abs(bars - 180) <= 2
+        near := near or math.abs(bars - 270) <= 2
+        near := near or math.abs(bars - 360) <= 2
+        // Diagonal harmonics
+        near := near or math.abs(bars - 45)  <= 2
+        near := near or math.abs(bars - 135) <= 2
+        near := near or math.abs(bars - 225) <= 2
+        near := near or math.abs(bars - 315) <= 2
+        // Sub-harmonics
+        near := near or math.abs(bars - 22)  <= 2  // 22.5 ≈ Mercury quarter
+        near := near or math.abs(bars - 30)  <= 2
+        near := near or math.abs(bars - 60)  <= 2
+        near := near or math.abs(bars - 67)  <= 2  // 67.5
+        near := near or math.abs(bars - 75)  <= 2
+        near := near or math.abs(bars - 105) <= 2
+        near := near or math.abs(bars - 120) <= 2
+        near := near or math.abs(bars - 150) <= 2
+        // Mercury cycle
+        near := near or math.abs(bars - 88)  <= 2  // Mercury orbital period
+        near := near or math.abs(bars - 176) <= 2  // 2x Mercury
+        near := near or math.abs(bars - 264) <= 2  // 3x Mercury
+        near := near or math.abs(bars - 352) <= 2  // 4x Mercury
+        // Full circle multiples (for longer timeframes)
+        near := near or math.abs(bars - 720) <= 3   // 2x360
+        near := near or math.abs(bars - 1080) <= 3  // 3x360
+        near
+
+jensenCritLo = isJensenCritical(barsSinceSwingLo) and i_useJensen
+jensenCritHi = isJensenCritical(barsSinceSwingHi) and i_useJensen
+jensenCritActive = jensenCritLo or jensenCritHi
+
+// Classify the type of critical point for display
+jensenLabel(int bars) =>
+    if bars <= 0
+        "—"
+    else if math.abs(bars - 360) <= 2 or math.abs(bars - 720) <= 2 or math.abs(bars - 1080) <= 2
+        str.tostring(bars) + "d Full"
+    else if math.abs(bars - 90) <= 2 or math.abs(bars - 180) <= 2 or math.abs(bars - 270) <= 2
+        str.tostring(bars) + "d Card"
+    else if math.abs(bars - 45) <= 2 or math.abs(bars - 135) <= 2 or math.abs(bars - 225) <= 2 or math.abs(bars - 315) <= 2
+        str.tostring(bars) + "d Diag"
+    else if math.abs(bars - 88) <= 2 or math.abs(bars - 176) <= 2 or math.abs(bars - 264) <= 2 or math.abs(bars - 352) <= 2
+        str.tostring(bars) + "d Merc"
+    else
+        str.tostring(bars) + "d Harm"
+
+jensenCritLabel = jensenCritLo ? jensenLabel(barsSinceSwingLo) : jensenCritHi ? jensenLabel(barsSinceSwingHi) : "—"
+
+// ============================================================================
+// C25: JENSEN FIVE-PHASE INTERMEDIATE TREND
+// ============================================================================
+// "An intermediate trend usually has five phases, three in its direction
+// and two corrective minor trends."
+// Phase 1: initial directional move
+// Phase 2: first corrective setback
+// Phase 3: second directional move
+// Phase 4: second corrective setback
+// Phase 5: third directional move / BLOWOFF (largest and longest)
+// Source: Jensen "Astro-Cycles" Section IV, pp.121-122
+
+// Count swing highs and lows using 3-bar pivots
+isPivotHigh = high[1] > high[2] and high[1] > high[0]
+isPivotLow  = low[1]  < low[2]  and low[1]  < low[0]
+
+// Track alternating swings over last 20 bars to count wave phases
+var int waveCount = 0
+var string lastSwingType = "none"
+
+if isPivotHigh and lastSwingType != "H"
+    waveCount += 1
+    lastSwingType := "H"
+if isPivotLow and lastSwingType != "L"
+    waveCount += 1
+    lastSwingType := "L"
+
+// Reset wave count periodically (every 50 bars ≈ 2.5 months on daily,
+// roughly one intermediate trend cycle per Jensen's framework) to track
+// only the current cycle's waves rather than accumulating indefinitely.
+if totalBarsElapsed % 50 == 0
+    waveCount := 0
+    lastSwingType := "none"
+
+// Map to 5-phase model (cap at 5)
+currentPhase = math.min(waveCount, 5)
+if currentPhase == 0
+    currentPhase := 1
+
+fivePhaseLabel = currentPhase == 1 ? "Phase 1 (Dir)" :
+                 currentPhase == 2 ? "Phase 2 (Corr)" :
+                 currentPhase == 3 ? "Phase 3 (Dir)" :
+                 currentPhase == 4 ? "Phase 4 (Corr)" :
+                 "Phase 5 (BLOW)"
+
+isBlowoffPhase = currentPhase >= 5 and i_use5Phase
+
+// Overall trend direction from price position vs 20-bar-ago
+fivePhaseTrendUp   = close > close[20] and not na(close[20])
+fivePhaseTrendDown = close < close[20] and not na(close[20])
+
+// ============================================================================
+// C26: VECTORIAL PROJECTION — 45°+60° Exhaustion
+// ============================================================================
+// "A 45° angle on the low close day and a lesser angle [60°] on the first
+// preceding low close day; the crossing will estimate exhaustion in time
+// and price."
+// 45° line: P = first_low + t (tan(45°) = 1.0)
+// 60° line: P = second_low + tan(60°) * (t - days_between)
+// Convergence point = projected exhaustion (potential top/bottom)
+// Source: Jensen Section IV, pp.124-126
+
+// Find two recent swing lows for projection
+recentLo1_price = ta.valuewhen(isPivotLow, low[1], 1)   // Earlier (1st preceding) low
+recentLo2_price = ta.valuewhen(isPivotLow, low[1], 0)   // Most recent (2nd) low
+recentLo1_bar   = ta.valuewhen(isPivotLow, bar_index[1], 1)
+recentLo2_bar   = ta.valuewhen(isPivotLow, bar_index[1], 0)
+
+daysBetweenLows = not na(recentLo1_bar) and not na(recentLo2_bar) ? math.abs(recentLo2_bar - recentLo1_bar) : 0
+
+// Projection calculation (Jensen pp.124-126):
+// Line 1 (45° from first_low):  P₁(t) = first_low + t            [tan(45°) = 1]
+// Line 2 (60° from second_low): P₂(t) = second_low + tan(60°)·(t - Δ)  [Δ = daysBetween]
+// Setting P₁ = P₂ and solving for t:
+//   t = (second_low − first_low + tan(60°)·Δ) / (tan(60°) − 1)
+tan60 = math.tan(math.toradians(60))  // ≈ 1.7321
+
+vecDenom = tan60 - 1.0
+vecTconverge = vecDenom != 0 and daysBetweenLows > 0 and not na(recentLo1_price) and not na(recentLo2_price) ?
+     (recentLo2_price - recentLo1_price + tan60 * daysBetweenLows) / vecDenom : na
+
+vecProjectedPrice = not na(vecTconverge) ? recentLo1_price + vecTconverge : na
+vecProjectedDays  = not na(vecTconverge) ? math.max(0, math.round(vecTconverge - daysBetweenLows)) : na
+
+// Check if current price is near the vectorial projection (within 1%)
+vecNearProjection = not na(vecProjectedPrice) and vecProjectedPrice > 0 and
+     math.abs(close - vecProjectedPrice) / close * 100 < 1.0 and i_useVectorial
+
+// ============================================================================
+// C28: FUTIA SQ9 ANGULAR POSITION
+// ============================================================================
+// Futia's universal formula converts any price to its angular position on the
+// Square of Nine spiral chart:  A = MOD(180 × √(P − 1) − 225, 360)
+// When a price sits on a cardinal (0/90/180/270) or ordinal (45/135/225/315)
+// axis, it occupies a critical S/R position.
+// Source: PDF 25 "Spiral Chart — Gann Mysteries"
+
+futiaAngle(float price) =>
+    if price <= 1
+        0.0
+    else
+        raw = 180.0 * math.sqrt(price - 1) - 225.0
+        // Manual modulo: Pine's % can return negative for floats
+        wrapped = raw - math.floor(raw / 360.0) * 360.0
+        wrapped
+
+futiaCurrentAngle = futiaAngle(close)
+
+// Find distance to nearest cardinal/ordinal axis (0,45,90,...,315)
+futiaAxisDist(float angle) =>
+    minDist = 360.0
+    for axis = 0 to 7
+        axisAngle = axis * 45.0
+        d = math.abs(angle - axisAngle)
+        if d > 180
+            d := 360 - d
+        if d < minDist
+            minDist := d
+    minDist
+
+futiaDistToAxis = futiaAxisDist(futiaCurrentAngle)
+futiaOnAxis     = futiaDistToAxis <= 5.0 and i_useFutia   // within 5°
+
+// Also compute Futia angles for swing pivots (to detect angular relationships)
+futiaSwingLoAngle = futiaAngle(swingLo)
+futiaSwingHiAngle = futiaAngle(swingHi)
+
+// ============================================================================
+// C29: RANGE EXPANSION CHECK (Crabel)
+// ============================================================================
+// When today's range (high − low) exceeds yesterday's range, the market is
+// showing increased energy.  The direction of close relative to yesterday's
+// close predicts next-day continuation with 75%+ accuracy.
+// Range expansion ratio = today_range / yesterday_range; > 1.0 = expanding.
+// Source: PDF 27 "Short-Term Market Forecasting" (Toby Crabel, pp.11-12)
+
+todayRange     = high - low
+yesterdayRange = high[1] - low[1]
+rangeExpRatio  = yesterdayRange > 0 ? todayRange / yesterdayRange : 1.0
+isRangeExpanding = rangeExpRatio > 1.0
+
+// Bias direction: if expanding, follow the close direction
+rangeExpBullish = isRangeExpanding and close > close[1]
+rangeExpBearish = isRangeExpanding and close < close[1]
+
+// Confidence from expansion magnitude (ratio > 1.2 is strong)
+rangeExpStrong  = isRangeExpanding and rangeExpRatio > 1.2 and i_useRangeExp
+
+// ============================================================================
+// C30: TRIANGULAR NUMBER S/R (Summation Numbers)
+// ============================================================================
+// Triangular numbers = n(n+1)/2: 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66,
+// 78, 91, 105, 120, 136, 153, 171, 190, 210, 231, 253, 276, 300, 325, 351,
+// 378, 406, 435, 465, 496, 528, 561, 595, 630, 666, ...
+// These are natural S/R levels because they represent the accumulation of
+// complete "rings" around the Square of Nine center.
+// Source: PDF 26 "Advanced Group" (p.21)
+
+// Solve n(n+1)/2 = price for n, then check nearest triangular numbers
+triangularNearest(float price) =>
+    if price <= 0
+        1.0
+    else
+        n_approx = (-1.0 + math.sqrt(1.0 + 8.0 * price)) / 2.0
+        n_low = math.max(1.0, math.floor(n_approx))
+        t_low  = n_low * (n_low + 1) / 2.0
+        t_high = (n_low + 1) * (n_low + 2) / 2.0
+        math.abs(price - t_low) <= math.abs(price - t_high) ? t_low : t_high
+
+nearestTriNum = triangularNearest(close)
+triDist       = math.abs(close - nearestTriNum)
+triThreshold  = math.max(close * 0.01, 1.0)    // 1% of price, floor of 1.0
+triNearLevel  = triDist <= triThreshold and i_useTriangular
+
+// ============================================================================
+// C31: PLANETARY HARMONIC PRICE LEVELS
+// ============================================================================
+// "I convert planetary positions into price. A conjunction between two planets
+// is the most powerful geometric relationship." (Thomas Long, PDF 23)
+// Without live ephemeris data, we use the Sun's approximate ecliptic longitude
+// (≈ day_of_year × 360/365) as a proxy, then project price harmonics at:
+//   base, base+30, base+45, base+60, base+90, base+120, base+144, base+180,
+//   base+240, base+270, base+300, base+360
+// Source: PDF 23 "Using Planetary Harmonics for Key Reversals" (pp.1-3)
+
+// Approximate Sun longitude from day of year.
+// Simplified: day_of_year × (360/365), ignoring leap years and orbital
+// eccentricity. Intentionally approximate for harmonic-based trading use.
+// Uses month/dayofmonth built-ins (chart timezone) to avoid UTC mismatch.
+_cumDays = array.from(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
+_dayOfYear     = array.get(_cumDays, month - 1) + dayofmonth
+sunLongitude   = _dayOfYear * (360.0 / 365.0)
+
+// Auto-scale: map degrees into the asset's price range so that harmonic
+// levels land near current prices.  Thresholds are order-of-magnitude
+// breakpoints (e.g., BTC ~100K → scale=100, Gold ~2K → scale=10).
+autoScale     = close > 10000 ? 100.0 : close > 1000 ? 10.0 : 1.0
+scaledSunBase = sunLongitude * autoScale
+
+// Key harmonic offsets (from Gann + Thomas Long)
+harmonic_90   = (sunLongitude + 90.0)  * autoScale
+harmonic_180  = (sunLongitude + 180.0) * autoScale
+harmonic_270  = (sunLongitude + 270.0) * autoScale
+harmonic_360  = (sunLongitude + 360.0) * autoScale
+
+// Check if current price is near any planetary harmonic level (within 1%)
+isNearPlanetaryHarmonic(float price, float tol) =>
+    near = false
+    if scaledSunBase > 0
+        near := near or math.abs(price - scaledSunBase) / price * 100 < tol
+        near := near or math.abs(price - harmonic_90)   / price * 100 < tol
+        near := near or math.abs(price - harmonic_180)  / price * 100 < tol
+        near := near or math.abs(price - harmonic_270)  / price * 100 < tol
+        near := near or math.abs(price - harmonic_360)  / price * 100 < tol
+    near
+
+planetaryHarmConf = isNearPlanetaryHarmonic(close, 1.0) and i_usePlanHarm
+
+// ============================================================================
+// C27: CONFIDENCE SCORING & SIGNAL GENERATION
+// ============================================================================
+// 31 strategy components (C1-C31); 22 scoring factors feed the confidence
+// score.  The R:R check is a single tiered factor (+0.15 / +0.05 / −0.10).
+//
+// Scoring factors (matches Python generate_signal):
+//   +0.30  Gann angle trend confirmed (C7)
+//   +0.10  SQ9 confluence (C2)
+//   +0.10  Vibration = 9 change number (C3)
+//   +0.15  Dynamic vol confirms direction (C5)
+//   +0.05  Range % level nearby (C10)
+//   +0.05  Hexagon level nearby (C9)
+//   +0.05  Fatal Number nearby (C14)
+//   +0.05  Swing trend confirms (C11)
+//   +0.05  Seasonal cardinal date (C13)
+//   +0.05  Shephard/planetary cycle window (C15/C16)
+//   +0.05  Weekly trend confirms (C20)
+//   +0.05  Significant squares of low (C22)
+//   +0.05  Third-time test dangerous zone (C22)
+//   +0.05  192-day shock point (C21)
+//   +0.05  Jensen critical time point (C24)
+//   +0.05  Jensen five-phase blowoff (C25)
+//   +0.05  Minor trend turn window (C23)
+//   +0.05  Vectorial projection confluence (C26)
+//   +0.05  Futia SQ9 on cardinal/ordinal axis (C28)
+//   +0.05  Triangular number S/R nearby (C30)
+//   +0.05  Range expansion with matching bias (C29)
+//   +0.15 / +0.05 / −0.10  R:R ratio (tiered)
+// Theoretical max (all factors active): ~1.60 → capped at 1.00
+// In practice ~0.85–0.95 is achievable since some factors rarely align.
+// Min to trade: configurable (default 0.40)
+
+// Calculate entry/stop/target
+buyEntry  = not na(r_1x4) ? r_1x4 : close
+buyStop   = not na(r_1x1) ? math.min(r_1x1, close * 0.95) : close * 0.95
+sellEntry = not na(s_4x1) ? s_4x1 : close
+sellStop  = not na(s_1x1) ? math.max(s_1x1, close * 1.05) : close * 1.05
+
+buyTarget  = sq9_180_up
+sellTarget = sq9_180_dn
+
+// Risk-reward calculation
+buyRisk    = math.abs(buyEntry - buyStop)
+buyReward  = math.abs(buyTarget - buyEntry)
+buyRR      = buyRisk > 0 ? buyReward / buyRisk : 0
+
+sellRisk   = math.abs(sellEntry - sellStop)
+sellReward = math.abs(sellEntry - sellTarget)
+sellRR     = sellRisk > 0 ? sellReward / sellRisk : 0
+
+// --- Buy Confidence (31-component scoring) ---
+buyConf = 0.0
+// C7: Gann angle trend
+buyConf := buyConf + (trendBull ? 0.30 : 0.0)
+// C2: SQ9 confluence
+buyConf := buyConf + (sq9Confluence ? 0.10 : 0.0)
+// C3: Vibration 9
+buyConf := buyConf + (isVibration9 ? 0.10 : 0.0)
+// C5: Dynamic volatility confirms
+buyConf := buyConf + (useDynamic and close < expectedHigh ? 0.15 : 0.0)
+// C10: Range percentage level nearby
+buyConf := buyConf + (i_useRangePct and rangeConfluence ? 0.05 : 0.0)
+// C9: Hexagon level nearby
+buyConf := buyConf + (i_useHexConf and hexConfluence ? 0.05 : 0.0)
+// C14: Fatal Number nearby
+buyConf := buyConf + (i_useFatal and fatalConfluence ? 0.05 : 0.0)
+// C11: Swing trend confirms bullish
+buyConf := buyConf + (i_useSwing and swingBullish ? 0.05 : 0.0)
+// C13: Seasonal cardinal date
+buyConf := buyConf + (i_useSeasonal and isSeasonalDate ? 0.05 : 0.0)
+// C15/C16: Shephard/planetary cycle window near swing low
+buyConf := buyConf + (shepherdCycleLo or planetaryCycleLo ? 0.05 : 0.0)
+// C20: Weekly trend confirms daily
+buyConf := buyConf + (weeklyTrendUp ? 0.05 : 0.0)
+// C22: Significant squares of low
+buyConf := buyConf + (sqOfLowNear ? 0.05 : 0.0)
+// C22: Third-time test dangerous zone
+buyConf := buyConf + (isDangerZone ? 0.05 : 0.0)
+// C21: 192-day shock point
+buyConf := buyConf + (isShockPoint ? 0.05 : 0.0)
+// C24: Jensen critical time point
+buyConf := buyConf + (jensenCritActive ? 0.05 : 0.0)
+// C25: Jensen five-phase blowoff
+buyConf := buyConf + (isBlowoffPhase and fivePhaseTrendUp ? 0.05 : 0.0)
+// C23: Minor trend turn window
+buyConf := buyConf + (minorTurnActive ? 0.05 : 0.0)
+// C26: Vectorial projection confluence
+buyConf := buyConf + (vecNearProjection ? 0.05 : 0.0)
+// C28: Futia SQ9 on cardinal/ordinal axis
+buyConf := buyConf + (futiaOnAxis ? 0.05 : 0.0)
+// C30: Triangular number S/R nearby
+buyConf := buyConf + (triNearLevel ? 0.05 : 0.0)
+// C29: Range expansion confirms bullish bias
+buyConf := buyConf + (rangeExpStrong and rangeExpBullish ? 0.05 : 0.0)
+// Risk-reward validation
+buyConf := buyConf + (buyRR >= i_rrRatio ? 0.15 : buyRR >= 1.5 ? 0.05 : -0.10)
+// Clamp 0.0 - 1.0
+buyConf := math.max(0.0, math.min(1.0, buyConf))
+
+// --- Sell Confidence (31-component scoring) ---
+sellConf = 0.0
+// C7: Gann angle trend
+sellConf := sellConf + (trendBear ? 0.30 : 0.0)
+// C2: SQ9 confluence
+sellConf := sellConf + (sq9Confluence ? 0.10 : 0.0)
+// C3: Vibration 9
+sellConf := sellConf + (isVibration9 ? 0.10 : 0.0)
+// C5: Dynamic volatility confirms
+sellConf := sellConf + (useDynamic and close > expectedLow ? 0.15 : 0.0)
+// C10: Range percentage level nearby
+sellConf := sellConf + (i_useRangePct and rangeConfluence ? 0.05 : 0.0)
+// C9: Hexagon level nearby
+sellConf := sellConf + (i_useHexConf and hexConfluence ? 0.05 : 0.0)
+// C14: Fatal Number nearby
+sellConf := sellConf + (i_useFatal and fatalConfluence ? 0.05 : 0.0)
+// C11: Swing trend confirms bearish
+sellConf := sellConf + (i_useSwing and swingBearish ? 0.05 : 0.0)
+// C13: Seasonal cardinal date
+sellConf := sellConf + (i_useSeasonal and isSeasonalDate ? 0.05 : 0.0)
+// C15/C16: Shephard/planetary cycle window near swing high
+sellConf := sellConf + (shepherdCycleHi or planetaryCycleHi ? 0.05 : 0.0)
+// C20: Weekly trend confirms daily
+sellConf := sellConf + (weeklyTrendDown ? 0.05 : 0.0)
+// C22: Significant squares of low
+sellConf := sellConf + (sqOfLowNear ? 0.05 : 0.0)
+// C22: Third-time test dangerous zone
+sellConf := sellConf + (isDangerZone ? 0.05 : 0.0)
+// C21: 192-day shock point
+sellConf := sellConf + (isShockPoint ? 0.05 : 0.0)
+// C24: Jensen critical time point
+sellConf := sellConf + (jensenCritActive ? 0.05 : 0.0)
+// C25: Jensen five-phase blowoff
+sellConf := sellConf + (isBlowoffPhase and fivePhaseTrendDown ? 0.05 : 0.0)
+// C23: Minor trend turn window
+sellConf := sellConf + (minorTurnActive ? 0.05 : 0.0)
+// C26: Vectorial projection confluence
+sellConf := sellConf + (vecNearProjection ? 0.05 : 0.0)
+// C28: Futia SQ9 on cardinal/ordinal axis
+sellConf := sellConf + (futiaOnAxis ? 0.05 : 0.0)
+// C30: Triangular number S/R nearby
+sellConf := sellConf + (triNearLevel ? 0.05 : 0.0)
+// C29: Range expansion confirms bearish bias
+sellConf := sellConf + (rangeExpStrong and rangeExpBearish ? 0.05 : 0.0)
+// Risk-reward validation
+sellConf := sellConf + (sellRR >= i_rrRatio ? 0.15 : sellRR >= 1.5 ? 0.05 : -0.10)
+// Clamp 0.0 - 1.0
+sellConf := math.max(0.0, math.min(1.0, sellConf))
+
+// ============================================================================
+// STRATEGY — ENTRIES, EXITS, AND TRADE MANAGEMENT
+// ============================================================================
+
+// Entry conditions
+longCond  = buyConf >= i_confMin and trendBull and buyRR >= 1.5
+shortCond = sellConf >= i_confMin and trendBear and sellRR >= 1.5
+
+// Conflict resolution: only take the stronger signal
+goLong  = longCond  and (not shortCond or buyConf > sellConf)
+goShort = shortCond and (not longCond  or sellConf > buyConf)
+
+// Position sizing based on risk
+riskAmt   = strategy.equity * i_riskPct / 100
+longQty   = buyRisk  > 0 ? riskAmt / buyRisk  : 0
+shortQty  = sellRisk > 0 ? riskAmt / sellRisk : 0
+
+// Track bars in trade
+var int barsInTrade = 0
+if strategy.position_size != 0
+    barsInTrade += 1
+else
+    barsInTrade := 0
+
+// Entry execution with trailing stop
+longTrailActivate  = math.abs(buyTarget - buyEntry)   * 0.5
+longTrailDist      = close * i_trailPct / 100
+shortTrailActivate = math.abs(sellEntry - sellTarget)  * 0.5
+shortTrailDist     = close * i_trailPct / 100
+
+if goLong and strategy.position_size <= 0
+    strategy.entry("Long", strategy.long, qty=longQty)
+    strategy.exit("Long SL/TP", "Long", stop=buyStop, limit=buyTarget,
+         trail_offset=longTrailActivate, trail_points=longTrailDist)
+    barsInTrade := 0
+
+if goShort and strategy.position_size >= 0
+    strategy.entry("Short", strategy.short, qty=shortQty)
+    strategy.exit("Short SL/TP", "Short", stop=sellStop, limit=sellTarget,
+         trail_offset=shortTrailActivate, trail_points=shortTrailDist)
+    barsInTrade := 0
+
+// Time-based exit (max bars in trade — Rule of 72 from PDF 4)
+if barsInTrade >= i_maxBars and strategy.position_size != 0
+    strategy.close_all("Timeout")
+    barsInTrade := 0
+
+// ============================================================================
+// VISUAL OVERLAYS
+// ============================================================================
+
+// --- Gann Angle Levels ---
+plot(i_showAngles ? r_1x1 : na, "1x1 Resistance (45°)", color=color.new(color.green, 50), linewidth=2)
+plot(i_showAngles ? r_1x4 : na, "1x4 Resistance (Buy Entry)", color=color.new(color.lime, 60))
+plot(i_showAngles ? r_4x1 : na, "4x1 Resistance", color=color.new(color.green, 70))
+plot(i_showAngles ? s_1x1 : na, "1x1 Support (45°)", color=color.new(color.red, 50), linewidth=2)
+plot(i_showAngles ? s_4x1 : na, "4x1 Support (Sell Entry)", color=color.new(color.orange, 60))
+
+// --- SQ9 Levels ---
+plot(i_showSQ9 ? sq9_180_up : na, "SQ9 180° Up", color=color.new(color.blue, 60), style=plot.style_cross)
+plot(i_showSQ9 ? sq9_360_up : na, "SQ9 360° Up", color=color.new(color.blue, 40), style=plot.style_cross)
+plot(i_showSQ9 ? sq9_180_dn : na, "SQ9 180° Down", color=color.new(color.purple, 60), style=plot.style_cross)
+plot(i_showSQ9 ? sq9_360_dn : na, "SQ9 360° Down", color=color.new(color.purple, 40), style=plot.style_cross)
+
+// --- 144 Cycle Levels ---
+plot(i_show144 ? cycle144_below : na, "144 Below", color=color.new(color.yellow, 50), style=plot.style_stepline)
+plot(i_show144 ? cycle144_above : na, "144 Above", color=color.new(color.yellow, 50), style=plot.style_stepline)
+
+// --- Range Percentage Levels ---
+plot(i_showRange ? range_500 : na, "Range 50% (Center of Gravity)", color=color.new(color.white, 40), linewidth=2, style=plot.style_stepline)
+plot(i_showRange ? range_250 : na, "Range 25%", color=color.new(color.gray, 60), style=plot.style_stepline)
+plot(i_showRange ? range_333 : na, "Range 33.3%", color=color.new(color.gray, 70), style=plot.style_stepline)
+plot(i_showRange ? range_666 : na, "Range 66.6%", color=color.new(color.gray, 70), style=plot.style_stepline)
+plot(i_showRange ? range_750 : na, "Range 75%", color=color.new(color.gray, 60), style=plot.style_stepline)
+
+// --- Hexagon Levels ---
+plot(i_showHex ? hex_180_up : na, "Hex 180° Up", color=color.new(color.aqua, 60), style=plot.style_cross)
+plot(i_showHex ? hex_360_up : na, "Hex 360° Up", color=color.new(color.aqua, 40), style=plot.style_cross)
+plot(i_showHex ? hex_180_dn : na, "Hex 180° Down", color=color.new(color.fuchsia, 60), style=plot.style_cross)
+
+// --- Dynamic Expected Range ---
+p_expHi = plot(useDynamic ? expectedHigh : na, "Expected High", color=color.new(color.teal, 80))
+p_expLo = plot(useDynamic ? expectedLow  : na, "Expected Low",  color=color.new(color.teal, 80))
+fill(p_expHi, p_expLo, color=color.new(color.teal, 95), title="Volatility Range")
+
+// --- Signal Markers ---
+plotshape(goLong  and strategy.position_size <= 0, "BUY Signal",
+     style=shape.triangleup, location=location.belowbar,
+     color=color.green, size=size.normal, text="BUY")
+plotshape(goShort and strategy.position_size >= 0, "SELL Signal",
+     style=shape.triangledown, location=location.abovebar,
+     color=color.red, size=size.normal, text="SELL")
+
+// --- Shephard/Fatal cycle markers ---
+plotshape(shepherdAlert, "Shephard Cycle", style=shape.diamond,
+     location=location.abovebar, color=color.new(color.yellow, 30),
+     size=size.tiny, text="SC")
+plotshape(timeFatalLo or timeFatalHi, "Fatal Time", style=shape.xcross,
+     location=location.belowbar, color=color.new(color.orange, 30),
+     size=size.tiny, text="F49")
+
+// --- New component markers (C21-C26) ---
+plotshape(isShockPoint, "192-Day Shock", style=shape.circle,
+     location=location.abovebar, color=color.new(color.fuchsia, 30),
+     size=size.tiny, text="♪")
+plotshape(isDangerZone, "3rd Test!", style=shape.flag,
+     location=location.belowbar, color=color.new(color.red, 20),
+     size=size.tiny, text="3X")
+plotshape(highSigMinorTurn, "Minor Turn", style=shape.arrowup,
+     location=location.belowbar, color=color.new(color.lime, 30),
+     size=size.tiny, text="MT")
+plotshape(jensenCritActive, "Jensen Critical", style=shape.square,
+     location=location.abovebar, color=color.new(color.aqua, 30),
+     size=size.tiny, text="JC")
+plotshape(isBlowoffPhase, "Blowoff Phase", style=shape.labelup,
+     location=location.belowbar, color=color.new(color.orange, 20),
+     size=size.tiny, text="P5")
+
+// --- Vectorial Projection line ---
+plot(i_useVectorial and not na(vecProjectedPrice) ? vecProjectedPrice : na,
+     "Vec Projection", color=color.new(color.lime, 40), linewidth=2,
+     style=plot.style_cross)
+
+// --- C28: Futia Angular axis marker ---
+plotshape(futiaOnAxis, "Futia Axis", style=shape.diamond,
+     location=location.belowbar, color=color.new(color.yellow, 20),
+     size=size.tiny, text="FA")
+
+// --- C29: Range Expansion marker ---
+plotshape(rangeExpStrong and rangeExpBullish, "Range Exp ▲", style=shape.arrowup,
+     location=location.belowbar, color=color.new(color.green, 20),
+     size=size.tiny, text="RE")
+plotshape(rangeExpStrong and rangeExpBearish, "Range Exp ▼", style=shape.arrowdown,
+     location=location.abovebar, color=color.new(color.red, 20),
+     size=size.tiny, text="RE")
+
+// --- C30: Triangular Number S/R marker ---
+plotshape(triNearLevel, "Tri Number", style=shape.circle,
+     location=location.abovebar, color=color.new(color.white, 30),
+     size=size.tiny, text="Δ")
+
+// --- C31: Planetary Harmonic marker ---
+plotshape(planetaryHarmConf, "Planet Harm", style=shape.square,
+     location=location.belowbar, color=color.new(color.purple, 20),
+     size=size.tiny, text="☉")
+
+// --- Seasonal markers ---
+bgcolor(isCardinalDate ? color.new(color.blue, 92) : na, title="Cardinal Date")
+bgcolor(isOctaveDate   ? color.new(color.purple, 92) : na, title="Octave Date")
+
+// --- Trend background ---
+bgcolor(trendBull ? color.new(color.green, 95) : trendBear ? color.new(color.red, 95) : na,
+     title="Trend Background")
+
+// ============================================================================
+// INFO TABLE — Full 31-Component Dashboard
+// ============================================================================
+var table infoTable = table.new(position.top_right, 2, 28,
+     bgcolor=color.new(color.black, 80), border_width=1)
+
+if barstate.islast
+    // Header
+    table.cell(infoTable, 0, 0, "Gann Complete (31 Components)", text_color=color.white, text_size=size.normal)
+    table.cell(infoTable, 1, 0, "", text_color=color.white)
+    
+    // Row 1: Trend
+    table.cell(infoTable, 0, 1, "Trend (C7)", text_color=color.gray, text_size=size.small)
+    trendStr = trendBull ? "▲ BULLISH" : trendBear ? "▼ BEARISH" : "— NEUTRAL"
+    trendClr = trendBull ? color.green : trendBear ? color.red : color.gray
+    table.cell(infoTable, 1, 1, trendStr, text_color=trendClr, text_size=size.small)
+    
+    // Row 2: Swing Trend (C11)
+    table.cell(infoTable, 0, 2, "Swing (C11)", text_color=color.gray, text_size=size.small)
+    swingStr = swingBullish ? "▲ HH+HL" : swingBearish ? "▼ LH+LL" : "— Mixed"
+    swingClr = swingBullish ? color.green : swingBearish ? color.red : color.gray
+    table.cell(infoTable, 1, 2, swingStr, text_color=swingClr, text_size=size.small)
+    
+    // Row 3: Buy Confidence
+    table.cell(infoTable, 0, 3, "Buy Conf", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 3, str.tostring(buyConf, "#.##"), text_color=buyConf >= i_confMin ? color.green : color.gray, text_size=size.small)
+    
+    // Row 4: Sell Confidence
+    table.cell(infoTable, 0, 4, "Sell Conf", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 4, str.tostring(sellConf, "#.##"), text_color=sellConf >= i_confMin ? color.red : color.gray, text_size=size.small)
+    
+    // Row 5: Vibration (C3)
+    table.cell(infoTable, 0, 5, "Vibration (C3)", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 5, str.tostring(priceVibration) + (isVibration9 ? " ⚡CHANGE" : ""), text_color=isVibration9 ? color.yellow : color.white, text_size=size.small)
+    
+    // Row 6: SQ9 (C2)
+    table.cell(infoTable, 0, 6, "SQ9 (C2)", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 6, sq9Confluence ? "✓ Near" : "✗ No", text_color=sq9Confluence ? color.blue : color.gray, text_size=size.small)
+    
+    // Row 7: Hexagon (C9)
+    table.cell(infoTable, 0, 7, "Hexagon (C9)", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 7, hexConfluence ? "✓ Near" : "✗ No", text_color=hexConfluence ? color.aqua : color.gray, text_size=size.small)
+    
+    // Row 8: Range % (C10)
+    table.cell(infoTable, 0, 8, "Range% (C10)", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 8, rangeConfluence ? "✓ Near" : "✗ No", text_color=rangeConfluence ? color.white : color.gray, text_size=size.small)
+    
+    // Row 9: Fatal 49 (C14)
+    table.cell(infoTable, 0, 9, "Fatal 49 (C14)", text_color=color.gray, text_size=size.small)
+    fatalStr = fatalConfluence ? "✓ Price" : timeFatalLo or timeFatalHi ? "✓ Time" : "✗ No"
+    fatalClr = fatalConfluence or timeFatalLo or timeFatalHi ? color.orange : color.gray
+    table.cell(infoTable, 1, 9, fatalStr, text_color=fatalClr, text_size=size.small)
+    
+    // Row 10: Seasonal (C13)
+    table.cell(infoTable, 0, 10, "Seasonal (C13)", text_color=color.gray, text_size=size.small)
+    seasStr = isCardinalDate ? "◆ Cardinal" : isOctaveDate ? "◆ Octave" : "—"
+    seasClr = isSeasonalDate ? color.blue : color.gray
+    table.cell(infoTable, 1, 10, seasStr, text_color=seasClr, text_size=size.small)
+    
+    // Row 11: Shephard (C15)
+    table.cell(infoTable, 0, 11, "Shephard (C15)", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 11, shepherdAlert ? "⚠ Cycle!" : "—", text_color=shepherdAlert ? color.yellow : color.gray, text_size=size.small)
+    
+    // Row 12: 192-Day Octave (C21)
+    table.cell(infoTable, 0, 12, "192d Octave (C21)", text_color=color.gray, text_size=size.small)
+    octaveStr = diatonicNote + " d" + str.tostring(octavePosition) + (isShockPoint ? " ⚡SHOCK" : "")
+    table.cell(infoTable, 1, 12, octaveStr, text_color=isShockPoint ? color.fuchsia : color.white, text_size=size.small)
+    
+    // Row 13: Third-Time Test (C22)
+    table.cell(infoTable, 0, 13, "3rd Test (C22)", text_color=color.gray, text_size=size.small)
+    testStr = isDangerZone ? "⚠ 3rd TOUCH!" : isThirdTest ? str.tostring(zoneTestCount) + "× tested" : str.tostring(zoneTestCount) + "× safe"
+    testClr = isDangerZone ? color.red : isThirdTest ? color.orange : color.gray
+    table.cell(infoTable, 1, 13, testStr, text_color=testClr, text_size=size.small)
+    
+    // Row 14: Minor Turn (C23)
+    table.cell(infoTable, 0, 14, "Minor Turn (C23)", text_color=color.gray, text_size=size.small)
+    turnStr = highSigMinorTurn ? "⚠ Key Day!" : minorTurnActive ? "◆ Watch" : "—"
+    turnClr = highSigMinorTurn ? color.lime : minorTurnActive ? color.yellow : color.gray
+    table.cell(infoTable, 1, 14, turnStr, text_color=turnClr, text_size=size.small)
+    
+    // Row 15: Jensen Critical (C24)
+    table.cell(infoTable, 0, 15, "Jensen (C24)", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 15, jensenCritActive ? jensenCritLabel : "—", text_color=jensenCritActive ? color.aqua : color.gray, text_size=size.small)
+    
+    // Row 16: Five-Phase (C25)
+    table.cell(infoTable, 0, 16, "5-Phase (C25)", text_color=color.gray, text_size=size.small)
+    phaseClr = isBlowoffPhase ? color.orange : currentPhase >= 3 ? color.yellow : color.gray
+    table.cell(infoTable, 1, 16, fivePhaseLabel, text_color=phaseClr, text_size=size.small)
+    
+    // Row 17: Vectorial (C26)
+    table.cell(infoTable, 0, 17, "Vectorial (C26)", text_color=color.gray, text_size=size.small)
+    vecStr = vecNearProjection ? "✓ " + str.tostring(vecProjectedPrice, "#.0") : not na(vecProjectedPrice) ? "→ " + str.tostring(vecProjectedPrice, "#.0") + " (" + str.tostring(vecProjectedDays) + "d)" : "—"
+    vecClr = vecNearProjection ? color.lime : not na(vecProjectedPrice) ? color.white : color.gray
+    table.cell(infoTable, 1, 17, vecStr, text_color=vecClr, text_size=size.small)
+    
+    // Row 18: Sq of Low
+    table.cell(infoTable, 0, 18, "Sq of Low", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 18, sqOfLowNear ? "✓ Near" : "✗ No", text_color=sqOfLowNear ? color.white : color.gray, text_size=size.small)
+    
+    // Row 19: Volatility
+    table.cell(infoTable, 0, 19, "Daily Vol", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 19, str.tostring(dailyVol, "#.##") + "%", text_color=color.white, text_size=size.small)
+    
+    // Row 20: Annual Vol
+    table.cell(infoTable, 0, 20, "Ann. Vol", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 20, str.tostring(annualVol, "#.#") + "%" + (useDynamic ? " [SQ12]" : ""), text_color=useDynamic ? color.teal : color.white, text_size=size.small)
+    
+    // Row 21: Buy R:R
+    table.cell(infoTable, 0, 21, "Buy R:R", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 21, str.tostring(buyRR, "#.#") + ":1", text_color=buyRR >= i_rrRatio ? color.green : color.gray, text_size=size.small)
+    
+    // Row 22: Sell R:R
+    table.cell(infoTable, 0, 22, "Sell R:R", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 22, str.tostring(sellRR, "#.#") + ":1", text_color=sellRR >= i_rrRatio ? color.red : color.gray, text_size=size.small)
+    
+    // Row 23: Bars from pivots
+    table.cell(infoTable, 0, 23, "Bars Lo/Hi", text_color=color.gray, text_size=size.small)
+    table.cell(infoTable, 1, 23, str.tostring(barsSinceSwingLo) + "/" + str.tostring(barsSinceSwingHi), text_color=color.white, text_size=size.small)
+    
+    // Row 24: Futia Angular (C28)
+    table.cell(infoTable, 0, 24, "Futia SQ9 (C28)", text_color=color.gray, text_size=size.small)
+    futiaStr = str.tostring(futiaCurrentAngle, "#.#") + "° " + (futiaOnAxis ? "⚡AXIS" : "d=" + str.tostring(futiaDistToAxis, "#.#") + "°")
+    table.cell(infoTable, 1, 24, futiaStr, text_color=futiaOnAxis ? color.yellow : color.white, text_size=size.small)
+    
+    // Row 25: Range Expansion (C29)
+    table.cell(infoTable, 0, 25, "Range Exp (C29)", text_color=color.gray, text_size=size.small)
+    reStr = isRangeExpanding ? str.tostring(rangeExpRatio, "#.##") + "x " + (rangeExpBullish ? "▲" : "▼") : "—"
+    reClr = rangeExpStrong ? (rangeExpBullish ? color.green : color.red) : isRangeExpanding ? color.yellow : color.gray
+    table.cell(infoTable, 1, 25, reStr, text_color=reClr, text_size=size.small)
+    
+    // Row 26: Triangular Number (C30)
+    table.cell(infoTable, 0, 26, "Tri Num (C30)", text_color=color.gray, text_size=size.small)
+    triStr = triNearLevel ? "✓ " + str.tostring(nearestTriNum, "#") : "→ " + str.tostring(nearestTriNum, "#") + " (d=" + str.tostring(triDist, "#.#") + ")"
+    table.cell(infoTable, 1, 26, triStr, text_color=triNearLevel ? color.white : color.gray, text_size=size.small)
+    
+    // Row 27: Planetary Harmonic (C31)
+    table.cell(infoTable, 0, 27, "Planet ☉ (C31)", text_color=color.gray, text_size=size.small)
+    phStr = planetaryHarmConf ? "✓ Harmonic" : "Sun " + str.tostring(sunLongitude, "#.#") + "°"
+    table.cell(infoTable, 1, 27, phStr, text_color=planetaryHarmConf ? color.purple : color.gray, text_size=size.small)
+
+// ============================================================================
+// ALERTS
+// ============================================================================
+alertcondition(goLong  and strategy.position_size <= 0,
+     "Gann BUY Signal",
+     "Gann Complete: BUY signal — Conf: {{plot_2}}")
+alertcondition(goShort and strategy.position_size >= 0,
+     "Gann SELL Signal",
+     "Gann Complete: SELL signal — Conf: {{plot_3}}")
+alertcondition(isVibration9,
+     "Vibration 9 Alert",
+     "Price vibration = 9 (CHANGE NUMBER) — Watch for reversal")
+alertcondition(shepherdAlert,
+     "Shephard Cycle Alert",
+     "Shephard key cycle alignment detected — Major reversal window")
+alertcondition(fatalConfluence,
+     "Fatal 49 Alert",
+     "Price near Fatal Number (49) multiple — Gann's fatal zone")
+alertcondition(isSeasonalDate,
+     "Seasonal Cardinal Alert",
+     "Seasonal cardinal/octave date — Increased reversal probability")
+alertcondition(cumRangeSignal,
+     "Cumulative Range Alert",
+     "Cumulative range matches key cycle number — Hidden reversal signal")
+alertcondition(isShockPoint,
+     "192-Day Shock Point",
+     "Diatonic Fa/La shock point in 192-day cycle — Trend may invert (PDF 6)")
+alertcondition(isDangerZone,
+     "Third-Time Test Alert",
+     "3rd touch of S/R zone — DANGEROUS: breakout/breakdown imminent (PDF 10)")
+alertcondition(highSigMinorTurn,
+     "Minor Trend Turn Alert",
+     "Key minor trend turn day (14 or 21 days from pivot) — Watch closely (PDF 10)")
+alertcondition(jensenCritActive,
+     "Jensen Critical Point",
+     "Jensen harmonic of 90° critical point — Reversal window (Jensen pp.108-113)")
+alertcondition(isBlowoffPhase,
+     "Five-Phase Blowoff Alert",
+     "Jensen Phase 5 (blowoff) detected — Trend exhaustion imminent (Jensen pp.121-122)")
+alertcondition(vecNearProjection,
+     "Vectorial Projection Alert",
+     "Price near 45°/60° vectorial exhaustion point — Top/bottom likely (Jensen pp.124-126)")
+alertcondition(futiaOnAxis,
+     "Futia SQ9 Axis Alert",
+     "Price on SQ9 cardinal/ordinal axis (Futia formula) — Key S/R level (PDF 25)")
+alertcondition(rangeExpStrong,
+     "Range Expansion Alert",
+     "Range expansion > 1.2x — 75%+ continuation probability in bias direction (PDF 27)")
+alertcondition(triNearLevel,
+     "Triangular Number Alert",
+     "Price near triangular (summation) number — Natural S/R level (PDF 26 p.21)")
+alertcondition(planetaryHarmConf,
+     "Planetary Harmonic Alert",
+     "Price near planetary harmonic price level — Potential reversal (PDF 23)")
