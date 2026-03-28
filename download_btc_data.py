@@ -1,14 +1,13 @@
 """
-Download Real Daily Bitcoin OHLC Data
-=====================================
+Extract BTCUSDT Daily Data to CSV
+==================================
 
-Helper script to download actual daily Bitcoin OHLC data for use with the
-Gann algorithm backtester.  Run this on a machine with internet access,
-then place the resulting ``btc_real_daily.csv`` in the same directory as
-``backtest_bitcoin.py`` to use real data instead of interpolated data.
+Helper script to extract the BTCUSDT-1d-*.zip files (real Binance daily
+kline data) shipped with this repository into a single merged CSV file,
+``btc_real_daily.csv``.
 
-Requirements:
-    pip install yfinance
+No external packages or API keys are needed — data is read entirely
+from the local zip files.
 
 Usage:
     python download_btc_data.py
@@ -25,50 +24,42 @@ from __future__ import annotations
 
 import csv
 import sys
-from datetime import datetime
+
+from backtest_bitcoin import load_btcusdt_zips
 
 
-def download_with_yfinance() -> None:
-    """Download BTC daily OHLC via yfinance and save as CSV."""
+def extract_and_save() -> None:
+    """Extract BTC daily OHLC from BTCUSDT zips and save as CSV."""
+    print("Extracting BTCUSDT data from repository zip files ...")
     try:
-        import yfinance as yf  # noqa: WPS433
-    except ImportError:
-        print("ERROR: yfinance is not installed.")
-        print("Install it with:  pip install yfinance")
+        bars = load_btcusdt_zips()
+    except Exception as exc:
+        print(f"  ✗ Failed: {exc}")
+        print("  Ensure BTCUSDT-1d-*.zip files are in the repository.")
         sys.exit(1)
 
-    print("Downloading BTC-USD daily data (Feb 2021 – present) ...")
-    btc = yf.Ticker("BTC-USD")
-    hist = btc.history(start="2021-02-01", end=datetime.now().strftime("%Y-%m-%d"))
-
-    if hist.empty:
-        print("ERROR: No data returned. Check your internet connection.")
-        sys.exit(1)
+    print(f"  ✓ Loaded {len(bars)} daily bars")
 
     output = "btc_real_daily.csv"
     with open(output, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["date", "open", "high", "low", "close", "volume"])
-        for date, row in hist.iterrows():
+        for b in bars:
             writer.writerow([
-                date.strftime("%Y-%m-%d"),
-                f"{row['Open']:.2f}",
-                f"{row['High']:.2f}",
-                f"{row['Low']:.2f}",
-                f"{row['Close']:.2f}",
-                int(row["Volume"]),
+                b.date.strftime("%Y-%m-%d"),
+                f"{b.open:.2f}",
+                f"{b.high:.2f}",
+                f"{b.low:.2f}",
+                f"{b.close:.2f}",
+                f"{b.volume:.2f}",
             ])
 
-    print(f"Saved {len(hist)} daily bars to {output}")
-    print(f"  Period: {hist.index[0].strftime('%Y-%m-%d')} to "
-          f"{hist.index[-1].strftime('%Y-%m-%d')}")
-    print(f"  Start:  ${hist.iloc[0]['Close']:,.2f}")
-    print(f"  End:    ${hist.iloc[-1]['Close']:,.2f}")
-    print()
-    print("To backtest with this data:")
-    print("  >>> from backtest_engine import GannBacktester, BacktestConfig")
-    print(f'  >>> result = GannBacktester(BacktestConfig()).run("{output}")')
+    print(f"\nSaved {len(bars)} daily bars to {output}")
+    print(f"  Period: {bars[0].date.strftime('%Y-%m-%d')} to "
+          f"{bars[-1].date.strftime('%Y-%m-%d')}")
+    print(f"  Start:  ${bars[0].close:,.2f}")
+    print(f"  End:    ${bars[-1].close:,.2f}")
 
 
 if __name__ == "__main__":
-    download_with_yfinance()
+    extract_and_save()

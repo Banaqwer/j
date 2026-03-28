@@ -3,18 +3,14 @@ Bitcoin (BTC/USD) 5-Year Backtest — Gann Unified Algorithm
 ==========================================================
 
 Backtests the W.D. Gann unified trading algorithm on Bitcoin (BTC/USD)
-daily data from February 2021 to February 2026.
+daily data spanning approximately 5 years.
 
-Bitcoin price data is generated using a historically-calibrated model
-anchored to 260+ real weekly close prices (Sunday closes) sourced from
-CoinMarketCap, StatMuse, CoinGecko, and Yahoo Finance.  Daily bars are
-interpolated between weekly anchors with crypto-appropriate volatility
-(~2.5% daily), producing a highly faithful approximation of Bitcoin's
-actual price trajectory.  The weekly anchor spacing (max 7 days between
-data points) dramatically improves accuracy over monthly anchors.
+Data is loaded from the **BTCUSDT-1d-YYYY-MM.zip** files included in
+this repository.  Each zip contains one CSV with real Binance daily
+kline data for that month.  No external APIs or packages are needed.
 
 Key Bitcoin characteristics handled:
-  - Trades 24/7 (no weekend gaps — all calendar days included)
+  - Real daily OHLCV data from Binance kline CSVs (no interpolation)
   - Much higher volatility than traditional markets (~60-80% annualized)
   - Large absolute price moves (hundreds/thousands of dollars per day)
   - Dynamic SQ12 used (high-volatility regime)
@@ -25,8 +21,8 @@ Usage:
     python backtest_bitcoin.py
 
 This will:
-  1. Generate ~1,834 daily BTC bars (Feb 2021 – Feb 2026)
-  2. Run the Gann algorithm backtester
+  1. Load real daily BTC data from BTCUSDT CSV zips in the repo (~5 years)
+  2. Run the Gann algorithm backtester on every daily bar
   3. Print full results and trade log
   4. Export CSV files (btc_data.csv, btc_backtest_trades.csv, btc_backtest_equity.csv)
 """
@@ -34,11 +30,14 @@ This will:
 from __future__ import annotations
 
 import csv
+import glob
 import math
 import os
-import random
-from datetime import datetime, timedelta
-from typing import List, Tuple
+import sys
+import zipfile
+from collections import Counter
+from datetime import datetime, timezone
+from typing import List
 
 from backtest_engine import (
     BacktestConfig,
@@ -46,410 +45,102 @@ from backtest_engine import (
     GannBacktester,
 )
 
+
 # ---------------------------------------------------------------------------
-# Real weekly BTC/USD close prices (Sunday closes) — sourced from
-# CoinMarketCap / StatMuse / CoinGecko / Yahoo Finance.
-# 260+ anchor points for maximum interpolation accuracy.
+# Load BTCUSDT data from repository zip files
 # ---------------------------------------------------------------------------
 
-BTC_WEEKLY_CLOSES: List[Tuple[str, float]] = [
-    # 2021 — Bull run to ATH, then consolidation
-    ("2021-01-03", 32127.00),
-    ("2021-01-10", 38178.00),
-    ("2021-01-17", 35635.00),
-    ("2021-01-24", 32308.00),
-    ("2021-01-31", 33114.00),
-    ("2021-02-07", 38677.00),
-    ("2021-02-14", 47837.00),
-    ("2021-02-21", 57539.00),
-    ("2021-02-28", 45093.00),
-    ("2021-03-07", 51042.00),
-    ("2021-03-14", 59439.00),
-    ("2021-03-21", 57437.00),
-    ("2021-03-28", 55789.00),
-    ("2021-04-04", 59848.00),
-    ("2021-04-11", 60073.00),
-    ("2021-04-18", 56211.00),
-    ("2021-04-25", 49992.00),
-    ("2021-05-02", 57794.00),
-    ("2021-05-09", 58276.00),
-    ("2021-05-16", 47248.00),
-    ("2021-05-23", 34770.00),
-    ("2021-05-30", 35789.00),
-    ("2021-06-06", 36151.00),
-    ("2021-06-13", 39060.00),
-    ("2021-06-20", 35589.00),
-    ("2021-06-27", 34687.00),
-    ("2021-07-04", 35197.00),
-    ("2021-07-11", 34273.00),
-    ("2021-07-18", 31666.00),
-    ("2021-07-25", 35452.00),
-    ("2021-08-01", 41526.00),
-    ("2021-08-08", 43828.00),
-    ("2021-08-15", 47387.00),
-    ("2021-08-22", 49320.00),
-    ("2021-08-29", 48861.00),
-    ("2021-09-05", 51806.00),
-    ("2021-09-12", 45169.00),
-    ("2021-09-19", 47262.00),
-    ("2021-09-26", 43225.00),
-    ("2021-10-03", 48204.00),
-    ("2021-10-10", 55632.00),
-    ("2021-10-17", 61124.00),
-    ("2021-10-24", 60570.00),
-    ("2021-10-31", 61319.00),
-    ("2021-11-07", 63213.00),
-    ("2021-11-14", 64607.00),
-    ("2021-11-21", 58106.00),
-    ("2021-11-28", 57221.00),
-    ("2021-12-05", 49406.00),
-    ("2021-12-12", 50248.00),
-    ("2021-12-19", 46658.00),
-    ("2021-12-26", 50791.00),
-    # 2022 — Bear market (crypto winter)
-    ("2022-01-02", 47700.00),
-    ("2022-01-09", 41862.00),
-    ("2022-01-16", 43113.00),
-    ("2022-01-23", 36277.00),
-    ("2022-01-30", 37918.00),
-    ("2022-02-06", 42412.00),
-    ("2022-02-13", 42255.00),
-    ("2022-02-20", 38372.00),
-    ("2022-02-27", 37724.00),
-    ("2022-03-06", 38150.00),
-    ("2022-03-13", 37800.00),
-    ("2022-03-20", 41314.00),
-    ("2022-03-27", 46942.00),
-    ("2022-04-03", 46250.00),
-    ("2022-04-10", 42208.00),
-    ("2022-04-17", 39717.00),
-    ("2022-04-24", 39469.00),
-    ("2022-05-01", 37714.00),
-    ("2022-05-08", 34055.00),
-    ("2022-05-15", 31287.00),
-    ("2022-05-22", 29307.00),
-    ("2022-05-29", 29731.00),
-    ("2022-06-05", 29990.00),
-    ("2022-06-12", 26548.00),
-    ("2022-06-19", 20535.00),
-    ("2022-06-26", 21191.00),
-    ("2022-07-03", 19265.00),
-    ("2022-07-10", 20827.00),
-    ("2022-07-17", 20945.00),
-    ("2022-07-24", 22723.00),
-    ("2022-07-31", 23292.00),
-    ("2022-08-07", 23154.00),
-    ("2022-08-14", 24225.00),
-    ("2022-08-21", 21444.00),
-    ("2022-08-28", 19817.00),
-    ("2022-09-04", 19981.00),
-    ("2022-09-11", 21826.00),
-    ("2022-09-18", 19415.00),
-    ("2022-09-25", 19077.00),
-    ("2022-10-02", 19300.00),
-    ("2022-10-09", 19400.00),
-    ("2022-10-16", 19200.00),
-    ("2022-10-23", 19500.00),
-    ("2022-10-30", 20600.00),
-    ("2022-11-06", 20900.00),
-    ("2022-11-13", 16200.00),
-    ("2022-11-20", 16600.00),
-    ("2022-11-27", 16400.00),
-    ("2022-12-04", 17000.00),
-    ("2022-12-11", 17150.00),
-    ("2022-12-18", 16700.00),
-    ("2022-12-25", 16900.00),
-    # 2023 — Recovery begins
-    ("2023-01-01", 16537.00),
-    ("2023-01-08", 17168.00),
-    ("2023-01-15", 20872.00),
-    ("2023-01-22", 22697.00),
-    ("2023-01-29", 23139.00),
-    ("2023-02-05", 22840.00),
-    ("2023-02-12", 21819.00),
-    ("2023-02-19", 24495.00),
-    ("2023-02-26", 23488.00),
-    ("2023-03-05", 22428.00),
-    ("2023-03-12", 22190.00),
-    ("2023-03-19", 27196.00),
-    ("2023-03-26", 27866.00),
-    ("2023-04-02", 28466.00),
-    ("2023-04-09", 28045.00),
-    ("2023-04-16", 30347.00),
-    ("2023-04-23", 27601.00),
-    ("2023-04-30", 29230.00),
-    ("2023-05-07", 28797.00),
-    ("2023-05-14", 26914.00),
-    ("2023-05-21", 26851.00),
-    ("2023-05-28", 28045.00),
-    ("2023-06-04", 27220.00),
-    ("2023-06-11", 26458.00),
-    ("2023-06-18", 26506.00),
-    ("2023-06-25", 30476.00),
-    ("2023-07-02", 30631.00),
-    ("2023-07-09", 30184.00),
-    ("2023-07-16", 30272.00),
-    ("2023-07-23", 29844.00),
-    ("2023-07-30", 29230.00),
-    ("2023-08-06", 29048.00),
-    ("2023-08-13", 29374.00),
-    ("2023-08-20", 26141.00),
-    ("2023-08-27", 26014.00),
-    ("2023-09-03", 25950.00),
-    ("2023-09-10", 25808.00),
-    ("2023-09-17", 26582.00),
-    ("2023-09-24", 26222.00),
-    ("2023-10-01", 27204.00),
-    ("2023-10-08", 27991.00),
-    ("2023-10-15", 26896.00),
-    ("2023-10-22", 29924.00),
-    ("2023-10-29", 34667.00),
-    ("2023-11-05", 34761.00),
-    ("2023-11-12", 37186.00),
-    ("2023-11-19", 36498.00),
-    ("2023-11-26", 37377.00),
-    ("2023-12-03", 39564.00),
-    ("2023-12-10", 43963.00),
-    ("2023-12-17", 41654.00),
-    ("2023-12-24", 43099.00),
-    ("2023-12-31", 42265.00),
-    # 2024 — ETF approval, halving, new ATH
-    ("2024-01-07", 44000.00),
-    ("2024-01-14", 42500.00),
-    ("2024-01-21", 41650.00),
-    ("2024-01-28", 43100.00),
-    ("2024-02-04", 42600.00),
-    ("2024-02-11", 48900.00),
-    ("2024-02-18", 52000.00),
-    ("2024-02-25", 51400.00),
-    ("2024-03-03", 52350.00),
-    ("2024-03-10", 69900.00),
-    ("2024-03-17", 69200.00),
-    ("2024-03-24", 65000.00),
-    ("2024-03-31", 71300.00),
-    ("2024-04-07", 69500.00),
-    ("2024-04-14", 67100.00),
-    ("2024-04-21", 66200.00),
-    ("2024-04-28", 63600.00),
-    ("2024-05-05", 63500.00),
-    ("2024-05-12", 62900.00),
-    ("2024-05-19", 67500.00),
-    ("2024-05-26", 67100.00),
-    ("2024-06-02", 67500.00),
-    ("2024-06-09", 66500.00),
-    ("2024-06-16", 66200.00),
-    ("2024-06-23", 64800.00),
-    ("2024-06-30", 62700.00),
-    ("2024-07-07", 55849.00),
-    ("2024-07-14", 60788.00),
-    ("2024-07-21", 68155.00),
-    ("2024-07-28", 68256.00),
-    ("2024-08-04", 67808.00),
-    ("2024-08-11", 66201.00),
-    ("2024-08-18", 66819.00),
-    ("2024-08-25", 68259.00),
-    ("2024-09-01", 67808.00),
-    ("2024-09-08", 67911.00),
-    ("2024-09-15", 65771.00),
-    ("2024-09-22", 65375.00),
-    ("2024-09-29", 65927.00),
-    ("2024-10-06", 64785.00),
-    ("2024-10-13", 64105.00),
-    ("2024-10-20", 63972.00),
-    ("2024-10-27", 67164.00),
-    ("2024-11-03", 75639.00),
-    ("2024-11-10", 80474.00),
-    ("2024-11-17", 89845.00),
-    ("2024-11-24", 98014.00),
-    ("2024-12-01", 96144.00),
-    ("2024-12-08", 88794.00),
-    ("2024-12-15", 90567.00),
-    ("2024-12-22", 89443.00),
-    ("2024-12-29", 84142.00),
-    # 2025 — Post-halving bull continuation
-    ("2025-01-05", 98340.00),
-    ("2025-01-12", 94488.00),
-    ("2025-01-19", 101090.00),
-    ("2025-01-26", 102683.00),
-    ("2025-02-02", 99577.00),
-    ("2025-02-09", 98600.00),
-    ("2025-02-16", 97000.00),
-    ("2025-02-23", 94500.00),
-    ("2025-03-02", 93000.00),
-    ("2025-03-09", 95800.00),
-    ("2025-03-16", 97200.00),
-    ("2025-03-23", 99100.00),
-    ("2025-03-30", 100200.00),
-    ("2025-04-06", 100600.00),
-    ("2025-04-13", 98200.00),
-    ("2025-04-20", 96500.00),
-    ("2025-04-27", 94100.00),
-    ("2025-05-04", 94900.00),
-    ("2025-05-11", 97100.00),
-    ("2025-05-18", 97800.00),
-    ("2025-05-25", 97000.00),
-    ("2025-06-01", 97400.00),
-    ("2025-06-08", 100900.00),
-    ("2025-06-15", 103200.00),
-    ("2025-06-22", 104900.00),
-    ("2025-06-29", 106100.00),
-    ("2025-07-06", 111900.00),
-    ("2025-07-13", 117300.00),
-    ("2025-07-20", 119400.00),
-    ("2025-07-27", 114200.00),
-    ("2025-08-03", 102800.00),
-    ("2025-08-10", 106900.00),
-    ("2025-08-17", 110700.00),
-    ("2025-08-24", 113300.00),
-    ("2025-08-31", 109600.00),
-    ("2025-09-07", 111100.00),
-    ("2025-09-14", 115400.00),
-    ("2025-09-21", 115300.00),
-    ("2025-09-28", 112100.00),
-    ("2025-10-05", 117800.00),
-    ("2025-10-12", 118400.00),
-    ("2025-10-19", 120200.00),
-    ("2025-10-26", 124600.00),
-    ("2025-11-02", 120400.00),
-    ("2025-11-09", 115900.00),
-    ("2025-11-16", 110500.00),
-    ("2025-11-23", 99300.00),
-    ("2025-11-30", 94900.00),
-    ("2025-12-07", 90700.00),
-    ("2025-12-14", 88200.00),
-    ("2025-12-21", 88300.00),
-    ("2025-12-28", 87800.00),
-    # 2026
-    ("2026-01-04", 90600.00),
-    ("2026-01-11", 90800.00),
-    ("2026-01-18", 93700.00),
-    ("2026-01-25", 86500.00),
-    ("2026-02-01", 76900.00),
-]
-
-
-def generate_btc_daily_data(
-    start_date: str = "2021-02-01",
-    end_date: str = "2026-02-08",
-) -> List[Bar]:
+def load_btcusdt_zips(data_dir: str | None = None) -> List[Bar]:
     """
-    Generate historically-calibrated daily Bitcoin OHLC bars.
+    Load real daily BTCUSDT OHLCV bars from the monthly zip files
+    shipped with this repository (``BTCUSDT-1d-YYYY-MM.zip``).
 
-    Bitcoin trades 24/7, so ALL calendar days are included (no weekend
-    skipping). Daily volatility is ~2.5% (reduced from 3.5% because weekly
-    anchors are much closer together, reducing interpolation error).
-    A mean-reversion correction keeps generated prices tightly aligned
-    with real weekly anchors (max 7-day gap).
+    Each zip contains a headerless CSV with Binance kline rows:
+        open_time, open, high, low, close, volume, close_time, ...
+
+    Handles both millisecond and microsecond timestamps.
 
     Parameters
     ----------
-    start_date : str
-        Start date (YYYY-MM-DD).
-    end_date : str
-        End date (YYYY-MM-DD).
+    data_dir : str or None
+        Directory containing the zip files.  Defaults to the script dir.
 
     Returns
     -------
     List[Bar]
-        Daily OHLC bars for Bitcoin.
+        Sorted, de-duplicated daily bars.
     """
-    random.seed(42)  # Reproducible results
+    if data_dir is None:
+        data_dir = os.path.dirname(os.path.abspath(__file__))
 
-    # Parse weekly anchor points
-    anchors = []
-    for date_str, price in BTC_WEEKLY_CLOSES:
-        anchors.append((datetime.strptime(date_str, "%Y-%m-%d"), price))
-    anchors.sort(key=lambda x: x[0])
+    zip_files = sorted(glob.glob(os.path.join(data_dir, "BTCUSDT-1d-*.zip")))
+    if not zip_files:
+        raise FileNotFoundError(
+            f"No BTCUSDT-1d-*.zip files found in {data_dir}"
+        )
 
-    dt_start = datetime.strptime(start_date, "%Y-%m-%d")
-    dt_end = datetime.strptime(end_date, "%Y-%m-%d")
+    # Binance changed from millisecond to microsecond timestamps
+    _MICROSECOND_THRESHOLD = 1_000_000_000_000_000
 
     bars: List[Bar] = []
-    prev_close = None
+    for zf_path in zip_files:
+        with zipfile.ZipFile(zf_path, "r") as zf:
+            for name in zf.namelist():
+                if not name.endswith(".csv"):
+                    continue
+                with zf.open(name) as cf:
+                    for raw_line in cf:
+                        cols = raw_line.decode("utf-8").strip().split(",")
+                        if len(cols) < 6:
+                            continue
+                        try:
+                            ts = int(cols[0])
+                            # Detect microseconds vs milliseconds
+                            if ts > _MICROSECOND_THRESHOLD:
+                                dt = datetime.fromtimestamp(
+                                    ts / 1_000_000, tz=timezone.utc
+                                ).replace(tzinfo=None)
+                            else:
+                                dt = datetime.fromtimestamp(
+                                    ts / 1_000, tz=timezone.utc
+                                ).replace(tzinfo=None)
+                            bars.append(Bar(
+                                date=dt,
+                                open=round(float(cols[1]), 2),
+                                high=round(float(cols[2]), 2),
+                                low=round(float(cols[3]), 2),
+                                close=round(float(cols[4]), 2),
+                                volume=round(float(cols[5]), 2),
+                            ))
+                        except (ValueError, IndexError):
+                            continue
 
-    # Find starting price by interpolating from nearest anchors
-    current_dt = dt_start
-    for idx in range(len(anchors) - 1):
-        if anchors[idx][0] <= current_dt <= anchors[idx + 1][0]:
-            frac = (current_dt - anchors[idx][0]).days / max(
-                (anchors[idx + 1][0] - anchors[idx][0]).days, 1
-            )
-            prev_close = anchors[idx][1] + frac * (
-                anchors[idx + 1][1] - anchors[idx][1]
-            )
-            break
+    if not bars:
+        raise RuntimeError("No valid kline rows found in BTCUSDT zip files.")
 
-    if prev_close is None:
-        prev_close = anchors[0][1]
+    # Sort and de-duplicate by date
+    bars.sort(key=lambda b: b.date)
+    seen: set[str] = set()
+    unique: List[Bar] = []
+    for b in bars:
+        key = b.date.strftime("%Y-%m-%d")
+        if key not in seen:
+            seen.add(key)
+            unique.append(b)
+    return unique
 
-    while current_dt <= dt_end:
-        # Bitcoin trades 24/7 — NO weekend skipping
 
-        # Find which weekly interval we're in
-        drift_per_day = 0.0
-        days_to_anchor = 999
-        anchor_price = prev_close
-        for idx in range(len(anchors) - 1):
-            if anchors[idx][0] <= current_dt <= anchors[idx + 1][0]:
-                total_days = (anchors[idx + 1][0] - anchors[idx][0]).days
-                days_to_anchor = (anchors[idx + 1][0] - current_dt).days
-                anchor_price = anchors[idx + 1][1]
-                if total_days > 0:
-                    drift_per_day = (
-                        math.log(anchors[idx + 1][1] / anchors[idx][1])
-                        / total_days
-                    )
-                break
-
-        # Daily volatility reduced to 2.5% — weekly anchors are much
-        # closer together so less noise is needed for accurate tracking
-        daily_vol = 0.025
-
-        # Mean-reversion correction: pull price toward weekly anchor
-        # Stronger correction since anchors are only 7 days apart
-        correction = 0.0
-        if days_to_anchor < 999 and days_to_anchor > 0 and anchor_price > 0:
-            price_ratio = math.log(anchor_price / prev_close)
-            correction_strength = min(0.25, 0.8 / max(days_to_anchor, 1))
-            correction = price_ratio * correction_strength
-
-        # Daily return = drift + mean-reversion correction + noise
-        noise = random.gauss(0, daily_vol)
-        daily_return = drift_per_day + correction + noise * 0.80
-
-        close_price = prev_close * math.exp(daily_return)
-
-        # Generate realistic OHLC — BTC has larger intraday swings
-        intraday_range = close_price * daily_vol
-        high_offset = abs(random.gauss(0, intraday_range * 0.8))
-        low_offset = abs(random.gauss(0, intraday_range * 0.8))
-        open_offset = random.gauss(0, intraday_range * 0.5)
-
-        open_price = prev_close + open_offset
-        high_price = max(open_price, close_price) + high_offset
-        low_price = min(open_price, close_price) - low_offset
-
-        # Ensure OHLC consistency
-        high_price = max(high_price, open_price, close_price)
-        low_price = min(low_price, open_price, close_price)
-        low_price = max(low_price, 1.0)  # BTC can't go below $1
-
-        # BTC volume is typically 20-60 billion USD notional
-        volume = random.uniform(20_000_000_000, 60_000_000_000)
-
-        bars.append(Bar(
-            date=current_dt,
-            open=round(open_price, 2),
-            high=round(high_price, 2),
-            low=round(low_price, 2),
-            close=round(close_price, 2),
-            volume=round(volume),
-        ))
-
-        prev_close = close_price
-        current_dt += timedelta(days=1)
-
-    return bars
+def get_btc_data() -> List[Bar]:
+    """Load BTC daily data from the BTCUSDT zip files in the repository."""
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    try:
+        bars = load_btcusdt_zips(base_dir)
+        print(f"   ✓ Loaded {len(bars)} daily bars from BTCUSDT zip files")
+        return bars
+    except Exception as exc:
+        print(f"   ✗ Failed to load BTCUSDT data: {exc}")
+        print("     Ensure BTCUSDT-1d-*.zip files are in the repository.")
+        sys.exit(1)
 
 
 def save_btc_csv(bars: List[Bar], filepath: str) -> None:
@@ -467,25 +158,21 @@ def save_btc_csv(bars: List[Bar], filepath: str) -> None:
 
 
 def main():
-    """Run the full 5-year Bitcoin backtest."""
+    """Run the full 5-year Bitcoin backtest using BTCUSDT CSV data."""
     base_dir = os.path.dirname(os.path.abspath(__file__))
 
     print("=" * 78)
     print("GANN UNIFIED TRADING ALGORITHM — BITCOIN (BTC/USD) 5-YEAR BACKTEST")
+    print("Using real Binance BTCUSDT daily kline data from repository")
     print("=" * 78)
 
-    # ── 1. Generate Bitcoin data ─────────────────────────────────────────
-    print("\n1. Generating Bitcoin (BTC/USD) daily data (Feb 2021 – Feb 2026)...")
-    print("   Data calibrated to 260+ real weekly closes from CoinMarketCap /")
-    print("   StatMuse / CoinGecko / Yahoo Finance (current price $68,978 Feb 8, 2026)")
-    print("   Note: Bitcoin trades 24/7 — all calendar days included")
+    # ── 1. Load Bitcoin data from BTCUSDT zips ───────────────────────────
+    print("\n1. Loading Bitcoin (BTC/USD) real daily OHLCV data...")
+    print("   Source: BTCUSDT-1d-*.zip files (Binance klines)")
 
-    bars = generate_btc_daily_data(
-        start_date="2021-02-01",
-        end_date="2026-02-08",
-    )
+    bars = get_btc_data()
 
-    print(f"   Generated {len(bars)} calendar days (24/7 market)")
+    print(f"   Total bars: {len(bars)}")
     print(f"   Period:     {bars[0].date.strftime('%Y-%m-%d')} to "
           f"{bars[-1].date.strftime('%Y-%m-%d')}")
     print(f"   Start:      ${bars[0].close:>12,.2f}")
@@ -502,7 +189,7 @@ def main():
     print("\n2. Configuring backtester for Bitcoin...")
 
     config = BacktestConfig(
-        initial_capital=100_000.0,
+        initial_capital=1_000.0,
         max_risk_pct=1.5,           # 1.5% risk — BTC is very volatile
         min_reward_risk=2.5,        # 2.5:1 R:R minimum (PDF 4 standard)
         max_position_pct=40.0,      # Max 40% — respect BTC volatility
@@ -512,7 +199,7 @@ def main():
         use_trailing_stop=True,     # Trail stop after partial exit
         partial_exit_pct=0.5,       # Book 50% at first target
         slippage_pct=0.001,         # 0.1% slippage (crypto spreads)
-        commission_per_trade=15.0,  # $15 per trade (exchange fees)
+        commission_per_trade=0.15,  # $0.15 per trade (proportional for $1k)
         use_fixed_sizing=True,      # Fixed sizing prevents unrealistic
         #   exponential compounding on BTC's extreme volatility
     )
@@ -591,6 +278,404 @@ def main():
         avg = data["pnl"] / data["count"] if data["count"] > 0 else 0
         print(f"  {reason:>15}  {data['count']:>6}  "
               f"${data['pnl']:>13,.2f}  ${avg:>11,.2f}")
+
+    # ── 7.5. Loss pattern analysis ───────────────────────────────────────
+    print(f"\n{'─' * 78}")
+    print("LOSS PATTERN ANALYSIS")
+    print(f"{'─' * 78}")
+
+    losing_trades = [t for t in result.trades if t.pnl <= 0]
+    winning_trades = [t for t in result.trades if t.pnl > 0]
+    n_losses = len(losing_trades)
+
+    if n_losses > 0:
+        # ─── 1. Loss by direction ────────────────────────────────────
+        buy_losses = [t for t in losing_trades if t.direction == "BUY"]
+        sell_losses = [t for t in losing_trades if t.direction == "SELL"]
+        buy_wins = [t for t in winning_trades if t.direction == "BUY"]
+        sell_wins = [t for t in winning_trades if t.direction == "SELL"]
+
+        print(f"\n  1. LOSSES BY DIRECTION")
+        print(f"     {'Direction':>10}  {'Losses':>7}  {'Wins':>6}  "
+              f"{'Loss%':>6}  {'Avg Loss':>10}  {'Total Loss':>12}")
+        print(f"     {'─' * 10}  {'─' * 7}  {'─' * 6}  "
+              f"{'─' * 6}  {'─' * 10}  {'─' * 12}")
+
+        for label, losses, wins in [("BUY", buy_losses, buy_wins),
+                                     ("SELL", sell_losses, sell_wins)]:
+            total = len(losses) + len(wins)
+            loss_rate = len(losses) / total * 100 if total > 0 else 0
+            avg_loss = (sum(t.pnl for t in losses) / len(losses)
+                        if losses else 0)
+            total_loss = sum(t.pnl for t in losses)
+            print(f"     {label:>10}  {len(losses):>7}  {len(wins):>6}  "
+                  f"{loss_rate:>5.1f}%  ${avg_loss:>9.2f}  ${total_loss:>11.2f}")
+
+        # ─── 2. Loss by day of week ──────────────────────────────────
+        print(f"\n  2. LOSSES BY DAY OF WEEK")
+        day_names = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        day_losses: dict[int, list] = {i: [] for i in range(7)}
+        day_all: dict[int, int] = {i: 0 for i in range(7)}
+
+        for t in result.trades:
+            dow = t.entry_date.weekday()
+            day_all[dow] += 1
+            if t.pnl <= 0:
+                day_losses[dow].append(t)
+
+        print(f"     {'Day':>5}  {'Losses':>7}  {'Total':>6}  "
+              f"{'Loss%':>6}  {'Avg Loss':>10}  {'Total Loss':>12}")
+        print(f"     {'─' * 5}  {'─' * 7}  {'─' * 6}  "
+              f"{'─' * 6}  {'─' * 10}  {'─' * 12}")
+
+        for dow in range(7):
+            losses = day_losses[dow]
+            total = day_all[dow]
+            loss_rate = len(losses) / total * 100 if total > 0 else 0
+            avg_loss = (sum(t.pnl for t in losses) / len(losses)
+                        if losses else 0)
+            total_loss = sum(t.pnl for t in losses)
+            print(f"     {day_names[dow]:>5}  {len(losses):>7}  {total:>6}  "
+                  f"{loss_rate:>5.1f}%  ${avg_loss:>9.2f}  ${total_loss:>11.2f}")
+
+        # ─── 3. Loss by confidence level ─────────────────────────────
+        print(f"\n  3. LOSSES BY CONFIDENCE LEVEL")
+        conf_buckets = [
+            (0.0, 0.30, "Low (0.00–0.30)"),
+            (0.30, 0.45, "Med (0.30–0.45)"),
+            (0.45, 0.60, "High (0.45–0.60)"),
+            (0.60, 1.01, "Very High (0.60+)"),
+        ]
+        print(f"     {'Confidence':>20}  {'Losses':>7}  {'Wins':>6}  "
+              f"{'Loss%':>6}  {'Avg Loss':>10}")
+        print(f"     {'─' * 20}  {'─' * 7}  {'─' * 6}  "
+              f"{'─' * 6}  {'─' * 10}")
+
+        for lo, hi, label in conf_buckets:
+            bucket_losses = [t for t in losing_trades
+                             if lo <= t.confidence < hi]
+            bucket_wins = [t for t in winning_trades
+                           if lo <= t.confidence < hi]
+            total = len(bucket_losses) + len(bucket_wins)
+            loss_rate = (len(bucket_losses) / total * 100
+                         if total > 0 else 0)
+            avg_loss = (sum(t.pnl for t in bucket_losses)
+                        / len(bucket_losses) if bucket_losses else 0)
+            print(f"     {label:>20}  {len(bucket_losses):>7}  "
+                  f"{len(bucket_wins):>6}  {loss_rate:>5.1f}%  "
+                  f"${avg_loss:>9.2f}")
+
+        # ─── 4. Loss by exit reason ──────────────────────────────────
+        print(f"\n  4. LOSS EXIT REASONS")
+        loss_reasons: dict[str, list] = {}
+        for t in losing_trades:
+            loss_reasons.setdefault(t.exit_reason, []).append(t)
+
+        print(f"     {'Reason':>15}  {'Count':>6}  {'%Losses':>8}  "
+              f"{'Avg Loss':>10}  {'Worst':>10}")
+        print(f"     {'─' * 15}  {'─' * 6}  {'─' * 8}  "
+              f"{'─' * 10}  {'─' * 10}")
+
+        for reason in sorted(loss_reasons, key=lambda r: -len(loss_reasons[r])):
+            trades_r = loss_reasons[reason]
+            pct = len(trades_r) / n_losses * 100
+            avg_l = sum(t.pnl for t in trades_r) / len(trades_r)
+            worst = min(t.pnl for t in trades_r)
+            print(f"     {reason:>15}  {len(trades_r):>6}  "
+                  f"{pct:>7.1f}%  ${avg_l:>9.2f}  ${worst:>9.2f}")
+
+        # ─── 5. Consecutive loss streaks ─────────────────────────────
+        print(f"\n  5. CONSECUTIVE LOSS STREAKS")
+        streaks: list[list] = []
+        current_streak: list = []
+        for t in result.trades:
+            if t.pnl <= 0:
+                current_streak.append(t)
+            else:
+                if current_streak:
+                    streaks.append(current_streak)
+                    current_streak = []
+        if current_streak:
+            streaks.append(current_streak)
+
+        if streaks:
+            streak_lens = [len(s) for s in streaks]
+            streak_pnls = [sum(t.pnl for t in s) for s in streaks]
+            print(f"     Total streak events:   {len(streaks)}")
+            print(f"     Max streak length:     {max(streak_lens)}")
+            print(f"     Avg streak length:     {sum(streak_lens)/len(streaks):.1f}")
+            print(f"     Worst streak PnL:      ${min(streak_pnls):,.2f}")
+
+            # Distribution of streak lengths
+            print(f"\n     Streak length distribution:")
+            dist = Counter(streak_lens)
+            for length in sorted(dist.keys()):
+                bar = "█" * dist[length]
+                print(f"       {length:>2} losses: {dist[length]:>4}x  {bar}")
+
+        # ─── 6. Losses by market volatility regime ───────────────────
+        print(f"\n  6. LOSSES BY MARKET VOLATILITY REGIME")
+
+        # Build date→bar index for quick lookup
+        bar_by_date: dict[str, int] = {}
+        for i, b in enumerate(bars):
+            bar_by_date[b.date.strftime("%Y-%m-%d")] = i
+
+        low_vol_losses = []
+        high_vol_losses = []
+        low_vol_wins = []
+        high_vol_wins = []
+
+        for t in result.trades:
+            key = t.entry_date.strftime("%Y-%m-%d")
+            idx = bar_by_date.get(key)
+            if idx is None or idx < 14:
+                continue
+            # Calculate 14-bar realized volatility at entry
+            window = [bars[j].close for j in range(idx - 14, idx)]
+            rets = [(window[k] - window[k-1]) / window[k-1]
+                    for k in range(1, len(window))]
+            vol = (sum(r**2 for r in rets) / len(rets)) ** 0.5 if rets else 0
+            daily_vol_pct = vol * 100
+
+            if t.pnl <= 0:
+                if daily_vol_pct < 3.0:
+                    low_vol_losses.append((t, daily_vol_pct))
+                else:
+                    high_vol_losses.append((t, daily_vol_pct))
+            else:
+                if daily_vol_pct < 3.0:
+                    low_vol_wins.append((t, daily_vol_pct))
+                else:
+                    high_vol_wins.append((t, daily_vol_pct))
+
+        print(f"     {'Regime':>15}  {'Losses':>7}  {'Wins':>6}  "
+              f"{'Loss%':>6}  {'Avg Loss':>10}")
+        print(f"     {'─' * 15}  {'─' * 7}  {'─' * 6}  "
+              f"{'─' * 6}  {'─' * 10}")
+
+        for label, losses_l, wins_l in [
+            ("Low vol (<3%)", low_vol_losses, low_vol_wins),
+            ("High vol (≥3%)", high_vol_losses, high_vol_wins),
+        ]:
+            total = len(losses_l) + len(wins_l)
+            loss_rate = len(losses_l) / total * 100 if total > 0 else 0
+            avg_l = (sum(t.pnl for t, _ in losses_l) / len(losses_l)
+                     if losses_l else 0)
+            print(f"     {label:>15}  {len(losses_l):>7}  {len(wins_l):>6}  "
+                  f"{loss_rate:>5.1f}%  ${avg_l:>9.2f}")
+
+        # ─── 7. Monthly loss clustering ──────────────────────────────
+        print(f"\n  7. MONTHLY LOSS CLUSTERING")
+        month_data: dict[str, dict] = {}
+        for t in result.trades:
+            key = t.entry_date.strftime("%Y-%m")
+            if key not in month_data:
+                month_data[key] = {"losses": 0, "wins": 0, "loss_pnl": 0.0}
+            if t.pnl <= 0:
+                month_data[key]["losses"] += 1
+                month_data[key]["loss_pnl"] += t.pnl
+            else:
+                month_data[key]["wins"] += 1
+
+        # Find worst months by loss count
+        worst_months = sorted(month_data.items(),
+                              key=lambda x: x[1]["losses"], reverse=True)[:10]
+
+        print(f"     {'Month':>8}  {'Losses':>7}  {'Wins':>6}  "
+              f"{'Loss%':>6}  {'Loss PnL':>10}")
+        print(f"     {'─' * 8}  {'─' * 7}  {'─' * 6}  "
+              f"{'─' * 6}  {'─' * 10}")
+
+        for month, data in worst_months:
+            total = data["losses"] + data["wins"]
+            loss_rate = data["losses"] / total * 100 if total > 0 else 0
+            print(f"     {month:>8}  {data['losses']:>7}  {data['wins']:>6}  "
+                  f"{loss_rate:>5.1f}%  ${data['loss_pnl']:>9.2f}")
+
+        # ─── 8. Loss pattern near Gann levels ────────────────────────
+        print(f"\n  8. LOSSES NEAR KEY GANN PRICE LEVELS")
+
+        gann_price_levels = [
+            10000, 14400, 22500, 32400, 36000, 40000, 50625,
+            62500, 72900, 90000, 100000, 108900, 129600, 144000,
+        ]
+
+        near_gann_losses: List = []
+        far_gann_losses: List = []
+        for t in losing_trades:
+            min_dist = min(
+                abs(t.entry_price - lv) / lv * 100
+                for lv in gann_price_levels
+            )
+            if min_dist < 5.0:  # Within 5% of a Gann level
+                near_gann_losses.append(t)
+            else:
+                far_gann_losses.append(t)
+
+        near_gann_wins: List = []
+        far_gann_wins: List = []
+        for t in winning_trades:
+            min_dist = min(
+                abs(t.entry_price - lv) / lv * 100
+                for lv in gann_price_levels
+            )
+            if min_dist < 5.0:
+                near_gann_wins.append(t)
+            else:
+                far_gann_wins.append(t)
+
+        print(f"     {'Proximity':>20}  {'Losses':>7}  {'Wins':>6}  "
+              f"{'Loss%':>6}  {'Avg Loss':>10}")
+        print(f"     {'─' * 20}  {'─' * 7}  {'─' * 6}  "
+              f"{'─' * 6}  {'─' * 10}")
+
+        for label, losses_l, wins_l in [
+            ("Near Gann (<5%)", near_gann_losses, near_gann_wins),
+            ("Far from Gann (≥5%)", far_gann_losses, far_gann_wins),
+        ]:
+            n_l = len(losses_l)
+            n_w = len(wins_l)
+            total = n_l + n_w
+            loss_rate = n_l / total * 100 if total > 0 else 0
+            avg_l = sum(t.pnl for t in losses_l) / n_l if n_l else 0
+            print(f"     {label:>20}  {n_l:>7}  {n_w:>6}  "
+                  f"{loss_rate:>5.1f}%  ${avg_l:>9.2f}")
+
+        # ─── 9. Summary of key findings ──────────────────────────────
+        print(f"\n  {'─' * 74}")
+        print(f"  KEY LOSS PATTERN FINDINGS")
+        print(f"  {'─' * 74}")
+
+        # Find the worst day
+        worst_day_idx = max(range(7),
+                            key=lambda d: len(day_losses[d]))
+        worst_day_rate = (len(day_losses[worst_day_idx])
+                          / day_all[worst_day_idx] * 100
+                          if day_all[worst_day_idx] > 0 else 0)
+
+        # Find worst direction
+        buy_loss_rate = (len(buy_losses)
+                         / (len(buy_losses) + len(buy_wins)) * 100
+                         if (len(buy_losses) + len(buy_wins)) > 0 else 0)
+        sell_loss_rate = (len(sell_losses)
+                          / (len(sell_losses) + len(sell_wins)) * 100
+                          if (len(sell_losses) + len(sell_wins)) > 0 else 0)
+
+        # Dominant exit reason for losses
+        dominant_reason = max(loss_reasons,
+                              key=lambda r: len(loss_reasons[r]))
+        dominant_pct = len(loss_reasons[dominant_reason]) / n_losses * 100
+
+        findings = []
+        findings.append(
+            f"  1. STOP LOSSES DOMINATE: {dominant_pct:.0f}% of losses "
+            f"exit via {dominant_reason} — tight stops protect capital "
+            f"but cause frequent small losses."
+        )
+
+        if buy_loss_rate > sell_loss_rate + 5:
+            findings.append(
+                f"  2. DIRECTIONAL BIAS: BUY trades lose more often "
+                f"({buy_loss_rate:.1f}% vs {sell_loss_rate:.1f}%) — "
+                f"algorithm struggles with false breakouts on long entries."
+            )
+        elif sell_loss_rate > buy_loss_rate + 5:
+            findings.append(
+                f"  2. DIRECTIONAL BIAS: SELL trades lose more often "
+                f"({sell_loss_rate:.1f}% vs {buy_loss_rate:.1f}%) — "
+                f"shorting against BTC's long-term uptrend is harder."
+            )
+        else:
+            findings.append(
+                f"  2. NO DIRECTIONAL BIAS: BUY ({buy_loss_rate:.1f}%) "
+                f"and SELL ({sell_loss_rate:.1f}%) loss rates are similar "
+                f"— algorithm is direction-neutral."
+            )
+
+        findings.append(
+            f"  3. WORST DAY: {day_names[worst_day_idx]} has the highest "
+            f"loss rate ({worst_day_rate:.1f}% of trades lose) — "
+            f"consider filtering or reducing size."
+        )
+
+        if streaks:
+            max_streak = max(streak_lens)
+            findings.append(
+                f"  4. MAX LOSING STREAK: {max_streak} consecutive losses "
+                f"— acceptable for a {result.win_rate * 100:.0f}% win-rate system "
+                f"({'normal' if max_streak <= 10 else 'concerning'})."
+            )
+
+        low_vol_loss_rate = (len(low_vol_losses)
+                             / (len(low_vol_losses) + len(low_vol_wins)) * 100
+                             if (len(low_vol_losses) + len(low_vol_wins)) > 0
+                             else 0)
+        high_vol_loss_rate = (len(high_vol_losses)
+                              / (len(high_vol_losses) + len(high_vol_wins))
+                              * 100
+                              if (len(high_vol_losses) + len(high_vol_wins))
+                              > 0 else 0)
+
+        if low_vol_loss_rate > high_vol_loss_rate + 5:
+            findings.append(
+                f"  5. VOLATILITY PATTERN: More losses in low-volatility "
+                f"({low_vol_loss_rate:.1f}%) vs high-volatility "
+                f"({high_vol_loss_rate:.1f}%) — choppy, range-bound markets "
+                f"generate false signals."
+            )
+        elif high_vol_loss_rate > low_vol_loss_rate + 5:
+            findings.append(
+                f"  5. VOLATILITY PATTERN: More losses in high-volatility "
+                f"({high_vol_loss_rate:.1f}%) vs low-volatility "
+                f"({low_vol_loss_rate:.1f}%) — extreme moves blow through "
+                f"stops before targets hit."
+            )
+        else:
+            findings.append(
+                f"  5. VOLATILITY PATTERN: Loss rates similar across "
+                f"volatility regimes ({low_vol_loss_rate:.1f}% low vs "
+                f"{high_vol_loss_rate:.1f}% high) — no clear regime bias."
+            )
+
+        # Average loss size relative to average win
+        avg_loss_val = abs(sum(t.pnl for t in losing_trades) / n_losses)
+        avg_win_val = (sum(t.pnl for t in winning_trades)
+                       / len(winning_trades) if winning_trades else 0)
+        loss_win_ratio = avg_loss_val / avg_win_val if avg_win_val > 0 else 0
+
+        findings.append(
+            f"  6. LOSS SIZE: Average loss (${avg_loss_val:.2f}) is "
+            f"{loss_win_ratio:.1f}x the average win (${avg_win_val:.2f}) — "
+            f"{'excellent' if loss_win_ratio < 0.5 else 'good' if loss_win_ratio < 1.0 else 'needs improvement'} "
+            f"risk management."
+        )
+
+        near_loss_rate = (len(near_gann_losses)
+                          / (len(near_gann_losses) + len(near_gann_wins))
+                          * 100
+                          if (len(near_gann_losses) + len(near_gann_wins))
+                          > 0 else 0)
+        far_loss_rate = (len(far_gann_losses)
+                         / (len(far_gann_losses) + len(far_gann_wins)) * 100
+                         if (len(far_gann_losses) + len(far_gann_wins))
+                         > 0 else 0)
+
+        if near_loss_rate > far_loss_rate + 5:
+            findings.append(
+                f"  7. GANN LEVELS: Higher loss rate near Gann levels "
+                f"({near_loss_rate:.1f}% vs {far_loss_rate:.1f}%) — "
+                f"price oscillation around key levels triggers stops."
+            )
+        else:
+            findings.append(
+                f"  7. GANN LEVELS: Loss rate near Gann levels "
+                f"({near_loss_rate:.1f}%) vs far ({far_loss_rate:.1f}%) "
+                f"— {'no significant difference' if abs(near_loss_rate - far_loss_rate) < 5 else 'better performance near levels'}."
+            )
+
+        for f_line in findings:
+            print(f_line)
 
     # ── 8. Bitcoin-specific Gann analysis ────────────────────────────────
     print(f"\n{'─' * 78}")
@@ -693,16 +778,15 @@ def main():
     print(f"\n  BTC buy-and-hold return: {btc_return:+.2f}%")
     print(f"  Algorithm return:        {algo_return:+.2f}%")
     print(f"  Outperformance:          {algo_return - btc_return:+.2f}%")
-    print(f"\n  Key observations:")
+    print(f"\n  Data source: BTCUSDT-1d-*.zip — real Binance daily klines")
+    print(f"  Key observations:")
     print(f"    - Bitcoin's extreme volatility ({annual_vol:.0f}% annual) "
           f"triggers Dynamic SQ12")
     print(f"    - Gann angles adapt to BTC's large price swings")
     print(f"    - 144-cycle levels align with BTC's major turning points")
     print(f"    - Number vibration analysis works on any price scale")
-    print(f"\n  For exact results, replace btc_data.csv with real daily")
-    print(f"  OHLC data from your exchange (Binance, Coinbase, etc.):")
-    print(f"  >>> bt = GannBacktester(config)")
-    print(f"  >>> result = bt.run('btc_data.csv')")
+    print(f"\n  To re-run:")
+    print(f"  >>> python backtest_bitcoin.py")
     print(f"{'=' * 78}")
 
 
