@@ -316,6 +316,17 @@ full policy maps and the 100K/150K tables in `results/summary.md`.)
   within 250 days.  Adding the optional $1,000 DLL at checkout (which doubles
   the payout cap to $4,000) is worth +$600 to the 55% trader and +$26,000 to
   the 60% trader, and nothing to a no-edge trader.
+* **Payout path.** Under identical fixed policies in the trade-level
+  simulator (`results/summary.md`, path table) the **Consistency path**
+  (3 trading days, best day ≤ 40% of window profit, $3,000 cap) beats the
+  Standard path (5 winning days of $150+, $2,000 cap) for every edge: $364
+  vs $314 with no edge, $4,859 vs $3,799 at 55%, $43,548 vs $32,504 at 60%,
+  and $66,279 vs $46,594 at 60% with the DLL-doubled caps.  The 3-day cycle
+  and the higher cap outweigh the 40% rule as soon as profits are spread
+  over days, which the optimal policies do anyway.  (Fixed policies are far
+  below the state-dependent DP optimum on the Standard path — $3,799 vs
+  $11,051 at 55% — so the table ranks the paths; it does not bound the
+  Consistency path's optimal value.)
 * **Account size.** For no-edge and weak traders the 50K dominates (cheapest
   lottery ticket); for a 55%+ trader the larger accounts pay more per year
   but the 150K takes ~190 trading days to pass and ties up $199/month.

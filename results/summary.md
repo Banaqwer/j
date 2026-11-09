@@ -237,6 +237,14 @@ The DP covers the Standard path exactly; here each variant gets the best *fixed*
 
 | size | edge | variant | best fixed policy | mean net payout | P(any payout) | median | mean # payouts | P(bust) |
 |---|---|---|---|---|---|---|---|---|
+| 50K | modest | standard | +2000 / −2000 × 5 lots | $3,799 | 62.6% | $450 | 2.5 | 92.1% |
+| 50K | modest | consistency | +1500 / −2000 × 3 lots | $4,859 | 51.0% | $405 | 2.0 | 86.6% |
+| 50K | modest | standard_dll | +2000 / −1000 × 5 lots | $2,908 | 65.2% | $518 | 1.6 | 99.6% |
+| 50K | modest | consistency_dll | +2000 / −800 × 3 lots | $5,387 | 50.7% | $360 | 1.7 | 93.1% |
+| 50K | strong | standard | +2000 / −1500 × 3 lots | $32,504 | 89.8% | $46,710 | 18.4 | 33.9% |
+| 50K | strong | consistency | +1500 / −2000 × 5 lots | $43,548 | 82.1% | $60,728 | 16.4 | 36.3% |
+| 50K | strong | standard_dll | +2000 / −1000 × 5 lots | $46,594 | 89.4% | $72,216 | 14.0 | 46.9% |
+| 50K | strong | consistency_dll | +2000 / −1000 × 5 lots | $66,279 | 84.5% | $86,840 | 13.0 | 32.7% |
 | 50K | zero | standard | +200 / −500 × 3 lots | $314 | 51.3% | $122 | 0.7 | 100.0% |
 | 50K | zero | consistency | +200 / −800 × 3 lots | $364 | 44.4% | $0 | 0.6 | 100.0% |
 | 50K | zero | standard_dll | +200 / −500 × 3 lots | $314 | 51.3% | $122 | 0.7 | 100.0% |

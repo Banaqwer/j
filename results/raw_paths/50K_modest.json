@@ -1,0 +1,47 @@
+{
+ "size": "50K",
+ "edge": "modest",
+ "edge_desc": "modest edge (55% at 1R): p_win=0.550 R=100 L=100 cost=5.00 -> mu=5.00$/trade sigma=99.5 gamma=+0.00101/$ per-trade Sharpe=+0.050 annual Sharpe~+2.52 (10 trades/day)",
+ "variants": {
+  "standard": {
+   "delta": 2000,
+   "lam": 2000,
+   "k": 5,
+   "mean_payout": 3799.414904296875,
+   "p_any_payout": 0.6255416666666667,
+   "p_bust": 0.9209166666666667,
+   "mean_n_payouts": 2.4759166666666665,
+   "median_payout": 450.0
+  },
+  "consistency": {
+   "delta": 1500,
+   "lam": 2000,
+   "k": 3,
+   "mean_payout": 4859.09356640625,
+   "p_any_payout": 0.51,
+   "p_bust": 0.8664166666666666,
+   "mean_n_payouts": 2.0421666666666667,
+   "median_payout": 405.0
+  },
+  "standard_dll": {
+   "delta": 2000,
+   "lam": 1000,
+   "k": 5,
+   "mean_payout": 2908.4012717342375,
+   "p_any_payout": 0.651875,
+   "p_bust": 0.995625,
+   "mean_n_payouts": 1.5617083333333333,
+   "median_payout": 517.5
+  },
+  "consistency_dll": {
+   "delta": 2000,
+   "lam": 800,
+   "k": 3,
+   "mean_payout": 5386.6575439049,
+   "p_any_payout": 0.50675,
+   "p_bust": 0.9307916666666667,
+   "mean_n_payouts": 1.6719166666666667,
+   "median_payout": 360.0
+  }
+ }
+}

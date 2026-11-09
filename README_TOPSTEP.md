@@ -44,7 +44,9 @@ Break-even win rate at 1R: 49.7%.  A pass can be made (near-)certain by
 resets: for a no-edge trader the expected cost until the first pass is $187
 and 81% pass within six attempts; the catch is that the funded account is
 then worth $382 in expectation and is lost with probability 99.6% within a
-year.  Every DP result is validated against a trade-by-trade Monte Carlo.
+year.  Every DP result is validated against a trade-by-trade Monte Carlo.  Under
+like-for-like fixed policies the Consistency payout path (3 days, 40% best-day
+rule, $3,000 cap) out-earns the Standard path for every edge tested.
 
 ## Reproduce
 
