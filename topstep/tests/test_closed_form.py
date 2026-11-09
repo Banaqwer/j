@@ -46,6 +46,7 @@ def test_bold_bound_dominates_timid_when_fair():
         assert cf.bold_play_bound(T, D, 0.0) > cf.p_pass_topstep_continuous(T, D, 0.0)
 
 
+@pytest.mark.slow
 def test_monte_carlo_matches_trailing_formula():
     """Brute-force check of exp(-gamma T/(e^{gamma D}-1)) with a fine random walk."""
     rng = np.random.default_rng(1)

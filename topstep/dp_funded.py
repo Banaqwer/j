@@ -1,5 +1,6 @@
 """Finite-horizon optimal trade/payout policy for the Topstep Express Funded
-Account (XFA), Standard payout path, by backward induction.
+Account (XFA), Standard payout path, by backward induction on exact day-P&L
+distributions (see daymodel.py).
 
 Verified mechanics modelled (help.topstep.com, Nov 2026):
   * balance starts at $0; MLL starts at -D and trails the END-OF-DAY balance,
@@ -8,7 +9,7 @@ Verified mechanics modelled (help.topstep.com, Nov 2026):
     (the request day itself does not count), positive net profit since the last
     payout (first payout exempt), request <= 50% of balance, <= cap (50K: $2,000;
     $4,000 if a DLL was added at Combine checkout), >= $125; trader keeps 90%;
-  * after EVERY payout the MLL is set to $0 permanently and the winning-day count restarts;
+  * after EVERY payout the MLL is set to $0 permanently and the day count restarts;
   * Scaling Plan: max lots depend on the current balance (50K: 2 / 3 / 5 lots
     below $1,500 / $1,500-2,000 / above $2,000);
   * optional Daily Loss Limit caps the daily stop.
@@ -17,18 +18,19 @@ State (end of day): (b, M, ref, w)
     b    balance ($, grid step h)             M   MLL ($, grid; = 0 after first payout)
     ref  balance right after the last payout (None before the first payout)
     w    winning days since last payout (capped at w_required)
-Actions: trade (Delta, Lambda) -> +Delta w.p. q, else -Lambda; size chosen automatically
-         within the Scaling-Plan cap;  payout;  do nothing.
-Objective: maximise expected (discounted) sum of payouts over H trading days.
+Actions: trade (Delta, Lambda) with the size chosen inside the Scaling-Plan cap of
+         the current balance; payout; do nothing.
+Objective: maximise expected (discounted) sum of net payouts over H trading days.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Optional, Sequence
 
 import numpy as np
 
-from .closed_form import p_hit_upper, expected_time_fixed
+from .daymodel import DayOutcomes, choose_size
+from .dp_combine import default_grid
 from .edge import Edge
 
 
@@ -64,63 +66,45 @@ class FundedSpec:
 class FAction:
     delta: float
     lam: float
-    q: np.ndarray = field(repr=False)        # per-state win probability (size depends on state)
-    k: np.ndarray = field(repr=False)        # per-state contracts used
-    s_w: np.ndarray = field(repr=False)
-    s_l: np.ndarray = field(repr=False)
-    bust_l: np.ndarray = field(repr=False)
-    feasible: np.ndarray = field(repr=False)
-
-
-def _size_table(delta: float, lam: float, edge: Edge, kmax: int):
-    """For each allowed max size 1..kmax return (k_used, q) or (0, nan) if infeasible."""
-    mu1, s1 = edge.mu, edge.sigma
-    feas = [k for k in range(1, kmax + 1) if expected_time_fixed(delta, lam, k * mu1, k * s1) <= edge.trades_per_day]
-    table = {}
-    for cap in range(1, kmax + 1):
-        f = [k for k in feas if k <= cap]
-        if not f:
-            table[cap] = (0, float("nan"))
-        else:
-            k = min(f) if edge.gamma >= 0 else max(f)
-            table[cap] = (k, p_hit_upper(delta, lam, edge.gamma / k))
-    return table
+    lsteps: int
+    by_cap: dict          # cap (max lots) -> DayOutcomes (or None)
 
 
 class FundedDP:
     def __init__(self, spec: FundedSpec, edge: Edge, h: float = 100.0, Bmax: float = 10000.0,
                  horizon: int = 250, discount: float = 1.0,
-                 deltas: Optional[Sequence[float]] = None, lambdas: Optional[Sequence[float]] = None):
+                 deltas: Optional[Sequence[float]] = None, lambdas: Optional[Sequence[float]] = None,
+                 coarse: bool = False):
         if spec.path != "standard":
             raise ValueError("FundedDP models the Standard payout path; use sim.run_funded for the Consistency path")
         self.spec, self.edge, self.h = spec, edge, float(h)
         self.H, self.beta = int(horizon), float(discount)
         D = spec.mll
-        cap = spec.daily_cap if spec.daily_cap is not None else max(2 * D, 2 * spec.cap_abs)
-        from .dp_combine import CombineDP
-        self.deltas = sorted(set(float(x) for x in (deltas or CombineDP._default_grid(cap, h))))
-        lam_cap = max(D, spec.cap_abs) if spec.daily_cap is None else spec.daily_cap
+        dcap = spec.daily_cap if spec.daily_cap is not None else max(2 * D, 2 * spec.cap_abs)
+        lcap = max(D, spec.cap_abs) if spec.daily_cap is None else spec.daily_cap
         if spec.daily_loss_limit is not None:
-            lam_cap = min(lam_cap, spec.daily_loss_limit)
-        self.lambdas = sorted(set(float(x) for x in (lambdas or CombineDP._default_grid(lam_cap, h))))
+            lcap = min(lcap, spec.daily_loss_limit)
+        self.deltas = sorted(set(float(x) for x in (deltas or default_grid(dcap, h, coarse))))
+        self.lambdas = sorted(set(float(x) for x in (lambdas or default_grid(lcap, h, coarse))))
         for x in self.deltas + self.lambdas:
             if abs(x / h - round(x / h)) > 1e-9 or x <= 0:
                 raise ValueError(f"action value {x} is not a positive multiple of h={h}")
+        if abs(spec.lock_at / h - round(spec.lock_at / h)) > 1e-9:
+            raise ValueError("lock_at must be a multiple of h")
+        self.caps = sorted({int(l) for _, l in spec.scaling})
         self.Bmax = float(np.ceil(Bmax / h) * h)
-        self.nb = int(round((self.Bmax + D) / h)) + 1          # b = -D + ib h
-        self.nm = int(round((spec.lock_at + D) / h)) + 1       # M = -D + im h
+        self.nb = int(round((self.Bmax + D) / h)) + 1
+        self.nm = int(round((spec.lock_at + D) / h)) + 1
         self.im_lock = self.nm - 1
-        self.nref = int(round(self.Bmax / h)) + 1              # iref = 0 -> none; else ref = (iref-1) h
+        self.nref = int(round(self.Bmax / h)) + 1
         self.nw = spec.w_required + 1
-        # ---- enumerate valid states
+        # ---- states
         states = []
-        # pre-first-payout: any M, ref none, b > M
         for ib in range(self.nb):
             for im in range(self.nm):
                 if ib > im:
                     for iw in range(self.nw):
                         states.append((ib, im, 0, iw))
-        # post-first-payout: M = 0 (locked), ref known, b > 0
         im0 = self.im_lock
         for ib in range(im0 + 1, self.nb):
             for iref in range(1, self.nref):
@@ -134,52 +118,61 @@ class FundedDP:
         self.b = -D + self.ib * h
         self.M = -D + self.im * h
         self.ref = np.where(self.iref == 0, -np.inf, (self.iref - 1) * h)
-        self.kmax_state = spec.max_lots(self.b)
+        self.cap_state = spec.max_lots(self.b)
+        self.cap_group = np.searchsorted(np.array(self.caps), self.cap_state)   # index into self.caps
+        # ---- actions and outcome matrix
         self.actions: list[FAction] = []
-        self._build_actions()
+        for delta in self.deltas:
+            for lam in self.lambdas:
+                by_cap = {cap: choose_size(delta, lam, edge, cap, h) for cap in self.caps}
+                if all(v is None for v in by_cap.values()):
+                    continue
+                self.actions.append(FAction(delta, lam, int(round(lam / h)), by_cap))
+        if not self.actions:
+            raise RuntimeError("no feasible trade actions")
+        ovals = sorted({int(o) for a in self.actions for v in a.by_cap.values() if v is not None for o in v.steps})
+        self.o_values = np.array(ovals)
+        o_index = {int(o): j for j, o in enumerate(self.o_values)}
+        A, C, J = len(self.actions), len(self.caps), len(self.o_values)
+        self.W = np.zeros((A * C, J))              # row = ai * C + ci
+        self.row_ok = np.zeros((A, C), dtype=bool)
+        for ai, a in enumerate(self.actions):
+            for ci, cap in enumerate(self.caps):
+                v = a.by_cap[cap]
+                if v is None:
+                    continue
+                self.row_ok[ai, ci] = True
+                for o, p in zip(v.steps, v.prob):
+                    self.W[ai * C + ci, o_index[int(o)]] = p
+        self.t_next = np.zeros((J, self.S), dtype=np.int32)
+        self.t_bust = np.zeros((J, self.S), dtype=bool)
+        for j, o in enumerate(self.o_values):
+            s_n, bust = self.transition(int(o))
+            self.t_next[j], self.t_bust[j] = s_n, bust
+        lsteps = np.array([a.lsteps for a in self.actions])
+        self.feas = (lsteps[:, None] <= (self.ib - self.im)[None, :]) & self.row_ok[:, self.cap_group]  # (A, S)
         self._build_payout()
         self.V = None
         self.policy = None
         self.policy_t = None
 
     def _lookup(self, ib, im, iref, iw):
-        idx = self.lookup[np.clip(ib, 0, self.nb - 1), np.clip(im, 0, self.nm - 1),
-                          np.clip(iref, 0, self.nref - 1), np.clip(iw, 0, self.nw - 1)]
-        return idx
+        return self.lookup[np.clip(ib, 0, self.nb - 1), np.clip(im, 0, self.nm - 1),
+                           np.clip(iref, 0, self.nref - 1), np.clip(iw, 0, self.nw - 1)]
 
-    def _build_actions(self):
+    def transition(self, o_steps: int):
         sp, h, D = self.spec, self.h, self.spec.mll
-        kmax_all = int(max(l for _, l in sp.scaling))
-        for delta in self.deltas:
-            for lam in self.lambdas:
-                table = _size_table(delta, lam, self.edge, kmax_all)
-                k_arr = np.array([table[int(c)][0] for c in range(1, kmax_all + 1)])
-                q_arr = np.array([table[int(c)][1] for c in range(1, kmax_all + 1)])
-                k_state = k_arr[self.kmax_state - 1]
-                q_state = q_arr[self.kmax_state - 1]
-                if not (k_state > 0).any():
-                    continue
-                dsteps, lsteps = int(round(delta / h)), int(round(lam / h))
-                feasible = (k_state > 0) & (lsteps <= (self.ib - self.im))
-                # win branch
-                ib_w = np.minimum(self.ib + dsteps, self.nb - 1)
-                b_w = -D + ib_w * h
-                m_w = np.minimum(sp.lock_at, np.maximum(self.M, b_w - D))
-                im_w = np.rint((m_w + D) / h).astype(int)
-                iw_w = np.minimum(self.iw + (1 if delta >= sp.win_threshold else 0), self.nw - 1)
-                s_w = self._lookup(ib_w, im_w, self.iref, iw_w)
-                # lose branch
-                ib_l = self.ib - lsteps
-                bust_l = ib_l <= self.im
-                s_l = self._lookup(np.maximum(ib_l, 0), self.im, self.iref, self.iw)
-                s_l = np.where(bust_l, 0, s_l)
-                assert (s_w[feasible] >= 0).all(), "win transition left the state space"
-                assert (s_l[feasible & ~bust_l] >= 0).all(), "lose transition left the state space"
-                self.actions.append(FAction(delta, lam, np.where(k_state > 0, q_state, 0.0).astype(np.float64),
-                                            k_state.astype(np.int8), s_w.astype(np.int32), s_l.astype(np.int32),
-                                            bust_l, feasible))
-        if not self.actions:
-            raise RuntimeError("no feasible trade actions")
+        ib_n = self.ib + o_steps
+        bust = ib_n <= self.im
+        ib_n = np.clip(ib_n, 0, self.nb - 1)
+        b_n = -D + ib_n * h
+        m_n = np.minimum(sp.lock_at, np.maximum(self.M, b_n - D))
+        im_n = np.rint((m_n + D) / h).astype(int)
+        iw_n = np.minimum(self.iw + (1 if o_steps * h >= sp.win_threshold - 1e-9 else 0), self.nw - 1)
+        s_n = self._lookup(ib_n, im_n, self.iref, iw_n)
+        s_n = np.where(bust, 0, s_n)
+        assert (s_n >= 0).all(), "transition left the state space"
+        return s_n.astype(np.int32), bust
 
     def _build_payout(self):
         sp, h, D = self.spec, self.h, self.spec.mll
@@ -194,32 +187,40 @@ class FundedDP:
         iref_p = np.rint(b_after / h).astype(int) + 1
         s_p = self._lookup(ib_p, im_p, iref_p, np.zeros(self.S, dtype=int))
         M_after = np.where(sp.mll_to_zero_after_payout, 0.0, self.M)
-        terminal = eligible & (s_p < 0) & (b_after <= M_after + 1e-9)   # withdrawal empties the account
+        terminal = eligible & (s_p < 0) & (b_after <= M_after + 1e-9)
         eligible &= (s_p >= 0) | terminal
         self.pay_A = np.where(eligible, A, 0.0)
         self.pay_eligible = eligible
         self.pay_terminal = terminal
         self.pay_next = np.where(eligible & ~terminal, s_p, 0).astype(np.int32)
 
+    def _trade_values(self, V: np.ndarray) -> np.ndarray:
+        """(A, S) value of each trade action from each state (−inf if infeasible)."""
+        Vn = np.where(self.t_bust, 0.0, V[self.t_next])          # (J, S)
+        Q = self.W @ Vn                                          # (A*C, S)
+        C = len(self.caps)
+        Q = Q.reshape(len(self.actions), C, self.S)
+        Qs = Q[:, self.cap_group, np.arange(self.S)]             # (A, S): row matching the state's cap
+        return np.where(self.feas, Qs, -np.inf)
+
     def solve(self, keep_policies: bool = True):
         V = np.zeros(self.S)
         pol_t = []
+        ar = np.arange(self.S)
         for t in range(self.H - 1, -1, -1):
-            best = self.beta * V            # do nothing
-            arg = np.full(self.S, -2, dtype=np.int32)
-            for ai, a in enumerate(self.actions):
-                vl = np.where(a.bust_l, 0.0, V[a.s_l])
-                val = self.beta * (a.q * V[a.s_w] + (1.0 - a.q) * vl)
-                val = np.where(a.feasible, val, -np.inf)
-                better = val > best + 1e-12
-                best = np.where(better, val, best)
-                arg = np.where(better, ai, arg)
+            Q = self.beta * self._trade_values(V)
+            arg = np.argmax(Q, axis=0).astype(np.int32)
+            best = Q[arg, ar]
+            nothing = self.beta * V
+            use_nothing = ~(best > nothing + 1e-12)
+            best = np.where(use_nothing, nothing, best)
+            arg = np.where(use_nothing, -2, arg)
             vp = self.spec.split * self.pay_A + self.beta * np.where(self.pay_terminal, 0.0, V[self.pay_next])
             vp = np.where(self.pay_eligible, vp, -np.inf)
             better = vp > best + 1e-12
             best = np.where(better, vp, best)
             arg = np.where(better, -1, arg)
-            V = best
+            V = np.where(np.isfinite(best), best, 0.0)
             if keep_policies:
                 pol_t.append(arg)
         self.V, self.policy = V, arg
@@ -238,6 +239,11 @@ class FundedDP:
     def fresh_state(self) -> int:
         return self.state_index()
 
+    def action_k(self, ai: int, s: int) -> int:
+        a = self.actions[ai]
+        v = a.by_cap[self.caps[self.cap_group[s]]]
+        return int(v.k) if v is not None else 0
+
     def describe_action(self, ai: int, s: Optional[int] = None) -> str:
         if ai == -1:
             return "request payout"
@@ -246,10 +252,12 @@ class FundedDP:
         a = self.actions[ai]
         if s is None:
             return f"target +{a.delta:.0f} / stop -{a.lam:.0f}"
-        return f"target +{a.delta:.0f} / stop -{a.lam:.0f} with {a.k[s]} contract(s), q={a.q[s]:.3f}"
+        v = a.by_cap[self.caps[self.cap_group[s]]]
+        return (f"target +{a.delta:.0f} / stop -{a.lam:.0f} with {v.k} contract(s), "
+                f"P(win day)={v.p_win:.3f}, unresolved={v.p_unresolved:.2f}")
 
     def simulate_policy(self, n_paths: int = 20000, seed: int = 0, record: bool = False) -> dict:
-        """Monte Carlo of the time-dependent optimal policy inside the binary-day model."""
+        """Monte Carlo of the time-dependent optimal policy inside the day-outcome model."""
         if self.policy_t is None:
             self.solve(keep_policies=True)
         rng = np.random.default_rng(seed)
@@ -258,13 +266,10 @@ class FundedDP:
         paid = np.zeros(n_paths)
         n_payouts = np.zeros(n_paths, int)
         first_payout_day = np.full(n_paths, -1)
-        a_q = np.stack([a.q for a in self.actions])
-        a_sw = np.stack([a.s_w for a in self.actions])
-        a_sl = np.stack([a.s_l for a in self.actions])
-        a_bust = np.stack([a.bust_l for a in self.actions])
+        C = len(self.caps)
+        Wc = np.cumsum(self.W, axis=1)
         for t in range(self.H):
             pol = self.policy_t[t][s]
-            u = rng.random(n_paths)
             m = alive & (pol == -1)
             if m.any():
                 paid[m] += self.spec.split * self.pay_A[s[m]]
@@ -278,11 +283,15 @@ class FundedDP:
             if m.any():
                 ai = pol[m]
                 sm = s[m]
-                win = u[m] < a_q[ai, sm]
-                bust = (~win) & a_bust[ai, sm]
-                s[m] = np.where(win, a_sw[ai, sm], a_sl[ai, sm])
+                rows = ai * C + self.cap_group[sm]
+                u = rng.random(m.sum())
+                j = (Wc[rows] < u[:, None]).sum(axis=1)
+                j = np.minimum(j, len(self.o_values) - 1)
+                bust = self.t_bust[j, sm]
+                nxt = self.t_next[j, sm]
                 idx_m = np.flatnonzero(m)
                 alive[idx_m[bust]] = False
+                s[m] = nxt
         return {
             "mean_payout": float(paid.mean()),
             "median_payout": float(np.median(paid)),

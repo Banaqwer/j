@@ -15,7 +15,9 @@ def test_bold_one_day_matches_gamblers_ruin():
         P, E = dp.evaluate(dp.policy_bold())
         s0 = dp.fresh_state()
         k = 5 if e.gamma < 0 else 1
-        exact = cf.p_hit_upper(3000, 2000, e.gamma / k)
+        exact = cf.lattice_hit_prob(3000, 2000, e.p_win, k * (e.reward - e.cost_rt), k * (e.loss + e.cost_rt))
+        if e.cost_rt == 0:
+            assert exact == pytest.approx(cf.p_hit_upper(3000, 2000, e.gamma / k), abs=1e-9)
         assert P[s0] == pytest.approx(exact, abs=1e-6)
         assert E[s0] == pytest.approx(1.0, abs=1e-6)
 
@@ -30,7 +32,8 @@ def test_timid_matches_discrete_trailing_product():
     assert P[dp.fresh_state()] == pytest.approx(exact, abs=1e-6)
     # and it converges to the continuous formula as h -> 0 (h=50 closer than h=100)
     cont = cf.p_pass_topstep_continuous(T, D, 0.0)
-    dp50 = CombineDP(SPEC50, e, h=50.0)
+    e50 = Edge(0.5, 50, 50, 0.0, trades_per_day=10000)
+    dp50 = CombineDP(SPEC50, e50, h=50.0)
     P50, _ = dp50.evaluate(dp50.policy_timid())
     assert abs(P50[dp50.fresh_state()] - cont) < abs(P[dp.fresh_state()] - cont)
 

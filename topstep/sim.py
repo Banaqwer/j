@@ -235,7 +235,7 @@ def dp_funded_policy(dp) -> Callable:
             idx = np.flatnonzero(tr)
             delta[idx] = [dp.actions[a].delta for a in ai[idx]]
             lam[idx] = [dp.actions[a].lam for a in ai[idx]]
-            k[idx] = [max(int(dp.actions[a].k[si]), 1) for a, si in zip(ai[idx], s[idx])]
+            k[idx] = [max(dp.action_k(int(a), int(si)), 1) for a, si in zip(ai[idx], s[idx])]
         delta[ai == -1] = 0.0
         return delta, lam, k
     return pol
