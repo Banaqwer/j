@@ -89,14 +89,15 @@ def econ_table(rows, size, dll=False):
     if not rs:
         return ""
     L = [f"### Whole-game economics {size}{' with DLL' if dll else ''}: pay until you pass, then trade the XFA for 250 days\n",
-         "| edge | path | monthly / reset / activation | R_pass = V_XFA − activation | fee-aware P_pass | E[days] per attempt | quits at start? | E[trading days until pass] | **E[cost until pass]** | **EV until pass (fee-aware)** | EV with pure P-max policy |",
-         "|---|---|---|---|---|---|---|---|---|---|---|"]
+         "| edge | path | monthly / reset / activation | R_pass = V_XFA − activation | fee-aware P_pass | E[days] per attempt | quits at start? | P(pass within 3 / 6 attempts) | E[trading days until pass] | **E[cost until pass]** | **EV until pass (fee-aware)** | EV with pure P-max policy |",
+         "|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for r in rs:
         for path in ("standard", "noaf"):
             e = r["economics"][path]
             fa = e["fee_aware_policy"]
+            p3 = 1 - (1 - fa['P_pass']) ** 3; p6 = 1 - (1 - fa['P_pass']) ** 6
             L.append(f"| {r['edge']} | {path} | ${e['monthly']:.0f} / ${e['reset']:.0f} / ${e['activation']:.0f} | ${f0(e['R_pass'])} | "
-                     f"{pct(fa['P_pass'])} | {f1(fa['E_days'])} | {'yes' if fa['quit_immediately'] else 'no'} | {f1(e['expected_trading_days_until_pass'])} | "
+                     f"{pct(fa['P_pass'])} | {f1(fa['E_days'])} | {'yes' if fa['quit_immediately'] else 'no'} | {pct(p3)} / {pct(p6)} | {f1(e['expected_trading_days_until_pass'])} | "
                      f"**${f0(e['expected_cost_until_pass'])}** | **${f0(e['EV_until_pass_fee_aware'])}** | ${f0(e['EV_until_pass_pmax_policy'])} |")
     return "\n".join(L) + "\n"
 
