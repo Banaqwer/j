@@ -1,0 +1,1825 @@
+{
+ "as_of": "2026-11-09",
+ "confidence_scale": "0-1; null=unknown; src keys resolve via sources map",
+ "sources": {
+  "combine_params": "https://help.topstep.com/en/articles/8284197-trading-combine-parameters",
+  "mll": "https://help.topstep.com/en/articles/8284204-what-is-the-maximum-loss-limit",
+  "consistency": "https://help.topstep.com/en/articles/8284208-consistency-at-topstep",
+  "dll": "https://help.topstep.com/en/articles/10490293-daily-loss-limit-in-the-trading-combine-and-express-funded-account",
+  "pricing": "https://help.topstep.com/en/articles/14289835-topstep-pricing-and-payment-questions",
+  "subscriptions": "https://help.topstep.com/en/articles/8284121-trading-combine-subscriptions",
+  "reset": "https://help.topstep.com/en/articles/8284128-what-is-a-reset",
+  "products_hours": "https://help.topstep.com/en/articles/8284206-when-and-what-products-can-i-trade",
+  "risk_adjustments": "https://help.topstep.com/en/articles/13613539-risk-adjustments-high-risk-high-volatility",
+  "prohibited_strategies": "https://help.topstep.com/en/articles/10305426-prohibited-trading-strategies-at-topstep",
+  "prohibited_conduct": "https://help.topstep.com/en/articles/10296582-prohibited-conduct",
+  "hedging": "https://help.topstep.com/en/articles/13747047-understanding-hedging",
+  "commissions": "https://help.topstep.com/en/articles/8284213-what-are-the-commissions-and-fees-in-the-trading-combine-and-express-funded-account",
+  "xfa_params": "https://help.topstep.com/en/articles/8284215-express-funded-account-parameters",
+  "xfa_activation": "https://help.topstep.com/en/articles/8284217-express-funded-account-activation",
+  "scaling_plan": "https://help.topstep.com/en/articles/8284223-what-is-the-scaling-plan",
+  "payout_policy": "https://help.topstep.com/en/articles/8284233-topstep-payout-policy",
+  "back2funded": "https://help.topstep.com/en/articles/12060405-back2funded-rules-guidelines-and-how-it-works",
+  "rtp": "https://help.topstep.com/en/articles/13620045-what-is-the-responsible-trading-program",
+  "ftp": "https://help.topstep.com/en/articles/10551016-what-is-the-focused-trader-program",
+  "responsible_trading": "https://help.topstep.com/en/articles/10406542-what-is-responsible-trading",
+  "lfa_params": "https://help.topstep.com/en/articles/10657969-live-funded-account-parameters",
+  "lfa_callup": "https://help.topstep.com/en/articles/13747178-live-funded-account-call-up-and-call-down-process",
+  "dlre": "https://help.topstep.com/en/articles/11748475-dynamic-live-risk-expansion",
+  "lfa_costs": "https://help.topstep.com/en/articles/8284229-what-are-the-costs-in-the-live-funded-account",
+  "lfa_rules_site": "https://www.topstep.com/live-funded-account-rules",
+  "octagon": "https://help.topstep.com/en/articles/15764697-the-topstep-octagon",
+  "lpb_retired": "https://help.topstep.com/en/articles/11177768-topstepx-live-performance-bonus",
+  "pro_account": "https://help.topstep.com/en/articles/14645398-what-is-a-pro-account",
+  "labs": "https://help.topstep.com/en/articles/15520357-topstep-labs",
+  "api": "https://help.topstep.com/en/articles/11187768-topstepx-api-access",
+  "topstepx": "https://help.topstep.com/en/articles/14434175-topstepx",
+  "eligibility": "https://help.topstep.com/en/articles/8284116-am-i-eligible-to-trade-with-topstep",
+  "banned": "https://help.topstep.com/en/articles/16989498-i-ve-been-banned-what-are-my-options",
+  "terms": "https://www.topstep.com/terms-of-use",
+  "xfa_rules_site_stale": "https://www.topstep.com/express-funded-account-rules",
+  "risk_disclosure": "https://www.topstep.com/risk-disclosure",
+  "double_caps_tc": "https://www.topstep.com/double-payout-caps-terms-conditions",
+  "price_limit": "https://help.topstep.com/en/articles/8284225-how-to-ensure-i-am-not-trading-within-2-of-a-price-limit",
+  "live_stats_blog": "https://www.topstep.com/blog/topstep-vs-lucid-trading",
+  "tradecovex_changes": "https://tradecovex.com/guides/topstep-rule-changes-2026",
+  "bestprops": "https://bestprops.com/topstep-accounts-compared/",
+  "x.com/Topstep/status/1660697228204187648": "https://x.com/Topstep/status/1660697228204187648",
+  "x.com/Topstep/status/1676619425871429634": "https://x.com/Topstep/status/1676619425871429634",
+  "saveonpropfirms.com/blog/what-is-topstep": "https://saveonpropfirms.com/blog/what-is-topstepx",
+  "blog.traderspost.io/article/how-to-get-f": "https://blog.traderspost.io/article/how-to-get-funded-with-topstep",
+  "topstep.com/dashboard-login": "https://www.topstep.com/dashboard-login",
+  "x.com/Topstep/status/1895184543306457296": "https://x.com/Topstep/status/1895184543306457296",
+  "h8284199": "https://help.topstep.com/en/articles/8284199-new-to-topstep-start-here",
+  "h2tfunding.com/what-platform-does-topste": "https://h2tfunding.com/what-platform-does-topstep-use/",
+  "x.com/Topstep/status/1980740749135118439": "https://x.com/Topstep/status/1980740749135118439",
+  "financemagnates.com/forex/brokers/plus50": "https://www.financemagnates.com/forex/brokers/plus500-becomes-tech-backbone-for-us-prop-firm/",
+  "financemagnates.com/forex/prop-firms-rep": "https://www.financemagnates.com/forex/prop-firms-report-futures-prop-tech-provider-projectx-to-end-its-third-party-service-offering",
+  "financemagnates.com/forex/topstep-faces-": "https://www.financemagnates.com/forex/topstep-faces-prop-traders-wrath-due-to-repeated-outages-ceo-sets-january-deadline-for-a-fix/",
+  "topstep.com/blog/prop-firm-payout-proof": "https://www.topstep.com/blog/prop-firm-payout-proof",
+  "topstepbrokerage.com/": "https://www.topstepbrokerage.com/",
+  "topstep.com/blog/topstep-express-funded-": "https://www.topstep.com/blog/topstep-express-funded-account-consistency",
+  "topstep.com/blog/new-topstep-campaign-pl": "https://www.topstep.com/blog/new-topstep-campaign-platform-trading-progress",
+  "topstep.com/blog/the-value-of-setting-a-": "https://www.topstep.com/blog/the-value-of-setting-a-daily-loss-limit",
+  "financemagnates.com/forex/topstep-acquir": "https://www.financemagnates.com/forex/topstep-acquires-the-futures-desk-adds-coaching-tools-for-futures-traders/",
+  "topstep.com/blog/why-trading-commissions": "https://www.topstep.com/blog/why-trading-commissions-matter",
+  "topstep.com/blog/what-is-a-daily-loss-li": "https://www.topstep.com/blog/what-is-a-daily-loss-limit",
+  "topstep.com/blog/topstep-aeropay-payout": "https://www.topstep.com/blog/topstep-aeropay-payout",
+  "propfirm.compare/updates/topstep": "https://propfirm.compare/updates/topstep",
+  "topstep.com/blog/daily-payouts": "https://www.topstep.com/blog/daily-payouts"
+ },
+ "combine": {
+  "common": {
+   "structure": "Single-phase simulated evaluation: one rule, two objectives. Stages: Trading Combine -> Express Funded Account (XFA) -> Live Funded Account (LFA).",
+   "rule_text": "Do not let your account balance hit or go below the Maximum Loss Limit (MLL)",
+   "objective_1_text": "Reach and maintain your Profit Target",
+   "objective_2_text": "Meet the Consistency Target - your best single day should stay below 55% of your Profit Target to avoid increasing your Consistency Target",
+   "sizes_offered": [
+    "50K",
+    "100K",
+    "150K"
+   ],
+   "platform": "TopstepX (only platform)",
+   "mll_type": "end_of_day_trailing",
+   "mll_monitoring": "real-time, realized + unrealized P&L; breach liquidates immediately by market order; realized balance back above limit does not undo breach",
+   "mll_locks_at": "starting balance (permanently) once reached by end-of-day balance",
+   "mll_breach_consequence": "account liquidated for rest of day and ineligible for funding until Reset; subscription keeps rebilling; practice trading allowed",
+   "mll_adjustable": false,
+   "consistency_target_pct": 55,
+   "consistency_formula": "Best Day Profit / Total Profit = Best Day %; new Profit Target = Best Day / 0.55 if exceeded",
+   "consistency_hard_line": true,
+   "consistency_breach_fails_account": false,
+   "consistency_wording_conflict": "Parameters page: 'below 55% of your Profit Target'; Consistency page: 'at or below 55%' computed vs Total Profit; Program Overview: 'below 55% of total profits'",
+   "best_day_lock_time_ct": "15:10",
+   "losses_reset_best_day": false,
+   "min_trading_days_explicit": null,
+   "min_trading_days_effective": 2,
+   "time_limit_days": null,
+   "time_limit": "none (monthly subscription until pass or cancel)",
+   "trading_day": "17:00 CT to 15:10 CT next calendar day",
+   "flat_by_ct": "15:10",
+   "flatten_begins_ct": "15:08",
+   "holiday_early_close_flat_minutes_before": 15,
+   "overnight_holds_allowed": false,
+   "dll_optional": true,
+   "dll_checkout_fixed": true,
+   "dll_breach_is_violation": false,
+   "dll_breach_effect": "positions flattened, pending orders canceled, no new trades until 17:00 CT next session; funding eligibility unaffected",
+   "micro_to_mini_ratio": 10,
+   "scaling_plan_applies": false,
+   "position_overage_tolerance_seconds": 10,
+   "exchanges": [
+    "CME",
+    "CBOT",
+    "NYMEX",
+    "COMEX"
+   ],
+   "futures_only": true,
+   "products_permitted": "ES, MES*, NQ, MNQ*, RTY, M2K*, NKD, YM, MYM*, MBT*, MET*, 6A, 6B, 6C, 6E, 6J, 6S, E7, M6E*, M6A*, 6M*, 6N, M6B, CL, QM, NG, QG, MCL*, RB, HO, PL, MNG, GC, SI, HG, MGC*, SIL*, MHG, ZT, ZF, ZN, TN, ZB, UB, HE, LE, ZC, ZW, ZS, ZM, ZL (* = restricted products; SI/HG/PL currently capped at 0)",
+   "cbot_pause_ct": "07:45-08:30 Mon-Fri (no orders)",
+   "tier1_news_window_minutes": 10,
+   "tier1_news_events": [
+    "CPI",
+    "FOMC rate decision",
+    "FOMC press conference",
+    "NFP",
+    "PPI"
+   ],
+   "tier1_news_minis_blocked": [
+    "ES",
+    "RTY",
+    "YM",
+    "NQ",
+    "NKD",
+    "GC",
+    "SI",
+    "HG",
+    "PL"
+   ],
+   "resets_per_account_per_day": 2,
+   "reset_restores": "starting balance, MLL, Consistency Target, trading-day count; rebill date pushed 30 days from Reset",
+   "reset_credit_per_rebill": 1,
+   "reset_credit_expiry_months_if_issued_on_or_after_2025_12_11": 12,
+   "subscription_rebill_days": 30,
+   "subscription_pausable": false,
+   "failed_charge_retries": 2,
+   "combine_purchase_limit": null,
+   "combine_purchase_limit_note": "no limit on standard Combines; 'excessive purchases' is Prohibited Conduct without a number",
+   "after_pass": "account closes, subscription auto-cancels; XFA balance starts at $0; profits do not carry over; status may take up to 30 minutes",
+   "automation_allowed": true,
+   "automation_conditions": "no support/exceptions; must originate from personal device (no VPS/VPN); HFT and SIM-exploitation prohibited; API $29/month",
+   "refund_wrong_size_window_days": 28,
+   "refund_14_day_guarantee_first_combine": true,
+   "pass_rate_2025": {
+    "combines_passed_pct": 16.8,
+    "individuals_reaching_funded_pct": 51.8,
+    "funded_individuals_with_payout_pct": 33.3,
+    "xfa_participants_called_to_live_pct": 0.71,
+    "lost_combine_day_1_pct": 63,
+    "confidence": 0.95,
+    "src": "risk_disclosure"
+   },
+   "confidence": 0.95,
+   "src": [
+    "combine_params",
+    "mll",
+    "consistency",
+    "dll",
+    "products_hours",
+    "reset",
+    "subscriptions",
+    "risk_adjustments"
+   ]
+  },
+  "50K": {
+   "account_prefix": "50KTC",
+   "starting_balance": 50000,
+   "profit_target": 3000,
+   "pass_balance": 53000,
+   "mll": 2000,
+   "mll_start_level": 48000,
+   "mll_lock_eod_balance_derived": 52000,
+   "consistency_target_pct": 55,
+   "best_day_recommendation_less_than": 1650,
+   "max_minis": 5,
+   "max_micros": 50,
+   "dll_optional_amount": 1000,
+   "tier1_news_micro_cap": 3,
+   "tier1_news_mhg_sil_cap": 2,
+   "volatility_caps_current": {
+    "CL": 3,
+    "QM": 3,
+    "RB": 3,
+    "HO": 3,
+    "GC": 3,
+    "MCL": 30,
+    "MGC": 30,
+    "SIL": 2,
+    "MHG": 2,
+    "SI": 0,
+    "HG": 0,
+    "PL": 0
+   },
+   "price_standard_monthly": 49,
+   "price_naf_monthly": 95,
+   "price_naf_with_dll_monthly": 85,
+   "reset_standard": 49,
+   "reset_naf": 95,
+   "activation_fee_standard": 149,
+   "activation_fee_naf": 0,
+   "responsible_trading_discount_monthly": 10,
+   "confidence": 0.96,
+   "src": [
+    "combine_params",
+    "consistency",
+    "dll",
+    "mll",
+    "pricing",
+    "risk_adjustments"
+   ]
+  },
+  "100K": {
+   "account_prefix": "100KTC",
+   "starting_balance": 100000,
+   "profit_target": 6000,
+   "pass_balance": 106000,
+   "mll": 3000,
+   "mll_start_level": 97000,
+   "mll_lock_eod_balance_derived": 103000,
+   "consistency_target_pct": 55,
+   "best_day_recommendation_less_than": 3300,
+   "max_minis": 10,
+   "max_micros": 100,
+   "dll_optional_amount": 2000,
+   "tier1_news_micro_cap": 6,
+   "tier1_news_mhg_sil_cap": 5,
+   "volatility_caps_current": {
+    "CL": 6,
+    "QM": 6,
+    "RB": 6,
+    "HO": 6,
+    "GC": 6,
+    "MCL": 60,
+    "MGC": 60,
+    "SIL": 5,
+    "MHG": 5,
+    "SI": 0,
+    "HG": 0,
+    "PL": 0
+   },
+   "price_standard_monthly": 99,
+   "price_naf_monthly": 149,
+   "price_naf_with_dll_monthly": 129,
+   "reset_standard": 99,
+   "reset_naf": 149,
+   "activation_fee_standard": 149,
+   "activation_fee_naf": 0,
+   "responsible_trading_discount_monthly": 20,
+   "confidence": 0.96,
+   "src": [
+    "combine_params",
+    "consistency",
+    "dll",
+    "mll",
+    "pricing",
+    "risk_adjustments"
+   ]
+  },
+  "150K": {
+   "account_prefix": "150KTC",
+   "starting_balance": 150000,
+   "profit_target": 9000,
+   "pass_balance": 159000,
+   "mll": 4500,
+   "mll_start_level": 145500,
+   "mll_lock_eod_balance_derived": 154500,
+   "consistency_target_pct": 55,
+   "best_day_recommendation_less_than": 4950,
+   "max_minis": 15,
+   "max_micros": 150,
+   "dll_optional_amount": 3000,
+   "tier1_news_micro_cap": 9,
+   "tier1_news_mhg_sil_cap": 7,
+   "volatility_caps_current": {
+    "CL": 9,
+    "QM": 9,
+    "RB": 9,
+    "HO": 9,
+    "GC": 9,
+    "MCL": 90,
+    "MGC": 90,
+    "SIL": 7,
+    "MHG": 7,
+    "SI": 0,
+    "HG": 0,
+    "PL": 0
+   },
+   "price_standard_monthly": 199,
+   "price_naf_monthly": 229,
+   "price_naf_with_dll_monthly": 199,
+   "reset_standard": 199,
+   "reset_naf": 229,
+   "activation_fee_standard": 149,
+   "activation_fee_naf": 0,
+   "responsible_trading_discount_monthly": 30,
+   "confidence": 0.96,
+   "src": [
+    "combine_params",
+    "consistency",
+    "dll",
+    "mll",
+    "pricing",
+    "risk_adjustments"
+   ]
+  },
+  "labs_variants": {
+   "note": "Separate one-time-fee experimental products; not the standard subscription Combine. All: 90-day lifespan, 30-day inactivity closure, no Rebills, no Resets, free XFA activation, 55% consistency, mandatory DLL.",
+   "25K_static": {
+    "price_one_time": 75,
+    "profit_target": 2000,
+    "mll": 1000,
+    "mll_type": "static",
+    "dll_mandatory": 500,
+    "max_minis": 2,
+    "max_micros": 20,
+    "xfa_payout_cap": 4000,
+    "xfa_mll": 1000,
+    "purchase_limit_per_month": 5
+   },
+   "50K_static": {
+    "price_one_time": 149,
+    "profit_target": 4000,
+    "mll": 2000,
+    "mll_type": "static",
+    "dll_mandatory": 1000,
+    "max_minis": 4,
+    "max_micros": 40,
+    "xfa_payout_cap": 8000,
+    "xfa_mll": 2000,
+    "xfa_scaling_lots": [
+     2,
+     3,
+     4
+    ],
+    "purchase_limit": 5,
+    "purchase_limit_period_conflict": "page says both '5 per Trader' and 'up to 5 of each per month'"
+   },
+   "250K_freedom": {
+    "price_one_time": 499,
+    "profit_target": 15000,
+    "mll": 10000,
+    "mll_type": "eod_trailing",
+    "dll_mandatory": 5000,
+    "max_minis": 25,
+    "max_micros": 250,
+    "xfa_payout_cap": 25000,
+    "xfa_path": "Standard only",
+    "xfa_scaling_lots": [
+     3,
+     4,
+     5,
+     10,
+     15,
+     20,
+     25
+    ],
+    "xfa_scaling_thresholds": [
+     1500,
+     2000,
+     3000,
+     4500,
+     6000,
+     8000
+    ],
+    "purchase_limit_per_month": 5
+   },
+   "50K_daily_payouts_plus_eod": {
+    "price_one_time": 119,
+    "profit_target": 3000,
+    "mll": 2000,
+    "mll_type": "eod_trailing",
+    "dll_mandatory": 1000,
+    "max_minis": 5,
+    "max_micros": 50,
+    "xfa_daily_payout_min": 250,
+    "xfa_daily_payout_max": 1500,
+    "xfa_daily_payout_buffer": 2000,
+    "xfa_5_winning_days_cap": 4000,
+    "purchase_limit_total_both_versions": 5,
+    "price_conflict": "topstep.com/labs product page showed a single $149 price for one verifier; embedded JSON showed $119 trailing / $149 static for another"
+   },
+   "50K_daily_payouts_plus_static": {
+    "price_one_time": 149,
+    "profit_target": 4000,
+    "mll": 2000,
+    "mll_type": "static",
+    "dll_mandatory": 1000,
+    "max_minis": 5,
+    "max_micros": 50,
+    "xfa_daily_payout_min": 250,
+    "xfa_daily_payout_max": 1500,
+    "xfa_daily_payout_buffer": 2000,
+    "xfa_5_winning_days_cap": 8000,
+    "purchase_limit_total_both_versions": 5
+   },
+   "challenges_fixed_payout": {
+    "3K": 49,
+    "1.5K": 39,
+    "6K": 149,
+    "1.5K_powered_up": 99,
+    "3K_undead": 199,
+    "3K_slasher": 65,
+    "launchpad": 10,
+    "profit_split": "none (fixed payout)",
+    "live_path": false
+   },
+   "confidence": 0.88,
+   "src": "labs"
+  }
+ },
+ "xfa": {
+  "starting_balance": 0,
+  "buying_power": {
+   "50K": 50000,
+   "100K": 100000,
+   "150K": 150000
+  },
+  "activation_fee": {
+   "standard_path": 149,
+   "no_activation_fee_path": 0,
+   "labs": 0
+  },
+  "monthly_fee": 0,
+  "mll": {
+   "50K": 2000,
+   "100K": 3000,
+   "150K": 4500
+  },
+  "mll_start_level": {
+   "50K": -2000,
+   "100K": -3000,
+   "150K": -4500
+  },
+  "mll_type": "end_of_day_trailing, monitored real-time incl. unrealized",
+  "mll_locks_at": 0,
+  "mll_locks_when_balance_reaches": {
+   "50K": 2000,
+   "100K": 3000,
+   "150K": 4500
+  },
+  "mll_after_first_payout": 0,
+  "mll_lock_offset_plus_100": false,
+  "mll_breach_consequence": "permanent closure (Back2Funded may be available); official wording conflict: MLL article 'liquidated immediately' vs XFA Parameters FAQ 'liquidated and closed at the end of the day'",
+  "balance_can_go_negative": true,
+  "scaling_plan": {
+   "unit": "mini-equivalent lots (1 mini = 10 micros); SIL counts as 2 micros (5:1 vs SI); MBT/MET capped at mini-equivalents",
+   "50K": [
+    {
+     "balance_below": 1500,
+     "lots": 2
+    },
+    {
+     "balance_from": 1500,
+     "balance_to": 2000,
+     "lots": 3
+    },
+    {
+     "balance_above": 2000,
+     "lots": 5
+    }
+   ],
+   "100K": [
+    {
+     "balance_below": 1500,
+     "lots": 3
+    },
+    {
+     "balance_from": 1500,
+     "balance_to": 2000,
+     "lots": 4
+    },
+    {
+     "balance_from": 2000,
+     "balance_to": 3000,
+     "lots": 5
+    },
+    {
+     "balance_above": 3000,
+     "lots": 10
+    }
+   ],
+   "150K": [
+    {
+     "balance_below": 1500,
+     "lots": 3
+    },
+    {
+     "balance_from": 1500,
+     "balance_to": 2000,
+     "lots": 4
+    },
+    {
+     "balance_from": 2000,
+     "balance_to": 3000,
+     "lots": 5
+    },
+    {
+     "balance_from": 3000,
+     "balance_to": 4500,
+     "lots": 10
+    },
+    {
+     "balance_above": 4500,
+     "lots": 15
+    }
+   ],
+   "increase_timing": "next session only (never mid-session)",
+   "payout_can_lower_tier": true,
+   "overage_tolerance_seconds": 10,
+   "boundary_tier_at_exact_threshold": null,
+   "confidence": 0.95,
+   "src": "scaling_plan"
+  },
+  "restricted_product_ladders": {
+   "note": "energies/gold (CL, QM, MCL, HO, RB, GC, MGC) on a 3/6/9 ladder by balance; SIL/MHG on 2/5/7; SI/HG/PL 0; temporary while volatility elevated",
+   "50K_example": [
+    {
+     "balance_below": 1500,
+     "minis": 1,
+     "micros": 12
+    },
+    {
+     "balance_from": 1500,
+     "minis": 1,
+     "micros": 18
+    },
+    {
+     "balance_from": 2000,
+     "minis": 3,
+     "micros": 31
+    }
+   ],
+   "tier1_news_xfa": "micros only (0 minis), capped by balance tier e.g. 50K below $1,500 = 1 micro, above $2,000 = 3 micros; 150K above $4,500 = 9 micros",
+   "confidence": 0.85,
+   "src": "risk_adjustments"
+  },
+  "dll": {
+   "optional": true,
+   "amount": {
+    "50K": 1000,
+    "100K": 2000,
+    "150K": 3000
+   },
+   "fixed_once_added": true,
+   "carries_from_combine": true,
+   "breach_is_violation": false,
+   "mandatory_for": [
+    "RTP traders",
+    "Labs products",
+    "Pro Account",
+    "LFA"
+   ],
+   "confidence": 0.95,
+   "src": "dll"
+  },
+  "payout_paths": {
+   "chosen_at": "activation",
+   "locked": true,
+   "mix_allowed_up_to_limit": true,
+   "standard": {
+    "winning_days_required": 5,
+    "winning_day_net_pnl": 150,
+    "consistency_rule": false,
+    "profit_target": null,
+    "cap_per_request": {
+     "50K": 2000,
+     "100K": 3000,
+     "150K": 5000
+    },
+    "cap_with_checkout_dll": {
+     "50K": 4000,
+     "100K": 6000,
+     "150K": 10000
+    }
+   },
+   "consistency": {
+    "trading_days_required": 3,
+    "min_trades_per_day": 1,
+    "max_best_day_pct_of_net_profit": 40,
+    "not_rounded": true,
+    "resets_after_payout": true,
+    "profit_target": null,
+    "cap_per_request": {
+     "50K": 3000,
+     "100K": 4000,
+     "150K": 6000
+    },
+    "cap_with_checkout_dll": {
+     "50K": 6000,
+     "100K": 8000,
+     "150K": 12000
+    }
+   },
+   "max_pct_of_balance_per_request": 50,
+   "profit_split_trader_pct": 90,
+   "confidence": 0.95,
+   "src": [
+    "xfa_params",
+    "payout_policy"
+   ]
+  },
+  "max_active_xfas": 5,
+  "max_active_xfas_exceptions": {
+   "shoulder_tap_holders": 1,
+   "focused_trader_program": "1 active $50K account of any type"
+  },
+  "activation_blocked_if_lfa_active": true,
+  "inactivity_close_days": 30,
+  "inactivity_day_type": null,
+  "can_be_put_on_hold": false,
+  "trade_copier": {
+   "own_accounts_allowed": true,
+   "max_buying_power": 750000,
+   "available_on_live": false,
+   "lead_must_have_lowest_max_position": true,
+   "payout_request_unlinks_followers": true,
+   "confidence": 0.93,
+   "src": "topstepx"
+  },
+  "back2funded": {
+   "fee": {
+    "50K": 599,
+    "100K": 699,
+    "150K": 829
+   },
+   "dll_discount": 50,
+   "window_calendar_days": 30,
+   "window_changed_from_7_on": "2026-05-29",
+   "max_reactivations_per_xfa": 2,
+   "eligible_only_before_first_payout": true,
+   "resets_everything_to_zero": true,
+   "same_size_and_path": true,
+   "excluded": [
+    "XFAs tied to an LFA or Pro Account (per B2F article)",
+    "Focused Trader Program traders",
+    "XFAs with any payout"
+   ],
+   "shoulder_tap_eligible": true,
+   "shoulder_tap_conflict": "B2F article excludes XFAs tied to an LFA while Call-Up article says B2F is available for any Shoulder Tap account",
+   "available_next_session": true,
+   "confidence": 0.95,
+   "src": "back2funded"
+  },
+  "voluntary_close_payout": {
+   "pct_of_reward_balance": 50,
+   "cap": 5000,
+   "status": "appears only on stale topstep.com/express-funded-account-rules (2025-06-26); absent from current help center; cap figure likely superseded by per-size caps",
+   "confidence": 0.4,
+   "src": "xfa_rules_site_stale"
+  },
+  "rtp_rules": {
+   "new_combines_and_xfas_get_dll": {
+    "50K": 1000,
+    "100K": 2000,
+    "150K": 3000
+   },
+   "new_xfas_consistency_only": true,
+   "standard_xfa_allowed_if_combine_bought_before_rtp": true,
+   "existing_standard_xfa_unaffected": true,
+   "reset_combine_becomes_consistency_with_dll": true,
+   "max_xfas": 5,
+   "payout_statement": "up to $6,000 every 3 trading days (page wording; does not say it scales by size)",
+   "exit_requires_lfa_profit": 10000,
+   "confidence": 0.9,
+   "src": "rtp"
+  },
+  "pro_account": {
+   "for": "jurisdictions without live market access",
+   "max_active": 1,
+   "size": "average of open XFAs rounded up",
+   "starting_balance_cap_pct": 20,
+   "starting_balance_cap": {
+    "50K": 10000,
+    "100K": 20000,
+    "150K": 30000
+   },
+   "dll_mandatory": {
+    "50K": 1000,
+    "100K": 2000,
+    "150K": 3000
+   },
+   "mll": "mirrors XFA",
+   "scaling_plan_applies": true,
+   "balance_expansion": false,
+   "payout_caps": {
+    "50K": 2000,
+    "100K": 3000,
+    "150K": 5000
+   },
+   "winning_days": 5,
+   "back2funded": false,
+   "page_date": "2026-09-11",
+   "confidence": 0.85,
+   "src": "pro_account"
+  },
+  "confidence": 0.95,
+  "src": [
+   "xfa_params",
+   "mll",
+   "xfa_activation"
+  ]
+ },
+ "payout": {
+  "minimum": 125,
+  "profit_split_trader_pct": 90,
+  "profit_split_grandfather": {
+   "joined_new_dashboard_before": "2026-01-12",
+   "first_profits_at_100_pct": 10000,
+   "legacy_dashboard_payouts_count": false
+  },
+  "winning_day_net_pnl_threshold": 150,
+  "day_lock_time_ct": "16:00",
+  "day_lock_time_conflict": "Payout Policy says days lock at 4:00 PM CT; Consistency article says a trading day's value locks at 3:10 PM CT",
+  "xfa_standard": {
+   "winning_days_per_cycle": 5,
+   "consecutive_required": false,
+   "profit_since_last_payout_min": 0.01,
+   "first_payout_exempt": true
+  },
+  "xfa_consistency": {
+   "trading_days_per_cycle": 3,
+   "max_best_day_pct": 40,
+   "window_resets_after_payout": true,
+   "new_window_starts": "trading day after request"
+  },
+  "max_pct_of_balance_per_request_xfa": 50,
+  "caps_per_request": {
+   "standard": {
+    "50K": 2000,
+    "100K": 3000,
+    "150K": 5000
+   },
+   "consistency": {
+    "50K": 3000,
+    "100K": 4000,
+    "150K": 6000
+   },
+   "standard_with_checkout_dll": {
+    "50K": 4000,
+    "100K": 6000,
+    "150K": 10000
+   },
+   "consistency_with_checkout_dll": {
+    "50K": 6000,
+    "100K": 8000,
+    "150K": 12000
+   },
+   "doubled_cap_offer_start": "2026-06-02T15:30 CT",
+   "doubled_cap_offer_end": null,
+   "doubled_cap_conditions": "DLL added at checkout on a NEW Trading Combine purchase on/after 2026-06-02; DLL added at XFA activation/reactivation or before the release does not qualify; both Combine paths qualify",
+   "live_capped": false
+  },
+  "request_day_excluded_from_next_cycle": true,
+  "request_after_17_00_ct_counts_next_trading_day": true,
+  "request_window": "Sunday 17:00 CT to Friday 17:00 CT excluding holidays, via Dashboard",
+  "internal_approval_business_days": [
+   1,
+   3
+  ],
+  "methods": [
+   {
+    "method": "Prop-to-Brokerage",
+    "region": "US only",
+    "time": "same day if requested by 12:00 CT",
+    "topstep_fee": 0
+   },
+   {
+    "method": "Aeropay",
+    "region": "US banks only",
+    "time": "instant after approval (1-3 business days if bank lacks RTP)",
+    "topstep_fee": 0
+   },
+   {
+    "method": "Wise",
+    "region": "China, Canada, UK only (restored Aug 2026)",
+    "time": "1-3 business days",
+    "topstep_fee": 0,
+    "unclaimed_cancel_days": 7
+   },
+   {
+    "method": "ACH",
+    "region": "US banks",
+    "time": "1-3 business days",
+    "topstep_fee": 30
+   },
+   {
+    "method": "Wire/SWIFT",
+    "region": "international",
+    "time": "5-10 business days",
+    "topstep_fee": 30
+   }
+  ],
+  "worked_example": "$500 ACH request -> $450 after 10% split -> $420 after $30 fee",
+  "bank_account_own_name_only": true,
+  "tax_forms": "W-9 (US) / W-8BEN (non-US) submitted with request; 1099-NEC for US over $600",
+  "after_each_xfa_payout": {
+   "mll_set_to": 0,
+   "winning_day_count_restarts": true,
+   "consistency_resets": true,
+   "scaling_tier_may_drop": true,
+   "back2funded_eligibility_lost": true,
+   "trading_may_resume_immediately": true,
+   "copy_trading_disabled_until_reenabled": true
+  },
+  "hitting_mll_after_request_affects_payout": false,
+  "minimum_post_payout_balance": null,
+  "minimum_post_payout_balance_note": "no explicit figure in current help center; structural: >=50% of balance stays and MLL is $0 after first payout; stale topstep.com page mentions an undefined 'Minimum Payout Balance'",
+  "reviewed_against": [
+   "Payout Policy",
+   "Prohibited Conduct",
+   "Terms of Use",
+   "Professional Behavior",
+   "Prohibited Trading Strategies"
+  ],
+  "pop_cards_since": "2026-01-01",
+  "live": {
+   "winning_days_per_cycle": 5,
+   "winning_day_net_pnl": 150,
+   "max_pct_of_balance_per_request": 50,
+   "dollar_cap": null,
+   "daily_payouts_after_lfa_winning_days": 30,
+   "daily_payout_max_pct_of_unlocked_balance": 100,
+   "daily_payout_frequency": "once per day",
+   "xfa_winning_days_count": false,
+   "full_payout_closes_lfa": true,
+   "reserve_withdrawable": false,
+   "pause_trading_until_processed": true,
+   "site_rules_extra": "until 30 Benchmark Days payouts limited to 50% of trader's share of Trading Profits; total payouts cannot exceed 90% of Starting Balance plus net Trading Profits"
+  },
+  "page_date": "2026-11-03 (dateModified)",
+  "confidence": 0.95,
+  "src": "payout_policy"
+ },
+ "pricing": {
+  "combine_monthly": {
+   "standard": {
+    "50K": 49,
+    "100K": 99,
+    "150K": 199
+   },
+   "no_activation_fee": {
+    "50K": 95,
+    "100K": 149,
+    "150K": 229
+   },
+   "no_activation_fee_with_dll": {
+    "50K": 85,
+    "100K": 129,
+    "150K": 199
+   }
+  },
+  "reset": {
+   "standard": {
+    "50K": 49,
+    "100K": 99,
+    "150K": 199
+   },
+   "no_activation_fee": {
+    "50K": 95,
+    "100K": 149,
+    "150K": 229
+   },
+   "naf_with_dll_reset_price": null
+  },
+  "xfa_activation_fee": {
+   "standard": 149,
+   "no_activation_fee": 0
+  },
+  "paths_changeable_after_purchase": false,
+  "responsible_trading_discount": {
+   "naf_monthly": {
+    "50K": 10,
+    "100K": 20,
+    "150K": 30
+   },
+   "back2funded": 50,
+   "xfa_activation": null,
+   "recurs_monthly": true
+  },
+  "back2funded": {
+   "50K": 599,
+   "100K": 699,
+   "150K": 829
+  },
+  "level2_dom_monthly": 38,
+  "level2_billing_day": 28,
+  "level1_included": true,
+  "api_access_monthly": 29,
+  "api_access_with_code_topstep": 14.5,
+  "practice_account": "free with active Combine subscription; 150K size, 15-lot max, up to 10 free resets/day",
+  "commissions_combine_xfa_lfa": {
+   "minis_round_turn": 1.0,
+   "micros_round_turn": 0.5,
+   "nfa_round_turn": 0.02,
+   "platform_fee": 0,
+   "round_turn_totals": {
+    "ES": 3.78,
+    "MES": 1.22,
+    "NQ": 3.78,
+    "MNQ": 1.22,
+    "RTY": 3.78,
+    "M2K": 1.22,
+    "YM": 3.78,
+    "NKD": 5.32,
+    "MBT": 2.82,
+    "MET": 0.72,
+    "CL": 4.02,
+    "MCL": 1.72,
+    "QM": 3.42,
+    "QG": 2.02,
+    "RB": 4.02,
+    "HO": 4.02,
+    "GC": 4.32,
+    "MGC": 1.92,
+    "SI": 4.32,
+    "SIL": 2.72,
+    "HG": 4.32,
+    "MHG": 1.92,
+    "NG": 4.22,
+    "MNG": 1.92,
+    "PL": 4.32,
+    "6A": 4.22,
+    "6B": 4.22,
+    "6C": 4.22,
+    "6E": 4.22,
+    "6J": 4.22,
+    "6S": 4.22,
+    "6M": 4.22,
+    "6N": 4.22,
+    "M6A": 1.0,
+    "M6E": 1.0,
+    "M6B": 1.0,
+    "E7": 2.72,
+    "ZT": 2.32,
+    "ZF": 2.32,
+    "ZN": 2.62,
+    "TN": 2.62,
+    "ZB": 2.76,
+    "UB": 2.92,
+    "HE": 5.22,
+    "LE": 5.22,
+    "ZC": 5.28,
+    "ZW": 5.28,
+    "ZS": 5.28,
+    "ZM": 5.28,
+    "ZL": 5.28
+   },
+   "cme_fee_increase_effective": "2026-10-01 (MCL to $0.60/side, MNG to $0.70/side; table already reflects)",
+   "confidence": 0.95,
+   "src": "commissions"
+  },
+  "lfa_market_data_per_exchange_monthly": 133,
+  "referral_code_discount_pct": 15,
+  "referral_reward_codes_max_per_90_days": 5,
+  "affiliate_code_discount_pct": 20,
+  "promo_codes": "new Combine OR Reset not both; first month only unless stated; not stackable except DLL discount on NAF Combine",
+  "refunds": {
+   "first_combine_14_day_guarantee_max_months": 1,
+   "accidental_rebill_window_days": 28,
+   "non_refundable": [
+    "Resets / applied Reset Credits",
+    "Activation fees",
+    "Back2Funded",
+    "Level 2 once billed",
+    "promo-code misses",
+    "full-price purchases before a sale"
+   ],
+   "refund_processing_business_days": [
+    7,
+    10
+   ]
+  },
+  "payment_methods": [
+   "Visa",
+   "Mastercard",
+   "American Express",
+   "Discover",
+   "Google Wallet",
+   "Apple Pay"
+  ],
+  "paypal_supported": false,
+  "taxes_added_at_checkout": true,
+  "price_lock": "monthly price locked for the life of an active Combine subscription (marketing page)",
+  "promo_status_2026_11_09": "no site-wide sale or public code found (social/newsletter codes not checked)",
+  "page_date": "2026-10-15 (dateModified)",
+  "confidence": 0.96,
+  "src": "pricing"
+ },
+ "prohibited": [
+  {
+   "item": "Cross-account hedging (single user): opposite positions in same/correlated instrument across accounts, even brief/unintentional; Combine/XFA/Live; Practice excluded; Trader-level; not appealable",
+   "src": "hedging",
+   "conf": 0.97
+  },
+  {
+   "item": "Hedging ladder: modal+window to un-hedge else liquidation+flag; same-day repeat liquidation; next-day 'I agree' required; later attempts immediate liquidation; excessive = Temporary Hedging Violation (rest of day); may close permanently",
+   "src": "hedging",
+   "conf": 0.95
+  },
+  {
+   "item": "Coordinated trading with others (pool risk, hedge aggregate, same/opposite strategy simultaneously)",
+   "src": "prohibited_conduct",
+   "conf": 0.97
+  },
+  {
+   "item": "Trading on behalf of others / account sharing / shared incentives; one profile per person (Terms Sec.16)",
+   "src": "terms",
+   "conf": 0.97
+  },
+  {
+   "item": "Account stacking: repeatedly hitting MLL in one account then switching to another for high-risk attempts",
+   "src": "prohibited_conduct",
+   "conf": 0.95
+  },
+  {
+   "item": "Excessive purchases of Combines or Resets (no numeric threshold; may trigger Focused Trader Program)",
+   "src": "prohibited_conduct",
+   "conf": 0.93
+  },
+  {
+   "item": "High-frequency trading (no numeric definition; 'hundreds or thousands of trades per day, durations in seconds' cited as abusive)",
+   "src": "api",
+   "conf": 0.93
+  },
+  {
+   "item": "Unfair technology: software, AI, ultra-high-speed systems, mass data entry giving unfair advantage",
+   "src": "terms",
+   "conf": 0.97
+  },
+  {
+   "item": "SIM exploitation: unrealistic SIM fills, queue position, no-slippage stops, gapped-market fills, tight brackets/auto-breakeven; profits may be rejected",
+   "src": "prohibited_strategies",
+   "conf": 0.97
+  },
+  {
+   "item": "Price exploitation (display errors, feed delays); external or slow data feed; exploiting platform bugs",
+   "src": "terms",
+   "conf": 0.97
+  },
+  {
+   "item": "Spoofing/disruptive practices; trading outside best bid/offer",
+   "src": "prohibited_conduct",
+   "conf": 0.95
+  },
+  {
+   "item": "Holding a position within 2% of a product's daily price-limit lock",
+   "src": "price_limit",
+   "conf": 0.95
+  },
+  {
+   "item": "Purposefully trading full Maximum Position Size directly into a scheduled major news event (news trading otherwise allowed)",
+   "src": "prohibited_strategies",
+   "conf": 0.95
+  },
+  {
+   "item": "Tier 1 news window (CPI, FOMC decision, FOMC presser, NFP, PPI): 5 min before/after no new equity-index/metal minis; micros capped 1/3/6/9/15 (25K-250K), MHG/SIL 1/2/5/7/12; pending orders do not fill; Live <$3,000 = 1 contract",
+   "src": "risk_adjustments",
+   "conf": 0.93
+  },
+  {
+   "item": "VPN/VPS/proxy/TOR/location spoofing/remote access; all order flow from personal device (servers only for data/backtest/logging)",
+   "src": "terms",
+   "conf": 0.97
+  },
+  {
+   "item": "Circumventing geo/technical restrictions; 34 ineligible country entries; 25 XFA-only countries ($200,000 total payout cap, no LFA); min age 18",
+   "src": "eligibility",
+   "conf": 0.92
+  },
+  {
+   "item": "Trading inconsistent with real futures markets or creating financial risk for Topstep; catch-all: uncommercial, games the market, not viable, not responsible trading (sole discretion)",
+   "src": "terms",
+   "conf": 0.95
+  },
+  {
+   "item": "Terms Sec.8: substantially larger position sizes or substantially different number of positions vs one's other trades fails market-standard risk management",
+   "src": "terms",
+   "conf": 0.93
+  },
+  {
+   "item": "Bad-faith chargebacks; unprofessional behavior (falsified screenshots, promo abuse, intentionally depleting an LFA, excessive XFA use)",
+   "src": "prohibited_conduct",
+   "conf": 0.95
+  },
+  {
+   "item": "Overnight/swing holds: flat by 15:10 CT (or earlier product close; 15 min before holiday early close)",
+   "src": "products_hours",
+   "conf": 0.97
+  },
+  {
+   "item": "No explicit DCA/averaging-down/martingale ban found; nearest: 'Size up after a loss' (don't), RTP trigger losers>winners, Terms Sec.8; catch-all applies",
+   "src": "responsible_trading",
+   "conf": 0.7
+  },
+  {
+   "item": "Consequences: warning; delete trading day; Reset; permanent closure; payout delay/denial; profits removed; balances forfeited; no refund; appeal within 30 calendar days, one review, factual only",
+   "src": "banned",
+   "conf": 0.95
+  },
+  {
+   "item": "Responsible Trading Program for reckless patterns: mandatory DLL on new accounts, Consistency-only new XFAs, exit after $10,000 LFA profit",
+   "src": "rtp",
+   "conf": 0.9
+  },
+  {
+   "item": "Focused Trader Program: Corrective (close all accounts, 1 active $50K account, 6 months) / Slowdown (no new Combines/Resets/B2F)",
+   "src": "ftp",
+   "conf": 0.9
+  }
+ ],
+ "changes": [
+  {
+   "date": "2023-05-22",
+   "change": "Baseline: DLL becomes objective, not a rule",
+   "src": "x.com/Topstep/status/1660697228204187648",
+   "type": "official_x_unfetchable",
+   "conf": 0.5
+  },
+  {
+   "date": "2023-07-05",
+   "change": "Baseline: XFA 100% payouts after 30 winning days of $200+",
+   "src": "x.com/Topstep/status/1676619425871429634",
+   "type": "official_x_unfetchable",
+   "conf": 0.45
+  },
+  {
+   "date": "2024-05-06",
+   "change": "TopstepX launched (sale $19/$69/$119 to 2024-05-13)",
+   "src": "saveonpropfirms.com/blog/what-is-topstep",
+   "type": "community",
+   "conf": 0.8
+  },
+  {
+   "date": "2024-06-09",
+   "change": "TopstepX mobile-web launch; still no native app 2026-11-09",
+   "src": "topstepx",
+   "type": "official",
+   "conf": 0.6
+  },
+  {
+   "date": "2024-08-25",
+   "change": "DLL removed from new/Reset TopstepX accounts (announced 08-27)",
+   "src": "blog.traderspost.io/article/how-to-get-f",
+   "type": "community",
+   "conf": 0.75
+  },
+  {
+   "date": "2024-12-06",
+   "change": "XFA payouts: 50% of balance, max $5,000/request",
+   "src": "xfa_rules_site_stale",
+   "type": "official_stale_page",
+   "conf": 0.8
+  },
+  {
+   "date": "2025-02-10",
+   "change": "Trailing Personal DLL released",
+   "src": "dll",
+   "type": "official",
+   "conf": 0.8
+  },
+  {
+   "date": "2025-02-24",
+   "change": "New Dashboard early access; invite 03-24; all 08-05; Legacy closed to new",
+   "src": "topstep.com/dashboard-login",
+   "type": "official",
+   "conf": 0.7
+  },
+  {
+   "date": "2025-02-27",
+   "change": "LFA balance capped at largest XFA size (superseded)",
+   "src": "x.com/Topstep/status/1895184543306457296",
+   "type": "official_x_unfetchable",
+   "conf": 0.4
+  },
+  {
+   "date": "2025-07-07",
+   "change": "All new Combines TopstepX-only",
+   "src": "h8284199",
+   "type": "official",
+   "conf": 0.85
+  },
+  {
+   "date": "2025-07-22",
+   "change": "XFA winning days no longer count toward Live 30-day unlock (date unverified)",
+   "src": "payout_policy",
+   "type": "official_rule_community_date",
+   "conf": 0.3
+  },
+  {
+   "date": "2025-07-29",
+   "change": "Winning-day threshold $200 -> $150",
+   "src": "bestprops",
+   "type": "community",
+   "conf": 0.85
+  },
+  {
+   "date": "2025-08-01",
+   "change": "Resets TopstepX-only",
+   "src": "h2tfunding.com/what-platform-does-topste",
+   "type": "community",
+   "conf": 0.55
+  },
+  {
+   "date": "2025-09-03",
+   "change": "Back2Funded launched (7-day window)",
+   "src": "xfa_rules_site_stale",
+   "type": "official_stale_page",
+   "conf": 0.6
+  },
+  {
+   "date": "2025-09-13",
+   "change": "Snapshot: Combine consistency 50%; no funded consistency rule",
+   "src": "consistency",
+   "type": "official",
+   "conf": 0.75
+  },
+  {
+   "date": "2025-09-19",
+   "change": "Live same-day payouts after 30 winning days of $150+",
+   "src": "payout_policy",
+   "type": "official",
+   "conf": 0.75
+  },
+  {
+   "date": "2025-10-21",
+   "change": "Free Resets + code ONWARD40 after AWS outage",
+   "src": "x.com/Topstep/status/1980740749135118439",
+   "type": "official_x_unfetchable",
+   "conf": 0.4
+  },
+  {
+   "date": "2025-10-22",
+   "change": "Plus500 exclusive tech/FCM partner",
+   "src": "financemagnates.com/forex/brokers/plus50",
+   "type": "news",
+   "conf": 0.8
+  },
+  {
+   "date": "2025-11-17",
+   "change": "ProjectX to exit third-party firms by 2026-02-28",
+   "src": "financemagnates.com/forex/prop-firms-rep",
+   "type": "news",
+   "conf": 0.85
+  },
+  {
+   "date": "2025-11-24",
+   "change": "Standard vs No Activation Fee paths launched; activation fee briefly $129 (community)",
+   "src": "pricing",
+   "type": "official_rule_community_date",
+   "conf": 0.75
+  },
+  {
+   "date": "2025-12-11",
+   "change": "Reset Credits issued on/after expire in 1 year",
+   "src": "reset",
+   "type": "official",
+   "conf": 0.95
+  },
+  {
+   "date": "2025-12-23",
+   "change": "CEO statement after Oct-Dec outages ('11 outages' is a trader claim)",
+   "src": "financemagnates.com/forex/topstep-faces-",
+   "type": "news",
+   "conf": 0.75
+  },
+  {
+   "date": "2025-12-30",
+   "change": "Repeat payouts need $0.01 profit since last payout (date community)",
+   "src": "tradecovex_changes",
+   "type": "community",
+   "conf": 0.5
+  },
+  {
+   "date": "2026-01-01",
+   "change": "POP cards from this date; Stacked POP announced 2026-05-21",
+   "src": "topstep.com/blog/prop-firm-payout-proof",
+   "type": "official",
+   "conf": 0.8
+  },
+  {
+   "date": "2026-01-12",
+   "change": "90/10 from first dollar for new joiners; earlier joiners keep 100% of first $10,000",
+   "src": "payout_policy",
+   "type": "official",
+   "conf": 0.95
+  },
+  {
+   "date": "2026-01-27",
+   "change": "Topstep Brokerage announced; live by Nov 2026 (Prop-to-Brokerage payouts)",
+   "src": "topstepbrokerage.com/",
+   "type": "official",
+   "conf": 0.8
+  },
+  {
+   "date": "2026-02-05",
+   "change": "XFA Standard/Consistency paths (blog 02-11); flat caps $5K/$6K then",
+   "src": "topstep.com/blog/topstep-express-funded-",
+   "type": "official",
+   "conf": 0.85
+  },
+  {
+   "date": "2026-02-05",
+   "change": "Metals/energy volatility caps announced",
+   "src": "risk_adjustments",
+   "type": "official_rule_x_date",
+   "conf": 0.5
+  },
+  {
+   "date": "2026-02-10",
+   "change": "LFA restructure: one LFA, average tier, 20% tradable/80% Reserve (date community)",
+   "src": "lfa_params",
+   "type": "official_rule_community_date",
+   "conf": 0.6
+  },
+  {
+   "date": "2026-02-25",
+   "change": "TopstepX refresh, new site, Training Camp (no Super Bowl mention)",
+   "src": "topstep.com/blog/new-topstep-campaign-pl",
+   "type": "official",
+   "conf": 0.85
+  },
+  {
+   "date": "2026-02-28",
+   "change": "ProjectX third-party cutoff",
+   "src": "financemagnates.com/forex/prop-firms-rep",
+   "type": "news",
+   "conf": 0.6
+  },
+  {
+   "date": "2026-03-20",
+   "change": "Blog: hitting DLL is an objective, not a violation",
+   "src": "topstep.com/blog/the-value-of-setting-a-",
+   "type": "official",
+   "conf": 0.9
+  },
+  {
+   "date": "2026-03-31",
+   "change": "RTP update: no purchase limits, mandatory DLL, Consistency-only XFAs",
+   "src": "rtp",
+   "type": "official_rule_x_date",
+   "conf": 0.8
+  },
+  {
+   "date": "2026-04-01",
+   "change": "Acquired The Futures Desk (no rule change)",
+   "src": "financemagnates.com/forex/topstep-acquir",
+   "type": "news",
+   "conf": 0.9
+  },
+  {
+   "date": "2026-04-12",
+   "change": "Commissions reintroduced on sim accounts (blog 04-30); no platform fee on current table",
+   "src": "topstep.com/blog/why-trading-commissions",
+   "type": "official_rule_community_date",
+   "conf": 0.75
+  },
+  {
+   "date": "2026-04-15",
+   "change": "Blog: DLL optional add-on, fixed once added",
+   "src": "topstep.com/blog/what-is-a-daily-loss-li",
+   "type": "official",
+   "conf": 0.9
+  },
+  {
+   "date": "2026-04-26",
+   "change": "Live MLL floor $1,000 reported (official value current; date community)",
+   "src": "lfa_rules_site",
+   "type": "official_rule_community_date",
+   "conf": 0.55
+  },
+  {
+   "date": "2026-04-28",
+   "change": "Tiered XFA caps $2K/$3K/$5K & $3K/$4K/$6K replace flat $5K/$6K; NAF $95/$149/$229 (date community)",
+   "src": "tradecovex_changes",
+   "type": "community",
+   "conf": 0.65
+  },
+  {
+   "date": "2026-04-29",
+   "change": "Responsible Trading Discount: -$10/-$20/-$30 NAF, -$50 B2F",
+   "src": "pricing",
+   "type": "official_rule_x_date",
+   "conf": 0.85
+  },
+  {
+   "date": "2026-05-12",
+   "change": "Aeropay instant payouts (US)",
+   "src": "topstep.com/blog/topstep-aeropay-payout",
+   "type": "official",
+   "conf": 0.7
+  },
+  {
+   "date": "2026-05-29",
+   "change": "Back2Funded window 7 -> 30 days",
+   "src": "back2funded",
+   "type": "official",
+   "conf": 0.95
+  },
+  {
+   "date": "2026-06-02",
+   "change": "Double XFA caps with checkout DLL (3:30 PM CT; no end date)",
+   "src": "double_caps_tc",
+   "type": "official",
+   "conf": 0.95
+  },
+  {
+   "date": "2026-06-09",
+   "change": "150K Standard $149 -> $199 by this date (community)",
+   "src": "bestprops",
+   "type": "community",
+   "conf": 0.55
+  },
+  {
+   "date": "2026-06-30",
+   "change": "Labs #001 $25K Static ($75); Live Performance Bonus retired",
+   "src": "labs",
+   "type": "official",
+   "conf": 0.85
+  },
+  {
+   "date": "2026-07-01",
+   "change": "Octagon $250K monthly pool replaces LPB (July pilot; help says Aug start); site Live rules updated",
+   "src": "lpb_retired",
+   "type": "official",
+   "conf": 0.85
+  },
+  {
+   "date": "2026-07-16",
+   "change": "Labs #002 $250K Freedom ($499)",
+   "src": "labs",
+   "type": "official",
+   "conf": 0.85
+  },
+  {
+   "date": "2026-07-27",
+   "change": "Understanding Hedging article (enforcement ladder)",
+   "src": "hedging",
+   "type": "official",
+   "conf": 0.9
+  },
+  {
+   "date": "2026-08-07",
+   "change": "Tier 1 news restrictions observed in force (start date unpublished)",
+   "src": "risk_adjustments",
+   "type": "official_rule_community_date",
+   "conf": 0.5
+  },
+  {
+   "date": "2026-08-01",
+   "change": "Wise restored for China/Canada/UK",
+   "src": "payout_policy",
+   "type": "official",
+   "conf": 0.9
+  },
+  {
+   "date": "2026-08-10",
+   "change": "Focused Trader Program article dated",
+   "src": "ftp",
+   "type": "official",
+   "conf": 0.9
+  },
+  {
+   "date": "2026-09-11",
+   "change": "Pro Account article (sim LFA substitute)",
+   "src": "pro_account",
+   "type": "official",
+   "conf": 0.85
+  },
+  {
+   "date": "2026-09-17",
+   "change": "Combine consistency 55% hard line documented (changed Feb-Sep 2026)",
+   "src": "consistency",
+   "type": "official",
+   "conf": 0.8
+  },
+  {
+   "date": "2026-10-01",
+   "change": "CME fees up: MCL $0.60/side, MNG $0.70/side",
+   "src": "commissions",
+   "type": "official",
+   "conf": 0.95
+  },
+  {
+   "date": "2026-10-15",
+   "change": "Labs #006-#009 + Launchpad; Tier 1 existing-position cutoff to 5 min pre-event (community)",
+   "src": "labs",
+   "type": "official_plus_community",
+   "conf": 0.6
+  },
+  {
+   "date": "2026-10-20",
+   "change": "Micro caps on restricted products reportedly lowered (unverifiable)",
+   "src": "propfirm.compare/updates/topstep",
+   "type": "community",
+   "conf": 0.35
+  },
+  {
+   "date": "2026-10-22",
+   "change": "Blog Live stats (4,577 live traders; 44.7% paid; ~35-day lifespan)",
+   "src": "live_stats_blog",
+   "type": "official",
+   "conf": 0.85
+  },
+  {
+   "date": "2026-11-03",
+   "change": "Payout Policy page updated (change unidentified)",
+   "src": "payout_policy",
+   "type": "official",
+   "conf": 0.5
+  },
+  {
+   "date": "2026-11-04",
+   "change": "Terms of Use updated",
+   "src": "terms",
+   "type": "official",
+   "conf": 0.95
+  },
+  {
+   "date": "2026-11-05",
+   "change": "Labs #010/#011 $50K Daily Payouts+",
+   "src": "topstep.com/blog/daily-payouts",
+   "type": "official",
+   "conf": 0.95
+  },
+  {
+   "date": "2026-11-09",
+   "change": "Prohibited Conduct, TopstepX, Call-Up pages edited",
+   "src": "lfa_callup",
+   "type": "official",
+   "conf": 0.9
+  },
+  {
+   "date": "2026-11-12",
+   "change": "Announced unified TopstepX/Dashboard login",
+   "src": "topstepx",
+   "type": "official",
+   "conf": 0.85
+  }
+ ],
+ "live_funded": {
+  "exists": true,
+  "operator": "TopstepFunded LLC",
+  "max_active": 1,
+  "call_up": {
+   "discretionary": true,
+   "fixed_payout_count_required": null,
+   "criteria": [
+    "consistency and account behavior",
+    "risk management, sizing, products, stops",
+    "exceptional performance in Sim",
+    "payout history and prior call-ups"
+   ],
+   "avg_payouts_before_callup_usd": 40000,
+   "creation_business_days": [
+    7,
+    10
+   ],
+   "can_decline": false,
+   "all_xfas_close": true,
+   "combine_activation_blocked_while_lfa_active": true,
+   "labs_daily_payouts_plus_consideration": "after 3 payouts on one XFA or 10 total (not guaranteed)",
+   "xfa_participants_called_up_2025_pct": 0.71
+  },
+  "size_determination": {
+   "method": "average funded tier of active eligible XFAs with >=1 payout (all XFAs if none have payouts), rounded UP",
+   "tiers": [
+    25000,
+    50000,
+    100000,
+    150000,
+    250000
+   ],
+   "labs_xfas_included": true
+  },
+  "starting_balance": {
+   "transfer": "cumulative eligible XFA balances hard-capped at LFA size (excess forfeited)",
+   "tradable_pct": 20,
+   "tradable_min": 10000,
+   "tradable_min_25K": 5000,
+   "reserve_pct": 80,
+   "reserve_increments": 4,
+   "reserve_increment_pct": 25,
+   "reserve_unlock_profit_target": {
+    "25K": 2000,
+    "50K": 3000,
+    "100K": 6000,
+    "150K": 9000,
+    "250K": 15000
+   },
+   "review_day": "Monday",
+   "deposit_business_days": [
+    1,
+    2
+   ],
+   "net_profit_since_last_expansion_required": true
+  },
+  "min_balance_liquidation": 1000,
+  "min_balance_conflict": "Program Overview (2026-09-10) still says 'reach or go below $0'; LFA Parameters and site rules say $1,000",
+  "dll": {
+   "mandatory": true,
+   "start": {
+    "25K": 1000,
+    "50K": 2000,
+    "100K": 3000,
+    "150K": 4500,
+    "250K": 5000
+   },
+   "breach_is_violation": false,
+   "expansion_profit_tiers": [
+    15000,
+    20000,
+    50000
+   ],
+   "expansion_step": 500,
+   "active_trading_days_per_tier": 10,
+   "tier4_profit": 100000,
+   "tier4_dll_max": 10000,
+   "tier4_lots_max": 30,
+   "tier5_profit": 200000,
+   "tier5_dll_max": 20000,
+   "tier5_lots_max": 50,
+   "tier6_profit": 550000,
+   "tier6_dll_max": 50000,
+   "tier6_lots_max": 70,
+   "tier7_profit": 1000000,
+   "tier7_dll_max": 100000,
+   "tier7_lots_max": 100,
+   "scales_down_same_day_if_profit_falls": true
+  },
+  "max_position_start": {
+   "25K": 3,
+   "50K": 5,
+   "100K": 10,
+   "150K": 15,
+   "250K": 15
+  },
+  "position_increase_requires": "Tier 4 ($100K net profit) AND >= $100,000 LFA balance AND Risk Team approval",
+  "safeguards": {
+   "tradable_balance_le_10000": {
+    "dll": 2000,
+    "max_lots": 5
+   },
+   "tradable_balance_le_5000": {
+    "dll": 1000,
+    "max_lots": 3
+   },
+   "updated": "Fridays",
+   "discretionary_net_equity_thresholds": {
+    "25K": 5000,
+    "50K": 10000,
+    "100K": 15000,
+    "150K": 20000,
+    "250K": 30000
+   }
+  },
+  "scaling_plan_applies": false,
+  "micro_mini_10to1_available": false,
+  "live_volatility_caps_50_100_150": {
+   "CL": [
+    3,
+    6,
+    9
+   ],
+   "QM": [
+    3,
+    6,
+    9
+   ],
+   "RB": [
+    3,
+    6,
+    9
+   ],
+   "HO": [
+    3,
+    6,
+    9
+   ],
+   "GC": [
+    3,
+    6,
+    9
+   ],
+   "MCL": [
+    3,
+    6,
+    9
+   ],
+   "MGC": [
+    5,
+    10,
+    15
+   ],
+   "SIL": [
+    2,
+    4,
+    6
+   ],
+   "MHG": [
+    2,
+    4,
+    6
+   ],
+   "SI": 0,
+   "HG": 0,
+   "PL": 0
+  },
+  "tier1_news_contract_limit_if_balance_below_3000": 1,
+  "inactivity_close_days": 30,
+  "can_be_put_on_hold": false,
+  "api_automation_allowed": false,
+  "trade_copier_allowed": false,
+  "trade_copier_conflict": "TopstepX article: LFAs cannot use the Trade Copier; LFA Parameters page has a generic tip about duplicating trades with a copier",
+  "trading_day": "17:00 CT to 15:10 CT",
+  "auto_flatten": "about 10 seconds before 15:10 CT (site rules) vs Risk Managers begin flattening 15:08 CT (help FAQ)",
+  "risk_lock_in": {
+   "description": "intraday minimum profit floor for the day",
+   "set_by_conflict": "Octagon help article (2026-09-03): trader-set; topstep.com/topstep-octagon: Risk Team may set; dedicated help article 13461608 returns 404",
+   "confidence": 0.5
+  },
+  "call_down_shoulder_tap": {
+   "warning_given": false,
+   "triggers": [
+    "significant drawdown of seeded capital",
+    "repeatedly hitting DLL",
+    "gambling-like activity",
+    "improper sizing / over-leverage / large size swings",
+    "revenge trading",
+    "inconsistent performance with risk/reward imbalance"
+   ],
+   "result": "one Shoulder Tap XFA with balance = remaining Live capital, standard XFA parameters and Payout Policy",
+   "max_xfas": 1,
+   "reserve_forfeited_if_balance_zero": true,
+   "return_automatic": false,
+   "back2funded_available": true
+  },
+  "costs": {
+   "market_data_per_exchange_monthly": 133,
+   "exchanges_covered_by_topstep": 1,
+   "all_four_exchanges_monthly": 532,
+   "out_of_pocket_all_four_monthly": 399,
+   "billed_day_of_month": 26,
+   "prorated": false,
+   "commissions_round_turn_range": [
+    0.72,
+    2.04
+   ],
+   "exchange_fees_round_turn_range": [
+    2.46,
+    4.3
+   ],
+   "examples_round_turn": {
+    "ES": 3.8,
+    "NQ": 3.8,
+    "CL": 1.54,
+    "GC": 4.24
+   },
+   "platform_license_paid_by_trader": true,
+   "conflict": "TopstepX commission table (ES $3.78 RT) says it applies to LFA too; LFA costs article gives different examples and a legacy '$3.70/lot simulated fee' line",
+   "confidence": 0.85,
+   "src": "lfa_costs"
+  },
+  "octagon": {
+   "monthly_pool": 250000,
+   "top_pnl_pool": 200000,
+   "top_pnl_places": 100,
+   "top_pnl_1st": 75000,
+   "top_pnl_1st_conflict": "topstep.com/topstep-octagon and Jul 7 2026 blog show $100,000 (July pilot); help article (2026-09-03) shows $75,000",
+   "top_pnl_2nd": 25000,
+   "top_pnl_3rd": 20000,
+   "top_pnl_4th": 15000,
+   "top_pnl_5th": 10000,
+   "top_pnl_6_10": 5000,
+   "top_pnl_11_25": 750,
+   "top_pnl_26_50": 500,
+   "top_pnl_51_100": 125,
+   "streak_pool": 50000,
+   "streak_places": 5,
+   "streak_day_profit_threshold": 500,
+   "streak_prizes": [
+    25000,
+    15000,
+    5000,
+    3000,
+    2000
+   ],
+   "must_finish_month_net_positive": true,
+   "auto_enrolled": true,
+   "paid_following_month_into_balance": true,
+   "replaced_live_performance_bonus_from": "2026-07-01",
+   "help_page_status": "Starts August 2026",
+   "pilot_month": "2026-07",
+   "id_verification_may_be_required_top3_or_within_first_175000": true,
+   "confidence": 0.88,
+   "src": "octagon"
+  },
+  "live_stats_2026_10_12": {
+   "live_traders": 4577,
+   "took_payout_pct": 44.7,
+   "took_10k_plus_pct": 19.8,
+   "blew_up_single_day_pct": 1.5,
+   "avg_lifespan_calendar_days": 35,
+   "avg_lifespan_trading_days": 21,
+   "all_time_paid_out_usd": 1500000000,
+   "confidence": 0.85,
+   "src": "live_stats_blog"
+  },
+  "confidence": 0.94,
+  "src": [
+   "lfa_params",
+   "lfa_callup",
+   "dlre",
+   "lfa_rules_site"
+  ]
+ }
+}

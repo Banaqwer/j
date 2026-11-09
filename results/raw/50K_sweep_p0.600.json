@@ -1,0 +1,382 @@
+{
+ "size": "50K",
+ "edge": "sweep_p0.600",
+ "edge_desc": "sweep p_win=0.600: p_win=0.600 R=100 L=100 cost=5.00 -> mu=15.00$/trade sigma=98.0 gamma=+0.00313/$ per-trade Sharpe=+0.153 annual Sharpe~+7.69 (10 trades/day)",
+ "dll": false,
+ "horizon": 250,
+ "edge_params": {
+  "p_win": 0.6,
+  "reward": 100.0,
+  "loss": 100.0,
+  "cost_rt": 5.0,
+  "trades_per_day": 10,
+  "mu": 15.0,
+  "sigma": 97.97958971132712,
+  "gamma": 0.003125
+ },
+ "closed_form": {
+  "fair_bold_bound_D_over_T_plus_D": 0.4,
+  "one_shot_bold_at_size": {
+   "k": 1,
+   "P": 0.9980697092854239
+  },
+  "continuous_timid_1_contract": 0.9861604859038395,
+  "continuous_timid_max_contracts": 0.5101529461313381,
+  "trailing_only_exp_formula_1_contract": 0.9820304013754536
+ },
+ "funded": {
+  "V_dp": 49940.78527359295,
+  "first_action": "target +2000 / stop -700 with 2 contract(s), P(win day)=0.000, unresolved=0.91",
+  "binary_sim": {
+   "mean_payout": 49844.3445,
+   "median_payout": 52200.0,
+   "p_any_payout": 0.9673,
+   "p_bust": 0.05605,
+   "mean_n_payouts": 27.69285,
+   "payout_quantiles": {
+    "0.1": 41400.0,
+    "0.25": 48600.0,
+    "0.5": 52200.0,
+    "0.75": 55800.0,
+    "0.9": 57600.0,
+    "0.99": 61200.0
+   },
+   "mean_first_payout_day": 24.61392535924739
+  },
+  "n_states": 73860,
+  "n_actions": 204,
+  "trade_level_sim": {
+   "mean_payout": 50010.52725,
+   "median_payout": 52200.0,
+   "p_any_payout": 0.9702,
+   "p_bust": 0.041,
+   "mean_n_payouts": 27.7849,
+   "payout_quantiles": {
+    "0.1": 43114.95000000001,
+    "0.25": 48600.0,
+    "0.5": 52200.0,
+    "0.75": 55800.0,
+    "0.9": 57600.0,
+    "0.99": 61200.0
+   },
+   "mean_first_payout_day": 24.67094413522985
+  }
+ },
+ "combine": {
+  "optimal": {
+   "P_pass": 0.989037119692221,
+   "E_days": 30.93998381298452,
+   "first_action": "target +900 / stop -200 with 1 contract(s), P(win day)=0.006, unresolved=0.66"
+  },
+  "bold": {
+   "P_pass": 0.7044925876251334,
+   "E_days": 8.076690376220643
+  },
+  "timid": {
+   "P_pass": 0.982192059001268,
+   "E_days": 52.87258963145623
+  },
+  "n_states": 33117,
+  "n_actions": 180,
+  "policy_fresh_mll": [
+   {
+    "b": -1900.0,
+    "action": "quit",
+    "P": 0.0
+   },
+   {
+    "b": -1800.0,
+    "action": "target +100 / stop -200 with 1 contract(s), P(win day)=0.675, unresolved=0.03",
+    "P": 0.46404730857509513
+   },
+   {
+    "b": -1700.0,
+    "action": "target +100 / stop -300 with 1 contract(s), P(win day)=0.742, unresolved=0.10",
+    "P": 0.6007353282224547
+   },
+   {
+    "b": -1600.0,
+    "action": "target +100 / stop -400 with 1 contract(s), P(win day)=0.755, unresolved=0.16",
+    "P": 0.6961561695197784
+   },
+   {
+    "b": -1500.0,
+    "action": "target +900 / stop -200 with 1 contract(s), P(win day)=0.006, unresolved=0.66",
+    "P": 0.7746280526169742
+   },
+   {
+    "b": -1400.0,
+    "action": "target +100 / stop -300 with 1 contract(s), P(win day)=0.742, unresolved=0.10",
+    "P": 0.830060492308883
+   },
+   {
+    "b": -1300.0,
+    "action": "target +100 / stop -400 with 1 contract(s), P(win day)=0.755, unresolved=0.16",
+    "P": 0.8713516262325975
+   },
+   {
+    "b": -1200.0,
+    "action": "target +100 / stop -500 with 1 contract(s), P(win day)=0.756, unresolved=0.21",
+    "P": 0.902240267451342
+   },
+   {
+    "b": -1100.0,
+    "action": "target +100 / stop -600 with 1 contract(s), P(win day)=0.756, unresolved=0.23",
+    "P": 0.9250877049086249
+   },
+   {
+    "b": -1000.0,
+    "action": "target +100 / stop -700 with 1 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.9421671407137556
+   },
+   {
+    "b": -900.0,
+    "action": "target +100 / stop -500 with 1 contract(s), P(win day)=0.756, unresolved=0.21",
+    "P": 0.9548194891656003
+   },
+   {
+    "b": -800.0,
+    "action": "target +100 / stop -900 with 1 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.9642508799490321
+   },
+   {
+    "b": -700.0,
+    "action": "target +100 / stop -700 with 1 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.9712533355112389
+   },
+   {
+    "b": -600.0,
+    "action": "target +100 / stop -1000 with 1 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.976465618999576
+   },
+   {
+    "b": -500.0,
+    "action": "target +100 / stop -900 with 1 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.9803350771085235
+   },
+   {
+    "b": -400.0,
+    "action": "target +100 / stop -1000 with 1 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.9832219543071214
+   },
+   {
+    "b": -300.0,
+    "action": "target +200 / stop -200 with 1 contract(s), P(win day)=0.534, unresolved=0.14",
+    "P": 0.985354525036204
+   },
+   {
+    "b": -200.0,
+    "action": "target +100 / stop -1000 with 1 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.9869606658672698
+   },
+   {
+    "b": -100.0,
+    "action": "target +900 / stop -200 with 1 contract(s), P(win day)=0.006, unresolved=0.66",
+    "P": 0.9881118993738265
+   },
+   {
+    "b": 0.0,
+    "action": "target +900 / stop -200 with 1 contract(s), P(win day)=0.006, unresolved=0.66",
+    "P": 0.989037119692221
+   },
+   {
+    "b": 100.0,
+    "action": "target +900 / stop -200 with 1 contract(s), P(win day)=0.006, unresolved=0.66",
+    "P": 0.9897666768417447
+   },
+   {
+    "b": 200.0,
+    "action": "target +900 / stop -200 with 1 contract(s), P(win day)=0.006, unresolved=0.66",
+    "P": 0.990378559956914
+   },
+   {
+    "b": 300.0,
+    "action": "target +2000 / stop -300 with 2 contract(s), P(win day)=0.000, unresolved=0.66",
+    "P": 0.9910957641454233
+   },
+   {
+    "b": 400.0,
+    "action": "target +2000 / stop -300 with 2 contract(s), P(win day)=0.000, unresolved=0.66",
+    "P": 0.9917226655175678
+   },
+   {
+    "b": 500.0,
+    "action": "target +1500 / stop -400 with 3 contract(s), P(win day)=0.184, unresolved=0.42",
+    "P": 0.992429241911913
+   },
+   {
+    "b": 600.0,
+    "action": "target +1500 / stop -400 with 3 contract(s), P(win day)=0.184, unresolved=0.42",
+    "P": 0.9930243983202444
+   },
+   {
+    "b": 700.0,
+    "action": "target +1500 / stop -400 with 3 contract(s), P(win day)=0.184, unresolved=0.42",
+    "P": 0.9934959671974227
+   },
+   {
+    "b": 800.0,
+    "action": "target +1200 / stop -500 with 4 contract(s), P(win day)=0.414, unresolved=0.16",
+    "P": 0.9940356382175122
+   },
+   {
+    "b": 900.0,
+    "action": "target +1200 / stop -500 with 4 contract(s), P(win day)=0.414, unresolved=0.16",
+    "P": 0.9944747736473966
+   },
+   {
+    "b": 1000.0,
+    "action": "target +1000 / stop -700 with 5 contract(s), P(win day)=0.534, unresolved=0.11",
+    "P": 0.9949092203420598
+   },
+   {
+    "b": 1100.0,
+    "action": "target +1000 / stop -700 with 5 contract(s), P(win day)=0.534, unresolved=0.11",
+    "P": 0.9953532941454359
+   },
+   {
+    "b": 1200.0,
+    "action": "target +1000 / stop -900 with 5 contract(s), P(win day)=0.534, unresolved=0.14",
+    "P": 0.9956747269112627
+   },
+   {
+    "b": 1300.0,
+    "action": "target +1000 / stop -800 with 4 contract(s), P(win day)=0.534, unresolved=0.14",
+    "P": 0.9959945326521238
+   },
+   {
+    "b": 1400.0,
+    "action": "target +500 / stop -1200 with 5 contract(s), P(win day)=0.742, unresolved=0.05",
+    "P": 0.9964533391297583
+   },
+   {
+    "b": 1500.0,
+    "action": "target +500 / stop -1200 with 5 contract(s), P(win day)=0.742, unresolved=0.05",
+    "P": 0.9968829741574611
+   },
+   {
+    "b": 1600.0,
+    "action": "target +400 / stop -1500 with 4 contract(s), P(win day)=0.755, unresolved=0.16",
+    "P": 0.9972820598496319
+   },
+   {
+    "b": 1700.0,
+    "action": "target +400 / stop -1500 with 4 contract(s), P(win day)=0.755, unresolved=0.16",
+    "P": 0.9976318797116521
+   },
+   {
+    "b": 1800.0,
+    "action": "target +400 / stop -1500 with 4 contract(s), P(win day)=0.755, unresolved=0.16",
+    "P": 0.997899877798923
+   },
+   {
+    "b": 1900.0,
+    "action": "target +300 / stop -2000 with 3 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.9981799221399383
+   },
+   {
+    "b": 2000.0,
+    "action": "target +300 / stop -2000 with 3 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.9984286176428928
+   },
+   {
+    "b": 2100.0,
+    "action": "target +200 / stop -2000 with 2 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.998657318021021
+   },
+   {
+    "b": 2200.0,
+    "action": "target +200 / stop -2000 with 2 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.9989165748101092
+   },
+   {
+    "b": 2300.0,
+    "action": "target +100 / stop -1000 with 1 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.9991538032754338
+   },
+   {
+    "b": 2400.0,
+    "action": "target +100 / stop -1000 with 1 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.9993798419099449
+   },
+   {
+    "b": 2500.0,
+    "action": "target +100 / stop -1000 with 1 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.9995569698248254
+   },
+   {
+    "b": 2600.0,
+    "action": "target +100 / stop -1000 with 1 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.9996986587761589
+   },
+   {
+    "b": 2700.0,
+    "action": "target +200 / stop -200 with 1 contract(s), P(win day)=0.534, unresolved=0.14",
+    "P": 0.9998026917246604
+   },
+   {
+    "b": 2800.0,
+    "action": "target +100 / stop -1000 with 1 contract(s), P(win day)=0.756, unresolved=0.24",
+    "P": 0.9998882427098563
+   },
+   {
+    "b": 2900.0,
+    "action": "target +100 / stop -200 with 1 contract(s), P(win day)=0.675, unresolved=0.03",
+    "P": 0.9999326186573001
+   }
+  ],
+  "trade_level_sim_optimal": {
+   "P_pass": 0.99125,
+   "P_bust": 0.00875,
+   "P_unresolved": 0.0,
+   "E_days": 32.33465,
+   "E_days_given_pass": 32.362370744010086,
+   "E_fees": 0.0
+  },
+  "trade_level_sim_bold": {
+   "P_pass": 0.64695,
+   "P_bust": 0.35305,
+   "P_unresolved": 0.0,
+   "E_days": 3.73535,
+   "E_days_given_pass": 4.21415874487982,
+   "E_fees": 0.0
+  }
+ },
+ "economics": {
+  "standard": {
+   "monthly": 49.0,
+   "reset": 49.0,
+   "activation": 149.0,
+   "R_pass": 49791.78527359295,
+   "fee_aware_policy": {
+    "P_pass": 0.9889878936545373,
+    "E_days": 27.336314957464005,
+    "V_attempt": 49179.68810412897,
+    "quit_immediately": false,
+    "first_action": "target +900 / stop -200 with 1 contract(s), P(win day)=0.006, unresolved=0.66"
+   },
+   "expected_cost_until_pass": 65.04056169381796,
+   "EV_until_pass_fee_aware": 49726.74471189913,
+   "EV_until_pass_pmax_policy": 49718.24862339994,
+   "expected_trading_days_until_pass": 27.640697255099905
+  },
+  "noaf": {
+   "monthly": 95.0,
+   "reset": 95.0,
+   "activation": 0.0,
+   "R_pass": 49940.78527359295,
+   "fee_aware_policy": {
+    "P_pass": 0.9889750236663036,
+    "E_days": 27.13428185616524,
+    "V_attempt": 49267.438975182726,
+    "quit_immediately": false,
+    "first_action": "target +900 / stop -200 with 1 contract(s), P(win day)=0.006, unresolved=0.66"
+   },
+   "expected_cost_until_pass": 125.17777746844779,
+   "EV_until_pass_fee_aware": 49815.6074961245,
+   "EV_until_pass_pmax_policy": 49798.21421709629,
+   "expected_trading_days_until_pass": 27.436771613881316
+  }
+ },
+ "elapsed_s": 175.1803069114685
+}

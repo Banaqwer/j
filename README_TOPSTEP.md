@@ -31,6 +31,21 @@ Trading Program targets exactly that behaviour; a trader with a real edge
 should instead play timidly in the Combine and treat the XFA as a capped
 annuity, withdrawing on the first eligible day.
 
+## Key numbers (50K, rules of 2026-11-09)
+
+| trader (win rate at 1R, $5 RT, 10 trades/day) | P(pass), optimal | P(pass), timid | XFA value in 250 days | EV of the whole game |
+|---|---|---|---|---|
+| coin flip after costs | 24.6% (bound 40%) | 3.5% | $382 | ≈ $0 (+$46) |
+| 53% | 41.3% | 32.2% | $1,639 | +$1,347 |
+| 55% (≈ Sharpe 2.5) | 71.6% | 65.8% | $11,051 | +$10,711 |
+| 60% | 98.9% | 98.2% | $49,941 | +$49,727 |
+
+Break-even win rate at 1R: 49.7%.  A pass can be made (near-)certain by
+resets: for a no-edge trader the expected cost until the first pass is $187
+and 81% pass within six attempts; the catch is that the funded account is
+then worth $382 in expectation and is lost with probability 99.6% within a
+year.  Every DP result is validated against a trade-by-trade Monte Carlo.
+
 ## Reproduce
 
 ```bash

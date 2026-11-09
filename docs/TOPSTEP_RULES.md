@@ -163,7 +163,16 @@ position sizing and stop/target choice within the Scaling Plan.
 | 2026-09 | Combine consistency objective 50% → 55% hard line, target rises to best day ÷ 0.55 | Consistency article (2026-09-17) |
 | 2026-11-05 | Topstep Labs "Daily Payouts+" experimental 50K products (one-time fee, daily payouts) | official blog |
 
-## 6. Known inconsistencies / open points
+## 6. Independent verification
+
+A separate 21-agent research-and-verification pass (six research sweeps, two
+adversarial verifier lenses per topic, one synthesis) produced
+`TOPSTEP_RULES_VERIFIED.md` (4,700 words, every number with a source key and
+confidence) and `topstep_rules_verified.json`.  None of its 30 listed
+uncertainties changes a parameter used by the model; the ones that touch the
+model are listed below.
+
+## 7. Known inconsistencies / open points
 
 * The XFA Parameters page still says "up to $5,000 / $6,000" per request
   while the Payout Policy (and Pro Account page) give the tiered caps; the
@@ -177,4 +186,10 @@ position sizing and stop/target choice within the Scaling Plan.
   $200 winning day, "+$100" MLL lock offsets or 30-winning-day XFA payouts;
   all are stale.
 * The exact wording of the Trader Pledge could not be fetched (404).
+* Whether a best day at *exactly* 55% of profit passes is unresolved across
+  official pages ("below" vs "at or below"); the model uses "at or below",
+  which matters only on a grid point.
+* The XFA MLL-breach timing is "immediate" on the MLL page and "closed at end
+  of day" in the XFA FAQ; the model uses immediate (the stricter reading).
+* The double-payout-cap offer has no published end date and can be withdrawn.
 

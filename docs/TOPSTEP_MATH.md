@@ -32,15 +32,35 @@ useful than a promise:
    the smallest per-trade edge at which the whole Topstep game (fees, resets,
    activation, capped payouts) has non-negative expected value.
 
+Headline numbers for a 50K account (ES, 1R trades of $100 per contract, $5
+round turn, 10 trades a day; full tables in `results/summary.md`):
+
+| trader (win rate at 1R) | P(pass) optimal policy | P(pass) one-shot bold | P(pass) timid | XFA value, 250 days (net) | E[cost until pass] | EV of the whole game |
+|---|---|---|---|---|---|---|
+| coin flip, no costs | 37.8% | 40.0% | 25.1% | $872 | $120 | +$603 |
+| coin flip after costs (50%) | 24.6% | 28.6% | 3.5% | $382 | $187 | +$46 |
+| 53% | 41.3% | 52.2% (1 lot) | 32.2% | $1,639 | $143 | +$1,347 |
+| 55% (annual Sharpe ≈ 2.5) | 71.6% | 87.3% (1 lot) | 65.8% | $11,051 | $192 | +$10,711 |
+| 60% | 98.9% | 99.8% (1 lot) | 98.2% | $49,941 | $65 | +$49,727 |
+| 47% | 14.7% | 17.5% | 0.1% | $172 | — | negative (do not buy) |
+
+The break-even win rate at 1R is **49.7%**: a trader who is a coin flip after
+commissions is, on paper, exactly break-even against Topstep — but only by
+playing the bold policy at maximum size, only in dollars (the expected gain is
+tens of dollars for weeks of work), with the XFA lost with probability ≈ 1
+within the year, and that policy is precisely what the Responsible Trading
+Program is designed to catch.  Topstep's own 2025 statistics (16.8% of
+Combines passed; 33.3% of funded traders ever paid) sit where this model puts
+a population of no-edge traders (24.6% optimal pass, 34% ever paid).
+
 The structural result is that Topstep's rule set is a well-designed
 *anti-bold-play* filter: the mathematically optimal no-edge strategy is bold
 play (maximum size, few bets), and the consistency target, winning-day
 requirement, payout cap, MLL reset and the Responsible Trading Program are each
-aimed at exactly that strategy.  A trader with no edge who plays optimally is
-left with a small, bounded expected value; a trader with a genuine edge should
-play *timidly* in the Combine and treat the funded account as a capped annuity.
-
----
+aimed at exactly that strategy.  A trader with a genuine edge should play
+*timidly* in the Combine (one contract, a tight daily stop, trade the whole
+session) and treat the funded account as a capped annuity, requesting every
+payout on the first eligible day.
 
 ## 1. The game, stated precisely
 
@@ -263,30 +283,42 @@ the right way to play it.
 
 ## 7. What the optimal policies look like
 
-(Numbers for the 50K Standard path, ES with $R=L=\$100$, $5 round turn,
-10 trades per day; full tables in Section 9 and `results/`.)
+(50K Standard path, ES with $R=L=\$100$, $5 round turn, 10 trades per day;
+full policy maps and the 100K/150K tables in `results/summary.md`.)
 
-* **No edge, pure pass maximiser.** Day 1: target $+1{,}500$ with a $200 stop
-  at 5 minis — a small-loss, high-payoff bet repeated until it hits, keeping
-  the best day under the 55% line; day 2: the remaining $1{,}500$.  Pass
-  probability 23.5%, i.e. the consistency target removes 16.5 points from the
-  40% bound.  The expected number of trading days is large because the policy
-  ignores the fee clock.
-* **No edge, fee-aware.** The daily fee makes the DP prefer faster resolution
-  and makes it *quit* from states whose continuation value is below the fee
-  burn; the EV of the whole game is small but — because resets are cheap —
-  can be slightly positive on paper.  That paper value is exactly the
-  behaviour Topstep's Responsible Trading Program is built to catch
-  (mandatory DLL, Consistency-path XFA with a 40% best-day rule, review of
-  "maxing position"), so it is not a reliable income.
-* **Positive edge.** The DP keeps size at 1 contract and uses moderate daily
-  targets; pass probability rises steeply with $\gamma_1$ and the fee-aware
-  policy never quits.  In the XFA the optimal payout policy is "request the
-  first payout the day you become eligible, then rebuild"; waiting for a
-  bigger balance is wrong because the cap is 50% of balance and the MLL
-  resets to 0 after the first payout anyway.
-
----
+* **No edge, pure pass maximiser.** From a fresh account: target +$1,000 with
+  an $800 daily stop at 5 minis (P(win the day) = 0.32), i.e. bold play
+  shaped to stay under the 55% line, and from +$800 on, +$1,000 days with the
+  stop at the (now locked) MLL.  Pass probability 24.6% versus 28.6% for an
+  unconstrained one-shot bet (the consistency target costs four points) and
+  3.5% for timid play (the trailing MLL ratchets a timid no-edge trader to
+  death).  Expected length 6 trading days.
+* **No edge, fee-aware.** The daily fee makes the DP quit from states whose
+  continuation value is below the fee burn (e.g. −$1,900 on a fresh MLL) and
+  prefer faster resolution; EV of the whole game +$46 (Standard path), +$19
+  (No-Activation-Fee path): break-even.  On a 100K or 150K the same trader is
+  −$15 / −$370 because fees scale faster than the option value of the XFA.
+* **Positive edge.** With a 55% win rate the DP keeps size at 1 contract with
+  a $200 daily stop and trades the whole session (the "target" is
+  effectively never hit: 56% of days end unresolved); pass probability 71.6%
+  in an expected 56 trading days, against 41.3% for bold play.  The
+  fee-aware policy never quits.  On the 150K the pure pass-maximiser takes
+  263 days and has *negative* EV once fees are counted, while the fee-aware
+  policy is +$24,854: fee-awareness, not pass probability, is the objective.
+* **Funded account.** For every edge the DP's first payout is requested on
+  the first eligible day; waiting for a bigger balance is wrong because the
+  cap is 50% of balance and the MLL resets to $0 at the first payout anyway.
+  With no edge the optimal XFA policy is a sequence of small-stop lottery days
+  (+$1,500 / −$300 with 2 lots) worth $382 net over a year, with the account
+  lost with probability 99.6%; with a 55% edge it is "trade 2 lots all day
+  with a $300 stop, withdraw whenever eligible": $11,051 expected, 56% chance
+  of at least one payout, median $5,400, 70% chance the account is lost
+  within 250 days.  Adding the optional $1,000 DLL at checkout (which doubles
+  the payout cap to $4,000) is worth +$600 to the 55% trader and +$26,000 to
+  the 60% trader, and nothing to a no-edge trader.
+* **Account size.** For no-edge and weak traders the 50K dominates (cheapest
+  lottery ticket); for a 55%+ trader the larger accounts pay more per year
+  but the 150K takes ~190 trading days to pass and ties up $199/month.
 
 ## 8. What is *not* a strategy
 
@@ -307,14 +339,22 @@ stop/target selection and payout timing.
 
 ---
 
-## 9. Results
+## 9. Results and validation
 
-See `results/summary.md` (generated by `python -m topstep.report`) for the
-full tables: pass probabilities (closed form, DP, trade-level simulation),
-funded-account values, EV until pass under both fee paths, the break-even
-sweep and the optimal policy maps.
+`results/summary.md` (generated by `python -m topstep.report`) holds the full
+tables for 50K/100K/150K, both fee paths, the DLL variant, the break-even
+sweep, the optimal policy maps and the figures.  Every DP number is paired
+with a trade-by-trade Monte Carlo of the same policy (20,000 accounts): the
+two agree to within sampling error (typically < 1 point of pass probability
+and < 3% of funded value); the one visible gap (150K, 53% edge: 43.7% DP vs
+34.9% simulated) is a 290-day chain where the grid rounding of day P&L
+accumulates, and is noted rather than hidden.
 
----
+Limitations worth knowing: sizes are in ES minis (micros would allow finer
+sizing near the MLL); the day model takes at most 10 trades of fixed 1R
+size; the Consistency payout path is evaluated only by simulation
+(`topstep/compare_paths.py`); Live Funded promotion (0.71% of XFA traders in
+2025) is treated as having no value; all rules are those of 2026-11-09.
 
 ## References
 
@@ -325,3 +365,9 @@ sweep and the optimal policy maps.
 * Grossman, S. & Zhou, Z. (1993). Optimal investment strategies for controlling drawdowns. *Math. Finance* 3, 241–276.
 * Kelly, J. (1956). A new interpretation of information rate. *Bell Syst. Tech. J.* 35, 917–926.
 * Williams, D. (1991). *Probability with Martingales* (optional stopping, Fatou).
+* Breiman, L. (1961). Optimal gambling systems for favorable games. *Proc. 4th Berkeley Symp.*
+* Freedman, D. (1967). Timid play is optimal. *Ann. Math. Statist.* 38, 1281–1283.
+* Browne, S. (1999). Reaching goals by a deadline. *Adv. Appl. Probab.* 31, 551–577.
+* Villahermosa (2026). Prop-firm challenges: a barrier model of pass rates and expected value. SSRN 7445798.
+* Lim (2026). The price of a funded account: an actuarial analysis of proprietary trading firm challenges. SSRN 7178078.
+* Zarattini, C. & Aziz, A. (2023). The art of financial illusion: how to use martingale betting systems to fool people. SSRN.

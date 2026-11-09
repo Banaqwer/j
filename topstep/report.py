@@ -144,6 +144,21 @@ def policy_section(rows, size="50K"):
     return "\n".join(L) + "\n"
 
 
+def paths_section():
+    files = sorted(glob.glob("results/raw_paths/*.json"))
+    if not files:
+        return ""
+    L = ["### Standard vs Consistency payout path (trade-level simulation, best fixed daily policy, 250 days)\n",
+         "The DP covers the Standard path exactly; here each variant gets the best *fixed* policy (daily target / stop / lots, payout requested on the first eligible day) from a grid search, so the numbers are lower bounds on each variant's value and comparable with each other.\n",
+         "| size | edge | variant | best fixed policy | mean net payout | P(any payout) | median | mean # payouts | P(bust) |",
+         "|---|---|---|---|---|---|---|---|---|"]
+    for fpath in files:
+        r = json.load(open(fpath))
+        for name, v in r["variants"].items():
+            L.append(f"| {r['size']} | {r['edge']} | {name} | +{v['delta']} / −{v['lam']} × {v['k']} lots | ${f0(v['mean_payout'])} | {pct(v['p_any_payout'])} | ${f0(v.get('median_payout'))} | {f1(v['mean_n_payouts'])} | {pct(v['p_bust'])} |")
+    return "\n".join(L) + "\n"
+
+
 def figures(rows, sweep):
     import matplotlib
     matplotlib.use("Agg")
@@ -167,12 +182,12 @@ def figures(rows, sweep):
     if sweep:
         xs, ys, yn, be = sweep
         fig, ax = plt.subplots(figsize=(8, 5))
-        ax.plot(xs, ys, "o-", label="standard path ($49/mo + $149 activation)")
-        ax.plot(xs, yn, "s-", label="no-activation-fee path ($95/mo)")
+        ax.plot(xs, ys, "o-", label="standard path (\\$49/mo + \\$149 activation)")
+        ax.plot(xs, yn, "s-", label="no-activation-fee path (\\$95/mo)")
         ax.axhline(0, c="gray", lw=1)
         if be:
             ax.axvline(be, ls="--", c="r", lw=1); ax.text(be + 0.002, min(ys) * 0.8, f"break-even p≈{be:.3f}", color="r")
-        ax.set_xlabel("per-trade win rate at 1R (ES, $5 round turn)"); ax.set_ylabel("EV until pass + 250 XFA days  ($)")
+        ax.set_xlabel("per-trade win rate at 1R (ES, $5 round turn)"); ax.set_ylabel("EV until pass + 250 XFA days  (dollars)")
         ax.set_title("Whole-game expected value vs edge, 50K"); ax.legend()
         fig.tight_layout(); fig.savefig(os.path.join(OUT, "fig_ev_sweep_50K.png"), dpi=130); plt.close(fig)
     # Fig 3: funded value vs edge across sizes
@@ -181,7 +196,7 @@ def figures(rows, sweep):
         pts = sorted([r for r in rows if r["size"] == size and not r["dll"]], key=lambda r: r["edge_params"]["gamma"])
         if pts:
             ax.plot([r["edge_params"]["gamma"] for r in pts], [r["funded"]["V_dp"] for r in pts], mk + "-", label=f"{size} XFA (DP, 250 days)")
-    ax.set_xlabel("γ per contract (1/$)"); ax.set_ylabel("expected net payouts in 250 trading days ($)")
+    ax.set_xlabel("γ per contract (1/$)"); ax.set_ylabel("expected net payouts in 250 trading days (dollars)")
     ax.set_title("Funded-account value vs edge"); ax.legend()
     fig.tight_layout(); fig.savefig(os.path.join(OUT, "fig_funded_value.png"), dpi=130); plt.close(fig)
 
@@ -200,6 +215,7 @@ def main():
     st, sweep = sweep_table(rows)
     parts.append(st)
     parts.append(policy_section(rows))
+    parts.append(paths_section())
     try:
         figures(rows, sweep)
         parts.append("### Figures\n\n![pass vs gamma](fig_pass_vs_gamma_50K.png)\n\n![EV sweep](fig_ev_sweep_50K.png)\n\n![funded value](fig_funded_value.png)\n")

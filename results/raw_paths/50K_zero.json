@@ -1,0 +1,47 @@
+{
+ "size": "50K",
+ "edge": "zero",
+ "edge_desc": "zero edge after $5 RT costs (coin flip): p_win=0.500 R=100 L=100 cost=5.00 -> mu=-5.00$/trade sigma=100.0 gamma=-0.00100/$ per-trade Sharpe=-0.050 annual Sharpe~-2.51 (10 trades/day)",
+ "variants": {
+  "standard": {
+   "delta": 200,
+   "lam": 500,
+   "k": 3,
+   "mean_payout": 313.5708461151123,
+   "p_any_payout": 0.5134583333333333,
+   "p_bust": 1.0,
+   "mean_n_payouts": 0.6787083333333334,
+   "median_payout": 121.5
+  },
+  "consistency": {
+   "delta": 200,
+   "lam": 800,
+   "k": 3,
+   "mean_payout": 363.8952509765625,
+   "p_any_payout": 0.44425,
+   "p_bust": 1.0,
+   "mean_n_payouts": 0.63275,
+   "median_payout": 0.0
+  },
+  "standard_dll": {
+   "delta": 200,
+   "lam": 500,
+   "k": 3,
+   "mean_payout": 313.5708461151123,
+   "p_any_payout": 0.5134583333333333,
+   "p_bust": 1.0,
+   "mean_n_payouts": 0.6787083333333334,
+   "median_payout": 121.5
+  },
+  "consistency_dll": {
+   "delta": 200,
+   "lam": 800,
+   "k": 3,
+   "mean_payout": 363.8952509765625,
+   "p_any_payout": 0.44425,
+   "p_bust": 1.0,
+   "mean_n_payouts": 0.63275,
+   "median_payout": 0.0
+  }
+ }
+}
