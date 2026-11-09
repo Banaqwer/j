@@ -18,3 +18,6 @@ silver_data.csv
 silver_backtest*.csv
 sol_data.csv
 sol_backtest*.csv
+
+# run logs of the topstep analysis (regenerated on every run)
+results/logs/
