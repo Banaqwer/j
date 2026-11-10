@@ -1,0 +1,1118 @@
+{
+ "n_variants": 21,
+ "variants": [
+  {
+   "name": "BTC_US_long",
+   "symbol": "BTCUSDT",
+   "rule": "Long 1 contract at the open of the 08:30 CT 5-min bar on Mon-Fri; exit at the open of the 15:10 CT bar (Topstep forced flat). No stop/target.",
+   "n": 1173,
+   "trades_per_day": 0.999515198136873,
+   "mean_net": -6.655700767263426,
+   "t_stat": -2.665590389498565,
+   "ci95_low": -11.485681329923283,
+   "ci95_high": -1.6454492327365762,
+   "win_rate": 0.4416027280477408,
+   "avg_win": 51.651901544401554,
+   "avg_loss": 52.76766717557252,
+   "sharpe_per_trade": -0.0778295300084485,
+   "total_net": -7807.136999999998,
+   "gross_mean": -2.8357007672634285,
+   "max_drawdown": 8674.742000000024,
+   "by_year": {
+    "2020": -56.4,
+    "2021": -2193.5,
+    "2022": -2453.7,
+    "2023": -987.4,
+    "2024": -2116.2
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 261,
+    "2022": 260,
+    "2023": 260,
+    "2024": 130
+   },
+   "reasons": {
+    "flat": 1173
+   },
+   "dsr": 2.3382020524528794e-06
+  },
+  {
+   "name": "BTC_US_short",
+   "symbol": "BTCUSDT",
+   "rule": "Short 1 contract at the open of the 08:30 CT 5-min bar on Mon-Fri; exit at the open of the 15:10 CT bar (Topstep forced flat). No stop/target.",
+   "n": 1173,
+   "trades_per_day": 0.999515198136873,
+   "mean_net": -0.9842992327365705,
+   "t_stat": -0.39420921506544776,
+   "ci95_low": -5.994550767263424,
+   "ci95_high": 3.84568132992328,
+   "win_rate": 0.44671781756180734,
+   "avg_win": 57.39648854961833,
+   "avg_loss": 48.12071340523884,
+   "sharpe_per_trade": -0.011510064732531822,
+   "total_net": -1154.5829999999971,
+   "gross_mean": 2.8357007672634285,
+   "max_drawdown": 3315.174999999987,
+   "by_year": {
+    "2020": -1945.3,
+    "2021": 199.5,
+    "2022": 467.3,
+    "2023": -999.0,
+    "2024": 1123.0
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 261,
+    "2022": 260,
+    "2023": 260,
+    "2024": 130
+   },
+   "reasons": {
+    "flat": 1173
+   },
+   "dsr": 0.010299790490389765
+  },
+  {
+   "name": "BTC_Asia_long",
+   "symbol": "BTCUSDT",
+   "rule": "Long 1 contract at the open of the 17:00 CT 5-min bar on Sun-Thu evenings; exit at the open of the 02:00 CT bar. No stop/target.",
+   "n": 1172,
+   "trades_per_day": 0.9986630965186829,
+   "mean_net": -5.311778156996582,
+   "t_stat": -2.4820387213773976,
+   "ci95_low": -9.548088694539237,
+   "ci95_high": -1.0214591083617686,
+   "win_rate": 0.4069965870307167,
+   "avg_win": 46.447574423480084,
+   "avg_loss": 40.835823021582726,
+   "sharpe_per_trade": -0.07250112517908062,
+   "total_net": -6225.403999999994,
+   "gross_mean": -1.4917781569965838,
+   "max_drawdown": 6308.282000000036,
+   "by_year": {
+    "2020": -1024.9,
+    "2021": -2337.0,
+    "2022": -2463.5,
+    "2023": -262.8,
+    "2024": -137.3
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 260,
+    "2022": 260,
+    "2023": 261,
+    "2024": 129
+   },
+   "reasons": {
+    "signal": 1172
+   },
+   "dsr": 5.5009024028461835e-06
+  },
+  {
+   "name": "BTC_Asia_short",
+   "symbol": "BTCUSDT",
+   "rule": "Short 1 contract at the open of the 17:00 CT 5-min bar on Sun-Thu evenings; exit at the open of the 02:00 CT bar. No stop/target.",
+   "n": 1172,
+   "trades_per_day": 0.9986630965186829,
+   "mean_net": -2.3282218430034143,
+   "t_stat": -1.0879100360543992,
+   "ci95_low": -6.618540891638232,
+   "ci95_high": 1.908088694539237,
+   "win_rate": 0.43686006825938567,
+   "avg_win": 46.50536523437499,
+   "avg_loss": 40.211246969696965,
+   "sharpe_per_trade": -0.03177819146342202,
+   "total_net": -2728.6760000000017,
+   "gross_mean": 1.4917781569965838,
+   "max_drawdown": 3759.75999999999,
+   "by_year": {
+    "2020": -976.8,
+    "2021": 350.6,
+    "2022": 477.1,
+    "2023": -1731.3,
+    "2024": -848.3
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 260,
+    "2022": 260,
+    "2023": 261,
+    "2024": 129
+   },
+   "reasons": {
+    "signal": 1172
+   },
+   "dsr": 0.0013150155230379932
+  },
+  {
+   "name": "BTC_Europe_long",
+   "symbol": "BTCUSDT",
+   "rule": "Long 1 contract at the open of the 02:00 CT 5-min bar on Mon-Fri; exit at the open of the 08:30 CT bar. No stop/target.",
+   "n": 1173,
+   "trades_per_day": 0.999515198136873,
+   "mean_net": 1.305931798806483,
+   "t_stat": 0.6178874272108403,
+   "ci95_low": -2.671626598465463,
+   "ci95_high": 5.568821888320547,
+   "win_rate": 0.45012787723785164,
+   "avg_win": 47.303475378787866,
+   "avg_loss": 36.347871317829444,
+   "sharpe_per_trade": 0.018040989436113448,
+   "total_net": 1531.8580000000045,
+   "gross_mean": 5.125931798806481,
+   "max_drawdown": 1644.089999999994,
+   "by_year": {
+    "2020": -485.4,
+    "2021": 2402.8,
+    "2022": -972.2,
+    "2023": 73.0,
+    "2024": 513.6
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 261,
+    "2022": 260,
+    "2023": 260,
+    "2024": 130
+   },
+   "reasons": {
+    "signal": 1173
+   },
+   "dsr": 0.09619361296888412
+  },
+  {
+   "name": "BTC_Europe_short",
+   "symbol": "BTCUSDT",
+   "rule": "Short 1 contract at the open of the 02:00 CT 5-min bar on Mon-Fri; exit at the open of the 08:30 CT bar. No stop/target.",
+   "n": 1173,
+   "trades_per_day": 0.999515198136873,
+   "mean_net": -8.94593179880648,
+   "t_stat": -4.232670334101632,
+   "ci95_low": -13.208821888320546,
+   "ci95_high": -4.968373401534537,
+   "win_rate": 0.3989769820971867,
+   "avg_win": 41.109224358974345,
+   "avg_loss": 42.174035460992904,
+   "sharpe_per_trade": -0.12358490789944757,
+   "total_net": -10493.578000000001,
+   "gross_mean": -5.125931798806481,
+   "max_drawdown": 10741.190000000062,
+   "by_year": {
+    "2020": -1516.3,
+    "2021": -4396.8,
+    "2022": -1014.2,
+    "2023": -2059.4,
+    "2024": -1506.8
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 261,
+    "2022": 260,
+    "2023": 260,
+    "2024": 130
+   },
+   "reasons": {
+    "signal": 1173
+   },
+   "dsr": 4.427545102177968e-10
+  },
+  {
+   "name": "BTC_CMEclose_long",
+   "symbol": "BTCUSDT",
+   "rule": "Long 1 contract at the open of the 14:00 CT 5-min bar on Mon-Fri; exit at the open of the 15:10 CT bar (Topstep forced flat). No stop/target.",
+   "n": 1173,
+   "trades_per_day": 0.999515198136873,
+   "mean_net": -3.6124339300937782,
+   "t_stat": -3.750173344897704,
+   "ci95_low": -5.486829049445876,
+   "ci95_high": -1.6704385976129565,
+   "win_rate": 0.38192668371696503,
+   "avg_win": 20.409504464285728,
+   "avg_loss": 18.4563351724138,
+   "sharpe_per_trade": -0.10949702926356408,
+   "total_net": -4237.385000000002,
+   "gross_mean": 0.20756606990622153,
+   "max_drawdown": 4234.710999999991,
+   "by_year": {
+    "2020": -656.1,
+    "2021": -378.1,
+    "2022": -742.9,
+    "2023": -839.5,
+    "2024": -1620.7
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 261,
+    "2022": 260,
+    "2023": 260,
+    "2024": 130
+   },
+   "reasons": {
+    "flat": 1173
+   },
+   "dsr": 7.886537347082787e-09
+  },
+  {
+   "name": "BTC_CMEclose_short",
+   "symbol": "BTCUSDT",
+   "rule": "Short 1 contract at the open of the 14:00 CT 5-min bar on Mon-Fri; exit at the open of the 15:10 CT bar (Topstep forced flat). No stop/target.",
+   "n": 1173,
+   "trades_per_day": 0.999515198136873,
+   "mean_net": -4.0275660699062215,
+   "t_stat": -4.181134163963689,
+   "ci95_low": -5.969561402387047,
+   "ci95_high": -2.153170950554122,
+   "win_rate": 0.3452685421994885,
+   "avg_win": 22.541217283950633,
+   "avg_loss": 18.03844791666667,
+   "sharpe_per_trade": -0.12208016211552161,
+   "total_net": -4724.334999999997,
+   "gross_mean": -0.20756606990622153,
+   "max_drawdown": 5465.019000000018,
+   "by_year": {
+    "2020": -1345.5,
+    "2021": -1615.9,
+    "2022": -1243.5,
+    "2023": -1146.9,
+    "2024": 627.5
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 261,
+    "2022": 260,
+    "2023": 260,
+    "2024": 130
+   },
+   "reasons": {
+    "flat": 1173
+   },
+   "dsr": 6.083510917485359e-10
+  },
+  {
+   "name": "BTC_CMEopen1h_long",
+   "symbol": "BTCUSDT",
+   "rule": "Long 1 contract at the open of the 17:00 CT 5-min bar on Sun-Thu evenings; exit at the open of the 18:00 CT bar. No stop/target.",
+   "n": 1173,
+   "trades_per_day": 0.999515198136873,
+   "mean_net": -3.046219096334182,
+   "t_stat": -4.039258484180558,
+   "ci95_low": -4.486348699914747,
+   "ci95_high": -1.6018894075021182,
+   "win_rate": 0.34697357203751067,
+   "avg_win": 18.001565110565128,
+   "avg_loss": 14.229571801566584,
+   "sharpe_per_trade": -0.11793769614601178,
+   "total_net": -3573.2149999999956,
+   "gross_mean": 0.7737809036658171,
+   "max_drawdown": 4050.221999999982,
+   "by_year": {
+    "2020": -863.3,
+    "2021": -1152.3,
+    "2022": -1426.8,
+    "2023": -452.4,
+    "2024": 321.5
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 260,
+    "2022": 260,
+    "2023": 261,
+    "2024": 130
+   },
+   "reasons": {
+    "signal": 1173
+   },
+   "dsr": 1.4408187267109952e-09
+  },
+  {
+   "name": "BTC_SunMon_long",
+   "symbol": "BTCUSDT",
+   "rule": "Long 1 contract at the open of the 17:00 CT 5-min bar on Sunday (hold to Monday 15:10 CT); exit at the open of the 15:10 CT bar (Topstep forced flat). No stop/target.",
+   "n": 234,
+   "trades_per_day": 0.19939177865646057,
+   "mean_net": 6.567777777777786,
+   "t_stat": 0.6488187535136832,
+   "ci95_low": -12.383286752136732,
+   "ci95_high": 25.895746581196605,
+   "win_rate": 0.452991452991453,
+   "avg_win": 115.75061320754718,
+   "avg_loss": 83.84925781249999,
+   "sharpe_per_trade": 0.04241460878142587,
+   "total_net": 1536.860000000002,
+   "gross_mean": 10.387777777777785,
+   "max_drawdown": 1930.0059999999985,
+   "by_year": {
+    "2020": 180.7,
+    "2021": 110.6,
+    "2022": -815.0,
+    "2023": -114.3,
+    "2024": 2175.0
+   },
+   "n_by_year": {
+    "2020": 52,
+    "2021": 52,
+    "2022": 52,
+    "2023": 53,
+    "2024": 25
+   },
+   "reasons": {
+    "flat": 234
+   },
+   "dsr": 0.10204487092857861
+  },
+  {
+   "name": "BTC_fund00_contra",
+   "symbol": "BTCUSDT",
+   "rule": "At the open of the 23:00 UTC 5-min bar, enter with side = -sign(most recently settled Binance funding rate); exit at the open of the funding-settlement bar one hour later. Skipped automatically when the window falls outside Topstep hours. No stop/target.",
+   "n": 1172,
+   "trades_per_day": 0.9986630965186829,
+   "mean_net": -2.431455631399314,
+   "t_stat": -3.119022587678498,
+   "ci95_low": -3.920372674914665,
+   "ci95_high": -0.9700130332764472,
+   "win_rate": 0.3677474402730375,
+   "avg_win": 17.39038283062646,
+   "avg_loss": 13.96075708502024,
+   "sharpe_per_trade": -0.09110762258381182,
+   "total_net": -2849.6659999999956,
+   "gross_mean": 1.388544368600686,
+   "max_drawdown": 2934.7629999999817,
+   "by_year": {
+    "2020": -884.2,
+    "2021": -247.2,
+    "2022": -193.5,
+    "2023": -860.0,
+    "2024": -664.7
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 260,
+    "2022": 260,
+    "2023": 261,
+    "2024": 129
+   },
+   "reasons": {
+    "signal": 1172
+   },
+   "dsr": 2.471060363073866e-07
+  },
+  {
+   "name": "BTC_fundAll_contra",
+   "symbol": "BTCUSDT",
+   "rule": "At the open of the 07:00 / 15:00 / 23:00 UTC 5-min bar, enter with side = -sign(most recently settled Binance funding rate); exit at the open of the funding-settlement bar one hour later. Skipped automatically when the window falls outside Topstep hours. No stop/target.",
+   "n": 3518,
+   "trades_per_day": 2.9976934927924286,
+   "mean_net": -2.885469584991472,
+   "t_stat": -6.043708616638394,
+   "ci95_low": -3.8430252984650393,
+   "ci95_high": -1.9602881040363853,
+   "win_rate": 0.36441159749857877,
+   "avg_win": 19.03160218408736,
+   "avg_loss": 15.451518783542038,
+   "sharpe_per_trade": -0.10189563969059712,
+   "total_net": -10151.081999999999,
+   "gross_mean": 0.9345304150085281,
+   "max_drawdown": 10499.319000000165,
+   "by_year": {
+    "2020": -2923.2,
+    "2021": -2790.8,
+    "2022": -1269.4,
+    "2023": -2340.6,
+    "2024": -827.1
+   },
+   "n_by_year": {
+    "2020": 786,
+    "2021": 782,
+    "2022": 780,
+    "2023": 781,
+    "2024": 389
+   },
+   "reasons": {
+    "signal": 3518
+   },
+   "dsr": 9.781721049305448e-16
+  },
+  {
+   "name": "BTC_gap_fade",
+   "symbol": "BTCUSDT",
+   "rule": "Weekend gap g = Sunday 16:55 CT close / Friday 15:10 CT open - 1 (Binance perp). If |g| >= 0.00%, at the Sunday 17:00 CT open enter against the gap (side = -sign(g)); exit at the Monday 15:10 CT forced flat. No stop/target.",
+   "n": 234,
+   "trades_per_day": 0.19939177865646057,
+   "mean_net": -18.58603418803423,
+   "t_stat": -1.8403297087990047,
+   "ci95_low": -38.20613141025646,
+   "ci95_high": 1.3385755341879924,
+   "win_rate": 0.4829059829059829,
+   "avg_win": 82.25667256637163,
+   "avg_loss": 112.76145454545458,
+   "sharpe_per_trade": -0.12030611662321349,
+   "total_net": -4349.13200000001,
+   "gross_mean": -14.766034188034233,
+   "max_drawdown": 5024.105000000001,
+   "by_year": {
+    "2020": -22.7,
+    "2021": 288.0,
+    "2022": -780.7,
+    "2023": -1337.8,
+    "2024": -2495.8
+   },
+   "n_by_year": {
+    "2020": 52,
+    "2021": 52,
+    "2022": 52,
+    "2023": 53,
+    "2024": 25
+   },
+   "reasons": {
+    "flat": 234
+   },
+   "dsr": 9.169245561468213e-05
+  },
+  {
+   "name": "BTC_gap_fade_1pct",
+   "symbol": "BTCUSDT",
+   "rule": "Weekend gap g = Sunday 16:55 CT close / Friday 15:10 CT open - 1 (Binance perp). If |g| >= 1.00%, at the Sunday 17:00 CT open enter against the gap (side = -sign(g)); exit at the Monday 15:10 CT forced flat. No stop/target.",
+   "n": 124,
+   "trades_per_day": 0.10566060065556031,
+   "mean_net": -17.6043467741936,
+   "t_stat": -1.0997710644769714,
+   "ci95_low": -49.764744556451674,
+   "ci95_high": 13.575457258064452,
+   "win_rate": 0.45161290322580644,
+   "avg_win": 110.9588928571428,
+   "avg_loss": 123.47995588235301,
+   "sharpe_per_trade": -0.0987623570978471,
+   "total_net": -2182.9390000000067,
+   "gross_mean": -13.784346774193603,
+   "max_drawdown": 3148.910000000001,
+   "by_year": {
+    "2020": -3.8,
+    "2021": 546.8,
+    "2022": -716.2,
+    "2023": -1075.6,
+    "2024": -934.1
+   },
+   "n_by_year": {
+    "2020": 26,
+    "2021": 40,
+    "2022": 24,
+    "2023": 24,
+    "2024": 10
+   },
+   "reasons": {
+    "flat": 124
+   },
+   "dsr": 0.0013395279093119307
+  },
+  {
+   "name": "BTC_gap_follow",
+   "symbol": "BTCUSDT",
+   "rule": "Weekend gap g = Sunday 16:55 CT close / Friday 15:10 CT open - 1 (Binance perp). If |g| >= 0.00%, at the Sunday 17:00 CT open enter with the gap (side = +sign(g)); exit at the Monday 15:10 CT forced flat. No stop/target.",
+   "n": 234,
+   "trades_per_day": 0.19939177865646057,
+   "mean_net": 10.946034188034236,
+   "t_stat": 1.0838413244035672,
+   "ci95_low": -8.978575534188007,
+   "ci95_high": 30.566131410256467,
+   "win_rate": 0.44871794871794873,
+   "avg_win": 121.78291428571433,
+   "avg_loss": 79.27003100775188,
+   "sharpe_per_trade": 0.07085292388169277,
+   "total_net": 2561.372000000011,
+   "gross_mean": 14.766034188034233,
+   "max_drawdown": 1793.4109999999928,
+   "by_year": {
+    "2020": -374.5,
+    "2021": -685.2,
+    "2022": 383.4,
+    "2023": 932.9,
+    "2024": 2304.8
+   },
+   "n_by_year": {
+    "2020": 52,
+    "2021": 52,
+    "2022": 52,
+    "2023": 53,
+    "2024": 25
+   },
+   "reasons": {
+    "flat": 234
+   },
+   "dsr": 0.2017415264966534
+  },
+  {
+   "name": "ETH_US_long",
+   "symbol": "ETHUSDT",
+   "rule": "Long 1 contract at the open of the 08:30 CT 5-min bar on Mon-Fri; exit at the open of the 15:10 CT bar (Topstep forced flat). No stop/target.",
+   "n": 1173,
+   "trades_per_day": 0.999515198136873,
+   "mean_net": -1.053776641091219,
+   "t_stat": -5.869636814041693,
+   "ci95_low": -1.414840963341858,
+   "ci95_high": -0.6949557544757028,
+   "win_rate": 0.3145780051150895,
+   "avg_win": 4.405547425474255,
+   "avg_loss": 3.5593619402985075,
+   "sharpe_per_trade": -0.17138082293397236,
+   "total_net": -1236.08,
+   "gross_mean": -0.13377664109121898,
+   "max_drawdown": 1238.1589999999992,
+   "by_year": {
+    "2020": -216.3,
+    "2021": -173.8,
+    "2022": -350.5,
+    "2023": -252.6,
+    "2024": -242.9
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 261,
+    "2022": 260,
+    "2023": 260,
+    "2024": 130
+   },
+   "reasons": {
+    "flat": 1173
+   },
+   "dsr": 5.299863621084297e-15
+  },
+  {
+   "name": "ETH_US_short",
+   "symbol": "ETHUSDT",
+   "rule": "Short 1 contract at the open of the 08:30 CT 5-min bar on Mon-Fri; exit at the open of the 15:10 CT bar (Topstep forced flat). No stop/target.",
+   "n": 1173,
+   "trades_per_day": 0.999515198136873,
+   "mean_net": -0.7862233589087809,
+   "t_stat": -4.379339407952408,
+   "ci95_low": -1.145044245524297,
+   "ci95_high": -0.4251590366581418,
+   "win_rate": 0.3256606990622336,
+   "avg_win": 4.6577722513089,
+   "avg_loss": 3.4153084702907712,
+   "sharpe_per_trade": -0.1278673307088754,
+   "total_net": -922.24,
+   "gross_mean": 0.13377664109121898,
+   "max_drawdown": 1022.7700000000033,
+   "by_year": {
+    "2020": -265.7,
+    "2021": -306.4,
+    "2022": -127.9,
+    "2023": -225.8,
+    "2024": 3.7
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 261,
+    "2022": 260,
+    "2023": 260,
+    "2024": 130
+   },
+   "reasons": {
+    "flat": 1173
+   },
+   "dsr": 1.7689377076601946e-10
+  },
+  {
+   "name": "ETH_Asia_long",
+   "symbol": "ETHUSDT",
+   "rule": "Long 1 contract at the open of the 17:00 CT 5-min bar on Sun-Thu evenings; exit at the open of the 02:00 CT bar. No stop/target.",
+   "n": 1172,
+   "trades_per_day": 0.9986630965186829,
+   "mean_net": -1.0540767918088731,
+   "t_stat": -6.792972199949343,
+   "ci95_low": -1.3608893771331052,
+   "ci95_high": -0.7654215017064842,
+   "win_rate": 0.3003412969283277,
+   "avg_win": 3.7172102272727288,
+   "avg_loss": 3.102239024390244,
+   "sharpe_per_trade": -0.198424836633182,
+   "total_net": -1235.3779999999992,
+   "gross_mean": -0.1340767918088733,
+   "max_drawdown": 1234.356999999998,
+   "by_year": {
+    "2020": -251.8,
+    "2021": -302.7,
+    "2022": -394.8,
+    "2023": -175.9,
+    "2024": -110.2
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 260,
+    "2022": 260,
+    "2023": 261,
+    "2024": 129
+   },
+   "reasons": {
+    "signal": 1172
+   },
+   "dsr": 3.1532047363325506e-18
+  },
+  {
+   "name": "ETH_Asia_short",
+   "symbol": "ETHUSDT",
+   "rule": "Short 1 contract at the open of the 17:00 CT 5-min bar on Sun-Thu evenings; exit at the open of the 02:00 CT bar. No stop/target.",
+   "n": 1172,
+   "trades_per_day": 0.9986630965186829,
+   "mean_net": -0.7859232081911267,
+   "t_stat": -5.064862964467351,
+   "ci95_low": -1.0745784982935158,
+   "ci95_high": -0.4791106228668949,
+   "win_rate": 0.3037542662116041,
+   "avg_win": 4.1019410112359544,
+   "avg_loss": 2.918373774509804,
+   "sharpe_per_trade": -0.14794622688156775,
+   "total_net": -921.1020000000005,
+   "gross_mean": 0.1340767918088733,
+   "max_drawdown": 941.6410000000042,
+   "by_year": {
+    "2020": -230.3,
+    "2021": -175.7,
+    "2022": -83.6,
+    "2023": -304.3,
+    "2024": -127.2
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 260,
+    "2022": 260,
+    "2023": 261,
+    "2024": 129
+   },
+   "reasons": {
+    "signal": 1172
+   },
+   "dsr": 1.8779464426805377e-12
+  },
+  {
+   "name": "ETH_fund00_contra",
+   "symbol": "ETHUSDT",
+   "rule": "At the open of the 23:00 UTC 5-min bar, enter with side = -sign(most recently settled Binance funding rate); exit at the open of the funding-settlement bar one hour later. Skipped automatically when the window falls outside Topstep hours. No stop/target.",
+   "n": 1172,
+   "trades_per_day": 0.9986630965186829,
+   "mean_net": -0.8430127986348125,
+   "t_stat": -13.04885260851202,
+   "ci95_low": -0.964998848122867,
+   "ci95_high": -0.7142089803754267,
+   "win_rate": 0.18600682593856654,
+   "avg_win": 1.7572935779816499,
+   "avg_loss": 1.4372127882599577,
+   "sharpe_per_trade": -0.3811610545254074,
+   "total_net": -988.0110000000002,
+   "gross_mean": 0.07698720136518751,
+   "max_drawdown": 987.1330000000045,
+   "by_year": {
+    "2020": -231.8,
+    "2021": -247.8,
+    "2022": -148.8,
+    "2023": -238.2,
+    "2024": -121.4
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 260,
+    "2022": 260,
+    "2023": 261,
+    "2024": 129
+   },
+   "reasons": {
+    "signal": 1172
+   },
+   "dsr": 1.2724445352820751e-47
+  },
+  {
+   "name": "ETH_gap_fade",
+   "symbol": "ETHUSDT",
+   "rule": "Weekend gap g = Sunday 16:55 CT close / Friday 15:10 CT open - 1 (Binance perp). If |g| >= 0.00%, at the Sunday 17:00 CT open enter against the gap (side = -sign(g)); exit at the Monday 15:10 CT forced flat. No stop/target.",
+   "n": 234,
+   "trades_per_day": 0.19939177865646057,
+   "mean_net": -0.40482905982905876,
+   "t_stat": -0.602225475357138,
+   "ci95_low": -1.7104408119658105,
+   "ci95_high": 0.9431403846153875,
+   "win_rate": 0.36752136752136755,
+   "avg_win": 8.116046511627909,
+   "avg_loss": 5.356148648648648,
+   "sharpe_per_trade": -0.03936871090293253,
+   "total_net": -94.72999999999975,
+   "gross_mean": 0.5151709401709412,
+   "max_drawdown": 251.2469999999999,
+   "by_year": {
+    "2020": -64.7,
+    "2021": 132.7,
+    "2022": -40.8,
+    "2023": -115.7,
+    "2024": -6.2
+   },
+   "n_by_year": {
+    "2020": 52,
+    "2021": 52,
+    "2022": 52,
+    "2023": 53,
+    "2024": 25
+   },
+   "reasons": {
+    "flat": 234
+   },
+   "dsr": 0.0059020131729962955
+  }
+ ],
+ "diagnostics": {
+  "BTCUSDT_hour_of_day_CT": {
+   "0": {
+    "mean_bp": 0.291,
+    "t": 2.332,
+    "n": 19716
+   },
+   "1": {
+    "mean_bp": 0.101,
+    "t": 0.797,
+    "n": 19764
+   },
+   "2": {
+    "mean_bp": 0.174,
+    "t": 1.269,
+    "n": 19656
+   },
+   "3": {
+    "mean_bp": -0.059,
+    "t": -0.412,
+    "n": 19716
+   },
+   "4": {
+    "mean_bp": 0.128,
+    "t": 0.922,
+    "n": 19716
+   },
+   "5": {
+    "mean_bp": 0.073,
+    "t": 0.442,
+    "n": 19716
+   },
+   "6": {
+    "mean_bp": 0.124,
+    "t": 0.788,
+    "n": 19716
+   },
+   "7": {
+    "mean_bp": 0.15,
+    "t": 0.83,
+    "n": 19716
+   },
+   "8": {
+    "mean_bp": -0.003,
+    "t": -0.016,
+    "n": 19716
+   },
+   "9": {
+    "mean_bp": -0.148,
+    "t": -0.83,
+    "n": 19716
+   },
+   "10": {
+    "mean_bp": 0.222,
+    "t": 1.214,
+    "n": 19716
+   },
+   "11": {
+    "mean_bp": -0.089,
+    "t": -0.539,
+    "n": 19716
+   },
+   "12": {
+    "mean_bp": -0.041,
+    "t": -0.274,
+    "n": 19716
+   },
+   "13": {
+    "mean_bp": 0.038,
+    "t": 0.236,
+    "n": 19716
+   },
+   "14": {
+    "mean_bp": 0.206,
+    "t": 1.27,
+    "n": 19716
+   },
+   "15": {
+    "mean_bp": -0.056,
+    "t": -0.343,
+    "n": 19716
+   },
+   "16": {
+    "mean_bp": 0.57,
+    "t": 3.445,
+    "n": 19716
+   },
+   "17": {
+    "mean_bp": 0.227,
+    "t": 1.523,
+    "n": 19716
+   },
+   "18": {
+    "mean_bp": -0.174,
+    "t": -1.11,
+    "n": 19728
+   },
+   "19": {
+    "mean_bp": -0.098,
+    "t": -0.59,
+    "n": 19716
+   },
+   "20": {
+    "mean_bp": -0.173,
+    "t": -1.209,
+    "n": 19716
+   },
+   "21": {
+    "mean_bp": -0.134,
+    "t": -0.804,
+    "n": 19716
+   },
+   "22": {
+    "mean_bp": -0.067,
+    "t": -0.476,
+    "n": 19716
+   },
+   "23": {
+    "mean_bp": -0.162,
+    "t": -1.213,
+    "n": 19716
+   }
+  },
+  "ETHUSDT_hour_of_day_CT": {
+   "0": {
+    "mean_bp": 0.326,
+    "t": 2.006,
+    "n": 19716
+   },
+   "1": {
+    "mean_bp": 0.099,
+    "t": 0.613,
+    "n": 19764
+   },
+   "2": {
+    "mean_bp": 0.196,
+    "t": 1.104,
+    "n": 19656
+   },
+   "3": {
+    "mean_bp": -0.27,
+    "t": -1.494,
+    "n": 19716
+   },
+   "4": {
+    "mean_bp": 0.208,
+    "t": 1.203,
+    "n": 19716
+   },
+   "5": {
+    "mean_bp": -0.013,
+    "t": -0.067,
+    "n": 19716
+   },
+   "6": {
+    "mean_bp": 0.119,
+    "t": 0.604,
+    "n": 19716
+   },
+   "7": {
+    "mean_bp": 0.206,
+    "t": 0.848,
+    "n": 19716
+   },
+   "8": {
+    "mean_bp": 0.064,
+    "t": 0.201,
+    "n": 19716
+   },
+   "9": {
+    "mean_bp": -0.243,
+    "t": -1.075,
+    "n": 19716
+   },
+   "10": {
+    "mean_bp": 0.565,
+    "t": 2.364,
+    "n": 19716
+   },
+   "11": {
+    "mean_bp": -0.079,
+    "t": -0.368,
+    "n": 19716
+   },
+   "12": {
+    "mean_bp": -0.108,
+    "t": -0.571,
+    "n": 19716
+   },
+   "13": {
+    "mean_bp": 0.28,
+    "t": 1.393,
+    "n": 19716
+   },
+   "14": {
+    "mean_bp": 0.158,
+    "t": 0.816,
+    "n": 19716
+   },
+   "15": {
+    "mean_bp": -0.043,
+    "t": -0.214,
+    "n": 19716
+   },
+   "16": {
+    "mean_bp": 0.648,
+    "t": 3.169,
+    "n": 19716
+   },
+   "17": {
+    "mean_bp": 0.283,
+    "t": 1.491,
+    "n": 19716
+   },
+   "18": {
+    "mean_bp": -0.022,
+    "t": -0.11,
+    "n": 19728
+   },
+   "19": {
+    "mean_bp": -0.194,
+    "t": -0.892,
+    "n": 19716
+   },
+   "20": {
+    "mean_bp": -0.236,
+    "t": -1.332,
+    "n": 19716
+   },
+   "21": {
+    "mean_bp": -0.344,
+    "t": -1.772,
+    "n": 19716
+   },
+   "22": {
+    "mean_bp": -0.047,
+    "t": -0.27,
+    "n": 19716
+   },
+   "23": {
+    "mean_bp": -0.055,
+    "t": -0.328,
+    "n": 19716
+   }
+  },
+  "BTC_US_long_by_weekday": {
+   "0": {
+    "count": 234,
+    "mean": 0.44,
+    "sum": 103.47,
+    "t": 0.08
+   },
+   "1": {
+    "count": 234,
+    "mean": -11.04,
+    "sum": -2583.27,
+    "t": -2.14
+   },
+   "2": {
+    "count": 235,
+    "mean": -0.44,
+    "sum": -102.39,
+    "t": -0.07
+   },
+   "3": {
+    "count": 235,
+    "mean": -13.74,
+    "sum": -3229.07,
+    "t": -2.52
+   },
+   "4": {
+    "count": 235,
+    "mean": -8.49,
+    "sum": -1995.88,
+    "t": -1.49
+   }
+  },
+  "BTC_US_long_etf_era": {
+   "n": 122,
+   "mean_net": -20.65508196721312,
+   "t": -1.7791286374324562
+  },
+  "BTC_Asia_long_by_weekday": {
+   "0": {
+    "count": 234,
+    "mean": -4.91,
+    "sum": -1148.46,
+    "t": -0.93
+   },
+   "1": {
+    "count": 234,
+    "mean": 1.5,
+    "sum": 351.68,
+    "t": 0.34
+   },
+   "2": {
+    "count": 235,
+    "mean": -7.91,
+    "sum": -1859.39,
+    "t": -2.03
+   },
+   "3": {
+    "count": 235,
+    "mean": -12.74,
+    "sum": -2994.93,
+    "t": -3.16
+   },
+   "6": {
+    "count": 234,
+    "mean": -2.45,
+    "sum": -574.3,
+    "t": -0.41
+   }
+  },
+  "BTC_Asia_long_etf_era": {
+   "n": 121,
+   "mean_net": -0.9376033057851365,
+   "t": -0.11230171601252792
+  },
+  "ETH_US_long_by_weekday": {
+   "0": {
+    "count": 234,
+    "mean": -0.6,
+    "sum": -139.62,
+    "t": -1.41
+   },
+   "1": {
+    "count": 234,
+    "mean": -1.44,
+    "sum": -337.08,
+    "t": -3.94
+   },
+   "2": {
+    "count": 235,
+    "mean": -0.48,
+    "sum": -113.68,
+    "t": -1.12
+   },
+   "3": {
+    "count": 235,
+    "mean": -1.32,
+    "sum": -311.32,
+    "t": -3.54
+   },
+   "4": {
+    "count": 235,
+    "mean": -1.42,
+    "sum": -334.39,
+    "t": -3.52
+   }
+  },
+  "ETH_US_long_etf_era": {
+   "n": 122,
+   "mean_net": -2.133024590163933,
+   "t": -3.073471118241
+  }
+ }
+}

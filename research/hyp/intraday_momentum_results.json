@@ -1,0 +1,708 @@
+{
+ "family": "intraday_momentum",
+ "n_variants": 15,
+ "variants": {
+  "BTC_utc_h1_last1h_sign": {
+   "n": 1172,
+   "trades_per_day": 0.9986630965186829,
+   "mean_net": -4.242788395904445,
+   "median_net": -3.850499999999938,
+   "std_net": 26.720511432683818,
+   "win_rate": 0.3438566552901024,
+   "avg_win": 16.144369727047142,
+   "avg_loss": 14.926825747724326,
+   "t_stat": -5.4358868969673315,
+   "ci95_low": -5.8231790742320895,
+   "ci95_high": -2.645018472696246,
+   "sharpe_per_trade": -0.15878395166923262,
+   "sharpe_annual": -2.5189316154305494,
+   "max_drawdown": 5061.761000000012,
+   "total_net": -4972.54800000001,
+   "gross_mean": -0.4227883959044446,
+   "p_win_at_1R": 0.3634494640108259,
+   "by_year": {
+    "2020": -910.0920000000008,
+    "2021": -2062.148,
+    "2022": -972.9580000000028,
+    "2023": -879.4500000000032,
+    "2024": -147.90000000000185
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 260,
+    "2022": 260,
+    "2023": 261,
+    "2024": 129
+   },
+   "rule": "UTC day. Signal r = close of the 00:55 UTC 5-min bar / open of the 00:00 UTC bar - 1 (same UTC date). Enter at the open of the 23:00 UTC bar with side = sign(r); exit at the open of the 00:00 UTC bar (next day). No stop/target. Skipped when the window is outside Topstep hours (Friday evening).",
+   "symbol": "BTCUSDT",
+   "reasons": {
+    "signal": 1172
+   },
+   "avg_hold_bars": 12.0,
+   "n_pos_years": 0,
+   "dsr": 4.0779721011620184e-13
+  },
+  "BTC_utc_h1_last1h_z1": {
+   "n": 262,
+   "trades_per_day": 0.22325062396578066,
+   "mean_net": -2.5920572519084,
+   "median_net": -3.848999999999723,
+   "std_net": 27.899139613626417,
+   "win_rate": 0.40076335877862596,
+   "avg_win": 19.492314285714297,
+   "avg_loss": 17.361859872611483,
+   "t_stat": -1.50384967127708,
+   "ci95_low": -5.865411545801521,
+   "ci95_high": 0.8454739503816597,
+   "sharpe_per_trade": -0.09290814296805035,
+   "sharpe_annual": -0.6968677887591894,
+   "max_drawdown": 867.7270000000007,
+   "total_net": -679.1190000000008,
+   "gross_mean": 1.2279427480915992,
+   "p_win_at_1R": 0.4296672002261425,
+   "by_year": {
+    "2020": -288.8160000000004,
+    "2021": -40.91199999999924,
+    "2022": -213.8809999999985,
+    "2023": -295.280000000002,
+    "2024": 159.76999999999924
+   },
+   "n_by_year": {
+    "2020": 55,
+    "2021": 63,
+    "2022": 54,
+    "2023": 56,
+    "2024": 34
+   },
+   "rule": "UTC day. Signal r = close of the 00:55 UTC 5-min bar / open of the 00:00 UTC bar - 1 (same UTC date). Trade only if |r| >= 1.0 x std(r over the previous 30 UTC days, excluding today). Enter at the open of the 23:00 UTC bar with side = sign(r); exit at the open of the 00:00 UTC bar (next day). No stop/target. Skipped when the window is outside Topstep hours (Friday evening).",
+   "symbol": "BTCUSDT",
+   "reasons": {
+    "signal": 262
+   },
+   "avg_hold_bars": 12.0,
+   "n_pos_years": 1,
+   "dsr": 0.0005546290743653584
+  },
+  "BTC_utc_30m_last30m_sign": {
+   "n": 1172,
+   "trades_per_day": 0.9986630965186829,
+   "mean_net": -4.297950511945395,
+   "median_net": -3.6769999999999707,
+   "std_net": 17.071881261885665,
+   "win_rate": 0.28498293515358364,
+   "avg_win": 10.439401197604797,
+   "avg_loss": 10.171787589498809,
+   "t_stat": -8.618741097356223,
+   "ci95_low": -5.223116467576794,
+   "ci95_high": -3.3494228029010267,
+   "sharpe_per_trade": -0.2517561155688747,
+   "sharpe_annual": -3.99383207318996,
+   "max_drawdown": 5032.790000000023,
+   "total_net": -5037.198000000002,
+   "gross_mean": -0.4779505119453938,
+   "p_win_at_1R": 0.2914748850083496,
+   "by_year": {
+    "2020": -980.3970000000011,
+    "2021": -2085.2400000000002,
+    "2022": -773.831000000002,
+    "2023": -947.7400000000023,
+    "2024": -249.98999999999623
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 260,
+    "2022": 260,
+    "2023": 261,
+    "2024": 129
+   },
+   "rule": "UTC day. Signal r = close of the 00:25 UTC 5-min bar / open of the 00:00 UTC bar - 1 (same UTC date). Enter at the open of the 23:30 UTC bar with side = sign(r); exit at the open of the 00:00 UTC bar (next day). No stop/target. Skipped when the window is outside Topstep hours (Friday evening).",
+   "symbol": "BTCUSDT",
+   "reasons": {
+    "signal": 1172
+   },
+   "avg_hold_bars": 6.0,
+   "n_pos_years": 0,
+   "dsr": 7.721598644195254e-25
+  },
+  "BTC_utc_penult1h_last1h_sign": {
+   "n": 1172,
+   "trades_per_day": 0.9986630965186829,
+   "mean_net": -3.0914266211604167,
+   "median_net": -3.9440000000006146,
+   "std_net": 26.713916998948704,
+   "win_rate": 0.34215017064846415,
+   "avg_win": 17.96116458852868,
+   "avg_loss": 14.040958495460453,
+   "t_stat": -3.961732753595917,
+   "ci95_low": -4.633198400170656,
+   "ci95_high": -1.518496416382263,
+   "sharpe_per_trade": -0.11572344936469167,
+   "sharpe_annual": -1.8358244154209553,
+   "max_drawdown": 3647.9749999999963,
+   "total_net": -3623.1520000000082,
+   "gross_mean": 0.7285733788395834,
+   "p_win_at_1R": 0.40339932719316746,
+   "by_year": {
+    "2020": -801.4320000000001,
+    "2021": -1110.3160000000066,
+    "2022": -360.9340000000001,
+    "2023": -871.410000000003,
+    "2024": -479.05999999999807
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 260,
+    "2022": 260,
+    "2023": 261,
+    "2024": 129
+   },
+   "rule": "UTC day. Signal r = close of the 22:55 UTC 5-min bar / open of the 22:00 UTC bar - 1 (same UTC date). Enter at the open of the 23:00 UTC bar with side = sign(r); exit at the open of the 00:00 UTC bar (next day). No stop/target. Skipped when the window is outside Topstep hours (Friday evening).",
+   "symbol": "BTCUSDT",
+   "reasons": {
+    "signal": 1172
+   },
+   "avg_hold_bars": 12.0,
+   "n_pos_years": 0,
+   "dsr": 5.619840970292328e-09
+  },
+  "BTC_utc_h1_and_penult_agree": {
+   "n": 580,
+   "trades_per_day": 0.49421893855020144,
+   "mean_net": -3.5110517241379458,
+   "median_net": -3.9440000000006146,
+   "std_net": 23.75638225971834,
+   "win_rate": 0.3482758620689655,
+   "avg_win": 16.745707920792086,
+   "avg_loss": 14.336092592592621,
+   "t_stat": -3.5593518360686702,
+   "ci95_low": -5.455080301724138,
+   "ci95_high": -1.6034860775862174,
+   "sharpe_per_trade": -0.14779404059730655,
+   "sharpe_annual": -1.6493654191583949,
+   "max_drawdown": 2141.7200000000043,
+   "total_net": -2036.4100000000085,
+   "gross_mean": 0.3089482758620541,
+   "p_win_at_1R": 0.3870383418545529,
+   "by_year": {
+    "2020": -359.1620000000005,
+    "2021": -1093.4520000000036,
+    "2022": -155.06600000000142,
+    "2023": -394.11000000000314,
+    "2024": -34.62
+   },
+   "n_by_year": {
+    "2020": 132,
+    "2021": 131,
+    "2022": 126,
+    "2023": 135,
+    "2024": 56
+   },
+   "rule": "UTC day. r1 = 00:00-01:00 UTC return (close 00:55 bar / open 00:00 bar - 1), r2 = 22:00-23:00 UTC return. If sign(r1) == sign(r2) enter at the open of the 23:00 UTC bar with that sign, else no trade; exit at the open of the 00:00 UTC bar. No stop/target.",
+   "symbol": "BTCUSDT",
+   "reasons": {
+    "signal": 580
+   },
+   "avg_hold_bars": 12.0,
+   "n_pos_years": 0,
+   "dsr": 5.8993770442371816e-08
+  },
+  "BTC_utc_daysofar_last1h_sign": {
+   "n": 1172,
+   "trades_per_day": 0.9986630965186829,
+   "mean_net": 0.1452713310580209,
+   "median_net": -2.9900000000000726,
+   "std_net": 26.427785186487405,
+   "win_rate": 0.38054607508532423,
+   "avg_win": 19.955988789237676,
+   "avg_loss": 12.024949035812677,
+   "t_stat": 0.18818411179705472,
+   "ci95_low": -1.3846742960750842,
+   "ci95_high": 1.7275404223549542,
+   "sharpe_per_trade": 0.005496916598682605,
+   "sharpe_annual": 0.08720249661408049,
+   "max_drawdown": 1464.5100000000061,
+   "total_net": 170.2580000000005,
+   "gross_mean": 3.96527133105802,
+   "p_win_at_1R": 0.5045424349921418,
+   "by_year": {
+    "2020": -667.7359999999995,
+    "2021": 1423.616000000005,
+    "2022": 145.6479999999966,
+    "2023": -755.3700000000015,
+    "2024": 24.09999999999961
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 260,
+    "2022": 260,
+    "2023": 261,
+    "2024": 129
+   },
+   "rule": "UTC day. Signal r = close of the 22:55 UTC 5-min bar / open of the 00:00 UTC bar - 1 (same UTC date). Enter at the open of the 23:00 UTC bar with side = sign(r); exit at the open of the 00:00 UTC bar (next day). No stop/target. Skipped when the window is outside Topstep hours (Friday evening).",
+   "symbol": "BTCUSDT",
+   "reasons": {
+    "signal": 1172
+   },
+   "avg_hold_bars": 12.0,
+   "n_pos_years": 3,
+   "dsr": 0.05684705374688077
+  },
+  "BTC_us_h1_last1h_sign": {
+   "n": 1172,
+   "trades_per_day": 0.9986630965186829,
+   "mean_net": -2.9576211604095572,
+   "median_net": -4.042000000000026,
+   "std_net": 31.20728531098892,
+   "win_rate": 0.3515358361774744,
+   "avg_win": 21.341747572815525,
+   "avg_loss": 16.13043684210526,
+   "t_stat": -3.2445192791262762,
+   "ci95_low": -4.743208340443686,
+   "ci95_high": -1.276002282423222,
+   "sharpe_per_trade": -0.09477342008239659,
+   "sharpe_annual": -1.5034753930632103,
+   "max_drawdown": 3506.819999999984,
+   "total_net": -3466.3320000000012,
+   "gross_mean": 0.8623788395904426,
+   "p_win_at_1R": 0.4210715573007299,
+   "by_year": {
+    "2020": -1107.7180000000012,
+    "2021": -641.7520000000029,
+    "2022": -530.6919999999961,
+    "2023": -501.5700000000004,
+    "2024": -684.6000000000007
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 261,
+    "2022": 259,
+    "2023": 260,
+    "2024": 130
+   },
+   "rule": "US session (America/Chicago). Signal r = close of the 09:25 CT 5-min bar / open of the 08:30 CT bar - 1 (same CT date, Mon-Fri). Enter at the open of the 14:10 CT bar with side = sign(r); exit at the open of the 15:10 CT bar (Topstep forced flat). No stop/target.",
+   "symbol": "BTCUSDT",
+   "reasons": {
+    "flat": 1172
+   },
+   "avg_hold_bars": 12.0,
+   "n_pos_years": 0,
+   "dsr": 2.839337725039671e-07
+  },
+  "BTC_us_h1_last1h_z1": {
+   "n": 334,
+   "trades_per_day": 0.28460194047546084,
+   "mean_net": -2.185538922155689,
+   "median_net": -4.634999999999964,
+   "std_net": 32.56918081653333,
+   "win_rate": 0.3502994011976048,
+   "avg_win": 24.63422222222221,
+   "avg_loss": 16.645963133640546,
+   "t_stat": -1.2263796723979288,
+   "ci95_low": -5.469284655688626,
+   "ci95_high": 1.5051257485029936,
+   "sharpe_per_trade": -0.06710451007248631,
+   "sharpe_annual": -0.5682911708571313,
+   "max_drawdown": 824.7739999999991,
+   "total_net": -729.97,
+   "gross_mean": 1.634461077844311,
+   "p_win_at_1R": 0.4470559808945894,
+   "by_year": {
+    "2020": -260.89100000000036,
+    "2021": 131.2859999999989,
+    "2022": -584.1249999999966,
+    "2023": 5.389999999998167,
+    "2024": -21.63000000000016
+   },
+   "n_by_year": {
+    "2020": 63,
+    "2021": 78,
+    "2022": 84,
+    "2023": 67,
+    "2024": 42
+   },
+   "rule": "US session (America/Chicago). Signal r = close of the 09:25 CT 5-min bar / open of the 08:30 CT bar - 1 (same CT date, Mon-Fri). Trade only if |r| >= 1.0 x std(r over the previous 30 sessions, excluding today). Enter at the open of the 14:10 CT bar with side = sign(r); exit at the open of the 15:10 CT bar (Topstep forced flat). No stop/target.",
+   "symbol": "BTCUSDT",
+   "reasons": {
+    "flat": 334
+   },
+   "avg_hold_bars": 12.0,
+   "n_pos_years": 2,
+   "dsr": 0.0013985322867336475
+  },
+  "BTC_overnight_us_sign": {
+   "n": 1172,
+   "trades_per_day": 0.9986630965186829,
+   "mean_net": -3.9831527303754393,
+   "median_net": -3.2039999999999234,
+   "std_net": 85.59980148427096,
+   "win_rate": 0.45819112627986347,
+   "avg_win": 52.65310614525139,
+   "avg_loss": 51.8786976377953,
+   "t_stat": -1.593008186657324,
+   "ci95_low": -8.872980780716729,
+   "ci95_high": 1.052931079351514,
+   "sharpe_per_trade": -0.04653226597852972,
+   "sharpe_annual": -0.7381828873682945,
+   "max_drawdown": 5806.658000000024,
+   "total_net": -4668.255000000015,
+   "gross_mean": -0.16315273037544187,
+   "p_win_at_1R": 0.4618953028052364,
+   "by_year": {
+    "2020": -648.394000000002,
+    "2021": -2733.7719999999963,
+    "2022": -1928.6390000000038,
+    "2023": 153.73999999999427,
+    "2024": 488.809999999992
+   },
+   "n_by_year": {
+    "2020": 261,
+    "2021": 261,
+    "2022": 260,
+    "2023": 260,
+    "2024": 130
+   },
+   "rule": "America/Chicago. Signal r = close of the 08:25 CT 5-min bar / open of the previous calendar day's 17:00 CT bar - 1 (the overnight Asia+Europe session; for Monday the Sunday 17:00 CT open). Mon-Fri. Enter at the open of the 08:30 CT bar with side = sign(r); exit at the open of the 15:10 CT bar (Topstep forced flat). No stop/target.",
+   "symbol": "BTCUSDT",
+   "reasons": {
+    "flat": 1172
+   },
+   "avg_hold_bars": 80.0,
+   "n_pos_years": 2,
+   "dsr": 0.0003891054302441555
+  },
+  "BTC_overnight_us_z1": {
+   "n": 324,
+   "trades_per_day": 0.2760809242935608,
+   "mean_net": -11.543317901234579,
+   "median_net": -4.68899999999996,
+   "std_net": 93.4388332845597,
+   "win_rate": 0.4567901234567901,
+   "avg_win": 51.704074324324324,
+   "avg_loss": 64.72862500000002,
+   "t_stat": -2.2236977380640837,
+   "ci95_low": -21.563459953703706,
+   "ci95_high": -1.3512859567901432,
+   "sharpe_per_trade": -0.12353876322578242,
+   "sharpe_annual": -1.0304376529055446,
+   "max_drawdown": 4070.942999999997,
+   "total_net": -3740.0350000000035,
+   "gross_mean": -7.723317901234581,
+   "p_win_at_1R": 0.40085845326766356,
+   "by_year": {
+    "2020": -106.61000000000038,
+    "2021": -2425.964999999999,
+    "2022": -1051.2400000000016,
+    "2023": 208.58999999999784,
+    "2024": -364.8100000000004
+   },
+   "n_by_year": {
+    "2020": 70,
+    "2021": 74,
+    "2022": 71,
+    "2023": 67,
+    "2024": 42
+   },
+   "rule": "America/Chicago. Signal r = close of the 08:25 CT 5-min bar / open of the previous calendar day's 17:00 CT bar - 1 (the overnight Asia+Europe session; for Monday the Sunday 17:00 CT open). Mon-Fri. Trade only if |r| >= 1.0 x std(r over the previous 30 sessions, excluding today). Enter at the open of the 08:30 CT bar with side = sign(r); exit at the open of the 15:10 CT bar (Topstep forced flat). No stop/target.",
+   "symbol": "BTCUSDT",
+   "reasons": {
+    "flat": 324
+   },
+   "avg_hold_bars": 80.0,
+   "n_pos_years": 1,
+   "dsr": 3.5475378195694266e-05
+  },
+  "ETH_utc_h1_last1h_sign": {
+   "n": 1170,
+   "trades_per_day": 0.9969588932823029,
+   "mean_net": -0.8684153846153845,
+   "median_net": -0.895999999999999,
+   "std_net": 2.2141521890495577,
+   "win_rate": 0.18205128205128204,
+   "avg_win": 1.691793427230047,
+   "avg_loss": 1.438242424242424,
+   "t_stat": -13.41568865789897,
+   "ci95_low": -0.9973151709401713,
+   "ci95_high": -0.746741581196582,
+   "sharpe_per_trade": -0.3922112440645549,
+   "sharpe_annual": -6.216686061295334,
+   "max_drawdown": 1015.1050000000037,
+   "total_net": -1016.0459999999998,
+   "gross_mean": 0.05158461538461547,
+   "p_win_at_1R": 0.22255417323515525,
+   "by_year": {
+    "2020": -231.32799999999997,
+    "2021": -236.72699999999983,
+    "2022": -229.35500000000016,
+    "2023": -247.7069999999999,
+    "2024": -70.92899999999992
+   },
+   "n_by_year": {
+    "2020": 261,
+    "2021": 260,
+    "2022": 259,
+    "2023": 261,
+    "2024": 129
+   },
+   "rule": "UTC day. Signal r = close of the 00:55 UTC 5-min bar / open of the 00:00 UTC bar - 1 (same UTC date). Enter at the open of the 23:00 UTC bar with side = sign(r); exit at the open of the 00:00 UTC bar (next day). No stop/target. Skipped when the window is outside Topstep hours (Friday evening).",
+   "symbol": "ETHUSDT",
+   "reasons": {
+    "signal": 1170
+   },
+   "avg_hold_bars": 12.0,
+   "n_pos_years": 0,
+   "dsr": 9.343501109310667e-49
+  },
+  "ETH_us_h1_last1h_sign": {
+   "n": 1172,
+   "trades_per_day": 0.9986630965186829,
+   "mean_net": -0.7938600682593859,
+   "median_net": -0.8954999999999995,
+   "std_net": 2.309142567706505,
+   "win_rate": 0.1945392491467577,
+   "avg_win": 1.955451754385963,
+   "avg_loss": 1.4578887711864406,
+   "t_stat": -11.76947296607043,
+   "ci95_low": -0.9172877986348126,
+   "ci95_high": -0.660010174914676,
+   "sharpe_per_trade": -0.3437899761416059,
+   "sharpe_annual": -5.453847387393155,
+   "max_drawdown": 935.7950000000056,
+   "total_net": -930.4040000000003,
+   "gross_mean": 0.12613993174061397,
+   "p_win_at_1R": 0.26742429818769436,
+   "by_year": {
+    "2020": -244.03199999999998,
+    "2021": -147.72000000000037,
+    "2022": -211.38699999999963,
+    "2023": -222.39100000000008,
+    "2024": -104.87400000000025
+   },
+   "n_by_year": {
+    "2020": 262,
+    "2021": 261,
+    "2022": 260,
+    "2023": 259,
+    "2024": 130
+   },
+   "rule": "US session (America/Chicago). Signal r = close of the 09:25 CT 5-min bar / open of the 08:30 CT bar - 1 (same CT date, Mon-Fri). Enter at the open of the 14:10 CT bar with side = sign(r); exit at the open of the 15:10 CT bar (Topstep forced flat). No stop/target.",
+   "symbol": "ETHUSDT",
+   "reasons": {
+    "flat": 1172
+   },
+   "avg_hold_bars": 12.0,
+   "n_pos_years": 0,
+   "dsr": 8.357682093503881e-40
+  },
+  "ETH_overnight_us_sign": {
+   "n": 1172,
+   "trades_per_day": 0.9986630965186829,
+   "mean_net": -1.0501271331058022,
+   "median_net": -0.8869999999999972,
+   "std_net": 6.15144748901636,
+   "win_rate": 0.3199658703071672,
+   "avg_win": 4.314863999999999,
+   "avg_loss": 3.5744328732747808,
+   "t_stat": -5.844244336763456,
+   "ci95_low": -1.3908809300341294,
+   "ci95_high": -0.6876179394197953,
+   "sharpe_per_trade": -0.1707121998490345,
+   "sharpe_annual": -2.7081600679343354,
+   "max_drawdown": 1234.9659999999978,
+   "total_net": -1230.7490000000003,
+   "gross_mean": -0.1301271331058024,
+   "p_win_at_1R": 0.3668921768347775,
+   "by_year": {
+    "2020": -222.2169999999999,
+    "2021": -364.01300000000026,
+    "2022": -332.50000000000057,
+    "2023": -189.23699999999985,
+    "2024": -122.78199999999981
+   },
+   "n_by_year": {
+    "2020": 261,
+    "2021": 261,
+    "2022": 260,
+    "2023": 260,
+    "2024": 130
+   },
+   "rule": "America/Chicago. Signal r = close of the 08:25 CT 5-min bar / open of the previous calendar day's 17:00 CT bar - 1 (the overnight Asia+Europe session; for Monday the Sunday 17:00 CT open). Mon-Fri. Enter at the open of the 08:30 CT bar with side = sign(r); exit at the open of the 15:10 CT bar (Topstep forced flat). No stop/target.",
+   "symbol": "ETHUSDT",
+   "reasons": {
+    "flat": 1172
+   },
+   "avg_hold_bars": 80.0,
+   "n_pos_years": 0,
+   "dsr": 2.065310974924545e-14
+  },
+  "BTC_utc_daysofar_last1h_z1": {
+   "n": 315,
+   "trades_per_day": 0.2684120097298508,
+   "mean_net": 2.127247619047615,
+   "median_net": -3.186000000000167,
+   "std_net": 37.125419063310076,
+   "win_rate": 0.4095238095238095,
+   "avg_win": 25.948875968992244,
+   "avg_loss": 14.394204301075272,
+   "t_stat": 1.0169555213289214,
+   "ci95_low": -1.7239480952380852,
+   "ci95_high": 6.325636984127005,
+   "sharpe_per_trade": 0.0572989523813863,
+   "sharpe_annual": 0.47124626812806025,
+   "max_drawdown": 415.7389999999993,
+   "total_net": 670.0829999999987,
+   "gross_mean": 5.947247619047615,
+   "p_win_at_1R": 0.5527289340528101,
+   "by_year": {
+    "2020": -193.7719999999988,
+    "2021": 821.9060000000012,
+    "2022": 28.15899999999936,
+    "2023": -146.56000000000137,
+    "2024": 160.3499999999985
+   },
+   "n_by_year": {
+    "2020": 78,
+    "2021": 75,
+    "2022": 63,
+    "2023": 64,
+    "2024": 35
+   },
+   "rule": "UTC day. Signal r = close of the 22:55 UTC 5-min bar / open of the 00:00 UTC bar - 1 (same UTC date). Trade only if |r| >= 1.0 x std(r over the previous 30 UTC days, excluding today). Enter at the open of the 23:00 UTC bar with side = sign(r); exit at the open of the 00:00 UTC bar (next day). [post-hoc] No stop/target. Skipped when the window is outside Topstep hours (Friday evening).",
+   "symbol": "BTCUSDT",
+   "reasons": {
+    "signal": 315
+   },
+   "avg_hold_bars": 12.0,
+   "n_pos_years": 3,
+   "dsr": 0.2260536425386197
+  },
+  "BTC_overnight_us_z1_reversal": {
+   "n": 324,
+   "trades_per_day": 0.2760809242935608,
+   "mean_net": 3.9033179012345824,
+   "median_net": -2.9510000000000396,
+   "std_net": 93.4388332845597,
+   "win_rate": 0.4506172839506173,
+   "avg_win": 69.51099315068495,
+   "avg_loss": 49.9097191011236,
+   "t_stat": 0.7519327858926996,
+   "ci95_low": -6.28871404320986,
+   "ci95_high": 13.923459953703706,
+   "sharpe_per_trade": 0.04177404366070553,
+   "sharpe_annual": 0.3484375784419994,
+   "max_drawdown": 1137.4800000000005,
+   "total_net": 1264.6750000000047,
+   "gross_mean": 7.723317901234581,
+   "p_win_at_1R": 0.5326854347762062,
+   "by_year": {
+    "2020": -428.18999999999966,
+    "2021": 1860.6049999999989,
+    "2022": 508.800000000002,
+    "2023": -720.4699999999978,
+    "2024": 43.93000000000072
+   },
+   "n_by_year": {
+    "2020": 70,
+    "2021": 74,
+    "2022": 71,
+    "2023": 67,
+    "2024": 42
+   },
+   "rule": "America/Chicago. Signal r = close of the 08:25 CT 5-min bar / open of the previous calendar day's 17:00 CT bar - 1 (the overnight Asia+Europe session; for Monday the Sunday 17:00 CT open). Mon-Fri. Trade only if |r| >= 1.0 x std(r over the previous 30 sessions, excluding today). Enter at the open of the 08:30 CT bar with side = -sign(r); exit at the open of the 15:10 CT bar (Topstep forced flat). No stop/target.",
+   "symbol": "BTCUSDT",
+   "reasons": {
+    "flat": 324
+   },
+   "avg_hold_bars": 80.0,
+   "n_pos_years": 3,
+   "dsr": 0.1546417390417928
+  }
+ },
+ "diagnostics": {
+  "BTCUSDT": {
+   "utc_h1->last1h": {
+    "n_days": 1643,
+    "beta": 0.012043679472234076,
+    "t_beta": 0.46165806496065065,
+    "corr": 0.011395619396569719,
+    "sign_agreement": 0.5118685331710287,
+    "mean_y_given_sign_x_bp": 0.08917642273144571
+   },
+   "utc_penult1h->last1h": {
+    "n_days": 1643,
+    "beta": 0.05898784883219773,
+    "t_beta": 1.968290527385601,
+    "corr": 0.04853140475984643,
+    "sign_agreement": 0.4850882531953743,
+    "mean_y_given_sign_x_bp": 4.9335710679115135
+   },
+   "utc_daysofar->last1h": {
+    "n_days": 1643,
+    "beta": 0.045862772128655915,
+    "t_beta": 7.5497004552557625,
+    "corr": 0.18321504622772652,
+    "sign_agreement": 0.54169202678028,
+    "mean_y_given_sign_x_bp": 9.221993533892455
+   },
+   "us_h1->last1h": {
+    "n_days": 1173,
+    "beta": 0.003979208667330556,
+    "t_beta": 0.15985698850333127,
+    "corr": 0.004671414892844022,
+    "sign_agreement": 0.48678601875532823,
+    "mean_y_given_sign_x_bp": 1.755517198875511
+   },
+   "overnight->us": {
+    "n_days": 1172,
+    "beta": -0.0972166845794016,
+    "t_beta": -4.403513548686196,
+    "corr": -0.12768416050811487,
+    "sign_agreement": 0.5093856655290102,
+    "mean_y_given_sign_x_bp": 1.5585867645851605
+   }
+  },
+  "ETHUSDT": {
+   "utc_h1->last1h": {
+    "n_days": 1643,
+    "beta": 0.030393921196661237,
+    "t_beta": 1.3296565061588037,
+    "corr": 0.032805853980092864,
+    "sign_agreement": 0.5246500304321363,
+    "mean_y_given_sign_x_bp": 2.826609706466179
+   },
+   "utc_penult1h->last1h": {
+    "n_days": 1643,
+    "beta": 0.03857484935515132,
+    "t_beta": 1.385883959799189,
+    "corr": 0.03419153282536668,
+    "sign_agreement": 0.4838709677419355,
+    "mean_y_given_sign_x_bp": 2.36559177639795
+   },
+   "utc_daysofar->last1h": {
+    "n_days": 1643,
+    "beta": 0.04159572580703048,
+    "t_beta": 7.511410130980434,
+    "corr": 0.18231678509383994,
+    "sign_agreement": 0.5276932440657334,
+    "mean_y_given_sign_x_bp": 9.211266334258315
+   },
+   "us_h1->last1h": {
+    "n_days": 1173,
+    "beta": 0.01217237151257113,
+    "t_beta": 0.5166478718169061,
+    "corr": 0.015096167467918937,
+    "sign_agreement": 0.5191815856777494,
+    "mean_y_given_sign_x_bp": 2.5874089147622024
+   },
+   "overnight->us": {
+    "n_days": 1172,
+    "beta": -0.08563049090738814,
+    "t_beta": -4.0255303195940355,
+    "corr": -0.11688081902951405,
+    "sign_agreement": 0.514505119453925,
+    "mean_y_given_sign_x_bp": -1.0586247785587253
+   }
+  }
+ },
+ "screen_passers": []
+}
