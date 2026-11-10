@@ -27,7 +27,14 @@ IS_START, IS_END = pd.Timestamp("2020-01-01", tz="UTC"), pd.Timestamp("2024-06-3
 HO_START, HO_END = pd.Timestamp("2024-07-01", tz="UTC"), pd.Timestamp("2026-10-31 23:59:59", tz="UTC")
 
 CONTRACT = {"BTCUSDT": {"mult": 0.1, "cost_rt": 2.82 + 1.00, "name": "MBT"},
-            "ETHUSDT": {"mult": 0.1, "cost_rt": 0.72 + 0.20, "name": "MET"}}
+            "ETHUSDT": {"mult": 0.1, "cost_rt": 0.72 + 0.20, "name": "MET"},
+            # CME equity index futures (price proxy: Oanda/histdata index CFD minute bars)
+            "ES": {"mult": 50.0, "cost_rt": 3.78 + 12.50, "name": "ES"},      # $50/pt, 1 tick = 0.25 = $12.50 slippage
+            "MES": {"mult": 5.0, "cost_rt": 1.22 + 1.25, "name": "MES"},
+            "NQ": {"mult": 20.0, "cost_rt": 3.78 + 5.00, "name": "NQ"},       # $20/pt, 1 tick = 0.25 = $5
+            "MNQ": {"mult": 2.0, "cost_rt": 1.22 + 0.50, "name": "MNQ"},
+            "RTY": {"mult": 50.0, "cost_rt": 3.78 + 5.00, "name": "RTY"},     # $50/pt, tick 0.10 = $5
+            "M2K": {"mult": 5.0, "cost_rt": 1.22 + 0.50, "name": "M2K"}}
 
 
 # ------------------------------------------------------------------ session masks (CT)
