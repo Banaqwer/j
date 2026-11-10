@@ -1,0 +1,1092 @@
+{
+ "family": "calendar_flows",
+ "symbol": "ES",
+ "data": "SPX500 Oanda CFD 1-minute bars, IS 2005-01..2017-12",
+ "bar_size": "1min",
+ "n_variants": 3,
+ "dsr_N": 22,
+ "survivor_bar": {
+  "mean_net": 0.0,
+  "t_stat": 2.5,
+  "n": 150,
+  "pos_years": 8
+ },
+ "variants": [
+  {
+   "name": "V1_turn_of_month_long",
+   "variant": "V1",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn, one position at a time. Price proxy: Oanda index CFD 1-minute bars; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that CT calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade). Exit = open of the first bar in [15:08, 15:15] CT of the day; if none, on an early-close day (last pre-15:08 bar before 15:00 CT) the open of the last quoted bar before the halt, otherwise the open of the first bar inside the 15:10-17:00 CT break. Flags are set on the bar before the fill bar (protocol.backtest_signals fills at the next bar's open). Trading day = Mon-Fri CT date that is not a US equity-market holiday (NYSE calendar incl. 2007-01-02, 2012-10-29/30) and has cash-session bars. For every month M: leg days = last trading day of M and the first three trading days of M+1. On each leg day enter long at the open of the 17:00 CT bar on the calendar day before the leg day (Sunday 17:00 for a Monday leg) and exit at the 15:08 bar of the leg day; each hold is one trade (4 per month).",
+   "n_scheduled": 621,
+   "n_entry_ok": 603,
+   "n_engine_trades": 603,
+   "n_dropped_exit_mismatch": 0,
+   "n": 603,
+   "trades_per_day": 0.17795268513353021,
+   "mean_net": 7.791310116086463,
+   "median_net": 43.719999999990904,
+   "std_net": 730.860072156451,
+   "t_stat": 0.261779063947446,
+   "ci95_low": -49.55611940298505,
+   "ci95_high": 64.0460779436156,
+   "win_rate": 0.5306799336650083,
+   "avg_win": 497.0481250000001,
+   "avg_loss": 545.4319434628972,
+   "sharpe_per_trade": 0.01066046759552439,
+   "sharpe_annual": 0.07138858888865494,
+   "total_net": 4698.160000000137,
+   "gross_mean": 24.071310116086448,
+   "max_drawdown": 13376.759999999958,
+   "by_year": {
+    "2005": 2275.0,
+    "2006": 326.2,
+    "2007": -1630.2,
+    "2008": -7385.2,
+    "2009": -505.2,
+    "2010": 7404.8,
+    "2011": 318.6,
+    "2012": 4602.4,
+    "2013": -605.2,
+    "2014": 94.8,
+    "2015": -2035.2,
+    "2016": -1761.4,
+    "2017": 3598.6
+   },
+   "n_by_year": {
+    "2005": 43,
+    "2006": 42,
+    "2007": 47,
+    "2008": 47,
+    "2009": 47,
+    "2010": 47,
+    "2011": 48,
+    "2012": 45,
+    "2013": 47,
+    "2014": 47,
+    "2015": 47,
+    "2016": 48,
+    "2017": 48
+   },
+   "reasons": {
+    "signal": 603
+   },
+   "exit_kinds": {
+    "regular": 589,
+    "early_close": 14
+   },
+   "entry_tod_ct": {
+    "17:00": 585,
+    "17:01": 11,
+    "17:02": 5,
+    "17:04": 2
+   },
+   "exit_tod_ct": {
+    "15:08": 504,
+    "15:09": 53,
+    "15:10": 16,
+    "12:14": 7,
+    "15:11": 5,
+    "15:13": 5
+   },
+   "entry_lag_min_mean": 0.04809286898839138,
+   "hold_minutes_median": 1328.0,
+   "n_long": 603,
+   "n_short": 0,
+   "by_leg": {
+    "T+1": {
+     "n": 143,
+     "mean_net": 61.76,
+     "t_stat": 0.86,
+     "win_rate": 0.587
+    },
+    "T+2": {
+     "n": 153,
+     "mean_net": 9.67,
+     "t_stat": 0.19,
+     "win_rate": 0.549
+    },
+    "T+3": {
+     "n": 155,
+     "mean_net": 14.43,
+     "t_stat": 0.25,
+     "win_rate": 0.568
+    },
+    "T-1": {
+     "n": 152,
+     "mean_net": -51.64,
+     "t_stat": -0.89,
+     "win_rate": 0.421
+    }
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 117,
+     "mean_net": -25.38,
+     "t_stat": -0.35
+    },
+    "Tue": {
+     "n": 131,
+     "mean_net": 43.76,
+     "t_stat": 0.64
+    },
+    "Wed": {
+     "n": 129,
+     "mean_net": 85.04,
+     "t_stat": 1.44
+    },
+    "Thu": {
+     "n": 101,
+     "mean_net": -16.48,
+     "t_stat": -0.24
+    },
+    "Fri": {
+     "n": 125,
+     "mean_net": -58.96,
+     "t_stat": -0.92
+    }
+   },
+   "dsr": 0.04656480087701343,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": false,
+    "pos_years": 7
+   },
+   "seconds": 2.1
+  },
+  {
+   "name": "V2_month_end_last_hour_long",
+   "variant": "V2",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn, one position at a time. Price proxy: Oanda index CFD 1-minute bars; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that CT calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade). Exit = open of the first bar in [15:08, 15:15] CT of the day; if none, on an early-close day (last pre-15:08 bar before 15:00 CT) the open of the last quoted bar before the halt, otherwise the open of the first bar inside the 15:10-17:00 CT break. Flags are set on the bar before the fill bar (protocol.backtest_signals fills at the next bar's open). Trading day = Mon-Fri CT date that is not a US equity-market holiday (NYSE calendar incl. 2007-01-02, 2012-10-29/30) and has cash-session bars. On the last trading day of each month: enter long at the open of the 14:00 CT bar; exit at the 15:08 bar.",
+   "n_scheduled": 156,
+   "n_entry_ok": 149,
+   "n_engine_trades": 149,
+   "n_dropped_exit_mismatch": 0,
+   "n": 149,
+   "trades_per_day": 0.0439717248505738,
+   "mean_net": -88.72966442952975,
+   "median_net": -66.28,
+   "std_net": 275.005293222807,
+   "t_stat": -3.9384099517929565,
+   "ci95_low": -131.88486577181177,
+   "ci95_high": -45.608020134227296,
+   "win_rate": 0.40268456375838924,
+   "avg_win": 158.30333333333257,
+   "avg_loss": 255.26876404494263,
+   "sharpe_per_trade": -0.3226471148598646,
+   "sharpe_annual": -1.0740260305154852,
+   "total_net": -13220.719999999932,
+   "gross_mean": -72.44966442952978,
+   "max_drawdown": 13833.59999999998,
+   "by_year": {
+    "2005": -890.4,
+    "2006": -595.4,
+    "2007": -1735.4,
+    "2008": -3074.1,
+    "2009": -1345.4,
+    "2010": -1420.4,
+    "2011": -550.4,
+    "2012": -574.1,
+    "2013": -2032.8,
+    "2014": -127.8,
+    "2015": -1384.1,
+    "2016": 1304.6,
+    "2017": -795.4
+   },
+   "n_by_year": {
+    "2005": 12,
+    "2006": 12,
+    "2007": 12,
+    "2008": 11,
+    "2009": 12,
+    "2010": 12,
+    "2011": 12,
+    "2012": 11,
+    "2013": 10,
+    "2014": 10,
+    "2015": 11,
+    "2016": 12,
+    "2017": 12
+   },
+   "reasons": {
+    "signal": 149
+   },
+   "exit_kinds": {
+    "regular": 149
+   },
+   "entry_tod_ct": {
+    "14:00": 145,
+    "14:01": 4
+   },
+   "exit_tod_ct": {
+    "15:08": 138,
+    "15:09": 8,
+    "15:10": 2,
+    "15:14": 1
+   },
+   "entry_lag_min_mean": 0.026845637583892617,
+   "hold_minutes_median": 68.0,
+   "n_long": 149,
+   "n_short": 0,
+   "by_leg": {
+    "T-1": {
+     "n": 149,
+     "mean_net": -88.73,
+     "t_stat": -3.94,
+     "win_rate": 0.403
+    }
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 22,
+     "mean_net": -84.69,
+     "t_stat": -1.61
+    },
+    "Tue": {
+     "n": 21,
+     "mean_net": -95.8,
+     "t_stat": -1.31
+    },
+    "Wed": {
+     "n": 21,
+     "mean_net": -45.33,
+     "t_stat": -0.69
+    },
+    "Thu": {
+     "n": 23,
+     "mean_net": -161.71,
+     "t_stat": -3.92
+    },
+    "Fri": {
+     "n": 62,
+     "mean_net": -75.39,
+     "t_stat": -2.11
+    }
+   },
+   "dsr": 5.5126024648621254e-09,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": false,
+    "t_ge_2.5": false,
+    "n_ge_150": false,
+    "pos_years_ge_8_of_13": false,
+    "pos_years": 1
+   },
+   "seconds": 1.6
+  },
+  {
+   "name": "V3_opex_friday_fade",
+   "variant": "V3",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn, one position at a time. Price proxy: Oanda index CFD 1-minute bars; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that CT calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade). Exit = open of the first bar in [15:08, 15:15] CT of the day; if none, on an early-close day (last pre-15:08 bar before 15:00 CT) the open of the last quoted bar before the halt, otherwise the open of the first bar inside the 15:10-17:00 CT break. Flags are set on the bar before the fill bar (protocol.backtest_signals fills at the next bar's open). Trading day = Mon-Fri CT date that is not a US equity-market holiday (NYSE calendar incl. 2007-01-02, 2012-10-29/30) and has cash-session bars. On the calendar third Friday of each month (15th-21st): at 14:00 CT compute ratio = (last traded price before 14:00:00 CT, i.e. the close of the 1-minute bar preceding the 14:00 bar) / open(08:30 bar) and enter side = -sign(ratio - 1) at the open of the 14:00 bar (ratio == 1 -> no trade); exit at the 15:08 bar.",
+   "n_scheduled": 156,
+   "n_entry_ok": 149,
+   "n_engine_trades": 149,
+   "n_dropped_exit_mismatch": 0,
+   "n_third_fridays_in_data": 154,
+   "n_not_trading_day": 0,
+   "n_missing_1400_or_0830_bar": 1,
+   "n_zero_signal": 4,
+   "n_sign_differs_from_literal_1400_open": 5,
+   "decision_bar_minute_ct": {
+    "13:54": 1,
+    "13:55": 1,
+    "13:58": 6,
+    "13:59": 141
+   },
+   "n": 149,
+   "trades_per_day": 0.0439717248505738,
+   "mean_net": -3.1256375838925274,
+   "median_net": -16.28,
+   "std_net": 298.5586710603126,
+   "t_stat": -0.12779152877025038,
+   "ci95_low": -47.18771812080464,
+   "ci95_high": 50.943993288590775,
+   "win_rate": 0.4429530201342282,
+   "avg_win": 183.11393939393918,
+   "avg_loss": 151.2197590361442,
+   "sharpe_per_trade": -0.010469089954051642,
+   "sharpe_annual": -0.034849451951068186,
+   "total_net": -465.7199999999866,
+   "gross_mean": 13.154362416107471,
+   "max_drawdown": 4818.679999999992,
+   "by_year": {
+    "2005": -315.4,
+    "2006": -409.1,
+    "2007": -399.1,
+    "2008": 4750.9,
+    "2009": 49.6,
+    "2010": -285.4,
+    "2011": -404.1,
+    "2012": -1145.4,
+    "2013": -845.4,
+    "2014": -319.1,
+    "2015": -689.1,
+    "2016": -375.4,
+    "2017": -79.1
+   },
+   "n_by_year": {
+    "2005": 12,
+    "2006": 11,
+    "2007": 11,
+    "2008": 11,
+    "2009": 12,
+    "2010": 12,
+    "2011": 11,
+    "2012": 12,
+    "2013": 12,
+    "2014": 11,
+    "2015": 11,
+    "2016": 12,
+    "2017": 11
+   },
+   "reasons": {
+    "signal": 149
+   },
+   "exit_kinds": {
+    "regular": 149
+   },
+   "entry_tod_ct": {
+    "14:00": 144,
+    "14:01": 4,
+    "14:04": 1
+   },
+   "exit_tod_ct": {
+    "15:08": 131,
+    "15:09": 11,
+    "15:10": 4,
+    "15:11": 2,
+    "15:12": 1
+   },
+   "entry_lag_min_mean": 0.053691275167785234,
+   "hold_minutes_median": 68.0,
+   "n_long": 95,
+   "n_short": 54,
+   "by_leg": {
+    "opex": {
+     "n": 149,
+     "mean_net": -3.13,
+     "t_stat": -0.13,
+     "win_rate": 0.443
+    }
+   },
+   "by_dow": {
+    "Fri": {
+     "n": 149,
+     "mean_net": -3.13,
+     "t_stat": -0.13
+    }
+   },
+   "by_side": {
+    "short": {
+     "n": 54,
+     "mean_net": -31.56,
+     "t_stat": -0.94
+    },
+    "long": {
+     "n": 95,
+     "mean_net": 13.04,
+     "t_stat": 0.39
+    }
+   },
+   "dsr": 0.019550966886768512,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": false,
+    "t_ge_2.5": false,
+    "n_ge_150": false,
+    "pos_years_ge_8_of_13": false,
+    "pos_years": 2
+   },
+   "seconds": 2.2
+  }
+ ],
+ "diagnostics": [
+  {
+   "name": "D1_NAS100_V1_turn_of_month_long",
+   "variant": "V1",
+   "symbol": "NQ",
+   "data": "NAS100",
+   "rule": "1 NQ contract ($20/pt), no stop/target, $8.78 per round turn, one position at a time. Price proxy: Oanda index CFD 1-minute bars; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that CT calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade). Exit = open of the first bar in [15:08, 15:15] CT of the day; if none, on an early-close day (last pre-15:08 bar before 15:00 CT) the open of the last quoted bar before the halt, otherwise the open of the first bar inside the 15:10-17:00 CT break. Flags are set on the bar before the fill bar (protocol.backtest_signals fills at the next bar's open). Trading day = Mon-Fri CT date that is not a US equity-market holiday (NYSE calendar incl. 2007-01-02, 2012-10-29/30) and has cash-session bars. For every month M: leg days = last trading day of M and the first three trading days of M+1. On each leg day enter long at the open of the 17:00 CT bar on the calendar day before the leg day (Sunday 17:00 for a Monday leg) and exit at the 15:08 bar of the leg day; each hold is one trade (4 per month).",
+   "n_scheduled": 621,
+   "n_entry_ok": 606,
+   "n_engine_trades": 606,
+   "n_dropped_exit_mismatch": 0,
+   "n": 606,
+   "trades_per_day": 0.17883799569628037,
+   "mean_net": 9.932871287128583,
+   "median_net": 19.220000000001818,
+   "std_net": 606.6182919526716,
+   "t_stat": 0.4030840541843187,
+   "ci95_low": -38.17331683168334,
+   "ci95_high": 56.36909240924067,
+   "win_rate": 0.523102310231023,
+   "avg_win": 423.24523659305964,
+   "avg_loss": 443.4235986159169,
+   "sharpe_per_trade": 0.016374170411438148,
+   "sharpe_annual": 0.1099232279757671,
+   "total_net": 6019.3199999999215,
+   "gross_mean": 18.712871287128564,
+   "max_drawdown": 9647.39999999999,
+   "by_year": {
+    "2005": 1011.7,
+    "2006": -580.8,
+    "2007": 321.3,
+    "2008": -6958.7,
+    "2009": 951.3,
+    "2010": 3954.6,
+    "2011": 2202.6,
+    "2012": 3874.1,
+    "2013": 2641.3,
+    "2014": 545.3,
+    "2015": -1466.7,
+    "2016": -4131.4,
+    "2017": 3654.6
+   },
+   "n_by_year": {
+    "2005": 44,
+    "2006": 42,
+    "2007": 47,
+    "2008": 47,
+    "2009": 47,
+    "2010": 48,
+    "2011": 48,
+    "2012": 46,
+    "2013": 47,
+    "2014": 47,
+    "2015": 47,
+    "2016": 48,
+    "2017": 48
+   },
+   "reasons": {
+    "signal": 606
+   },
+   "exit_kinds": {
+    "regular": 592,
+    "early_close": 14
+   },
+   "entry_tod_ct": {
+    "17:00": 571,
+    "17:01": 19,
+    "17:02": 8,
+    "17:04": 5,
+    "17:03": 3
+   },
+   "exit_tod_ct": {
+    "15:08": 569,
+    "15:09": 15,
+    "12:14": 7,
+    "15:10": 5,
+    "15:11": 2,
+    "12:00": 2
+   },
+   "entry_lag_min_mean": 0.10561056105610561,
+   "hold_minutes_median": 1328.0,
+   "n_long": 606,
+   "n_short": 0,
+   "by_leg": {
+    "T+1": {
+     "n": 143,
+     "mean_net": 48.58,
+     "t_stat": 0.85,
+     "win_rate": 0.552
+    },
+    "T+2": {
+     "n": 155,
+     "mean_net": 0.01,
+     "t_stat": 0.0,
+     "win_rate": 0.535
+    },
+    "T+3": {
+     "n": 154,
+     "mean_net": 37.05,
+     "t_stat": 0.79,
+     "win_rate": 0.571
+    },
+    "T-1": {
+     "n": 154,
+     "mean_net": -43.08,
+     "t_stat": -0.9,
+     "win_rate": 0.435
+    }
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 117,
+     "mean_net": -36.78,
+     "t_stat": -0.63
+    },
+    "Tue": {
+     "n": 132,
+     "mean_net": 53.98,
+     "t_stat": 0.97
+    },
+    "Wed": {
+     "n": 128,
+     "mean_net": 75.49,
+     "t_stat": 1.53
+    },
+    "Thu": {
+     "n": 102,
+     "mean_net": -7.05,
+     "t_stat": -0.12
+    },
+    "Fri": {
+     "n": 127,
+     "mean_net": -45.24,
+     "t_stat": -0.83
+    }
+   },
+   "dsr": 0.06203918210705132,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": true,
+    "pos_years": 9
+   },
+   "seconds": 1.5,
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: NAS100 CFD twin of the pre-registered variant with NQ contract spec; not nominable"
+  },
+  {
+   "name": "D1_NAS100_V2_month_end_last_hour_long",
+   "variant": "V2",
+   "symbol": "NQ",
+   "data": "NAS100",
+   "rule": "1 NQ contract ($20/pt), no stop/target, $8.78 per round turn, one position at a time. Price proxy: Oanda index CFD 1-minute bars; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that CT calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade). Exit = open of the first bar in [15:08, 15:15] CT of the day; if none, on an early-close day (last pre-15:08 bar before 15:00 CT) the open of the last quoted bar before the halt, otherwise the open of the first bar inside the 15:10-17:00 CT break. Flags are set on the bar before the fill bar (protocol.backtest_signals fills at the next bar's open). Trading day = Mon-Fri CT date that is not a US equity-market holiday (NYSE calendar incl. 2007-01-02, 2012-10-29/30) and has cash-session bars. On the last trading day of each month: enter long at the open of the 14:00 CT bar; exit at the 15:08 bar.",
+   "n_scheduled": 156,
+   "n_entry_ok": 149,
+   "n_engine_trades": 149,
+   "n_dropped_exit_mismatch": 0,
+   "n": 149,
+   "trades_per_day": 0.043971718413771906,
+   "mean_net": -43.12899328859085,
+   "median_net": -8.78,
+   "std_net": 214.67218648676103,
+   "t_stat": -2.4523738442485965,
+   "ci95_low": -77.4279865771819,
+   "ci95_high": -10.009865771811855,
+   "win_rate": 0.4563758389261745,
+   "avg_win": 126.74941176470577,
+   "avg_loss": 185.74296296296336,
+   "sharpe_per_trade": -0.200906293425444,
+   "sharpe_annual": -0.6687757711196358,
+   "total_net": -6426.220000000037,
+   "gross_mean": -34.34899328859086,
+   "max_drawdown": 8045.700000000033,
+   "by_year": {
+    "2005": -489.4,
+    "2006": -685.4,
+    "2007": -685.4,
+    "2008": -1952.6,
+    "2009": -867.4,
+    "2010": -639.4,
+    "2011": -1.4,
+    "2012": -662.6,
+    "2013": -1163.8,
+    "2014": 370.2,
+    "2015": -986.6,
+    "2016": 1332.6,
+    "2017": 4.6
+   },
+   "n_by_year": {
+    "2005": 12,
+    "2006": 12,
+    "2007": 12,
+    "2008": 11,
+    "2009": 12,
+    "2010": 12,
+    "2011": 12,
+    "2012": 11,
+    "2013": 10,
+    "2014": 10,
+    "2015": 11,
+    "2016": 12,
+    "2017": 12
+   },
+   "reasons": {
+    "signal": 149
+   },
+   "exit_kinds": {
+    "regular": 149
+   },
+   "entry_tod_ct": {
+    "14:00": 149
+   },
+   "exit_tod_ct": {
+    "15:08": 146,
+    "15:09": 2,
+    "15:10": 1
+   },
+   "entry_lag_min_mean": 0.0,
+   "hold_minutes_median": 68.0,
+   "n_long": 149,
+   "n_short": 0,
+   "by_leg": {
+    "T-1": {
+     "n": 149,
+     "mean_net": -43.13,
+     "t_stat": -2.45,
+     "win_rate": 0.456
+    }
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 22,
+     "mean_net": -38.69,
+     "t_stat": -1.02
+    },
+    "Tue": {
+     "n": 21,
+     "mean_net": -45.54,
+     "t_stat": -0.74
+    },
+    "Wed": {
+     "n": 21,
+     "mean_net": 5.6,
+     "t_stat": 0.11
+    },
+    "Thu": {
+     "n": 23,
+     "mean_net": -82.87,
+     "t_stat": -2.74
+    },
+    "Fri": {
+     "n": 62,
+     "mean_net": -45.65,
+     "t_stat": -1.62
+    }
+   },
+   "dsr": 7.241817250023655e-06,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": false,
+    "t_ge_2.5": false,
+    "n_ge_150": false,
+    "pos_years_ge_8_of_13": false,
+    "pos_years": 3
+   },
+   "seconds": 1.5,
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: NAS100 CFD twin of the pre-registered variant with NQ contract spec; not nominable"
+  },
+  {
+   "name": "D1_NAS100_V3_opex_friday_fade",
+   "variant": "V3",
+   "symbol": "NQ",
+   "data": "NAS100",
+   "rule": "1 NQ contract ($20/pt), no stop/target, $8.78 per round turn, one position at a time. Price proxy: Oanda index CFD 1-minute bars; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that CT calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade). Exit = open of the first bar in [15:08, 15:15] CT of the day; if none, on an early-close day (last pre-15:08 bar before 15:00 CT) the open of the last quoted bar before the halt, otherwise the open of the first bar inside the 15:10-17:00 CT break. Flags are set on the bar before the fill bar (protocol.backtest_signals fills at the next bar's open). Trading day = Mon-Fri CT date that is not a US equity-market holiday (NYSE calendar incl. 2007-01-02, 2012-10-29/30) and has cash-session bars. On the calendar third Friday of each month (15th-21st): at 14:00 CT compute ratio = (last traded price before 14:00:00 CT, i.e. the close of the 1-minute bar preceding the 14:00 bar) / open(08:30 bar) and enter side = -sign(ratio - 1) at the open of the 14:00 bar (ratio == 1 -> no trade); exit at the 15:08 bar.",
+   "n_scheduled": 156,
+   "n_entry_ok": 154,
+   "n_engine_trades": 154,
+   "n_dropped_exit_mismatch": 0,
+   "n_third_fridays_in_data": 154,
+   "n_not_trading_day": 0,
+   "n_missing_1400_or_0830_bar": 0,
+   "n_zero_signal": 0,
+   "n_sign_differs_from_literal_1400_open": 2,
+   "decision_bar_minute_ct": {
+    "13:58": 3,
+    "13:59": 151
+   },
+   "n": 154,
+   "trades_per_day": 0.04544727943436828,
+   "mean_net": -12.572207792208339,
+   "median_net": -36.779999999999546,
+   "std_net": 189.02697789008104,
+   "t_stat": -0.8253689364997012,
+   "ci95_low": -42.21409090909133,
+   "ci95_high": 17.76935064935039,
+   "win_rate": 0.42207792207792205,
+   "avg_win": 127.95846153846091,
+   "avg_loss": 115.20696629213532,
+   "sharpe_per_trade": -0.06651012428246651,
+   "sharpe_annual": -0.22508262688428293,
+   "total_net": -1936.120000000084,
+   "gross_mean": -3.7922077922083446,
+   "max_drawdown": 3205.560000000084,
+   "by_year": {
+    "2005": -307.4,
+    "2006": -671.4,
+    "2007": -49.4,
+    "2008": 2099.4,
+    "2009": -259.4,
+    "2010": -435.4,
+    "2011": -217.4,
+    "2012": -1397.4,
+    "2013": 340.6,
+    "2014": -2.6,
+    "2015": -515.4,
+    "2016": -273.4,
+    "2017": -247.4
+   },
+   "n_by_year": {
+    "2005": 12,
+    "2006": 12,
+    "2007": 12,
+    "2008": 11,
+    "2009": 12,
+    "2010": 12,
+    "2011": 12,
+    "2012": 12,
+    "2013": 12,
+    "2014": 11,
+    "2015": 12,
+    "2016": 12,
+    "2017": 12
+   },
+   "reasons": {
+    "signal": 154
+   },
+   "exit_kinds": {
+    "regular": 154
+   },
+   "entry_tod_ct": {
+    "14:00": 153,
+    "14:01": 1
+   },
+   "exit_tod_ct": {
+    "15:08": 151,
+    "15:09": 2,
+    "15:11": 1
+   },
+   "entry_lag_min_mean": 0.006493506493506494,
+   "hold_minutes_median": 68.0,
+   "n_long": 93,
+   "n_short": 61,
+   "by_leg": {
+    "opex": {
+     "n": 154,
+     "mean_net": -12.57,
+     "t_stat": -0.83,
+     "win_rate": 0.422
+    }
+   },
+   "by_dow": {
+    "Fri": {
+     "n": 154,
+     "mean_net": -12.57,
+     "t_stat": -0.83
+    }
+   },
+   "by_side": {
+    "short": {
+     "n": 61,
+     "mean_net": -22.88,
+     "t_stat": -1.18
+    },
+    "long": {
+     "n": 93,
+     "mean_net": -5.81,
+     "t_stat": -0.27
+    }
+   },
+   "dsr": 0.002928706262147443,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": false,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": false,
+    "pos_years": 2
+   },
+   "seconds": 2.3,
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: NAS100 CFD twin of the pre-registered variant with NQ contract spec; not nominable"
+  },
+  {
+   "name": "D2a_V1_overnight_only",
+   "variant": "V1",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn, one position at a time. Price proxy: Oanda index CFD 1-minute bars; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that CT calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade). Exit = open of the first bar in [15:08, 15:15] CT of the day; if none, on an early-close day (last pre-15:08 bar before 15:00 CT) the open of the last quoted bar before the halt, otherwise the open of the first bar inside the 15:10-17:00 CT break. Flags are set on the bar before the fill bar (protocol.backtest_signals fills at the next bar's open). Trading day = Mon-Fri CT date that is not a US equity-market holiday (NYSE calendar incl. 2007-01-02, 2012-10-29/30) and has cash-session bars. For every month M: leg days = last trading day of M and the first three trading days of M+1. On each leg day DIAGNOSTIC D2a: enter long at the 17:00 CT bar on the calendar day before the leg day, exit at the open of the 08:30 CT bar of the leg day (within 5 minutes, else the leg is skipped); each hold is one trade (4 per month).",
+   "n_scheduled": 621,
+   "n_entry_ok": 603,
+   "n_engine_trades": 603,
+   "n_dropped_exit_mismatch": 0,
+   "n": 603,
+   "trades_per_day": 0.17795268513353021,
+   "mean_net": 5.4695854063019125,
+   "median_net": -1.2800000000022749,
+   "std_net": 402.8144944296136,
+   "t_stat": 0.33343253546420853,
+   "ci95_low": -26.169510779436163,
+   "ci95_high": 38.20403814262031,
+   "win_rate": 0.49917081260364843,
+   "avg_win": 287.5073754152824,
+   "avg_loss": 275.63430463576145,
+   "sharpe_per_trade": 0.013578422529325465,
+   "sharpe_annual": 0.09092888421793319,
+   "total_net": 3298.160000000053,
+   "gross_mean": 21.7495854063019,
+   "max_drawdown": 10351.32000000009,
+   "by_year": {
+    "2005": 570.0,
+    "2006": -1778.8,
+    "2007": -695.2,
+    "2008": -4720.2,
+    "2009": 1189.8,
+    "2010": 3449.8,
+    "2011": 878.6,
+    "2012": 4247.4,
+    "2013": -1415.2,
+    "2014": 1699.8,
+    "2015": 489.8,
+    "2016": -6396.4,
+    "2017": 5778.6
+   },
+   "n_by_year": {
+    "2005": 43,
+    "2006": 42,
+    "2007": 47,
+    "2008": 47,
+    "2009": 47,
+    "2010": 47,
+    "2011": 48,
+    "2012": 45,
+    "2013": 47,
+    "2014": 47,
+    "2015": 47,
+    "2016": 48,
+    "2017": 48
+   },
+   "reasons": {
+    "signal": 603
+   },
+   "exit_kinds": {
+    "regular": 603
+   },
+   "entry_tod_ct": {
+    "17:00": 585,
+    "17:01": 11,
+    "17:02": 5,
+    "17:04": 2
+   },
+   "exit_tod_ct": {
+    "08:30": 603
+   },
+   "entry_lag_min_mean": 0.04809286898839138,
+   "hold_minutes_median": 930.0,
+   "n_long": 603,
+   "n_short": 0,
+   "by_leg": {
+    "T+1": {
+     "n": 143,
+     "mean_net": 16.03,
+     "t_stat": 0.43,
+     "win_rate": 0.587
+    },
+    "T+2": {
+     "n": 153,
+     "mean_net": -31.05,
+     "t_stat": -1.08,
+     "win_rate": 0.484
+    },
+    "T+3": {
+     "n": 155,
+     "mean_net": 4.78,
+     "t_stat": 0.15,
+     "win_rate": 0.445
+    },
+    "T-1": {
+     "n": 152,
+     "mean_net": 33.0,
+     "t_stat": 1.01,
+     "win_rate": 0.487
+    }
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 117,
+     "mean_net": -5.64,
+     "t_stat": -0.16
+    },
+    "Tue": {
+     "n": 131,
+     "mean_net": -7.96,
+     "t_stat": -0.21
+    },
+    "Wed": {
+     "n": 129,
+     "mean_net": 35.74,
+     "t_stat": 0.97
+    },
+    "Thu": {
+     "n": 101,
+     "mean_net": -7.22,
+     "t_stat": -0.24
+    },
+    "Fri": {
+     "n": 125,
+     "mean_net": 8.96,
+     "t_stat": 0.23
+    }
+   },
+   "dsr": 0.05397294097307376,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": true,
+    "pos_years": 8
+   },
+   "seconds": 1.6,
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: decomposition of V1's holds into overnight / day legs (each its own round turn); not nominable"
+  },
+  {
+   "name": "D2b_V1_day_only",
+   "variant": "V1",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn, one position at a time. Price proxy: Oanda index CFD 1-minute bars; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that CT calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade). Exit = open of the first bar in [15:08, 15:15] CT of the day; if none, on an early-close day (last pre-15:08 bar before 15:00 CT) the open of the last quoted bar before the halt, otherwise the open of the first bar inside the 15:10-17:00 CT break. Flags are set on the bar before the fill bar (protocol.backtest_signals fills at the next bar's open). Trading day = Mon-Fri CT date that is not a US equity-market holiday (NYSE calendar incl. 2007-01-02, 2012-10-29/30) and has cash-session bars. For every month M: leg days = last trading day of M and the first three trading days of M+1. On each leg day DIAGNOSTIC D2b: enter long at the 08:30 CT bar of the leg day (within 5 minutes), exit at the 15:08 bar; each hold is one trade (4 per month).",
+   "n_scheduled": 621,
+   "n_entry_ok": 621,
+   "n_engine_trades": 621,
+   "n_dropped_exit_mismatch": 0,
+   "n": 621,
+   "trades_per_day": 0.18326470558527738,
+   "mean_net": -16.02235104669872,
+   "median_net": 13.72000000000682,
+   "std_net": 559.8926434769658,
+   "t_stat": -0.7131276598923563,
+   "ci95_low": -60.967801932366754,
+   "ci95_high": 28.772334943639624,
+   "win_rate": 0.5136876006441223,
+   "avg_win": 377.23097178683383,
+   "avg_loss": 431.4124503311255,
+   "sharpe_per_trade": -0.028616827231733196,
+   "sharpe_annual": -0.19447383060168766,
+   "total_net": -9949.879999999905,
+   "gross_mean": 0.25764895330125753,
+   "max_drawdown": 14992.23999999982,
+   "by_year": {
+    "2005": 117.4,
+    "2006": 873.6,
+    "2007": -1861.4,
+    "2008": -4366.4,
+    "2009": -1221.4,
+    "2010": 3823.6,
+    "2011": -1341.4,
+    "2012": -1041.4,
+    "2013": 498.6,
+    "2014": -2896.4,
+    "2015": -3426.4,
+    "2016": 3853.6,
+    "2017": -2961.4
+   },
+   "n_by_year": {
+    "2005": 45,
+    "2006": 48,
+    "2007": 48,
+    "2008": 48,
+    "2009": 48,
+    "2010": 48,
+    "2011": 48,
+    "2012": 48,
+    "2013": 48,
+    "2014": 48,
+    "2015": 48,
+    "2016": 48,
+    "2017": 48
+   },
+   "reasons": {
+    "signal": 621
+   },
+   "exit_kinds": {
+    "regular": 607,
+    "early_close": 14
+   },
+   "entry_tod_ct": {
+    "08:30": 621
+   },
+   "exit_tod_ct": {
+    "15:08": 521,
+    "15:09": 54,
+    "15:10": 16,
+    "12:14": 7,
+    "15:11": 5,
+    "15:13": 5
+   },
+   "entry_lag_min_mean": 0.0,
+   "hold_minutes_median": 398.0,
+   "n_long": 621,
+   "n_short": 0,
+   "by_leg": {
+    "T+1": {
+     "n": 155,
+     "mean_net": 23.72,
+     "t_stat": 0.46,
+     "win_rate": 0.535
+    },
+    "T+2": {
+     "n": 155,
+     "mean_net": 17.85,
+     "t_stat": 0.42,
+     "win_rate": 0.548
+    },
+    "T+3": {
+     "n": 155,
+     "mean_net": -6.63,
+     "t_stat": -0.15,
+     "win_rate": 0.581
+    },
+    "T-1": {
+     "n": 156,
+     "mean_net": -98.49,
+     "t_stat": -2.4,
+     "win_rate": 0.391
+    }
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 118,
+     "mean_net": -40.26,
+     "t_stat": -0.76
+    },
+    "Tue": {
+     "n": 135,
+     "mean_net": 26.2,
+     "t_stat": 0.53
+    },
+    "Wed": {
+     "n": 136,
+     "mean_net": 21.66,
+     "t_stat": 0.48
+    },
+    "Thu": {
+     "n": 103,
+     "mean_net": -30.65,
+     "t_stat": -0.57
+    },
+    "Fri": {
+     "n": 129,
+     "mean_net": -66.09,
+     "t_stat": -1.29
+    }
+   },
+   "dsr": 0.003991574127497489,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": false,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": false,
+    "pos_years": 5
+   },
+   "seconds": 1.7,
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: decomposition of V1's holds into overnight / day legs (each its own round turn); not nominable"
+  }
+ ],
+ "survivors": []
+}

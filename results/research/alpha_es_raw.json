@@ -1,0 +1,372 @@
+{
+ "hyps": [
+  {
+   "family": "intraday_momentum",
+   "script_path": "/home/user/j/research/hyp/es_intraday_momentum.py",
+   "n_variants_tried": 5,
+   "variants": [
+    {
+     "name": "V1_first30_last30_sign",
+     "rule": "r1=open(09:00 CT)/open(08:30 CT)-1; at the 14:30 bar enter side=sign(r1) (fill = open of first 1m bar in [14:30,14:35), decision on the last bar before 14:30); exit at the open of the first 1m bar at/after 15:08 CT (forced flat 15:10 otherwise); ES $50/pt, $16.28 RT",
+     "n": 3127,
+     "mean_net": -15.87,
+     "t_stat": -3.87,
+     "win_rate": 0.46,
+     "avg_win": 144.4,
+     "avg_loss": 152.5,
+     "sharpe_per_trade": -0.069,
+     "dsr": 0,
+     "trades_per_day": 0.923,
+     "by_year": "2005:-1811,2006:-5323,2007:+1227,2008:-10617,2009:-1421,2010:-584,2011:-3602,2012:+970,2013:-2486,2014:-8401,2015:-6830,2016:-5446,2017:-5293"
+    },
+    {
+     "name": "V2_first30_last30_z1",
+     "rule": "as V1 but only if |r1| >= 1 x std(r1 over the 60 trading days strictly before the decision day, ddof=1, full 60-day window required); z = r1/std (no mean subtraction)",
+     "n": 947,
+     "mean_net": -19.66,
+     "t_stat": -2.41,
+     "win_rate": 0.458,
+     "avg_win": 157.8,
+     "avg_loss": 169.8,
+     "sharpe_per_trade": -0.078,
+     "dsr": 0,
+     "trades_per_day": 0.279,
+     "by_year": "2005:+751,2006:-887,2007:-2000,2008:-6124,2009:-794,2010:-2016,2011:-1891,2012:+3280,2013:+2094,2014:-3146,2015:-4065,2016:-1165,2017:-2658"
+    },
+    {
+     "name": "V3_twelfth_last30_sign",
+     "rule": "r12=P(14:30-)/open(14:00 CT)-1 where P(14:30-) = close of the last 1m bar before 14:30:00 CT (the price seen when the 14:30 bar opens; no bar-(i+1) info in the bar-i signal); at 14:30 enter side=sign(r12); exit at the 15:08 bar open",
+     "n": 3083,
+     "mean_net": -16.27,
+     "t_stat": -3.92,
+     "win_rate": 0.444,
+     "avg_win": 150.6,
+     "avg_loss": 149.4,
+     "sharpe_per_trade": -0.071,
+     "dsr": 0,
+     "trades_per_day": 0.91,
+     "by_year": "2005:-3068,2006:-3518,2007:-4061,2008:+3943,2009:-4617,2010:-4338,2011:-5790,2012:-4231,2013:-5172,2014:-9426,2015:-46,2016:-5720,2017:-4102"
+    },
+    {
+     "name": "V4_both_agree",
+     "rule": "at 14:30 enter only if sign(r1)==sign(r12) and both non-zero, with that side; exit at the 15:08 bar open; r1, r12 as in V1/V3",
+     "n": 1522,
+     "mean_net": -15.25,
+     "t_stat": -2.49,
+     "win_rate": 0.456,
+     "avg_win": 152.4,
+     "avg_loss": 155.7,
+     "sharpe_per_trade": -0.064,
+     "dsr": 0,
+     "trades_per_day": 0.449,
+     "by_year": "2005:-25,2006:-2312,2007:+395,2008:-1389,2009:-1054,2010:-633,2011:-2426,2012:+563,2013:-2257,2014:-6501,2015:-1379,2016:-3838,2017:-2348"
+    },
+    {
+     "name": "V5_first60_last30_sign",
+     "rule": "r60=open(09:30 CT)/open(08:30 CT)-1; at 14:30 enter side=sign(r60); exit at the 15:08 bar open",
+     "n": 3158,
+     "mean_net": -8.74,
+     "t_stat": -2.15,
+     "win_rate": 0.46,
+     "avg_win": 151.2,
+     "avg_loss": 144.9,
+     "sharpe_per_trade": -0.038,
+     "dsr": 0,
+     "trades_per_day": 0.932,
+     "by_year": "2005:-2826,2006:-3797,2007:+544,2008:+2776,2009:-5180,2010:+451,2011:-1247,2012:+1319,2013:-2425,2014:-4615,2015:-1622,2016:-4775,2017:-6196"
+    }
+   ],
+   "survivors": [],
+   "notes": "NULL RESULT: none of the 5 pre-registered variants qualifies (bar: mean_net>0, t>=2.5, n>=150, >=8/13 positive years). All five are negative net of costs with t between -2.15 and -3.92 and at most 4/13 positive years. Gross (pre-cost) means are ~$0 per ES contract: V1 +0.41, V2 -3.38, V3 +0.01, V4 +1.03, V5 +7.54; the negative net is the $16.28 round-turn cost on a signal with essentially no gross edge, i.e. no momentum and no exploitable reversal either. Implementation: protocol.backtest_signals on the 1-minute SPX500 CFD grid (ES costs/multiplier) because the 5-min grid has no 15:08 bar; 'open(HH:MM)' = open of the first 1m bar in [HH:MM, HH:MM+5) (= the 5-min bar open); decision bar = last 1m bar before 14:30 (must be in [14:25,14:30)), fill = open of the next bar which must be the first bar in [14:30,14:35) same CT date; exit flagged on the last bar before 15:08 so it fills at the open of the first bar at/after 15:08 (2707 of 3127 V1 exits at 15:08, 259 at 15:09, the rest 15:10-15:14 via the break); trades whose exit bar fell after 15:15 CT (no bar in the 15:10-17:00 break, engine would carry to 17:00) were dropped as missing-bar=no-trade: 1 trade each in V1/V3/V5, 0 in V2/V4. For r12 the 14:30 price is the close of the decision bar (last trade before 14:30:00) so the signal uses no bar-(i+1) information. Verification: spot-checked trade 2009-03-18 against raw bars (short at 790.3, out at 794.8, gross -225) and all entries are in the 14:30 bar; direct correlation of the realised 14:30->15:08 return with r1 is rho=-0.051 (t=-2.9, opposite to GHLZ), with r12 rho=+0.133 (t=+7.6) but sign agreement only 47.6% and mean sign*return +0.04 pts, so the r12 linear relation lives in the tails (2008 is V3's only positive year) and a sign rule captures none of it; r60 rho=+0.01. Two labelled post-hoc diagnostics (not nominable): D1 NAS100 twin of V1 with NQ costs: n=3193, mean_net -11.60, t=-3.79, 2/13 positive years (same null). D2 V3 timing-convention check using the literal open(14:30) as the signal price with fill at the next 1m bar open: n=3070, mean_net -16.72, t=-4.04, 2/13 positive years (result insensitive to the convention). Z for V2 uses rolling(60, min_periods=60).std().shift(1) on the daily r1 series. Full results JSON (all stats incl. bootstrap CIs, by_year, n_by_year, exit-minute distributions, long/short counts): /home/user/j/research/hyp/es_intraday_momentum_results.json. Data: 3,311,533 1m bars 2005-01-02..2017-12-29 UTC, 3,234 days with a valid 14:30 fill. DSR values are ~0 because every per-trade Sharpe is negative."
+  },
+  {
+   "family": "overnight_drift",
+   "script_path": "/home/user/j/research/hyp/es_overnight_drift.py",
+   "n_variants_tried": 4,
+   "variants": [
+    {
+     "name": "V1_long_overnight_all",
+     "rule": "ES 1 contract, no stop/target, $16.28 RT. Oanda SPX500 CFD 1-min bars; 'the HH:MM bar' = first 1-min bar with open time >= HH:MM CT that calendar date (entry needs it within 5 min, else no trade; exit fills at the first bar >= the instant; 15:10 CT forced flat / early-close rule as backstop). Enter long at the open of the 17:00 CT bar Sun-Thu; exit at the open of the 08:30 CT bar next calendar day.",
+     "n": 3285,
+     "trades_per_day": 0.9694,
+     "mean_net": 1.7672,
+     "t_stat": 0.2417,
+     "win_rate": 0.5151,
+     "avg_win": 269.11,
+     "avg_loss": 282.19,
+     "sharpe_per_trade": 0.0042,
+     "dsr": 0.0445,
+     "by_year": "2005:+2418 2006:-733 2007:+4786 2008:-15118 2009:-658 2010:+261 2011:+4446 2012:-1144 2013:+5674 2014:+4952 2015:-1285 2016:-9080 2017:+11286 (pos 7/13)"
+    },
+    {
+     "name": "V2_long_overnight_after_down_day",
+     "rule": "As V1, but only on Mon-Thu dates d where r_cash = open(15:08 CT bar of d)/open(08:30 CT bar of d) - 1 < 0 (both bars must exist within 5 min; both known at 16:59 CT). Sunday has no same-calendar-day cash session so never enters (literal pre-registered text). Exit at the open of the 08:30 CT bar of d+1.",
+     "n": 1136,
+     "trades_per_day": 0.3352,
+     "mean_net": 9.2878,
+     "t_stat": 0.7442,
+     "win_rate": 0.5396,
+     "avg_win": 280.16,
+     "avg_loss": 308.19,
+     "sharpe_per_trade": 0.0221,
+     "dsr": 0.1156,
+     "by_year": "2005:+3996 2006:+178 2007:+5067 2008:-6769 2009:+2089 2010:+1391 2011:-2250 2012:+1215 2013:+3101 2014:-5146 2015:-2475 2016:+2834 2017:+7321 (pos 9/13)"
+    },
+    {
+     "name": "V3_long_overnight_to_0900",
+     "rule": "As V1 (long at the open of the 17:00 CT bar Sun-Thu) but exit at the open of the 09:00 CT bar of the next calendar day.",
+     "n": 3285,
+     "trades_per_day": 0.9694,
+     "mean_net": 0.5221,
+     "t_stat": 0.0671,
+     "win_rate": 0.5221,
+     "avg_win": 295.47,
+     "avg_loss": 321.67,
+     "sharpe_per_trade": 0.0012,
+     "dsr": 0.0304,
+     "by_year": "2005:+3668 2006:+877 2007:+3171 2008:-19693 2009:-1578 2010:-424 2011:+2316 2012:-1269 2013:+10169 2014:+10362 2015:-6455 2016:-9055 2017:+9626 (pos 7/13)"
+    },
+    {
+     "name": "V4_short_intraday",
+     "rule": "ES 1 contract, no stop/target, $16.28 RT, same bar conventions. Enter short at the open of the 09:00 CT bar Mon-Fri; exit at the open of the 15:08 CT bar the same day (first bar >= 15:08; protocol forced flat at the first bar >= 15:10 CT when 15:08-15:10 had no quotes; holiday early closes exit at the last quoted bar).",
+     "n": 3346,
+     "trades_per_day": 0.9874,
+     "mean_net": -28.7591,
+     "t_stat": -3.0445,
+     "win_rate": 0.431,
+     "avg_win": 408.63,
+     "avg_loss": 360.01,
+     "sharpe_per_trade": -0.0526,
+     "dsr": 0,
+     "by_year": "2005:+1511 2006:-6249 2007:+541 2008:+2214 2009:-13255 2010:-9900 2011:-5340 2012:-9838 2013:-11175 2014:-1731 2015:-8470 2016:-20270 2017:-14264 (pos 3/13)"
+    }
+   ],
+   "survivors": [],
+   "notes": "NULL RESULT: none of the 4 pre-registered variants clears the survivor bar (mean_net>0, t>=2.5, n>=150, >=8/13 positive years). Best is V2 (t=0.74, 9/13 positive years, DSR 0.12). Economics: the 17:00->08:30 CT overnight return on the SPX500 CFD proxy is positive but tiny, gross +$18.0/night (0.36 ES pt, V1) and +$25.6 (V2), which the $16.28 round turn consumes; the 09:00->15:08 CT day session was itself POSITIVE on average 2005-2017 (long gross +$12.5/day), so the short-intraday leg V4 loses reliably (t=-3.0, 3/13 positive years, total -$96k per contract). The anomaly's premise (day session flat/negative) does not hold in this proxy at these session boundaries. Implementation (fixed before looking at P&L): 1-minute execution grid because the pre-registered 15:08 CT bar does not exist on a 5-min grid; Oanda bars exist only when the quote changed, so 'the HH:MM bar' = first 1-min bar with open >= HH:MM CT on that date; entries require it within 5 min (3285/3390 scheduled evenings, 3346/3390 mornings) else no trade; exits fill at the first bar >= the instant, mean entry lag 0.08 min; all fills via protocol.backtest_signals (reason 'signal' for all trades), sym='ES' ($50/pt, $16.28 RT). The CFD follows ES hours (15:15-15:30 CT halt to 2015, 16:00-17:00 break from 2016) and has NO bars during exchange early closes (Good Friday 08:15 CT, holidays 10:30/12:15 CT), where the protocol's 15:10 forced flat cannot fire; without a fix 4 V1 trades rode the weekend. Added rule: if the bar after bar i opens at/after the market's next reopen instant (17:00 CT Mon-Thu, Sun 17:00 after Fri), close at the open of bar i (last quoted bar) \u2014 this affected 5 V1, 6 V3, 87 V4 trades (all exchange holidays/early closes; dates verified). Exits at the first bar inside the 15:10-17:00 break (15:11-15:14, 187 V4 trades, when 15:08-15:10 had no quote change) are the protocol's own forced-flat semantics and kept. Post-check: 0 trades survive past a reopen in any variant. V2 Sunday handling: literal pre-registered text (same calendar day) excludes Sunday entries. Breakdown by weekday (same trades, not new variants) in the JSON: V1 Mon +$9.3, Tue -$3.9, Wed +$3.6, Thu -$5.4, Sun +$5.2 per trade; V4 losses are concentrated Tue/Thu. DIAGNOSTICS (post-hoc, not nominable): D1 NAS100 twin with NQ spec ($20/pt, $8.78 RT): V1 n=3273 mean +$12.26 t=2.11 DSR 0.57 11/13 positive years; V2 n=1134 mean +$15.12 t=1.52; V3 n=3273 +$12.21 t=1.86; V4 n=3343 -$17.43 t=-2.22 \u2014 the overnight premium is relatively larger and costs smaller in NQ, but still below t=2.5. D2 V2 with Sunday entries conditioned on Friday's cash session: n=1435 mean +$7.03 t=0.62 (Sunday subset -$1.5), i.e. the alternative reading does not help. Deflated Sharpe computed with N=22. Results JSON: /home/user/j/research/hyp/es_overnight_drift_results.json; run log: /tmp/claude-0/-home-user-j/d4e59bbd-7fc8-5231-bb28-07880c32ca90/scratchpad/es_overnight_drift_run.log. Only data_research/IS was read (2005-01-02 .. 2017-12-29)."
+  },
+  {
+   "family": "orb_continuation",
+   "script_path": "/home/user/j/research/hyp/es_orb_continuation.py",
+   "n_variants_tried": 4,
+   "variants": [
+    {
+     "name": "V1_us_orb30_all",
+     "rule": "range=[08:30,09:00) CT 5-min high/low; from 09:00 enter at open of bar after first 5-min close > range high (long) / < range low (short); stop=opposite side of range (bar high/low); exit 15:08 CT; one trade/day",
+     "n": 3206,
+     "mean_net": -21.29,
+     "t_stat": -2.72,
+     "win_rate": 0.4148,
+     "avg_win": 371.74,
+     "avg_loss": 299.93,
+     "sharpe_per_trade": -0.0481,
+     "dsr": 0,
+     "trades_per_day": 0.9461,
+     "by_year": "2005:-5461,2006:-1077,2007:-12506,2008:+14526,2009:-6402,2010:-914,2011:-6016,2012:-2736,2013:-10216,2014:-10656,2015:-11897,2016:-8375,2017:-6512 (pos_years 1/13; CI95 -37.0..-5.6; gross mean -5.01; exits flat 1835 / stop 1371; long 1649 / short 1557)"
+    },
+    {
+     "name": "V2_us_orb30_wide",
+     "rule": "V1 only on days with (range high-low)/open(08:30) >= median width of the 60 prior valid-range days (strictly prior, 60 obs required)",
+     "n": 1525,
+     "mean_net": -14.01,
+     "t_stat": -1.02,
+     "win_rate": 0.442,
+     "avg_win": 440.27,
+     "avg_loss": 373.81,
+     "sharpe_per_trade": -0.0261,
+     "dsr": 0.0015,
+     "trades_per_day": 0.45,
+     "by_year": "2005:-2446,2006:+3094,2007:-9745,2008:+11477,2009:+245,2010:+2334,2011:-3879,2012:+1234,2013:-2158,2014:-6553,2015:-8480,2016:-4501,2017:-1988 (pos_years 5/13; CI95 -41.7..+13.7; gross mean +2.27; exits flat 968 / stop 557)"
+    },
+    {
+     "name": "V3_us_orb60_all",
+     "rule": "as V1 with range=[08:30,09:30) CT (twelve 5-min bars) and entries from 09:30 CT",
+     "n": 3096,
+     "mean_net": -14.68,
+     "t_stat": -1.89,
+     "win_rate": 0.4499,
+     "avg_win": 327.26,
+     "avg_loss": 294.39,
+     "sharpe_per_trade": -0.034,
+     "dsr": 0.0001,
+     "trades_per_day": 0.9137,
+     "by_year": "2005:-36,2006:-6203,2007:-6193,2008:+6723,2009:-3712,2010:-828,2011:-1163,2012:-3588,2013:-2357,2014:-6080,2015:-6321,2016:-9476,2017:-6227 (pos_years 1/13; CI95 -30.5..+0.4; gross mean +1.60; exits flat 2325 / stop 771)"
+    },
+    {
+     "name": "V4_us_orb30_2h",
+     "rule": "as V1 but exit at the open of 5-min bar entry+24 (120 min after the fill bar's 5-min boundary) or the stop, whichever first (15:08 CT flat if earlier)",
+     "n": 3206,
+     "mean_net": -25.67,
+     "t_stat": -5.39,
+     "win_rate": 0.442,
+     "avg_win": 201.22,
+     "avg_loss": 205.38,
+     "sharpe_per_trade": -0.0952,
+     "dsr": 0,
+     "trades_per_day": 0.9461,
+     "by_year": "2005:-7856,2006:-2452,2007:-12121,2008:-6759,2009:-5147,2010:+126,2011:-9296,2012:-5271,2013:-5086,2014:-9511,2015:-12437,2016:-4765,2017:-1722 (pos_years 1/13; CI95 -34.8..-16.9; gross mean -9.39; exits time 2484 / stop 666 / flat 56)"
+    }
+   ],
+   "survivors": [],
+   "notes": "NULL RESULT: none of the 4 pre-registered ORB-continuation variants clears the survivor bar (need mean_net>0, t>=2.5, n>=150, >=8/13 positive years). All four have negative net mean per ES contract; V1 and V4 are significantly negative (t=-2.72, -5.39). Even GROSS of costs the edge is ~zero (gross mean V1 -5.0, V2 +2.3, V3 +1.6, V4 -9.4 $/contract), so the $16.28 round turn is not the only problem - the 2005-2017 cash-open breakout simply does not continue on average. 2008 is the lone big positive year for V1-V3 (crisis trend days); 10-12 of 13 years are negative. The width filter (V2) is the least bad (5/13 positive years, t=-1.02, CI spans zero) but is nowhere near the bar. Implementation: signals on the CT-aligned 5-min grid (load_bars_index 5min), execution on the 1-min grid from the same parquet so the 15:08 CT exit is exact (decision bar = last 1-min bar in the signal 5-min window, fill = next 1-min bar open = next 5-min bar open); stop checked on every 1-min bar from the fill bar to the bar before the exit bar and filled at the range level; one trade/day, no re-entry after a stop. Eligible days (ex ante): weekdays not on the NYSE/CME holiday calendar (incl. Good Friday, 2007-01-02, 2012-10-29/30), all range bars present, and a 1-min bar in [15:08,15:15] CT present (holiday/half-day sessions lack it) -> 3238 eligible days, ~3206 trades for V1. Entry fills satisfy protocol.entry_mask (observed 09:05..15:05 CT), all exits same CT date, flat exits at 15:08-15:14 CT. Engine replicates protocol.backtest_signals and was cross-checked day by day against protocol.backtest_signals (1-min bars, equivalent stop_pct, exit flags) for every trade of every variant: V1 2854 exact matches + 352 days where the engine's ep*(1-stop_pct) level cannot be made bit-identical to the range level, of which only 37 outcomes differ and every one is a bar whose low/high equals the range level exactly (this script fills the stop on the touch; the engine's level was 1 ulp beyond) - similar counts for V2-V4 (18/33/14 touch-only diffs); nothing else mismatched. Post-hoc diagnostics (labelled, not nominable): D1 NAS100 twin of V1 with NQ costs: n=3196, mean_net=-16.11, t=-2.47, 2/13 positive years (same null); D2 V1 by side: long-only n=1649 mean -14.76 t=-1.47 (6/13 pos years), short-only n=1557 mean -28.20 t=-2.34 (1/13; shorts win 36% and only 2008 pays). Results JSON: /home/user/j/research/hyp/es_orb_continuation_results.json. Run: cd /home/user/j && python3 -m research.hyp.es_orb_continuation (~55 s). Only data_research/IS was read."
+  },
+  {
+   "family": "fomc_drift",
+   "script_path": "/home/user/j/research/hyp/es_fomc_drift.py",
+   "n_variants_tried": 3,
+   "variants": [
+    {
+     "name": "V1_pre_fomc_long_1d",
+     "rule": "1 ES ($50/pt, $16.28 rt). 1-minute Oanda SPX500 bars; 'the HH:MM bar' = first 1-min bar with open >= HH:MM CT that date (entry bar must open within 5 min of HH:MM else no trade; exits fill at the open of the first bar >= the instant). Enter long at the open of the 17:00 CT bar on the calendar day before each scheduled FOMC statement day (last day of each '... Meeting' panel on fomchistorical<year>.htm; conference calls and unscheduled meetings excluded; 104 days 2005-2017); exit at the open of the 12:55 CT bar on the statement day.",
+     "n": 102,
+     "mean_net": 125.19,
+     "t_stat": 2.88,
+     "trades_per_day": 0.0301,
+     "win_rate": 0.618,
+     "avg_win": 367.9,
+     "avg_loss": 266.9,
+     "sharpe_per_trade": 0.285,
+     "dsr": 0.82,
+     "by_year": "2005:+621 2006:+511 2007:+2140 2008:+4800 2009:+4095 2010:-975 2011:+630 2012:+2460 2013:-990 2014:-225 2015:-400 2016:+115 2017:-10 (8/13 positive); ci95=[40,211]; by assumed release time: 13:15-era(2005-Jan2013) n=55 mean=$219 t=3.56, 13:00-era(Mar2013-2017) n=39 mean=$-35 t=-0.54, 11:30 PC days n=8 mean=$261 t=2.75"
+    },
+    {
+     "name": "V2_pre_fomc_long_2d",
+     "rule": "Same bar conventions and dates as V1. Enter long at the open of the 17:00 CT bar on every evening (Sun-Thu) from the second weekday before the statement day through the day before it (Wed statement: Mon 17:00 + Tue 17:00; Tue statement: Sun 17:00 + Mon 17:00, Friday 17:00 is inside the weekend close); each leg is closed by the protocol forced flat at the first bar >= 15:10 CT and the last leg exits at the open of the 12:55 CT bar on the statement day; one round-turn cost per leg (208 legs scheduled, 205 filled).",
+     "n": 205,
+     "mean_net": 98.16,
+     "t_stat": 2.17,
+     "trades_per_day": 0.0605,
+     "win_rate": 0.566,
+     "avg_win": 457.5,
+     "avg_loss": 370.2,
+     "sharpe_per_trade": 0.152,
+     "dsr": 0.589,
+     "by_year": "2005:+486 2006:+886 2007:+4794 2008:+6164 2009:+4930 2010:-2066 2011:-3326 2012:+2400 2013:+416 2014:+1740 2015:+1804 2016:+1054 2017:+840 (11/13 positive); ci95=[12,183]; per-event (legs summed, n=104 events): mean=$193.5 t=2.18 win_rate=0.683; reasons flat=103 signal=102"
+    },
+    {
+     "name": "V3_post_fomc_continuation",
+     "rule": "Same bar conventions and dates as V1. On the statement day, when the 13:35 CT bar opens compute s = sign(open(13:35 bar)/open(12:55 bar) - 1) (both bars must open within 5 min of their instants); if s != 0 enter with side s at the open of the next quoted bar (fills at 13:36 on 102 of 104 days; strict no-look-ahead reading of 'signal on bar i, act at open of bar i+1'); exit at the open of the 15:08 CT bar the same day (15:10 forced-flat backstop). 58 longs, 46 shorts, 0 zero signals.",
+     "n": 104,
+     "mean_net": -36.81,
+     "t_stat": -0.7,
+     "trades_per_day": 0.0307,
+     "win_rate": 0.462,
+     "avg_win": 361.7,
+     "avg_loss": 378.4,
+     "sharpe_per_trade": -0.069,
+     "dsr": 0.004,
+     "by_year": "2005:+945 2006:+595 2007:-180 2008:-3880 2009:-1600 2010:-1010 2011:-705 2012:-855 2013:+1000 2014:+735 2015:-515 2016:+2265 2017:-620 (5/13 positive); ci95=[-144,58]; longs n=58 mean=$-8 t=-0.16, shorts n=46 mean=$-73 t=-0.73"
+    }
+   ],
+   "survivors": [],
+   "notes": "NULL RESULT: no pre-registered variant clears the survivor bar (mean_net>0, t>=2.5, n>=150, >=8/13 positive years). V1 clears mean/t/years (t=2.88, 8/13) but n=102 < 150; with only 104 scheduled statements in 2005-2017 a one-trade-per-statement rule cannot reach n>=150 in-sample, so V1/V3 could never qualify under this bar. V2 (two legs per statement, n=205) fails on t=2.17 (DSR 0.59). V3 is negative. Nothing nominated.\n\nANNOUNCEMENT DATES USED (104, last day of each scheduled meeting parsed from fomchistorical2005..2017.htm; 'Conference Call' and '(unscheduled)' panels excluded): 2005-02-02 03-22 05-03 06-30 08-09 09-20 11-01 12-13; 2006-01-31 03-28 05-10 06-29 08-08 09-20 10-25 12-12; 2007-01-31 03-21 05-09 06-28 08-07 09-18 10-31 12-11; 2008-01-30 03-18 04-30 06-25 08-05 09-16 10-29 12-16; 2009-01-28 03-18 04-29 06-24 08-12 09-23 11-04 12-16; 2010-01-27 03-16 04-28 06-23 08-10 09-21 11-03 12-14; 2011-01-26 03-15 04-27 06-22 08-09 09-21 11-02 12-13; 2012-01-25 03-13 04-25 06-20 08-01 09-13 10-24 12-12; 2013-01-30 03-20 05-01 06-19 07-31 09-18 10-30 12-18; 2014-01-29 03-19 04-30 06-18 07-30 09-17 10-29 12-17; 2015-01-28 03-18 04-29 06-17 07-29 09-17 10-28 12-16; 2016-01-27 03-16 04-27 06-15 07-27 09-21 11-02 12-14; 2017-02-01 03-15 05-03 06-14 07-26 09-20 11-01 12-13. Also parsed 2018-2019 (16 dates, out of sample) for the record. Cross-check vs statement-link dates: all agree except the Fed page's own June 2007 link (20070618 for the June 27-28 meeting; heading kept, data shows the 13:15 CT spike on 2007-06-28). The saved fomccalendars.htm (fetched 2026) holds only 2021-2027, so 2020 could NOT be parsed; a clearly labelled fallback list (2020-01-29, 04-29, 06-10, 07-29, 09-16, 11-05, 12-16) is kept in the script but is outside the in-sample window and unused.\n\nRELEASE-TIME DATA CHECK (minute of the largest 1-min range in 10:30-14:30 CT per statement day, 96/104 within [-5,+30] min of the assumed time): statements came out at ~13:15 CT (2:15 pm ET) from 2005 through January 2013, at 13:00 CT (2:00 pm ET) from March 2013 on, and at 11:30 CT (12:30 pm ET) on the eight 2011-2012 press-conference meetings (2011-04-27, 06-22, 11-02, 2012-01-25, 04-25, 06-20, 09-13, 12-12). The task's '13:30 CT for some 2011-2012 press-conference meetings' is therefore wrong in the data: on those 8 days the pre-registered 12:55 exit is 85 min POST-announcement and V3's 13:35 signal is 2 h post. Rules were implemented exactly as pre-registered; the corrected timing is diagnostic D2.\n\nImplementation: 1-minute grid (15:08 exit is not on the 5-min grid); protocol.backtest_signals with ES spec; entries flagged on the bar before the fill bar; V3 signal attached to the 13:35 bar and filled at the next bar (13:36). Skipped legs (no bar within 5 min of 17:00): 2005-10-31 and 2006-12-11 (V1/V2) plus 2013-07-29 (V2 first leg). 0 trades dropped as unpriceable; no early-close exits. Exit times: V1/V2 final leg 12:55 (96) or 12:56 (6); V2 first leg forced flat at 15:10-15:14; V3 15:08 (97) /15:09 (5) /15:10-11 (2). Median hold V1 19.9 h, V3 92 min.\n\nEdge is concentrated in 2007-2009 and the 13:15-era (pre-Mar-2013): V1 13:15-era n=55 mean=$219 t=3.56 vs 13:00-era (2013-2017) n=39 mean=$-35 t=-0.54, i.e. the Lucca-Moench drift is not visible in the last five in-sample years on this proxy.\n\nDIAGNOSTICS (post-hoc, labelled, not nominable): D1 NAS100 twin with NQ spec ($20/pt, $8.78 rt): V1 n=99 mean=$53 t=1.60 (7/13 yrs); V2 n=202 mean=$53 t=1.56 (10/13); V3 n=104 mean=$-18 t=-0.46 \u2014 same sign pattern, weaker. D2 release-time corrected (the 8 PC days shifted 90 min earlier: exit 11:25, V3 12:05 vs 11:25): V1 n=102 mean=$105 t=2.42 dsr=0.68 (8/13); V2 n=205 mean=$88 t=1.95 (11/13); V3 mean=$-40 t=-0.76 \u2014 the pre-registered V1/V2 numbers were flattered by the 8 post-announcement holds (those 8 V1 trades: mean=$261 as registered vs $-1 corrected).\n\nOutputs: script /home/user/j/research/hyp/es_fomc_drift.py; JSON /home/user/j/research/hyp/es_fomc_drift_results.json (variants, diagnostics, full date list, per-day release-time check); run log /tmp/claude-0/-home-user-j/d4e59bbd-7fc8-5231-bb28-07880c32ca90/scratchpad/es_fomc_drift_run.log. ROOT=/home/user/j/data_research/IS only (bars 2005-01-02..2017-12-29); holdout and full-sample files were not read."
+  },
+  {
+   "family": "calendar_flows",
+   "script_path": "/home/user/j/research/hyp/es_calendar_flows.py",
+   "n_variants_tried": 3,
+   "variants": [
+    {
+     "name": "V1_turn_of_month_long",
+     "rule": "ES, 1 contract, no stop/target. Trading day = Mon-Fri CT date that is not a US equity-market holiday (NYSE calendar incl. 2007-01-02, 2012-10-29/30) and has cash-session bars. For every month M, leg days = last trading day of M and first three trading days of M+1. Each leg: enter long at the open of the 17:00 CT bar (first 1-min bar with open >= 17:00 CT, within 5 min else no trade) on the calendar day before the leg day (Sunday 17:00 for a Monday leg); exit at the open of the first bar in [15:08,15:15] CT of the leg day (early-close days: open of the last quoted bar before the 12:15 CT halt). Each hold = one trade. Flags on the bar before the fill bar; protocol.backtest_signals.",
+     "n": 603,
+     "trades_per_day": 0.178,
+     "mean_net": 7.79,
+     "t_stat": 0.26,
+     "win_rate": 0.531,
+     "avg_win": 497,
+     "avg_loss": 545.4,
+     "sharpe_per_trade": 0.0107,
+     "dsr": 0.047,
+     "by_year": "2005:+2275 2006:+326 2007:-1630 2008:-7385 2009:-505 2010:+7405 2011:+319 2012:+4602 2013:-605 2014:+95 2015:-2035 2016:-1761 2017:+3599 (pos 7/13; ci95 [-49.6,+64.0]; 621 legs scheduled, 603 with a 17:00 entry bar, 14 early-close exits; by leg: T-1 n=152 mean -51.6 t=-0.89, T+1 n=143 mean +61.8 t=0.86, T+2 n=153 mean +9.7 t=0.19, T+3 n=155 mean +14.4 t=0.25)"
+    },
+    {
+     "name": "V2_month_end_last_hour_long",
+     "rule": "ES, 1 contract, no stop/target. On the last trading day of each month (definition as V1): enter long at the open of the 14:00 CT bar (first 1-min bar with open >= 14:00 CT, within 5 min else no trade); exit at the open of the first bar in [15:08,15:15] CT the same day.",
+     "n": 149,
+     "trades_per_day": 0.044,
+     "mean_net": -88.73,
+     "t_stat": -3.94,
+     "win_rate": 0.403,
+     "avg_win": 158.3,
+     "avg_loss": 255.3,
+     "sharpe_per_trade": -0.3226,
+     "dsr": 0,
+     "by_year": "2005:-890 2006:-595 2007:-1735 2008:-3074 2009:-1345 2010:-1420 2011:-550 2012:-574 2013:-2033 2014:-128 2015:-1384 2016:+1305 2017:-795 (pos 1/13; ci95 [-131.9,-45.6]; 156 month-ends scheduled, 7 skipped because the half-day session (12:15 CT close) has no 14:00 bar)"
+    },
+    {
+     "name": "V3_opex_friday_fade",
+     "rule": "ES, 1 contract, no stop/target. On the calendar third Friday of each month (15th-21st): ratio = (last traded price before 14:00:00 CT = close of the 1-min bar preceding the 14:00 bar) / open(08:30 bar, within 5 min); enter side = -sign(ratio-1) at the open of the 14:00 CT bar (within 5 min; ratio exactly 1 -> no trade); exit at the open of the first bar in [15:08,15:15] CT.",
+     "n": 149,
+     "trades_per_day": 0.044,
+     "mean_net": -3.13,
+     "t_stat": -0.13,
+     "win_rate": 0.443,
+     "avg_win": 183.1,
+     "avg_loss": 151.2,
+     "sharpe_per_trade": -0.0105,
+     "dsr": 0.02,
+     "by_year": "2005:-315 2006:-409 2007:-399 2008:+4751 2009:+50 2010:-285 2011:-404 2012:-1145 2013:-845 2014:-319 2015:-689 2016:-375 2017:-79 (pos 2/13; ci95 [-47.2,+50.9]; 156 third Fridays, 2 Good Fridays without bars, 4 exact-tie signals, 1 missing 14:00 bar; long n=95 mean +13.0 t=0.39, short n=54 mean -31.6 t=-0.94; the literal fill-bar open(14:00) would flip the sign on 5 of 149 days)"
+    }
+   ],
+   "survivors": [],
+   "notes": "NULL RESULT: none of the 3 pre-registered calendar_flows variants meets the survivor bar (mean_net>0, t>=2.5, n>=150, >=8/13 positive years). V1 turn-of-month long: mean +$7.79/trade, t=0.26, 7/13 positive years - the classic turn-of-month premium does not survive ES costs over 17:00->15:08 holds; the T-1 (month-end day) leg is the worst (-$51.6). V2 month-end last hour long is significantly NEGATIVE (mean -$88.73, t=-3.94, losing in 12 of 13 years, bootstrap CI [-131.9,-45.6]); the opposite side was not pre-registered so it cannot be nominated, but it is the one strong signal in the family and would be a candidate for a future pre-registered short variant (NAS100 twin also negative: mean -$43.1 NQ, t=-2.45; the day-only decomposition D2b shows the same T-1 day weakness: -$98.5, t=-2.4). V3 opex fade: mean -$3.13, t=-0.13, noise (all positive P&L from 2008). Diagnostics (post-hoc, not nominable): D1 NAS100/NQ twins: V1 +$9.93 t=0.40 (9/13 pos yrs), V2 -$43.13 t=-2.45, V3 -$12.57 t=-0.83. D2 V1 decomposition (ES): overnight-only 17:00->08:30 +$5.47 t=0.33 (8/13), day-only 08:30->15:08 -$16.02 t=-0.71. Implementation: 1-minute grid (the 15:08 exit has no 5-min bar); signals flagged on the bar before the fill bar and run through protocol.backtest_signals with ES costs; 'trading day' had to be read as NYSE trading day because the CFD quotes abbreviated Globex sessions on US holidays (93 holiday weekdays carry cash-window bars but no cash session; in this data every non-holiday weekday has cash bars, so the readings differ only on holidays). Early-close days (12:15 CT halt: Black Friday, Christmas Eve, July 3, NYE 2012-15) are exited at the last quoted bar before the halt instead of the protocol's 15:30 CT post-close bar; 14 V1 trades affected, all reported. Zero exit mismatches; all skipped legs are explained (missing 17:00 quote on Jan-1 evenings and 2006 data gaps, half-day month-ends, Good Fridays, exact ties). Results JSON: /home/user/j/research/hyp/es_calendar_flows_results.json. Deflated Sharpe uses N=22; all DSR <= 0.06."
+  },
+  {
+   "family": "vwap_reversion",
+   "script_path": "/home/user/j/research/hyp/es_vwap_reversion.py",
+   "n_variants_tried": 3,
+   "variants": [
+    {
+     "name": "V1_band_030",
+     "rule": "5-min cash-session VWAP (anchor 08:30 CT, tp=(H+L+C)/3, w=tick volume); from the 09:30 CT bar, dev=close/VWAP-1 >= +0.30% -> short, <= -0.30% -> long at next bar open; target = VWAP level known at the time (touch, fill at level), stop = entry x (1 -/+ 0.30%) checked first; exit 15:08 CT; one trade at a time",
+     "n": 8394,
+     "mean_net": -24.56,
+     "t_stat": -9.74,
+     "win_rate": 0.386,
+     "avg_win": 222.74,
+     "avg_loss": 180.18,
+     "sharpe_per_trade": -0.1064,
+     "dsr": 0,
+     "trades_per_day": 2.477,
+     "by_year": "2005:-12649,2006:-6904,2007:-12333,2008:-58526,2009:-24182,2010:-13181,2011:-24190,2012:-10878,2013:-7163,2014:-14824,2015:-13023,2016:-8132,2017:-192 (pos_years 0/13; gross_mean -8.28; exits stop 4293 / target 2400 / flat 1701; CI95 [-29.3,-19.9])"
+    },
+    {
+     "name": "V2_band_020",
+     "rule": "as V1 with entry threshold 0.20% and stop 0.20%",
+     "n": 14719,
+     "mean_net": -21.72,
+     "t_stat": -14.47,
+     "win_rate": 0.353,
+     "avg_win": 186.64,
+     "avg_loss": 135.53,
+     "sharpe_per_trade": -0.1193,
+     "dsr": 0,
+     "trades_per_day": 4.344,
+     "by_year": "2005:-20363,2006:-13677,2007:-22173,2008:-74575,2009:-35792,2010:-28411,2011:-33811,2012:-18625,2013:-13459,2014:-18602,2015:-25889,2016:-11496,2017:-2757 (pos_years 0/13; gross_mean -5.44; exits stop 8573 / target 4068 / flat 2078; CI95 [-24.7,-18.8])"
+    },
+    {
+     "name": "V3_band_030_rangeday",
+     "rule": "as V1 only on days whose first-hour range (max high - min low of the 08:30-09:25 5-min bars, index points) < median first-hour range of the 20 previous valid-range days (strictly before the day; 20 obs required)",
+     "n": 3135,
+     "mean_net": -25.57,
+     "t_stat": -7,
+     "win_rate": 0.396,
+     "avg_win": 194.56,
+     "avg_loss": 169.99,
+     "sharpe_per_trade": -0.125,
+     "dsr": 0,
+     "trades_per_day": 0.925,
+     "by_year": "2005:-4410,2006:-2483,2007:-2617,2008:-27723,2009:-7888,2010:-8219,2011:-12002,2012:-4750,2013:-3567,2014:-3928,2015:-553,2016:-2454,2017:+435 (pos_years 1/13; gross_mean -9.29; exits stop 1509 / target 893 / flat 733; CI95 [-32.8,-18.5])"
+    }
+   ],
+   "survivors": [],
+   "notes": "NULL RESULT: none of the 3 pre-registered variants passes the survivor bar (mean_net > 0, t >= 2.5, n >= 150, >= 8/13 positive years). All three lose money BEFORE costs (gross mean -8.3 / -5.4 / -9.3 $/contract): stops are hit ~1.8x as often as the VWAP target, i.e. a 0.2-0.3% excursion from session VWAP on SPX continues more often than it reverts within the day, and re-entries after stops (allowed by the one-trade-at-a-time rule) compound losses on trend days (max 39 trades on one day). Every calendar year 2005-2016 is negative for V1 and V2; the low-range-day filter (V3) does not help (t = -7.0). IMPLEMENTATION: signals on the 5-min grid exactly as pre-registered (VWAP cumulative from the 08:30 CT bar over bars with CT open in [08:30,15:10), tp=(H+L+C)/3, w=tick volume, no zero-volume bars in IS data; dev=close/VWAP-1; signal bars with CT open >= 09:30, so first fill 09:35); execution on the 1-min grid as the sibling ES scripts: decision bar = last 1-min bar of the signal 5-min window, fill = open of the next 1-min bar (= open of the next 5-min bar, verified for 8394/8394 trades); target during 5-min window j = VWAP at the close of the last session bar that opened before window j (no look-ahead, verified against an independent recomputation), long exits when 1-min high >= target / short when low <= target, filled at the level; stop = entry*(1 -/+ band) checked first on each bar and filled at the stop price (protocol convention); time exit at the open of the first 1-min bar in [15:08,15:10] CT (days lacking such a bar, or the 08:30 bar, or weekends/US equity holidays ex ante, are ineligible: 3157 eligible days, 1531 of them V3 range-days). Engine validated against protocol.backtest_signals on every eligible day with signals: trade sequences identical up to the first target exit (V1: 3059 trades fully matched on entry/exit/net, 1438 target-exit trades matched on entry and checked internally, 953/2391 days with identical full sequences since no target was hit). Post-hoc diagnostics (never nominated): D1 NAS100 twin of V1 with NQ costs: n=10646, mean_net=-12.36, t=-7.20, 0/13 positive years (same sign as ES); D2 V1 by side: long-only n=4463 mean_net=-26.00 t=-7.28, short-only n=3931 mean_net=-22.94 t=-6.48 - the loss is symmetric, not a drift artefact. Results JSON: /home/user/j/research/hyp/es_vwap_reversion_results.json. Deflated Sharpe uses 22 ES variants for the round; dsr ~ 0 for all three."
+  }
+ ],
+ "survivors": [],
+ "verdicts": [],
+ "synth": {
+  "summary_markdown": "## ES round synthesis: 22 pre-registered variants, 6 families, nothing nominated, nothing replicated, nothing confirmed\n\n**Bottom line.** Zero of the 22 variants met the pre-registered survivor bar (mean_net > 0, t >= 2.5, n >= 150, net P&L > 0 in >= 8 of the 13 in-sample calendar years 2005-2017). `SURVIVORS: []`, `VERDICTS: []`, and all six family result files (`/home/user/j/research/hyp/es_*_results.json`) carry `survivors: []`. Because nothing was nominated, the holdout-replication lens and the audit lens were never exercised: there are no holdout runs, no audit reports, and `research/verify/` is empty. \"Confirmed by both lenses\" is the empty set, and so is \"confirmed by either lens\". Nothing feeds the Topstep dynamic program from this round. The sealed holdout (`data_research/HO`, 2018-01-01 .. 2020-05, 29 months) was not opened by any of the six scripts (each hard-codes `ROOT = data_research/IS`; verified by grep), so it remains clean for a later round.\n\n**Trial accounting.** 5 + 4 + 4 + 3 + 3 + 3 = 22 variants, matching the task header; every family deflated its Sharpe with N = 22, which is the right count for this dataset (the 211 earlier crypto trials were on unrelated data). Note, however, that four of the six families (intraday momentum, ORB, VWAP reversion, calendar) are re-registrations on a new asset of ideas that already failed on BTC/ETH; that is legitimate pre-registration, but it means the ES families were not chosen blind. It changes nothing today: the best DSR with n >= 150 is 0.59 and the best t with n >= 150 is 2.17.\n\n**Data and proxy caveat (applies to every number below).** All results are on the Oanda SPX500 CFD 1-minute series (bars only when the quote changed, tick volume, no roll/basis) with ES economics bolted on ($50/pt, $16.28 round turn = $3.78 commission + one tick slippage). The CFD is a spot-index proxy, not the futures; for the overnight and FOMC families the CFD's financing/dividend adjustment and the futures basis roll are not the same thing, so a per-night drift of a few dollars is within the proxy error. 3,311,533 bars 2005-01-02..2017-12-29, ~3,234 days with a valid 14:30 CT fill.\n\n### Family-by-family: what was found, what was nominated, what the lenses said\n\n| Family | Variants | Best in-sample variant | n | net $/ES | t | DSR | pos. yrs | trades/day | Nominated | Replication | Audit | Confirmed (both) |\n|---|---|---|---|---|---|---|---|---|---|---|---|---|\n| intraday_momentum | 5 | V5 first-60-min sign -> last 30 min | 3158 | -8.74 | -2.15 | ~0 | 4/13 | 0.93 | none | not run | not run | none |\n| overnight_drift | 4 | V2 long 17:00->08:30 after a down cash day | 1136 | +9.29 | 0.74 | 0.12 | 9/13 | 0.34 | none | not run | not run | none |\n| orb_continuation | 4 | V2 30-min ORB, wide-range filter | 1525 | -14.01 | -1.02 | 0.00 | 5/13 | 0.45 | none | not run | not run | none |\n| fomc_drift | 3 | V1 long 17:00 day-before -> 12:55 statement day | 102 | +125.19 | 2.88 | 0.82 | 8/13 | 0.03 | none (n < 150) | not run | not run | none |\n| calendar_flows | 3 | V1 turn-of-month long, 4 legs | 603 | +7.79 | 0.26 | 0.05 | 7/13 | 0.18 | none | not run | not run | none |\n| vwap_reversion | 3 | V3 0.30% band, low-range days | 3135 | -25.57 | -7.00 | ~0 | 1/13 | 0.93 | none | not run | not run | none |\n\nAll stored JSON values were re-read and match the task text to the cent; \"pos. yrs\" was recomputed from each variant's `by_year` and agrees.\n\n**intraday_momentum (5 variants, all negative net).** First-30/first-60-minute sign and 14:00->14:30 sign into the 14:30->15:08 CT window, with and without a 60-day z-filter and a both-agree filter. Every variant is negative net (t from -2.15 to -3.92, at most 4/13 positive years) and the gross means are essentially zero (+0.41, -3.38, +0.01, +1.03, +7.54 $/contract): there is no momentum to buy and no reversal to sell, only the round turn. The direct correlation of the 14:30->15:08 return with the first-half-hour return is -0.051 (t = -2.9), the opposite sign to the Gao-Han-Li-Zhou result that motivated the family; the 14:00->14:30 signal has rho = +0.133 (t = 7.6) but sign agreement is 47.6% and the linear relation lives in the 2008 tails, which a sign rule cannot capture. NAS100/NQ twin and the alternative timing convention give the same null. Nothing nominated; lenses not exercised; confirmed: none.\n\n**overnight_drift (4 variants, the one weakly positive family).** Long 17:00 CT -> 08:30 CT next day (V1), the same after a down cash day (V2), to 09:00 (V3), and the short day-session mirror (V4). The overnight premium exists on the proxy but is tiny: gross +$18.0 per night (0.36 ES pt) for V1 and +$25.6 for V2, which the $16.28 round turn consumes (net +1.77 and +9.29, t 0.24 and 0.74). V2 is the best thing in the whole round with n >= 150 (9/13 positive years, DSR 0.12) and it is nowhere near t = 2.5; its per-trade standard deviation is $421 per ES contract, so a $9 mean is 2% of one sigma. The short-day leg V4 is significantly negative (t = -3.04, 3/13 years, -$96k per contract over 13 years) because the 09:00->15:08 day session was itself positive on this proxy: the anomaly's premise (flat or negative day session) does not hold at these boundaries. The NQ twin is relatively stronger (V1 t = 2.11, 11/13 years) but still fails t. Precision note: the early-close/reopen exit rule (Good Friday, holiday half-days, where the protocol's 15:10 forced flat cannot fire because there are no bars) was added after an initial run showed 4 V1 trades riding a weekend; the committed pre-fix JSON had V1 n = 3281, mean +1.55, t = 0.21 and V4 mean -28.09, t = -2.97, so the post-P&L fix moved V1 by +$0.22 and V4 by -$0.67 and changed no verdict, but it is a post-hoc implementation change and should be recorded as such. Nothing nominated; lenses not exercised; confirmed: none.\n\n**orb_continuation (4 variants, all negative net).** 30- and 60-minute cash-open range breakouts with the opposite range side as stop, flat at 15:08 CT or after 2 hours, with and without a width filter. All four are negative net and V1/V4 significantly so (t = -2.72, -5.39); gross means are -5.0, +2.3, +1.6, -9.4 $/contract, so the cash-open breakout simply does not continue on average 2005-2017, costs or no costs. 2008 is the lone big positive year for V1-V3 (crisis trend days); 10-12 of 13 years are negative. The width filter is the least bad (t = -1.02, CI spans zero) and still far from the bar. The engine was cross-checked trade by trade against `protocol.backtest_signals` (only touch-only stop-level ulp differences, 37/18/33/14 outcomes per variant). Nothing nominated; lenses not exercised; confirmed: none.\n\n**fomc_drift (3 variants, the only t > 2.5 in the round, and it cannot qualify).** Long the evening before each scheduled FOMC statement into 12:55 CT (V1), the two-evening version (V2), and post-announcement continuation 13:36->15:08 (V3). V1 clears mean, t and years (mean +$125, t = 2.88, 8/13) but has n = 102 against a bar of 150; with only 104 scheduled statements in 13 years, a one-trade-per-event rule can never reach the n bar in-sample, so V1 and V3 were structurally unnominable from the start. Three further reasons to be skeptical of V1 beyond the n bar: (i) the effect is concentrated in 2007-2009 and the 13:15-CT-release era (n = 55, mean +$219, t = 3.56) and is absent in the 13:00 era 2013-2017 (n = 39, mean -$35, t = -0.54), i.e. invisible in the last five in-sample years; (ii) the pre-registration's assumed release time was wrong for the eight 2011-2012 press-conference meetings (statements came at 11:30 CT, not 13:30), so the registered 12:55 exit held those eight trades 85 minutes post-announcement; implemented literally as registered, they contributed mean +$261, and with the corrected 11:25 exit V1 falls to mean +$105, t = 2.42, DSR 0.68, i.e. below the t bar as well; (iii) the NQ twin is much weaker (t = 1.60). V2 (n = 205) fails on t = 2.17 (DSR 0.59; corrected t = 1.95) and V3 is negative. The holdout holds 18 scheduled statements (8 + 8 + 2020-01-29 and 2020-04-29; the March 2020 emergency cuts are unscheduled and excluded by the rule), far too few to test anything at t >= 2 even if V1 had been nominated. Announcement dates were parsed from the saved Fed pages for 2005-2019; 2020 could not be parsed (the saved calendar page holds 2021-2027 only) and a labelled fallback list is in the script, unused. Nothing nominated; lenses not exercised; confirmed: none.\n\n**calendar_flows (3 variants).** Turn-of-month long over four 17:00->15:08 legs (V1: +$7.79, t = 0.26, 7/13; the month-end T-1 leg is the worst at -$51.6), month-end last-hour long (V2), and third-Friday fade (V3: -$3.13, t = -0.13, all positive P&L from 2008). V2 is the one strong signal in the family and it is the wrong sign: -$88.73 per trade, t = -3.94, negative in 12 of 13 years, bootstrap CI [-131.9, -45.6], gross -$72.45, and the NQ twin is also negative (t = -2.45). The opposite side was not pre-registered and cannot be nominated. For the record, the arithmetic mirror from the stored stats (not a run) would be: short net = +72.45 - 16.28 = +$56.17, t = +2.49, n = 149, so even the mirrored short would miss the bar on t by 0.01 and on n by one trade, and at 0.044 trades/day (11 trades a year) it would be useless for a Topstep combine regardless. It is a legitimate candidate for a future pre-registered short variant, nothing more. Nothing nominated; lenses not exercised; confirmed: none.\n\n**vwap_reversion (3 variants, the worst family).** Fade 0.20%/0.30% excursions from the cash-session VWAP back to VWAP with a symmetric stop, with and without a low-range-day filter. All three lose before costs (gross -8.3 / -5.4 / -9.3 $/contract); stops are hit ~1.8x as often as the VWAP target; V1 and V2 are negative in every year 2005-2016 (t = -9.74, -14.47); re-entries after stops compound losses on trend days (up to 39 trades in a day). The loss is symmetric by side (long t = -7.28, short t = -6.48), so it is not a drift artefact. The NQ twin is the same. Nothing nominated; lenses not exercised; confirmed: none.\n\n### What the round says collectively\n\n- Of 22 variants, 15 are negative net, 4 are positive but indistinguishable from zero (overnight V1/V2/V3, turn-of-month V1; t <= 0.74), and 3 are FOMC variants where the only t above 2.5 sits on n = 102 and shrinks to 2.42 once the pre-registration's release-time error is corrected. Highest t with n >= 150: 2.17. Highest DSR with n >= 150: 0.59.\n- Two families (VWAP reversion, ORB continuation) and the month-end last hour lose *gross*, so the finding is not just \"costs ate the edge\": the intraday mean-reversion-to-VWAP premise and the cash-open continuation premise are false on this proxy in 2005-2017, and the intraday-momentum premise is absent (gross ~ $0).\n- The two anomalies that exist on the proxy (overnight premium, pre-FOMC drift) are either too small for one ES round turn (overnight: 0.36 pt per night gross) or too rare and era-dependent (FOMC: ~8 events a year, edge gone after 2012 in-sample).\n- Per-trade dollar volatility on one ES contract is $230-$730 (sd = mean*sqrt(n)/t: intraday momentum $229, overnight $420, FOMC V1 $439, turn-of-month $731). Against a Topstep 50K daily loss limit of $1,000 that is 1.4-4 sigma per trade on a single contract; any ES rule that ever does pass would have to be priced in MES, and MES net is not ES net / 10 (MES round turn $2.47 is relatively 1.5x more expensive per point than ES's $16.28): MES net = ES gross / 10 - 2.47. `evaluate_survivor.evaluate()` also rounds trades/day to max(1, round(tpd)), so event-frequency rules (0.03-0.18 trades/day) would be modelled at 5-30x their true frequency; that needs fixing before any such rule is ever priced.\n\n### The holdout: 2.4 years with three stress episodes, and how that cuts both ways\n\nThe sealed holdout is 2018-01-01 .. 2020-05 (last source file `oanda-SPX500_USD-2020-5.csv`): 29 months, about 606 NYSE trading days, containing the February 2018 volatility spike, the October-December 2018 drawdown and the February-March 2020 crash. (The repo does not define the three episodes anywhere; these are the obvious three from the calendar, not from the data.)\n\nIt cuts against false positives, which is the point: a rule tuned to the 2009-2017 calm regime that only looks good because it was never stressed would fail there, and three episodes of opposite character (a vol-product unwind, a slow Q4 bear, a liquidity crash) are a harsher regime test than most 2.4-year windows. For a Topstep evaluation, where pass probability is driven by the loss tail and the daily/trailing limits, stress-period behaviour is exactly the information the DP needs; a calm-period holdout confirmation would say little about what matters.\n\nIt also cuts against true positives, and more sharply than the stress count suggests. An edge sitting exactly on the IS bar (t = 2.5 over ~3200 trades) has a per-trade Sharpe of 0.044; over ~580 holdout trades its expected t is 1.06, so P(t_HO >= 2) is about 0.17 and P(mean_HO > 0) about 0.86. The arithmetic is the same for every frequency class (IS t = 2.5 at any n gives E[t_HO] ~ 1.05 for a holdout 0.19x the IS length): a holdout confirmation rule of t >= 2 would reject a genuine bar-level edge five times in six, and the stress episodes make it worse by roughly doubling per-trade variance in those months (the 2008 analogue in-sample: intraday momentum V1 lost $10.6k in 2008 alone against $1-5k in normal years). Conversely, the episodes make a false positive easier to manufacture: 2008 was the *only* positive year for ORB V1-V3 and intraday momentum V3, so a trend-following rule that is null in-sample could print a positive holdout purely on March 2020. Two practical consequences: (a) holdout verdicts in this programme should be read as sign-and-magnitude replication (mean > 0, within the IS CI, no single-episode dominance) rather than as an independent t >= 2 test, and (b) with 3 episodes in 29 months, any holdout mean, positive or negative, carries a wide interval dominated by those months, so neither a pass nor a fail there would be a strong statement. Both halves argue for not spending the holdout on anything that has not cleared the in-sample bar with room to spare, which is what happened.\n\n### Housekeeping and things to fix before another ES round\n\n1. Five of the six family scripts and JSONs are untracked and `es_overnight_drift.py` / its JSON are modified relative to commit f060600 (the early-close fix); the raw results should be committed as-is with the post-P&L fix noted.\n2. The survivor bar's n >= 150 structurally excludes one-trade-per-event families on 13 years of data (104 FOMC statements, 156 month-ends, 156 third Fridays). Either register multi-leg or multi-event versions, or decide up front that such families are diagnostics, not candidates.\n3. The FOMC pre-registration carried a factual error (13:30 CT assumed for 2011-2012 press-conference releases; the data show 11:30 CT). The registered rule was run literally and the corrected version reported as a diagnostic, which is the right handling, but release-time facts should be checked against the data before the next registration, since here the error flattered the headline t by 0.46.\n4. `overnight_drift` and `fomc_drift` JSONs omit the `survivor_bar` field that the other four carry; harmless, but the files should share one schema.\n5. The DP feed in `research/evaluate_survivor.py` expects per-micro-contract stats and integer trades/day; the ES round produces per-ES-contract stats at fractional frequencies, so a conversion step (MES cost model, event-frequency handling) is needed before anything from this programme can be priced.\n\n### Stats for the Topstep dynamic program\n\nNone. No variant was confirmed by either lens, so there is no per-trade $, trades/day, n, win rate or avg win/loss to hand to the DP. The in-sample figures in the table above are reported for the record only and must not be used as DP inputs.",
+  "confirmed": []
+ }
+}

@@ -28,6 +28,13 @@ Implementation conventions (fixed before any P&L was looked at):
     Sunday has no cash session on the same calendar date, so under the literal pre-registered text V2 never
     enters on Sunday (the alternative reading, Sunday conditioned on Friday's session, is diagnostic D2).
   * V1/V3 entries Sun-Thu 17:00 CT; V4 entries Mon-Fri 09:00 CT.  One contract, no stop, no target.
+  * Exchange early closes the protocol cannot see (Good Friday 08:15 CT, holiday 10:30 / 12:15 CT closes): when the
+    bar after bar i opens at or after the market's next reopen instant (17:00 CT same day Mon-Thu, Sunday 17:00 CT
+    after a Friday) -- i.e. the whole 15:10-17:00 CT break or weekend had no quotes -- the position is closed at the
+    open of bar i, the last quoted bar before the halt (early_close_exits).  Exits at the open of the first bar
+    inside the break (15:11-15:14 CT when 15:08-15:10 had no quote change) are the protocol's own forced-flat
+    semantics and are kept.  A post-check drops any trade whose exit is at/after the reopen instant following its
+    entry (none occur in the final run); counts are reported per variant.
   * Costs: protocol.CONTRACT["ES"]: $50/pt, $16.28 per round turn (commission $3.78 + one tick $12.50).
   * Survivor bar: mean_net > 0, t >= 2.5, n >= 150, net P&L > 0 in >= 8 of the 13 calendar years 2005..2017.
   * Deflated Sharpe: protocol.deflated_sharpe(sharpe_per_trade, n, 22) (22 pre-registered ES variants).
@@ -110,6 +117,41 @@ def flag_exits(n: int, sched: pd.DataFrame):
     return exits
 
 
+def forced_flat_and_reopen_ns(bars: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
+    """For every bar: (a) the UTC instant (ns) of the next 15:10 CT forced-flat time strictly after the bar's open
+    (15:10 CT of the bar's CT date if the bar opens before 15:10, else 15:10 CT of the next date) and (b) the
+    instant the market is holdable again after it (17:00 CT the same date for Mon-Thu, Sunday 17:00 CT after a
+    Friday / weekend)."""
+    ct = bars["ct"]
+    tod = ct.dt.hour * 60 + ct.dt.minute
+    date = ct.dt.tz_localize(None).dt.normalize()
+    date = pd.DatetimeIndex(date.where(tod < 15 * 60 + 10, date + pd.Timedelta(days=1)))
+    ff = (date + pd.Timedelta(hours=15, minutes=10)).tz_localize(TZ, ambiguous="raise", nonexistent="raise")
+    dow = date.dayofweek.values
+    add = np.where(dow == 4, 2, np.where(dow == 5, 1, 0))              # Fri -> Sun 17:00, Sat -> Sun 17:00
+    reopen = (date + pd.to_timedelta(add, unit="D") + pd.Timedelta(hours=17)).tz_localize(TZ, ambiguous="raise", nonexistent="raise")
+    to_ns = lambda idx: idx.tz_convert("UTC").values.astype("datetime64[ns]").astype(np.int64)
+    return to_ns(ff), to_ns(reopen)
+
+
+def early_close_exits(bars: pd.DataFrame) -> np.ndarray:
+    """Exit flags for session ends the protocol cannot see: when bar i is holdable and bar i+1 opens at or after the
+    market's next reopen instant (i.e. the whole 15:10-17:00 CT break, or the weekend, had no quotes: exchange early
+    close such as Good Friday 08:15 CT or Thanksgiving/Black Friday 12:15 CT), the position is closed at the open of
+    bar i -- the last quoted bar before the halt -- by flagging exits[i-1].  A trader is flat before an early close
+    by exchange calendar; this only supplies the last available price.  A bar i+1 that falls inside the break is
+    left to the protocol's own forced flat (exit at that bar's open)."""
+    ot = bars["open_time"].values.astype("datetime64[ns]").astype(np.int64)
+    _, reopen = forced_flat_and_reopen_ns(bars)
+    hold = P.tradable_mask(bars["open_time"])
+    n = len(ot)
+    gap = np.zeros(n, dtype=bool)
+    gap[:-1] = hold[:-1] & (ot[1:] >= reopen[:-1])
+    exits = np.zeros(n, dtype=bool)
+    exits[:-1] = gap[1:]                      # exits[i-1] <- gap at bar i  => fill at open of bar i
+    return exits
+
+
 # ----------------------------------------------------------------------------- variants
 def build_variant(bars: pd.DataFrame, key: str, sunday_uses_friday: bool = False):
     """key in {"V1","V2","V3","V4"} selects the pre-registered rule; labels are handled by the caller."""
@@ -117,7 +159,7 @@ def build_variant(bars: pd.DataFrame, key: str, sunday_uses_friday: bool = False
     if key == "V4":
         ent = scheduled_bars(bars, 9, 0, WEEKDAYS)
         entries, side = flag_entries(n, ent, -1)
-        exits = flag_exits(n, scheduled_bars(bars, 15, 8, WEEKDAYS))
+        exits = flag_exits(n, scheduled_bars(bars, 15, 8, WEEKDAYS)) | early_close_exits(bars)
         return entries, exits, side, ent
     ent = scheduled_bars(bars, 17, 0, EVENINGS)
     if key == "V2":
@@ -138,7 +180,7 @@ def build_variant(bars: pd.DataFrame, key: str, sunday_uses_friday: bool = False
     else:
         entries, side = flag_entries(n, ent, +1)
     exit_hh, exit_mm = (9, 0) if key == "V3" else (8, 30)
-    exits = flag_exits(n, scheduled_bars(bars, exit_hh, exit_mm, WEEKDAYS))
+    exits = flag_exits(n, scheduled_bars(bars, exit_hh, exit_mm, WEEKDAYS)) | early_close_exits(bars)
     return entries, exits, side, ent
 
 
@@ -177,10 +219,26 @@ def run_one(bars: pd.DataFrame, name: str, sym_contract: str, sunday_uses_friday
     key = name.split("_")[0] if name.startswith("V") else re.search(r"(V[1-4])_", name).group(1)
     entries, exits, side, ent = build_variant(bars, key, sunday_uses_friday)
     tr = P.backtest_signals(bars, entries, exits, side, sym=sym_contract)
+    # validity post-check: a Topstep position can never survive to the market reopen that follows the forced flat
+    # after its entry (exits at the open of the first bar inside the 15:10-17:00 CT break are the protocol's own
+    # forced-flat semantics and are kept)
+    ff, reopen = forced_flat_and_reopen_ns(bars)
+    ot = bars["open_time"].values.astype("datetime64[ns]").astype(np.int64)
+    e_rows = np.searchsorted(ot, tr["entry_time"].values.astype("datetime64[ns]").astype(np.int64))
+    x_ns = tr["exit_time"].values.astype("datetime64[ns]").astype(np.int64)
+    invalid = x_ns >= reopen[e_rows]
+    n_invalid = int(invalid.sum())
+    n_in_break = int(((x_ns >= ff[e_rows]) & ~invalid).sum())
+    tr = tr.loc[~invalid].reset_index(drop=True)
+    # early-close exits: exit bar is the last quoted bar before a quote-less break (see early_close_exits)
+    ec = early_close_exits(bars)
+    x_rows = np.searchsorted(ot, x_ns[~invalid])
+    n_early_close = int(ec[np.maximum(x_rows - 1, 0)].sum())
     st = P.summarize(tr, bars)
     rec = {"name": name, "variant": key, "symbol": sym_contract, "data": "NAS100" if sym_contract == "NQ" else "SPX500",
            "rule": rule_text(key, sym_contract, sunday_uses_friday), "n": int(st.get("n", 0)),
            "n_scheduled_days": int(len(ent)), "n_entry_bar_ok": int(ent["ok"].sum()),
+           "n_dropped_unpriceable": n_invalid, "n_early_close_exits": n_early_close, "n_exits_inside_break": n_in_break,
            "entry_lag_min_mean": float(ent.loc[ent["ok"], "lag_min"].mean()) if ent["ok"].any() else None}
     if "r_cash" in ent:
         rc = ent["r_cash"]

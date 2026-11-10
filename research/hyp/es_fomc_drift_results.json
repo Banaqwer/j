@@ -1,0 +1,2050 @@
+{
+ "family": "fomc_drift",
+ "symbol": "ES",
+ "data": "SPX500 Oanda CFD 1-minute bars, IS 2005-01..2017-12",
+ "bar_size": "1min",
+ "n_variants": 3,
+ "dsr_N": 22,
+ "announcement_dates_used": [
+  "2005-02-02",
+  "2005-03-22",
+  "2005-05-03",
+  "2005-06-30",
+  "2005-08-09",
+  "2005-09-20",
+  "2005-11-01",
+  "2005-12-13",
+  "2006-01-31",
+  "2006-03-28",
+  "2006-05-10",
+  "2006-06-29",
+  "2006-08-08",
+  "2006-09-20",
+  "2006-10-25",
+  "2006-12-12",
+  "2007-01-31",
+  "2007-03-21",
+  "2007-05-09",
+  "2007-06-28",
+  "2007-08-07",
+  "2007-09-18",
+  "2007-10-31",
+  "2007-12-11",
+  "2008-01-30",
+  "2008-03-18",
+  "2008-04-30",
+  "2008-06-25",
+  "2008-08-05",
+  "2008-09-16",
+  "2008-10-29",
+  "2008-12-16",
+  "2009-01-28",
+  "2009-03-18",
+  "2009-04-29",
+  "2009-06-24",
+  "2009-08-12",
+  "2009-09-23",
+  "2009-11-04",
+  "2009-12-16",
+  "2010-01-27",
+  "2010-03-16",
+  "2010-04-28",
+  "2010-06-23",
+  "2010-08-10",
+  "2010-09-21",
+  "2010-11-03",
+  "2010-12-14",
+  "2011-01-26",
+  "2011-03-15",
+  "2011-04-27",
+  "2011-06-22",
+  "2011-08-09",
+  "2011-09-21",
+  "2011-11-02",
+  "2011-12-13",
+  "2012-01-25",
+  "2012-03-13",
+  "2012-04-25",
+  "2012-06-20",
+  "2012-08-01",
+  "2012-09-13",
+  "2012-10-24",
+  "2012-12-12",
+  "2013-01-30",
+  "2013-03-20",
+  "2013-05-01",
+  "2013-06-19",
+  "2013-07-31",
+  "2013-09-18",
+  "2013-10-30",
+  "2013-12-18",
+  "2014-01-29",
+  "2014-03-19",
+  "2014-04-30",
+  "2014-06-18",
+  "2014-07-30",
+  "2014-09-17",
+  "2014-10-29",
+  "2014-12-17",
+  "2015-01-28",
+  "2015-03-18",
+  "2015-04-29",
+  "2015-06-17",
+  "2015-07-29",
+  "2015-09-17",
+  "2015-10-28",
+  "2015-12-16",
+  "2016-01-27",
+  "2016-03-16",
+  "2016-04-27",
+  "2016-06-15",
+  "2016-07-27",
+  "2016-09-21",
+  "2016-11-02",
+  "2016-12-14",
+  "2017-02-01",
+  "2017-03-15",
+  "2017-05-03",
+  "2017-06-14",
+  "2017-07-26",
+  "2017-09-20",
+  "2017-11-01",
+  "2017-12-13"
+ ],
+ "announcement_dates_all_scheduled_2005_2020": [
+  "2005-02-02",
+  "2005-03-22",
+  "2005-05-03",
+  "2005-06-30",
+  "2005-08-09",
+  "2005-09-20",
+  "2005-11-01",
+  "2005-12-13",
+  "2006-01-31",
+  "2006-03-28",
+  "2006-05-10",
+  "2006-06-29",
+  "2006-08-08",
+  "2006-09-20",
+  "2006-10-25",
+  "2006-12-12",
+  "2007-01-31",
+  "2007-03-21",
+  "2007-05-09",
+  "2007-06-28",
+  "2007-08-07",
+  "2007-09-18",
+  "2007-10-31",
+  "2007-12-11",
+  "2008-01-30",
+  "2008-03-18",
+  "2008-04-30",
+  "2008-06-25",
+  "2008-08-05",
+  "2008-09-16",
+  "2008-10-29",
+  "2008-12-16",
+  "2009-01-28",
+  "2009-03-18",
+  "2009-04-29",
+  "2009-06-24",
+  "2009-08-12",
+  "2009-09-23",
+  "2009-11-04",
+  "2009-12-16",
+  "2010-01-27",
+  "2010-03-16",
+  "2010-04-28",
+  "2010-06-23",
+  "2010-08-10",
+  "2010-09-21",
+  "2010-11-03",
+  "2010-12-14",
+  "2011-01-26",
+  "2011-03-15",
+  "2011-04-27",
+  "2011-06-22",
+  "2011-08-09",
+  "2011-09-21",
+  "2011-11-02",
+  "2011-12-13",
+  "2012-01-25",
+  "2012-03-13",
+  "2012-04-25",
+  "2012-06-20",
+  "2012-08-01",
+  "2012-09-13",
+  "2012-10-24",
+  "2012-12-12",
+  "2013-01-30",
+  "2013-03-20",
+  "2013-05-01",
+  "2013-06-19",
+  "2013-07-31",
+  "2013-09-18",
+  "2013-10-30",
+  "2013-12-18",
+  "2014-01-29",
+  "2014-03-19",
+  "2014-04-30",
+  "2014-06-18",
+  "2014-07-30",
+  "2014-09-17",
+  "2014-10-29",
+  "2014-12-17",
+  "2015-01-28",
+  "2015-03-18",
+  "2015-04-29",
+  "2015-06-17",
+  "2015-07-29",
+  "2015-09-17",
+  "2015-10-28",
+  "2015-12-16",
+  "2016-01-27",
+  "2016-03-16",
+  "2016-04-27",
+  "2016-06-15",
+  "2016-07-27",
+  "2016-09-21",
+  "2016-11-02",
+  "2016-12-14",
+  "2017-02-01",
+  "2017-03-15",
+  "2017-05-03",
+  "2017-06-14",
+  "2017-07-26",
+  "2017-09-20",
+  "2017-11-01",
+  "2017-12-13",
+  "2018-01-31",
+  "2018-03-21",
+  "2018-05-02",
+  "2018-06-13",
+  "2018-08-01",
+  "2018-09-26",
+  "2018-11-08",
+  "2018-12-19",
+  "2019-01-30",
+  "2019-03-20",
+  "2019-05-01",
+  "2019-06-19",
+  "2019-07-31",
+  "2019-09-18",
+  "2019-10-30",
+  "2019-12-11",
+  "2020-01-29",
+  "2020-04-29",
+  "2020-06-10",
+  "2020-07-29",
+  "2020-09-16",
+  "2020-11-05",
+  "2020-12-16"
+ ],
+ "note_2020": "fomccalendars.htm holds years [2021, 2022, 2023, 2024, 2025, 2026, 2027] only; 2020 from the labelled fallback list (unused in-sample)",
+ "release_time_check": [
+  {
+   "date": "2005-02-02",
+   "title": "February 1-2 Meeting - 2005",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:35"
+  },
+  {
+   "date": "2005-03-22",
+   "title": "March 22 Meeting - 2005",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:21"
+  },
+  {
+   "date": "2005-05-03",
+   "title": "May 3 Meeting - 2005",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:34"
+  },
+  {
+   "date": "2005-06-30",
+   "title": "June 29-30 Meeting - 2005",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:15"
+  },
+  {
+   "date": "2005-08-09",
+   "title": "August 9 Meeting - 2005",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:19"
+  },
+  {
+   "date": "2005-09-20",
+   "title": "September 20 Meeting - 2005",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:17"
+  },
+  {
+   "date": "2005-11-01",
+   "title": "November 1 Meeting - 2005",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:20"
+  },
+  {
+   "date": "2005-12-13",
+   "title": "December 13 Meeting - 2005",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:25"
+  },
+  {
+   "date": "2006-01-31",
+   "title": "January 31 Meeting - 2006",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:21"
+  },
+  {
+   "date": "2006-03-28",
+   "title": "March 27-28 Meeting - 2006",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:17"
+  },
+  {
+   "date": "2006-05-10",
+   "title": "May 10 Meeting - 2006",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:17"
+  },
+  {
+   "date": "2006-06-29",
+   "title": "June 28-29 Meeting - 2006",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:16"
+  },
+  {
+   "date": "2006-08-08",
+   "title": "August 8 Meeting - 2006",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:22"
+  },
+  {
+   "date": "2006-09-20",
+   "title": "September 20 Meeting - 2006",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:13"
+  },
+  {
+   "date": "2006-10-25",
+   "title": "October 24-25 Meeting - 2006",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:17"
+  },
+  {
+   "date": "2006-12-12",
+   "title": "December 12 Meeting - 2006",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "11:22"
+  },
+  {
+   "date": "2007-01-31",
+   "title": "January 30-31 Meeting - 2007",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:14"
+  },
+  {
+   "date": "2007-03-21",
+   "title": "March 20-21 Meeting - 2007",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:15"
+  },
+  {
+   "date": "2007-05-09",
+   "title": "May 9 Meeting - 2007",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:20"
+  },
+  {
+   "date": "2007-06-28",
+   "title": "June 27-28 Meeting - 2007",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:15"
+  },
+  {
+   "date": "2007-08-07",
+   "title": "August 7 Meeting - 2007",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:14"
+  },
+  {
+   "date": "2007-09-18",
+   "title": "September 18 Meeting - 2007",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:15"
+  },
+  {
+   "date": "2007-10-31",
+   "title": "October 30-31 Meeting - 2007",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:16"
+  },
+  {
+   "date": "2007-12-11",
+   "title": "December 11 Meeting - 2007",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:16"
+  },
+  {
+   "date": "2008-01-30",
+   "title": "January 29-30 Meeting - 2008",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:18"
+  },
+  {
+   "date": "2008-03-18",
+   "title": "March 18 Meeting - 2008",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:14"
+  },
+  {
+   "date": "2008-04-30",
+   "title": "April 29-30 Meeting - 2008",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:16"
+  },
+  {
+   "date": "2008-06-25",
+   "title": "June 24-25 Meeting - 2008",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:14"
+  },
+  {
+   "date": "2008-08-05",
+   "title": "August 5 Meeting - 2008",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:16"
+  },
+  {
+   "date": "2008-09-16",
+   "title": "September 16 Meeting - 2008",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:14"
+  },
+  {
+   "date": "2008-10-29",
+   "title": "October 28-29 Meeting - 2008",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:18"
+  },
+  {
+   "date": "2008-12-16",
+   "title": "December 15-16 Meeting - 2008",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:21"
+  },
+  {
+   "date": "2009-01-28",
+   "title": "January 27-28 Meeting - 2009",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:18"
+  },
+  {
+   "date": "2009-03-18",
+   "title": "March 17-18 Meeting - 2009",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:17"
+  },
+  {
+   "date": "2009-04-29",
+   "title": "April 28-29 Meeting - 2009",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:17"
+  },
+  {
+   "date": "2009-06-24",
+   "title": "June 23-24 Meeting - 2009",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:21"
+  },
+  {
+   "date": "2009-08-12",
+   "title": "August 11-12 Meeting - 2009",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:16"
+  },
+  {
+   "date": "2009-09-23",
+   "title": "September 22-23 Meeting - 2009",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:18"
+  },
+  {
+   "date": "2009-11-04",
+   "title": "November 3-4 Meeting - 2009",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:19"
+  },
+  {
+   "date": "2009-12-16",
+   "title": "December 15-16 Meeting - 2009",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:16"
+  },
+  {
+   "date": "2010-01-27",
+   "title": "January 26-27 Meeting - 2010",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:17"
+  },
+  {
+   "date": "2010-03-16",
+   "title": "March 16 Meeting - 2010",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:13"
+  },
+  {
+   "date": "2010-04-28",
+   "title": "April 27-28 Meeting - 2010",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "10:40"
+  },
+  {
+   "date": "2010-06-23",
+   "title": "June 22-23 Meeting - 2010",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:16"
+  },
+  {
+   "date": "2010-08-10",
+   "title": "August 10 Meeting - 2010",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:16"
+  },
+  {
+   "date": "2010-09-21",
+   "title": "September 21 Meeting - 2010",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:15"
+  },
+  {
+   "date": "2010-11-03",
+   "title": "November 2-3 Meeting - 2010",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:16"
+  },
+  {
+   "date": "2010-12-14",
+   "title": "December 14 Meeting - 2010",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:16"
+  },
+  {
+   "date": "2011-01-26",
+   "title": "January 25-26 Meeting - 2011",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:17"
+  },
+  {
+   "date": "2011-03-15",
+   "title": "March 15 Meeting - 2011",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:17"
+  },
+  {
+   "date": "2011-04-27",
+   "title": "April 26-27 Meeting - 2011",
+   "press_conf": true,
+   "release_ct_assumed": "11:30",
+   "detected_max_range_minute_ct": "11:33"
+  },
+  {
+   "date": "2011-06-22",
+   "title": "June 21-22 Meeting - 2011",
+   "press_conf": true,
+   "release_ct_assumed": "11:30",
+   "detected_max_range_minute_ct": "13:28"
+  },
+  {
+   "date": "2011-08-09",
+   "title": "August 9 Meeting - 2011",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:19"
+  },
+  {
+   "date": "2011-09-21",
+   "title": "September 20-21 Meeting - 2011",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:25"
+  },
+  {
+   "date": "2011-11-02",
+   "title": "November 1-2 Meeting - 2011",
+   "press_conf": true,
+   "release_ct_assumed": "11:30",
+   "detected_max_range_minute_ct": "12:01"
+  },
+  {
+   "date": "2011-12-13",
+   "title": "December 13 Meeting - 2011",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:13"
+  },
+  {
+   "date": "2012-01-25",
+   "title": "January 24-25 Meeting - 2012",
+   "press_conf": true,
+   "release_ct_assumed": "11:30",
+   "detected_max_range_minute_ct": "11:28"
+  },
+  {
+   "date": "2012-03-13",
+   "title": "March 13 Meeting - 2012",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "14:04"
+  },
+  {
+   "date": "2012-04-25",
+   "title": "April 24-25 Meeting - 2012",
+   "press_conf": true,
+   "release_ct_assumed": "11:30",
+   "detected_max_range_minute_ct": "13:22"
+  },
+  {
+   "date": "2012-06-20",
+   "title": "June 19-20 Meeting - 2012",
+   "press_conf": true,
+   "release_ct_assumed": "11:30",
+   "detected_max_range_minute_ct": "11:32"
+  },
+  {
+   "date": "2012-08-01",
+   "title": "July 31-August 1 Meeting - 2012",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:13"
+  },
+  {
+   "date": "2012-09-13",
+   "title": "September 12-13 Meeting - 2012",
+   "press_conf": true,
+   "release_ct_assumed": "11:30",
+   "detected_max_range_minute_ct": "11:31"
+  },
+  {
+   "date": "2012-10-24",
+   "title": "October 23-24 Meeting - 2012",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:16"
+  },
+  {
+   "date": "2012-12-12",
+   "title": "December 11-12 Meeting - 2012",
+   "press_conf": true,
+   "release_ct_assumed": "11:30",
+   "detected_max_range_minute_ct": "11:30"
+  },
+  {
+   "date": "2013-01-30",
+   "title": "January 29-30 Meeting - 2013",
+   "press_conf": false,
+   "release_ct_assumed": "13:15",
+   "detected_max_range_minute_ct": "13:16"
+  },
+  {
+   "date": "2013-03-20",
+   "title": "March 19-20 Meeting - 2013",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:24"
+  },
+  {
+   "date": "2013-05-01",
+   "title": "April/May 30-1 Meeting - 2013",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:20"
+  },
+  {
+   "date": "2013-06-19",
+   "title": "June 18-19 Meeting - 2013",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:38"
+  },
+  {
+   "date": "2013-07-31",
+   "title": "July 30-31 Meeting - 2013",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:02"
+  },
+  {
+   "date": "2013-09-18",
+   "title": "September 17-18 Meeting - 2013",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2013-10-30",
+   "title": "October 29-30 Meeting - 2013",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2013-12-18",
+   "title": "December 17-18 Meeting - 2013",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2014-01-29",
+   "title": "January 28-29 Meeting - 2014",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2014-03-19",
+   "title": "March 18-19 Meeting - 2014",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "14:08"
+  },
+  {
+   "date": "2014-04-30",
+   "title": "April 29-30 Meeting - 2014",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2014-06-18",
+   "title": "June 17-18 Meeting - 2014",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2014-07-30",
+   "title": "July 29-30 Meeting - 2014",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:01"
+  },
+  {
+   "date": "2014-09-17",
+   "title": "September 16-17 Meeting - 2014",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:03"
+  },
+  {
+   "date": "2014-10-29",
+   "title": "October 28-29 Meeting - 2014",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2014-12-17",
+   "title": "December 16-17 Meeting - 2014",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2015-01-28",
+   "title": "January 27-28 Meeting - 2015",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2015-03-18",
+   "title": "March 17-18 Meeting - 2015",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2015-04-29",
+   "title": "April 28-29 Meeting - 2015",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:02"
+  },
+  {
+   "date": "2015-06-17",
+   "title": "June 16-17 Meeting - 2015",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2015-07-29",
+   "title": "July 28-29 Meeting - 2015",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:04"
+  },
+  {
+   "date": "2015-09-17",
+   "title": "September 16-17 Meeting - 2015",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:01"
+  },
+  {
+   "date": "2015-10-28",
+   "title": "October 27-28 Meeting - 2015",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2015-12-16",
+   "title": "December 15-16 Meeting - 2015",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2016-01-27",
+   "title": "January 26-27 Meeting - 2016",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:02"
+  },
+  {
+   "date": "2016-03-16",
+   "title": "March 15-16 Meeting - 2016",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2016-04-27",
+   "title": "April 26-27 Meeting - 2016",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2016-06-15",
+   "title": "June 14-15 Meeting - 2016",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:09"
+  },
+  {
+   "date": "2016-07-27",
+   "title": "July 26-27 Meeting - 2016",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:01"
+  },
+  {
+   "date": "2016-09-21",
+   "title": "September 20-21 Meeting - 2016",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2016-11-02",
+   "title": "November 1-2 Meeting - 2016",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:19"
+  },
+  {
+   "date": "2016-12-14",
+   "title": "December 13-14 Meeting - 2016",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:02"
+  },
+  {
+   "date": "2017-02-01",
+   "title": "Jan/Feb 31-1 Meeting - 2017",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2017-03-15",
+   "title": "March 14-15 Meeting - 2017",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2017-05-03",
+   "title": "May 2-3 Meeting - 2017",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:03"
+  },
+  {
+   "date": "2017-06-14",
+   "title": "June 13-14 Meeting - 2017",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:02"
+  },
+  {
+   "date": "2017-07-26",
+   "title": "July 25-26 Meeting - 2017",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  },
+  {
+   "date": "2017-09-20",
+   "title": "September 19-20 Meeting - 2017",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:21"
+  },
+  {
+   "date": "2017-11-01",
+   "title": "Oct/Nov 31-1 Meeting - 2017",
+   "press_conf": false,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:02"
+  },
+  {
+   "date": "2017-12-13",
+   "title": "December 12-13 Meeting - 2017",
+   "press_conf": true,
+   "release_ct_assumed": "13:00",
+   "detected_max_range_minute_ct": "13:00"
+  }
+ ],
+ "variants": [
+  {
+   "name": "V1_pre_fomc_long_1d",
+   "variant": "V1",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry (and each V3 signal bar) requires that bar to open within 5 minutes of HH:MM, else no trade; an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Announcement days = last day of each scheduled FOMC meeting ('... Meeting - <year>' headings of federalreserve.gov/monetarypolicy/fomchistorical<year>.htm; 'Conference Call' and '(unscheduled)' entries excluded), 104 days in 2005-2017. Enter long at the open of the 17:00 CT bar on the calendar day before the announcement day; exit at the open of the 12:55 CT bar on the announcement day.",
+   "n": 102,
+   "n_events": 104,
+   "n_legs_scheduled": 104,
+   "n_legs_entry_bar_ok": 102,
+   "entry_lag_min_mean": 0.11764705882352941,
+   "n_dropped_unpriceable": 0,
+   "n_trades_unmapped": 0,
+   "trades_per_day": 0.030101449226567302,
+   "mean_net": 125.19058823529423,
+   "median_net": 56.22000000000227,
+   "std_net": 438.70059493653594,
+   "t_stat": 2.8820634818188813,
+   "ci95_low": 40.232254901961205,
+   "ci95_high": 210.54965686274528,
+   "win_rate": 0.6176470588235294,
+   "avg_win": 367.92634920635015,
+   "avg_loss": 266.9210256410268,
+   "sharpe_per_trade": 0.2853668075225764,
+   "sharpe_annual": 0.7859545448442686,
+   "total_net": 12769.440000000011,
+   "gross_mean": 141.47058823529426,
+   "max_drawdown": 3523.0400000000227,
+   "by_year": {
+    "2005": 621.0,
+    "2006": 511.0,
+    "2007": 2139.8,
+    "2008": 4799.8,
+    "2009": 4094.8,
+    "2010": -975.2,
+    "2011": 629.8,
+    "2012": 2459.8,
+    "2013": -990.2,
+    "2014": -225.2,
+    "2015": -400.2,
+    "2016": 114.8,
+    "2017": -10.2
+   },
+   "n_by_year": {
+    "2005": 7,
+    "2006": 7,
+    "2007": 8,
+    "2008": 8,
+    "2009": 8,
+    "2010": 8,
+    "2011": 8,
+    "2012": 8,
+    "2013": 8,
+    "2014": 8,
+    "2015": 8,
+    "2016": 8,
+    "2017": 8
+   },
+   "reasons": {
+    "signal": 102
+   },
+   "entry_tod_ct": {
+    "17:00": 96,
+    "17:01": 3,
+    "17:04": 1,
+    "17:03": 1,
+    "17:02": 1
+   },
+   "exit_tod_ct": {
+    "12:55": 96,
+    "12:56": 6
+   },
+   "entry_dow": {
+    "Tue": 74,
+    "Mon": 23,
+    "Wed": 5
+   },
+   "hold_minutes_median": 1195.0,
+   "per_event": {
+    "n_events_traded": 102,
+    "mean_net": 125.19058823529423,
+    "t_stat": 2.8820634818188813,
+    "win_rate": 0.6176470588235294
+   },
+   "by_release_time": {
+    "11:30": {
+     "n": 8,
+     "mean_net": 260.6,
+     "t_stat": 2.75
+    },
+    "13:00": {
+     "n": 39,
+     "mean_net": -34.74,
+     "t_stat": -0.54
+    },
+    "13:15": {
+     "n": 55,
+     "mean_net": 218.9,
+     "t_stat": 3.56
+    }
+   },
+   "dsr": 0.8203328891194397,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": true,
+    "n_ge_150": false,
+    "pos_years_ge_8_of_13": true,
+    "pos_years": 8
+   }
+  },
+  {
+   "name": "V2_pre_fomc_long_2d",
+   "variant": "V2",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry (and each V3 signal bar) requires that bar to open within 5 minutes of HH:MM, else no trade; an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Announcement days = last day of each scheduled FOMC meeting ('... Meeting - <year>' headings of federalreserve.gov/monetarypolicy/fomchistorical<year>.htm; 'Conference Call' and '(unscheduled)' entries excluded), 104 days in 2005-2017. Enter long at the open of the 17:00 CT bar on every evening (Sun-Thu) from the second weekday before the announcement day through the day before it (Wednesday announcement: Mon 17:00 and Tue 17:00; Tuesday announcement: Sun 17:00 and Mon 17:00); each leg is closed by the protocol forced flat at 15:10 CT and the last leg exits at the open of the 12:55 CT bar on the announcement day; one round-turn cost per leg.",
+   "n": 205,
+   "n_events": 104,
+   "n_legs_scheduled": 208,
+   "n_legs_entry_bar_ok": 205,
+   "entry_lag_min_mean": 0.07317073170731707,
+   "n_dropped_unpriceable": 0,
+   "n_trades_unmapped": 0,
+   "trades_per_day": 0.06049801070045389,
+   "mean_net": 98.15902439024411,
+   "median_net": 48.719999999997725,
+   "std_net": 647.8246422428548,
+   "t_stat": 2.169450272992908,
+   "ci95_low": 12.181585365854133,
+   "ci95_high": 183.44926829268317,
+   "win_rate": 0.5658536585365853,
+   "avg_win": 457.4700000000007,
+   "avg_loss": 370.1564044943827,
+   "sharpe_per_trade": 0.15152097958238292,
+   "sharpe_annual": 0.591621007874652,
+   "total_net": 20122.600000000042,
+   "gross_mean": 114.43902439024411,
+   "max_drawdown": 5709.680000000013,
+   "by_year": {
+    "2005": 485.8,
+    "2006": 885.8,
+    "2007": 4794.5,
+    "2008": 6164.5,
+    "2009": 4929.5,
+    "2010": -2065.5,
+    "2011": -3325.5,
+    "2012": 2399.5,
+    "2013": 415.8,
+    "2014": 1739.5,
+    "2015": 1804.5,
+    "2016": 1054.5,
+    "2017": 839.5
+   },
+   "n_by_year": {
+    "2005": 15,
+    "2006": 15,
+    "2007": 16,
+    "2008": 16,
+    "2009": 16,
+    "2010": 16,
+    "2011": 16,
+    "2012": 16,
+    "2013": 15,
+    "2014": 16,
+    "2015": 16,
+    "2016": 16,
+    "2017": 16
+   },
+   "reasons": {
+    "flat": 103,
+    "signal": 102
+   },
+   "entry_tod_ct": {
+    "17:00": 197,
+    "17:01": 4,
+    "17:02": 2,
+    "17:04": 1,
+    "17:03": 1
+   },
+   "exit_tod_ct": {
+    "12:55": 96,
+    "15:10": 90,
+    "12:56": 6,
+    "15:11": 6,
+    "15:14": 4
+   },
+   "entry_dow": {
+    "Mon": 96,
+    "Tue": 79,
+    "Sun": 25,
+    "Wed": 5
+   },
+   "hold_minutes_median": 1328.0,
+   "per_event": {
+    "n_events_traded": 104,
+    "mean_net": 193.48653846153894,
+    "t_stat": 2.183426949027533,
+    "win_rate": 0.6826923076923077
+   },
+   "by_release_time": {
+    "11:30": {
+     "n": 16,
+     "mean_net": 243.72,
+     "t_stat": 2.21
+    },
+    "13:00": {
+     "n": 77,
+     "mean_net": 72.68,
+     "t_stat": 1.29
+    },
+    "13:15": {
+     "n": 112,
+     "mean_net": 94.88,
+     "t_stat": 1.32
+    }
+   },
+   "dsr": 0.5891155249524834,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": true,
+    "pos_years": 11
+   }
+  },
+  {
+   "name": "V3_post_fomc_continuation",
+   "variant": "V3",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry (and each V3 signal bar) requires that bar to open within 5 minutes of HH:MM, else no trade; an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Announcement days = last day of each scheduled FOMC meeting ('... Meeting - <year>' headings of federalreserve.gov/monetarypolicy/fomchistorical<year>.htm; 'Conference Call' and '(unscheduled)' entries excluded), 104 days in 2005-2017. On the announcement day compute s = sign(open(13:35 CT bar) / open(12:55 CT bar) - 1) when the 13:35 bar opens; if s != 0 enter with side s at the open of the next quoted bar (normally the 13:36 bar); exit at the open of the 15:08 CT bar the same day (forced flat 15:10 CT backstop).",
+   "n": 104,
+   "n_events": 104,
+   "n_legs_scheduled": 104,
+   "n_legs_entry_bar_ok": 104,
+   "entry_lag_min_mean": 0.009615384615384616,
+   "n_signal_zero": 0,
+   "n_signal_long": 58,
+   "n_signal_short": 46,
+   "n_dropped_unpriceable": 0,
+   "n_trades_unmapped": 0,
+   "trades_per_day": 0.030691673721205875,
+   "mean_net": -36.808846153845735,
+   "median_net": -21.279999999995454,
+   "std_net": 535.1272048526528,
+   "t_stat": -0.7014744274231929,
+   "ci95_low": -143.97350961538515,
+   "ci95_high": 58.39788461538506,
+   "win_rate": 0.46153846153846156,
+   "avg_win": 361.7408333333338,
+   "avg_loss": 378.42285714285674,
+   "sharpe_per_trade": -0.06878522680225359,
+   "sharpe_annual": -0.19129593008733622,
+   "total_net": -3828.1199999999562,
+   "gross_mean": -20.52884615384573,
+   "max_drawdown": 9349.800000000007,
+   "by_year": {
+    "2005": 944.8,
+    "2006": 594.8,
+    "2007": -180.2,
+    "2008": -3880.2,
+    "2009": -1600.2,
+    "2010": -1010.2,
+    "2011": -705.2,
+    "2012": -855.2,
+    "2013": 999.8,
+    "2014": 734.8,
+    "2015": -515.2,
+    "2016": 2264.8,
+    "2017": -620.2
+   },
+   "n_by_year": {
+    "2005": 8,
+    "2006": 8,
+    "2007": 8,
+    "2008": 8,
+    "2009": 8,
+    "2010": 8,
+    "2011": 8,
+    "2012": 8,
+    "2013": 8,
+    "2014": 8,
+    "2015": 8,
+    "2016": 8,
+    "2017": 8
+   },
+   "reasons": {
+    "signal": 104
+   },
+   "entry_tod_ct": {
+    "13:36": 102,
+    "13:37": 1,
+    "13:38": 1
+   },
+   "exit_tod_ct": {
+    "15:08": 97,
+    "15:09": 5,
+    "15:10": 1,
+    "15:11": 1
+   },
+   "entry_dow": {
+    "Wed": 74,
+    "Tue": 25,
+    "Thu": 5
+   },
+   "hold_minutes_median": 92.0,
+   "per_event": {
+    "n_events_traded": 104,
+    "mean_net": -36.808846153845735,
+    "t_stat": -0.7014744274231929,
+    "win_rate": 0.46153846153846156
+   },
+   "by_release_time": {
+    "11:30": {
+     "n": 8,
+     "mean_net": -8.78,
+     "t_stat": -0.08
+    },
+    "13:00": {
+     "n": 39,
+     "mean_net": 67.18,
+     "t_stat": 0.92
+    },
+    "13:15": {
+     "n": 57,
+     "mean_net": -111.89,
+     "t_stat": -1.41
+    }
+   },
+   "by_side": {
+    "short": {
+     "n": 46,
+     "mean_net": -73.24,
+     "t_stat": -0.73
+    },
+    "long": {
+     "n": 58,
+     "mean_net": -7.92,
+     "t_stat": -0.16
+    }
+   },
+   "dsr": 0.004294899844013859,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": false,
+    "t_ge_2.5": false,
+    "n_ge_150": false,
+    "pos_years_ge_8_of_13": false,
+    "pos_years": 5
+   }
+  }
+ ],
+ "diagnostics": [
+  {
+   "name": "D1_NAS100_V1_pre_fomc_long_1d",
+   "variant": "V1",
+   "symbol": "NQ",
+   "data": "NAS100",
+   "rule": "1 NQ contract ($20/pt), no stop/target, $8.78 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry (and each V3 signal bar) requires that bar to open within 5 minutes of HH:MM, else no trade; an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Announcement days = last day of each scheduled FOMC meeting ('... Meeting - <year>' headings of federalreserve.gov/monetarypolicy/fomchistorical<year>.htm; 'Conference Call' and '(unscheduled)' entries excluded), 104 days in 2005-2017. Enter long at the open of the 17:00 CT bar on the calendar day before the announcement day; exit at the open of the 12:55 CT bar on the announcement day.",
+   "n": 99,
+   "n_events": 104,
+   "n_legs_scheduled": 104,
+   "n_legs_entry_bar_ok": 99,
+   "entry_lag_min_mean": 0.18181818181818182,
+   "n_dropped_unpriceable": 0,
+   "n_trades_unmapped": 0,
+   "trades_per_day": 0.029216108207808178,
+   "mean_net": 53.11898989898948,
+   "median_net": 55.21999999999636,
+   "std_net": 329.6087196361681,
+   "t_stat": 1.603499072464721,
+   "ci95_low": -10.904747474748008,
+   "ci95_high": 111.44878787878777,
+   "win_rate": 0.6161616161616161,
+   "avg_win": 232.79377049180323,
+   "avg_loss": 235.3063157894748,
+   "sharpe_per_trade": 0.16115772045601162,
+   "sharpe_annual": 0.4372829742872219,
+   "total_net": 5258.779999999959,
+   "gross_mean": 61.898989898989456,
+   "max_drawdown": 3248.860000000014,
+   "by_year": {
+    "2005": 458.5,
+    "2006": 172.5,
+    "2007": 348.5,
+    "2008": 2125.3,
+    "2009": 3137.8,
+    "2010": -748.2,
+    "2011": 779.8,
+    "2012": 1811.8,
+    "2013": -724.2,
+    "2014": -290.2,
+    "2015": -880.2,
+    "2016": -902.2,
+    "2017": -30.2
+   },
+   "n_by_year": {
+    "2005": 7,
+    "2006": 7,
+    "2007": 7,
+    "2008": 6,
+    "2009": 8,
+    "2010": 8,
+    "2011": 8,
+    "2012": 8,
+    "2013": 8,
+    "2014": 8,
+    "2015": 8,
+    "2016": 8,
+    "2017": 8
+   },
+   "reasons": {
+    "signal": 99
+   },
+   "entry_tod_ct": {
+    "17:00": 91,
+    "17:01": 3,
+    "17:03": 3,
+    "17:02": 1,
+    "17:04": 1
+   },
+   "exit_tod_ct": {
+    "12:55": 97,
+    "12:56": 2
+   },
+   "entry_dow": {
+    "Tue": 73,
+    "Mon": 21,
+    "Wed": 5
+   },
+   "hold_minutes_median": 1195.0,
+   "per_event": {
+    "n_events_traded": 99,
+    "mean_net": 53.11898989898948,
+    "t_stat": 1.603499072464721,
+    "win_rate": 0.6161616161616161
+   },
+   "by_release_time": {
+    "11:30": {
+     "n": 8,
+     "mean_net": 168.72,
+     "t_stat": 1.56
+    },
+    "13:00": {
+     "n": 39,
+     "mean_net": -70.22,
+     "t_stat": -1.56
+    },
+    "13:15": {
+     "n": 52,
+     "mean_net": 127.84,
+     "t_stat": 2.68
+    }
+   },
+   "dsr": 0.3688300927404832,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": false,
+    "pos_years_ge_8_of_13": false,
+    "pos_years": 7
+   },
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: NAS100 CFD twin of the pre-registered variant with NQ contract spec; not nominable"
+  },
+  {
+   "name": "D1_NAS100_V2_pre_fomc_long_2d",
+   "variant": "V2",
+   "symbol": "NQ",
+   "data": "NAS100",
+   "rule": "1 NQ contract ($20/pt), no stop/target, $8.78 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry (and each V3 signal bar) requires that bar to open within 5 minutes of HH:MM, else no trade; an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Announcement days = last day of each scheduled FOMC meeting ('... Meeting - <year>' headings of federalreserve.gov/monetarypolicy/fomchistorical<year>.htm; 'Conference Call' and '(unscheduled)' entries excluded), 104 days in 2005-2017. Enter long at the open of the 17:00 CT bar on every evening (Sun-Thu) from the second weekday before the announcement day through the day before it (Wednesday announcement: Mon 17:00 and Tue 17:00; Tuesday announcement: Sun 17:00 and Mon 17:00); each leg is closed by the protocol forced flat at 15:10 CT and the last leg exits at the open of the 12:55 CT bar on the announcement day; one round-turn cost per leg.",
+   "n": 202,
+   "n_events": 104,
+   "n_legs_scheduled": 208,
+   "n_legs_entry_bar_ok": 202,
+   "entry_lag_min_mean": 0.1782178217821782,
+   "n_dropped_unpriceable": 0,
+   "n_trades_unmapped": 0,
+   "trades_per_day": 0.05961266523209346,
+   "mean_net": 52.54673267326695,
+   "median_net": 55.219999999998635,
+   "std_net": 479.09116092434687,
+   "t_stat": 1.558846109428903,
+   "ci95_low": -12.246089108911436,
+   "ci95_high": 121.87866336633608,
+   "win_rate": 0.5891089108910891,
+   "avg_win": 311.8250420168063,
+   "avg_loss": 319.18963855421714,
+   "sharpe_per_trade": 0.1096800295206544,
+   "sharpe_annual": 0.42510586684616386,
+   "total_net": 10614.439999999924,
+   "gross_mean": 61.32673267326693,
+   "max_drawdown": 3981.0199999999895,
+   "by_year": {
+    "2005": 294.3,
+    "2006": 34.3,
+    "2007": 1488.3,
+    "2008": 2627.9,
+    "2009": 3417.5,
+    "2010": -1024.5,
+    "2011": -1778.5,
+    "2012": 2007.5,
+    "2013": 997.5,
+    "2014": 1457.5,
+    "2015": -234.5,
+    "2016": 265.5,
+    "2017": 1061.5
+   },
+   "n_by_year": {
+    "2005": 15,
+    "2006": 15,
+    "2007": 15,
+    "2008": 13,
+    "2009": 16,
+    "2010": 16,
+    "2011": 16,
+    "2012": 16,
+    "2013": 16,
+    "2014": 16,
+    "2015": 16,
+    "2016": 16,
+    "2017": 16
+   },
+   "reasons": {
+    "flat": 103,
+    "signal": 99
+   },
+   "entry_tod_ct": {
+    "17:00": 185,
+    "17:01": 7,
+    "17:03": 5,
+    "17:02": 3,
+    "17:04": 2
+   },
+   "exit_tod_ct": {
+    "12:55": 97,
+    "15:10": 96,
+    "15:11": 5,
+    "12:56": 2,
+    "15:12": 1
+   },
+   "entry_dow": {
+    "Mon": 94,
+    "Tue": 78,
+    "Sun": 25,
+    "Wed": 5
+   },
+   "hold_minutes_median": 1327.0,
+   "per_event": {
+    "n_events_traded": 104,
+    "mean_net": 102.06192307692233,
+    "t_stat": 1.6470391554923896,
+    "win_rate": 0.5769230769230769
+   },
+   "by_release_time": {
+    "11:30": {
+     "n": 16,
+     "mean_net": 151.22,
+     "t_stat": 1.31
+    },
+    "13:00": {
+     "n": 78,
+     "mean_net": 44.68,
+     "t_stat": 0.81
+    },
+    "13:15": {
+     "n": 108,
+     "mean_net": 43.61,
+     "t_stat": 0.95
+    }
+   },
+   "dsr": 0.3514553852949066,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": true,
+    "pos_years": 10
+   },
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: NAS100 CFD twin of the pre-registered variant with NQ contract spec; not nominable"
+  },
+  {
+   "name": "D1_NAS100_V3_post_fomc_continuation",
+   "variant": "V3",
+   "symbol": "NQ",
+   "data": "NAS100",
+   "rule": "1 NQ contract ($20/pt), no stop/target, $8.78 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry (and each V3 signal bar) requires that bar to open within 5 minutes of HH:MM, else no trade; an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Announcement days = last day of each scheduled FOMC meeting ('... Meeting - <year>' headings of federalreserve.gov/monetarypolicy/fomchistorical<year>.htm; 'Conference Call' and '(unscheduled)' entries excluded), 104 days in 2005-2017. On the announcement day compute s = sign(open(13:35 CT bar) / open(12:55 CT bar) - 1) when the 13:35 bar opens; if s != 0 enter with side s at the open of the next quoted bar (normally the 13:36 bar); exit at the open of the 15:08 CT bar the same day (forced flat 15:10 CT backstop).",
+   "n": 104,
+   "n_events": 104,
+   "n_legs_scheduled": 104,
+   "n_legs_entry_bar_ok": 104,
+   "entry_lag_min_mean": 0.0,
+   "n_signal_zero": 0,
+   "n_signal_long": 56,
+   "n_signal_short": 48,
+   "n_dropped_unpriceable": 0,
+   "n_trades_unmapped": 0,
+   "trades_per_day": 0.03069166922840455,
+   "mean_net": -17.8953846153834,
+   "median_net": -11.779999999992723,
+   "std_net": 400.81497820229663,
+   "t_stat": -0.45531689342723874,
+   "ci95_low": -95.3232692307681,
+   "ci95_high": 54.72048076923185,
+   "win_rate": 0.47115384615384615,
+   "avg_win": 271.75061224489934,
+   "avg_loss": 275.9436363636354,
+   "sharpe_per_trade": -0.04464749470103725,
+   "sharpe_annual": -0.12416740914919458,
+   "total_net": -1861.1199999998737,
+   "gross_mean": -9.115384615383409,
+   "max_drawdown": 5610.619999999994,
+   "by_year": {
+    "2005": -280.2,
+    "2006": 643.8,
+    "2007": 1209.8,
+    "2008": -2000.2,
+    "2009": -1058.2,
+    "2010": -758.2,
+    "2011": -618.2,
+    "2012": -364.2,
+    "2013": 625.8,
+    "2014": 715.8,
+    "2015": -590.2,
+    "2016": 1041.8,
+    "2017": -428.2
+   },
+   "n_by_year": {
+    "2005": 8,
+    "2006": 8,
+    "2007": 8,
+    "2008": 8,
+    "2009": 8,
+    "2010": 8,
+    "2011": 8,
+    "2012": 8,
+    "2013": 8,
+    "2014": 8,
+    "2015": 8,
+    "2016": 8,
+    "2017": 8
+   },
+   "reasons": {
+    "signal": 104
+   },
+   "entry_tod_ct": {
+    "13:36": 104
+   },
+   "exit_tod_ct": {
+    "15:08": 95,
+    "15:09": 7,
+    "15:10": 2
+   },
+   "entry_dow": {
+    "Wed": 74,
+    "Tue": 25,
+    "Thu": 5
+   },
+   "hold_minutes_median": 92.0,
+   "per_event": {
+    "n_events_traded": 104,
+    "mean_net": -17.8953846153834,
+    "t_stat": -0.45531689342723874,
+    "win_rate": 0.47115384615384615
+   },
+   "by_release_time": {
+    "11:30": {
+     "n": 8,
+     "mean_net": 26.22,
+     "t_stat": 0.36
+    },
+    "13:00": {
+     "n": 39,
+     "mean_net": 32.96,
+     "t_stat": 0.44
+    },
+    "13:15": {
+     "n": 57,
+     "mean_net": -58.89,
+     "t_stat": -1.2
+    }
+   },
+   "by_side": {
+    "short": {
+     "n": 48,
+     "mean_net": -52.65,
+     "t_stat": -0.74
+    },
+    "long": {
+     "n": 56,
+     "mean_net": 11.9,
+     "t_stat": 0.29
+    }
+   },
+   "dsr": 0.008541658042539509,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": false,
+    "t_ge_2.5": false,
+    "n_ge_150": false,
+    "pos_years_ge_8_of_13": false,
+    "pos_years": 5
+   },
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: NAS100 CFD twin of the pre-registered variant with NQ contract spec; not nominable"
+  },
+  {
+   "name": "D2_release_corrected_V1_pre_fomc_long_1d",
+   "variant": "V1",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry (and each V3 signal bar) requires that bar to open within 5 minutes of HH:MM, else no trade; an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Announcement days = last day of each scheduled FOMC meeting ('... Meeting - <year>' headings of federalreserve.gov/monetarypolicy/fomchistorical<year>.htm; 'Conference Call' and '(unscheduled)' entries excluded), 104 days in 2005-2017. Enter long at the open of the 17:00 CT bar on the calendar day before the announcement day; exit at the open of the 12:55 CT bar on the announcement day. DIAGNOSTIC D2: on the eight 2011-2012 press-conference days (statement 12:30 pm ET = 11:30 CT) every instant is 90 minutes earlier (exit 11:25; V3 signal 12:05 vs 11:25).",
+   "n": 102,
+   "n_events": 104,
+   "n_legs_scheduled": 104,
+   "n_legs_entry_bar_ok": 102,
+   "entry_lag_min_mean": 0.11764705882352941,
+   "n_dropped_unpriceable": 0,
+   "n_trades_unmapped": 0,
+   "trades_per_day": 0.030101449226567302,
+   "mean_net": 104.70039215686279,
+   "median_net": 43.71999999999659,
+   "std_net": 437.6111113308721,
+   "t_stat": 2.4163511854642525,
+   "ci95_low": 19.207745098038462,
+   "ci95_high": 188.78617647058877,
+   "win_rate": 0.5980392156862745,
+   "avg_win": 357.16262295082066,
+   "avg_loss": 270.91414634146474,
+   "sharpe_per_trade": 0.2392544189256204,
+   "sharpe_annual": 0.6589522431188468,
+   "total_net": 10679.440000000004,
+   "gross_mean": 120.98039215686278,
+   "max_drawdown": 3523.0400000000227,
+   "by_year": {
+    "2005": 621.0,
+    "2006": 511.0,
+    "2007": 2139.8,
+    "2008": 4799.8,
+    "2009": 4094.8,
+    "2010": -975.2,
+    "2011": 654.8,
+    "2012": 344.8,
+    "2013": -990.2,
+    "2014": -225.2,
+    "2015": -400.2,
+    "2016": 114.8,
+    "2017": -10.2
+   },
+   "n_by_year": {
+    "2005": 7,
+    "2006": 7,
+    "2007": 8,
+    "2008": 8,
+    "2009": 8,
+    "2010": 8,
+    "2011": 8,
+    "2012": 8,
+    "2013": 8,
+    "2014": 8,
+    "2015": 8,
+    "2016": 8,
+    "2017": 8
+   },
+   "reasons": {
+    "signal": 102
+   },
+   "entry_tod_ct": {
+    "17:00": 96,
+    "17:01": 3,
+    "17:04": 1,
+    "17:03": 1,
+    "17:02": 1
+   },
+   "exit_tod_ct": {
+    "12:55": 88,
+    "11:25": 7,
+    "12:56": 6,
+    "11:27": 1
+   },
+   "entry_dow": {
+    "Tue": 74,
+    "Mon": 23,
+    "Wed": 5
+   },
+   "hold_minutes_median": 1195.0,
+   "per_event": {
+    "n_events_traded": 102,
+    "mean_net": 104.70039215686279,
+    "t_stat": 2.4163511854642525,
+    "win_rate": 0.5980392156862745
+   },
+   "by_release_time": {
+    "11:30": {
+     "n": 8,
+     "mean_net": -0.65,
+     "t_stat": -0.01
+    },
+    "13:00": {
+     "n": 39,
+     "mean_net": -34.74,
+     "t_stat": -0.54
+    },
+    "13:15": {
+     "n": 55,
+     "mean_net": 218.9,
+     "t_stat": 3.56
+    }
+   },
+   "dsr": 0.6790619273879855,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": false,
+    "pos_years_ge_8_of_13": true,
+    "pos_years": 8
+   },
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: the 2011-2012 press-conference statements came out at 11:30 CT (data-confirmed), so on those 8 days the exit is 11:25 and the V3 signal 12:05 vs 11:25; not nominable"
+  },
+  {
+   "name": "D2_release_corrected_V2_pre_fomc_long_2d",
+   "variant": "V2",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry (and each V3 signal bar) requires that bar to open within 5 minutes of HH:MM, else no trade; an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Announcement days = last day of each scheduled FOMC meeting ('... Meeting - <year>' headings of federalreserve.gov/monetarypolicy/fomchistorical<year>.htm; 'Conference Call' and '(unscheduled)' entries excluded), 104 days in 2005-2017. Enter long at the open of the 17:00 CT bar on every evening (Sun-Thu) from the second weekday before the announcement day through the day before it (Wednesday announcement: Mon 17:00 and Tue 17:00; Tuesday announcement: Sun 17:00 and Mon 17:00); each leg is closed by the protocol forced flat at 15:10 CT and the last leg exits at the open of the 12:55 CT bar on the announcement day; one round-turn cost per leg. DIAGNOSTIC D2: on the eight 2011-2012 press-conference days (statement 12:30 pm ET = 11:30 CT) every instant is 90 minutes earlier (exit 11:25; V3 signal 12:05 vs 11:25).",
+   "n": 205,
+   "n_events": 104,
+   "n_legs_scheduled": 208,
+   "n_legs_entry_bar_ok": 205,
+   "entry_lag_min_mean": 0.07317073170731707,
+   "n_dropped_unpriceable": 0,
+   "n_trades_unmapped": 0,
+   "trades_per_day": 0.06049801070045389,
+   "mean_net": 87.96390243902454,
+   "median_net": 43.72000000000227,
+   "std_net": 647.1133405471626,
+   "t_stat": 1.9462609348843445,
+   "ci95_low": 1.4230487804876626,
+   "ci95_high": 173.68585365853704,
+   "win_rate": 0.5560975609756098,
+   "avg_win": 453.28140350877277,
+   "avg_loss": 369.68659340659406,
+   "sharpe_per_trade": 0.13593276003960483,
+   "sharpe_annual": 0.5307560492247808,
+   "total_net": 18032.60000000003,
+   "gross_mean": 104.24390243902455,
+   "max_drawdown": 5884.800000000001,
+   "by_year": {
+    "2005": 485.8,
+    "2006": 885.8,
+    "2007": 4794.5,
+    "2008": 6164.5,
+    "2009": 4929.5,
+    "2010": -2065.5,
+    "2011": -3300.5,
+    "2012": 284.5,
+    "2013": 415.8,
+    "2014": 1739.5,
+    "2015": 1804.5,
+    "2016": 1054.5,
+    "2017": 839.5
+   },
+   "n_by_year": {
+    "2005": 15,
+    "2006": 15,
+    "2007": 16,
+    "2008": 16,
+    "2009": 16,
+    "2010": 16,
+    "2011": 16,
+    "2012": 16,
+    "2013": 15,
+    "2014": 16,
+    "2015": 16,
+    "2016": 16,
+    "2017": 16
+   },
+   "reasons": {
+    "flat": 103,
+    "signal": 102
+   },
+   "entry_tod_ct": {
+    "17:00": 197,
+    "17:01": 4,
+    "17:02": 2,
+    "17:04": 1,
+    "17:03": 1
+   },
+   "exit_tod_ct": {
+    "15:10": 90,
+    "12:55": 88,
+    "11:25": 7,
+    "12:56": 6,
+    "15:11": 6
+   },
+   "entry_dow": {
+    "Mon": 96,
+    "Tue": 79,
+    "Sun": 25,
+    "Wed": 5
+   },
+   "hold_minutes_median": 1328.0,
+   "per_event": {
+    "n_events_traded": 104,
+    "mean_net": 173.390384615385,
+    "t_stat": 1.9828565908430873,
+    "win_rate": 0.6730769230769231
+   },
+   "by_release_time": {
+    "11:30": {
+     "n": 16,
+     "mean_net": 113.09,
+     "t_stat": 1.0
+    },
+    "13:00": {
+     "n": 77,
+     "mean_net": 72.68,
+     "t_stat": 1.29
+    },
+    "13:15": {
+     "n": 112,
+     "mean_net": 94.88,
+     "t_stat": 1.32
+    }
+   },
+   "dsr": 0.5015548262951892,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": true,
+    "pos_years": 11
+   },
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: the 2011-2012 press-conference statements came out at 11:30 CT (data-confirmed), so on those 8 days the exit is 11:25 and the V3 signal 12:05 vs 11:25; not nominable"
+  },
+  {
+   "name": "D2_release_corrected_V3_post_fomc_continuation",
+   "variant": "V3",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry (and each V3 signal bar) requires that bar to open within 5 minutes of HH:MM, else no trade; an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Announcement days = last day of each scheduled FOMC meeting ('... Meeting - <year>' headings of federalreserve.gov/monetarypolicy/fomchistorical<year>.htm; 'Conference Call' and '(unscheduled)' entries excluded), 104 days in 2005-2017. On the announcement day compute s = sign(open(13:35 CT bar) / open(12:55 CT bar) - 1) when the 13:35 bar opens; if s != 0 enter with side s at the open of the next quoted bar (normally the 13:36 bar); exit at the open of the 15:08 CT bar the same day (forced flat 15:10 CT backstop). DIAGNOSTIC D2: on the eight 2011-2012 press-conference days (statement 12:30 pm ET = 11:30 CT) every instant is 90 minutes earlier (exit 11:25; V3 signal 12:05 vs 11:25).",
+   "n": 104,
+   "n_events": 104,
+   "n_legs_scheduled": 104,
+   "n_legs_entry_bar_ok": 104,
+   "entry_lag_min_mean": 0.009615384615384616,
+   "n_signal_zero": 0,
+   "n_signal_long": 63,
+   "n_signal_short": 41,
+   "n_dropped_unpriceable": 0,
+   "n_trades_unmapped": 0,
+   "trades_per_day": 0.030691673721205875,
+   "mean_net": -40.12615384615346,
+   "median_net": -16.28,
+   "std_net": 540.0198804184893,
+   "t_stat": -0.7577648486141081,
+   "ci95_low": -146.23432692307642,
+   "ci95_high": 57.861826923077615,
+   "win_rate": 0.47115384615384615,
+   "avg_win": 358.5159183673473,
+   "avg_loss": 395.2799999999995,
+   "sharpe_per_trade": -0.074304956726885,
+   "sharpe_annual": -0.20664663719191284,
+   "total_net": -4173.11999999996,
+   "gross_mean": -23.84615384615347,
+   "max_drawdown": 9784.800000000007,
+   "by_year": {
+    "2005": 944.8,
+    "2006": 594.8,
+    "2007": -180.2,
+    "2008": -3880.2,
+    "2009": -1600.2,
+    "2010": -1010.2,
+    "2011": -1730.2,
+    "2012": -175.2,
+    "2013": 999.8,
+    "2014": 734.8,
+    "2015": -515.2,
+    "2016": 2264.8,
+    "2017": -620.2
+   },
+   "n_by_year": {
+    "2005": 8,
+    "2006": 8,
+    "2007": 8,
+    "2008": 8,
+    "2009": 8,
+    "2010": 8,
+    "2011": 8,
+    "2012": 8,
+    "2013": 8,
+    "2014": 8,
+    "2015": 8,
+    "2016": 8,
+    "2017": 8
+   },
+   "reasons": {
+    "signal": 104
+   },
+   "entry_tod_ct": {
+    "13:36": 94,
+    "12:06": 8,
+    "13:37": 1,
+    "13:38": 1
+   },
+   "exit_tod_ct": {
+    "15:08": 97,
+    "15:09": 5,
+    "15:10": 1,
+    "15:11": 1
+   },
+   "entry_dow": {
+    "Wed": 74,
+    "Tue": 25,
+    "Thu": 5
+   },
+   "hold_minutes_median": 92.0,
+   "per_event": {
+    "n_events_traded": 104,
+    "mean_net": -40.12615384615346,
+    "t_stat": -0.7577648486141081,
+    "win_rate": 0.47115384615384615
+   },
+   "by_release_time": {
+    "11:30": {
+     "n": 8,
+     "mean_net": -51.91,
+     "t_stat": -0.36
+    },
+    "13:00": {
+     "n": 39,
+     "mean_net": 67.18,
+     "t_stat": 0.92
+    },
+    "13:15": {
+     "n": 57,
+     "mean_net": -111.89,
+     "t_stat": -1.41
+    }
+   },
+   "by_side": {
+    "short": {
+     "n": 41,
+     "mean_net": -88.6,
+     "t_stat": -0.79
+    },
+    "long": {
+     "n": 63,
+     "mean_net": -8.58,
+     "t_stat": -0.18
+    }
+   },
+   "dsr": 0.0036440310700934808,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": false,
+    "t_ge_2.5": false,
+    "n_ge_150": false,
+    "pos_years_ge_8_of_13": false,
+    "pos_years": 5
+   },
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: the 2011-2012 press-conference statements came out at 11:30 CT (data-confirmed), so on those 8 days the exit is 11:25 and the V3 signal 12:05 vs 11:25; not nominable"
+  }
+ ],
+ "survivors": []
+}
