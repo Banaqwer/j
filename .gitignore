@@ -24,3 +24,4 @@ results/logs/
 
 # downloaded research data (untrusted, regenerable)
 data_research/
+results/research/*.log
