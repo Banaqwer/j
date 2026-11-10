@@ -1,0 +1,256 @@
+{
+ "hyps": [
+  {
+   "family": "session_continuation",
+   "script_path": "/home/user/j/research/hyp/r2_session_continuation.py",
+   "n_variants_tried": 5,
+   "variants": [
+    {
+     "name": "V1_overnight_reversal_z1",
+     "rule": "BTC, 1-min bars. Topstep day d = session opening 17:00 CT on date d (Sun-Thu), ending 15:10 CT on d+1. At the 08:29 CT bar close on d+1: r = close(08:29 CT)/open(17:00 CT bar of day d) - 1 (08:29 close = last price before the 08:30 open, decision-time proxy for 'open of 08:30 bar'); z = r/sd, sd = sample std (ddof=1) of the same overnight return over the 60 Topstep days preceding d (min 50 valid), no mean subtracted. If |z| >= 1: enter 1 MBT at the open of the 08:30 CT bar, side = -sign(r); exit at the open of the 15:08 CT bar the same day. No stop/target; $3.82 RT; forced flat 15:10 CT backstop.",
+     "n": 260,
+     "mean_net": 3.3733,
+     "t_stat": 0.5672,
+     "trades_per_day": 0.2215,
+     "win_rate": 0.4808,
+     "avg_win": 67.38,
+     "avg_loss": 55.89,
+     "sharpe_per_trade": 0.0352,
+     "dsr": 0.0141,
+     "by_year": "2020: -389.6 (n=52), 2021: +1157.1, 2022: +545.1, 2023: -147.8, 2024H1: -287.6; positive years 2/5; long n=118 mean +5.61, short n=142 mean +1.51; all 260 exits at 15:08 CT"
+    },
+    {
+     "name": "V2_overnight_reversal_z05",
+     "rule": "Same as V1 with |z| >= 0.5.",
+     "n": 528,
+     "mean_net": 0.2907,
+     "t_stat": 0.0758,
+     "trades_per_day": 0.4499,
+     "win_rate": 0.447,
+     "avg_win": 63.23,
+     "avg_loss": 50.58,
+     "sharpe_per_trade": 0.0033,
+     "dsr": 0.0036,
+     "by_year": "2020: -453.5, 2021: +1285.4, 2022: -7.6, 2023: -940.6, 2024H1: +269.7; positive years 2/5; long n=241 mean +1.13, short n=287 mean -0.41"
+    },
+    {
+     "name": "V3_daysofar_continuation_z1",
+     "rule": "BTC, 1-min bars. At the 11:59 CT bar close on d+1: r = close(11:59 CT)/open(17:00 CT bar of day d) - 1; z = r/sd, sd = std (ddof=1) of the same day-so-far return over the 60 Topstep days preceding d (min 50 valid). If |z| >= 1: enter 1 MBT at the open of the 12:00 CT bar, side = +sign(r); exit at the open of the 15:08 CT bar the same day. No stop/target; $3.82 RT.",
+     "n": 284,
+     "mean_net": -3.6631,
+     "t_stat": -1.0853,
+     "trades_per_day": 0.242,
+     "win_rate": 0.3944,
+     "avg_win": 41.71,
+     "avg_loss": 33.21,
+     "sharpe_per_trade": -0.0644,
+     "dsr": 0.0001,
+     "by_year": "2020: -345.0, 2021: -831.3, 2022: +185.0, 2023: +50.7, 2024H1: -99.6; positive years 2/5; long n=153 mean -1.06, short n=131 mean -6.70"
+    },
+    {
+     "name": "V4_daysofar_continuation_z05",
+     "rule": "Same as V3 with |z| >= 0.5.",
+     "n": 588,
+     "mean_net": -4.5575,
+     "t_stat": -2.0082,
+     "trades_per_day": 0.501,
+     "win_rate": 0.369,
+     "avg_win": 41.5,
+     "avg_loss": 31.5,
+     "sharpe_per_trade": -0.0828,
+     "dsr": 0,
+     "by_year": "2020: -736.8, 2021: -1179.4, 2022: -896.7, 2023: -212.3, 2024H1: +345.4; positive years 1/5; long n=314 mean -3.36, short n=274 mean -5.93"
+    },
+    {
+     "name": "V5_prevday_continuation_z1",
+     "rule": "BTC, 1-min bars. At 16:59 CT on date d (Sun-Thu): r = open(15:08 CT bar of the previous Topstep day's day session)/open(17:00 CT bar that opened the previous Topstep day) - 1 (Sunday uses Thu 17:00 -> Fri 15:08); z = r/sd, sd = std (ddof=1) of the full-day return over the 60 Topstep days preceding that previous day (min 50 valid). If |z| >= 1: enter 1 MBT at the open of the 17:00 CT bar on date d, side = +sign(r); hold overnight, exit at the open of the 15:08 CT bar on d+1. No stop/target; $3.82 RT; forced flat / weekend backstop.",
+     "n": 283,
+     "mean_net": -8.6825,
+     "t_stat": -0.9979,
+     "trades_per_day": 0.2411,
+     "win_rate": 0.4594,
+     "avg_win": 97.43,
+     "avg_loss": 98.84,
+     "sharpe_per_trade": -0.0593,
+     "dsr": 0.0001,
+     "by_year": "2020: -30.4, 2021: -1069.1, 2022: +269.6, 2023: -59.5, 2024H1: -1567.8; positive years 1/5; long n=153 mean -1.30, short n=130 mean -17.38; every trade held 1328 min (17:00 -> 15:08 next day)"
+    }
+   ],
+   "survivors": [],
+   "notes": "RESULT: no variant qualifies (bar: mean_net>0, t>=2.5, n>=150, net>0 in >=3 of 5 IS calendar periods). Best is V1 (mean_net +$3.37, t=0.57, DSR 0.014 with N=201); V3/V4/V5 are negative; V4 is the most significant and it is negative (t=-2.01), i.e. day-so-far continuation at |z|>=0.5 is, if anything, a reversal in-sample. Nothing nominated. IMPLEMENTATION: in-sample root only (/home/user/j/data_research/IS, 2020-01-01..2024-06-30, 2,365,920 1-min bars, zero gaps; 1,175 Topstep days, 1,172 with all prices). Protocol.backtest_signals (fixed 2026-11-10 forced-flat) used unchanged; all 1,943 trades exit with reason 'signal' at the 15:08 CT open, entries verified to be exactly 08:30 / 12:00 / 17:00 CT (V5 Sun-Thu), constant hold lengths (398 / 188 / 1328 min). Deviations from the pre-registered wording, fixed before looking at results: (a) 1-min execution grid because '15:08 CT bar' does not exist on the 5-min grid; signal opens are grid-independent. (b) To respect 'signal from bar i, fill at open of bar i+1' the decision price for the 08:30 / 12:00 entries is the close of the preceding 1-min bar (08:29 / 11:59 CT), used consistently in the sd history too; median |difference| from the literal open is 0.005 bp, and diagnostic D2 (literal open formula, zero-delay fill) reproduces the identical trade sets for V1/V2/V3 (V4: 589 vs 588 days) with the same stats. (c) z = r/sd with no mean subtraction (spec says 'standard deviation' and sides by sign(r)); sd is ddof=1 over the 60 Topstep days preceding the scored day, min 50 valid; first signals 2020-03-11. First valid sd 2020-03-11 so 2020 has ~42 fewer trading days than other years. POST-HOC DIAGNOSTICS (labelled, not nominated): D1 response by |z| bucket (entry open -> 15:08 open, net $/contract, same side convention): overnight-reversal [0,0.5) n=594 -6.54 t=-1.84; [0.5,1) n=268 -2.70 t=-0.55; [1,2) n=188 -8.66 t=-1.49; >=2 n=72 +34.81 t=2.38 (all 1122: -3.33, t=-1.28). daysofar-continuation: [0,0.5) n=534 -5.06 t=-2.46; [0.5,1) n=304 -5.39; [1,2) n=213 -6.08; >=2 n=71 +3.58 t=0.60 (all: -4.79, t=-3.12). prevday-continuation: all buckets negative (all 1121: -5.11, t=-1.31). The only positive cell is overnight fade at |z|>=2 (n=72, t=2.38), a post-hoc slice inside V1 that is not a pre-registered variant, has n<150 and would not survive the N=201 deflation; it is reported only as a diagnostic. D2 = literal-open sensitivity, see above. Results JSON: /home/user/j/research/hyp/r2_session_continuation_results.json. Runtime ~16 s."
+  },
+  {
+   "family": "orb_long_hold",
+   "script_path": "/home/user/j/research/hyp/r2_orb_long_hold.py",
+   "n_variants_tried": 4,
+   "variants": [
+    {
+     "name": "V1_us_orb30_wide",
+     "rule": "BTCUSDT 5-min bars, CT, Mon-Fri. OR = [min low, max high] of the 6 bars 08:30-09:00 CT; OR open = open of the 08:30 bar. Width filter: trade only if (OR high-OR low)/OR open >= median of that quantity over the previous 60 weekdays with a complete OR (strictly prior, >=30 required). From the 09:00 bar on, first 5-min close above OR high -> long, first close below OR low -> short (one trade/day, no re-entry); fill at next bar open (fill bar must open before 15:08 CT). Stop = opposite side of the OR on bar high/low. Exit at the 15:08 CT deadline = open of the 15:10 CT bar (forced flat). Cost $3.82/RT.",
+     "n": 552,
+     "mean_net": 2.8726,
+     "t_stat": 0.9314,
+     "win_rate": 0.4185,
+     "avg_win": 61.1822,
+     "avg_loss": 39.0885,
+     "sharpe_per_trade": 0.0396,
+     "dsr": 0.0335,
+     "trades_per_day": 0.4704,
+     "by_year": "2020:-729 2021:+762 2022:+1071 2023:+159 2024:+323 (4 of 5 positive); 580 eligible sessions, exits flat=363 stop=189, avg hold 49 bars, long 50%, by_side long +1.79 short +3.96, CI95 [-3.14, +9.04], maxDD 884"
+    },
+    {
+     "name": "V2_us_orb30_all",
+     "rule": "Same as V1 without the width filter: OR 08:30-09:00 CT, first close outside OR from 09:00 CT -> long/short at next bar open, stop = opposite side of the OR, exit at the open of the 15:10 CT bar, one trade per weekday.",
+     "n": 1144,
+     "mean_net": 2.1404,
+     "t_stat": 1.1758,
+     "win_rate": 0.3741,
+     "avg_win": 56.2033,
+     "avg_loss": 30.1766,
+     "sharpe_per_trade": 0.0348,
+     "dsr": 0.0561,
+     "trades_per_day": 0.9748,
+     "by_year": "2020:-1114 2021:-52 2022:+1633 2023:+552 2024:+1430 (3 of 5 positive); 1173 eligible sessions, exits flat=657 stop=487, avg hold 47 bars, long 49%, by_side long +1.39 short +2.87, CI95 [-1.51, +5.75], maxDD 1799"
+    },
+    {
+     "name": "V3_us_orb60_wide",
+     "rule": "As V1 but OR = the 12 bars 08:30-09:30 CT, breakout entries from the 09:30 bar on, width filter = (OR high-OR low)/OR open >= trailing 60-weekday median of the 60-min OR widths (strictly prior, >=30 required). Stop = opposite side of the OR, exit at the open of the 15:10 CT bar, one trade per weekday.",
+     "n": 505,
+     "mean_net": 1.7587,
+     "t_stat": 0.596,
+     "win_rate": 0.4436,
+     "avg_win": 51.6131,
+     "avg_loss": 37.9828,
+     "sharpe_per_trade": 0.0265,
+     "dsr": 0.0151,
+     "trades_per_day": 0.4303,
+     "by_year": "2020:-627 2021:+600 2022:+463 2023:+652 2024:-200 (3 of 5 positive); 578 eligible sessions, exits flat=423 stop=82, avg hold 49 bars, long 48%, by_side long +2.65 short +0.94, CI95 [-4.00, +7.56], maxDD 1190"
+    },
+    {
+     "name": "V4_evening_orb60",
+     "rule": "BTCUSDT 5-min bars, CT. Sessions start 17:00 CT, only sessions starting Sun-Thu. OR = [min low, max high] of the 12 bars 17:00-18:00 CT. From the 18:00 bar until the 01:55 bar (signal bar open < 02:00 CT), first close above OR high -> long, first close below OR low -> short (one trade/session); fill at next bar open. Stop = opposite side of the OR on bar high/low. Exit at the 15:08 CT deadline next day = open of the 15:10 CT bar (forced flat). No width filter. Cost $3.82/RT.",
+     "n": 1140,
+     "mean_net": -4.7753,
+     "t_stat": -2.032,
+     "win_rate": 0.2342,
+     "avg_win": 95.913,
+     "avg_loss": 35.57,
+     "sharpe_per_trade": -0.0602,
+     "dsr": 0,
+     "trades_per_day": 0.9714,
+     "by_year": "2020:-1023 2021:-3450 2022:+958 2023:-399 2024:-1529 (1 of 5 positive); 1174 eligible sessions, exits stop=832 flat=308, avg hold 113 bars, long 49%, by_side long -5.14 short -4.43, CI95 [-9.55, -0.04], maxDD 6330"
+    }
+   ],
+   "survivors": [],
+   "notes": "No variant passes the survivor bar (mean_net>0, t>=2.5, n>=150, >=3 positive years): best t-stat is V2 at 1.18 (V1 0.93, V3 0.60); V4 is significantly NEGATIVE (t=-2.03, 73% of trades stopped out during the overnight hold). The US-session ORB has a small positive gross edge (+$6/trade gross for V2) that the $3.82 MBT round turn nearly consumes; DSR with N=200 is 0.02-0.06 for all. The width filter (V1/V3) halves trade count without improving t. Implementation: own engine with per-trade stop price replicating protocol.backtest_signals bar-for-bar, validated at run start against the unpatched protocol (1051 random trades identical, incl. stop/signal/flat exits); forced_flat_time is the fixed 2026-11-10 version (daily break + weekend only). 'Exit at 15:08 CT' is implemented as the protocol's forced flat at the open of the 15:10 CT 5-min bar (no 15:08 bar on the 5-min grid; entries are blocked from 15:08 CT by entry_mask). Width filter uses a strictly-prior rolling median over the previous 60 weekdays with complete ranges, min 30 periods (first V1 signal 2020-02-12). Session keys for V4 are built from naive CT wall-clock time so DST changes cannot shift bars across sessions. Spot checks: V1-V3 entries 09:05-15:00 CT Mon-Fri, V4 entries 18:05-02:00 CT in Sun-Thu sessions, all session-end exits at 15:10 CT, max one trade per session, 0 skipped entries. Post-hoc diagnostics (never nominated, on V2's trades): D1 by entry hour: 09h n=900 +$2.80 (t 1.34), 10h n=163 -$0.79, 11h n=44 +$7.54, 12-13h n=25 -$10.07, 14-15h n=12 -$1.99 -- late breaks are few and worthless but not the reason for the weak edge; D2 by OR-width/trailing-median quintile: Q1 +$0.61, Q2 +$2.58, Q3 +$3.42, Q4 +$1.98, Q5 +$2.71 (all t<1) -- no monotone relation, so the wide filter has no support. Results JSON: /home/user/j/research/hyp/r2_orb_long_hold_results.json. Data: in-sample only (2020-01-01..2024-06-30, asserted in the script); funding/metrics not used by this family."
+  },
+  {
+   "family": "oi_trend_long_hold",
+   "script_path": "/home/user/j/research/hyp/r2_oi_trend_long_hold.py",
+   "n_variants_tried": 3,
+   "variants": [
+    {
+     "name": "V1_oi_z2_ret1",
+     "rule": "BTCUSDT 5-min bars, CT times. OI_t = Binance 5-min open_interest with create_time == bar open_time t (OI<=0 treated as missing); dOI_t = ln(OI_t/OI_(t-4h)) (48 bars); z_t = (dOI_t - m)/s with m, s = mean and sample std of dOI over the 8640 five-min bars strictly before t (>=6912 non-missing required); ret4h_t = close_t/close_(t-4h) - 1. Trigger: z_t >= 2 and |ret4h_t| >= 1%. Evaluated on every tradable bar of a Mon-Fri calendar day with open time 00:00..11:05 CT (before 11:08 CT); if flat, enter at the open of the next bar, side = sign(ret4h_t); at most one trade per day; no stop/target; exit = forced flat at the open of the 15:10 CT bar the same day. Cost $3.82/RT.",
+     "n": 122,
+     "mean_net": 11.42,
+     "t_stat": 1.26,
+     "win_rate": 0.533,
+     "avg_win": 76.27,
+     "avg_loss": 62.52,
+     "sharpe_per_trade": 0.114,
+     "dsr": 0.067,
+     "trades_per_day": 0.19,
+     "by_year": "2022:+319 (n=52), 2023:+328 (n=41), 2024H1:+746 (n=29); 3/3 positive; ci95=[-6.27,29.23]; maxDD=555; long 86 trades mean +7.32, short 36 trades mean +21.24"
+    },
+    {
+     "name": "V2_oi_z15_ret05",
+     "rule": "Same as V1 with z_t >= 1.5 and |ret4h_t| >= 0.5%.",
+     "n": 262,
+     "mean_net": -5.29,
+     "t_stat": -0.84,
+     "win_rate": 0.458,
+     "avg_win": 70.62,
+     "avg_loss": 69.45,
+     "sharpe_per_trade": -0.052,
+     "dsr": 0,
+     "trades_per_day": 0.4,
+     "by_year": "2022:-381 (n=102), 2023:-190 (n=92), 2024H1:-816 (n=68); 0/3 positive; ci95=[-17.93,6.53]; maxDD=1920; long 169 trades mean -9.21, short 93 trades mean +1.82"
+    },
+    {
+     "name": "V3_oi_z2_ret1_evening",
+     "rule": "V1's trigger (z_t >= 2, |ret4h_t| >= 1%) evaluated on bars with open time 17:00..22:55 CT on Sun-Thu calendar days; if flat, enter at the open of the next bar, side = sign(ret4h_t); at most one trade per evening; no stop/target; hold overnight; exit = forced flat at the open of the next day's 15:10 CT bar. Cost $3.82/RT.",
+     "n": 21,
+     "mean_net": -18.48,
+     "t_stat": -0.62,
+     "win_rate": 0.476,
+     "avg_win": 90.11,
+     "avg_loss": 117.2,
+     "sharpe_per_trade": -0.135,
+     "dsr": 0.001,
+     "trades_per_day": 0.03,
+     "by_year": "2022:-135 (n=9), 2023:+224 (n=9), 2024H1:-476 (n=3); 1/3 positive; ci95=[-77.67,34.11]; maxDD=585"
+    }
+   ],
+   "survivors": [],
+   "notes": "No variant passes the survivor bar (mean_net>0, t>=2.5, n>=150, >=3 positive years); none nominated. V1 is the only one with positive mean (+$11.42/trade, positive in all 3 available calendar years) but n=122<150 and t=1.26, DSR=0.067 with N=199: indistinguishable from noise. Loosening the thresholds (V2) doubles the sample and flips the mean negative (-$5.29, t=-0.84), i.e. the V1 result does not extend to adjacent parameters. V3 (evening) fires only 21 times. DATA/PERIOD: metrics exist from 2022-01-01 so the family's in-sample is 2022-01-01..2024-06-30 (bars sliced to that period for summarize, so trades/day refers to it); z first valid 2022-01-25 (4h lag + 30-day window at 80% min periods); only 3 calendar years exist (2022, 2023, 2024H1), so the '>=3 positive years' criterion requires all three. 133 metric rows with open_interest==0 (2022-03-07 outage etc.) treated as missing; metrics aligned by exact timestamp match to bar open_time (262395 of 262656 bars matched); signal from bar t acted at open of bar t+5min, so the OI snapshot is at least 5 minutes old at decision time. INTERPRETATION CHOICES (documented in the rule strings): z(dOI) is a full z-score (trailing 30-day mean subtracted, sample std, strictly prior observations); 'before 11:08 CT' applied to the signal bar's open time (last signal bar 11:05, last fill 11:10); V1 'day' = CT calendar day from 00:00 (Mon-Fri); 'exit at 15:08 CT' = the protocol's forced flat at the open of the 15:10 CT bar (no 15:08 bar on the 5-min grid). Engine = protocol.backtest_signals unmodified (no stop, no target, no signal exits); asserted one trade per day and all exits reason=='flat'. POST-HOC DIAGNOSTICS (never nominated): D1 V2 by CT fill-time bucket: 00:00-06:00 n=129 mean -10.96 (t -1.06); 06:00-08:30 n=61 mean -12.79 (t -1.04); 08:30-11:10 n=72 mean +11.20 (t +1.34) - overnight entries are dead weight, US-morning entries mildly positive but not significant. D2 V2 by z bucket at signal bar: z[1.5,2) n=233 mean -3.77 (t -0.58); z[2,3) n=28 mean -18.23 (t -0.75); z>=3 n=1 - no monotone benefit from stronger OI build (under V2 the day's slot is usually taken by an earlier z>=1.5 trigger, hence few z>=2 trades). Results JSON: /home/user/j/research/hyp/r2_oi_trend_long_hold_results.json. Run: cd /home/user/j && python3 -m research.hyp.r2_oi_trend_long_hold (1.6 s)."
+  },
+  {
+   "family": "funding_fade_long_hold",
+   "n_variants_tried": 3,
+   "script_path": "/home/user/j/research/hyp/r2_funding_fade_long_hold.py",
+   "variants": [
+    {
+     "name": "V1_fade_p95_next",
+     "rule": "1 MBT (0.1 BTC), no stop/target, Binance BTCUSDT perp 1-min bars as CME proxy, $3.82 round turn, one position at a time. Funding settlements T at 00:00/08:00/16:00 UTC (calc_time rounded to the minute). For each T compute the 95th and 5th percentiles (np.quantile, linear) of the settled rates with calc_time in [T-180d, T) (history only; need >= 486 of 540). Signal: rate(T) >= p95 -> short, rate(T) <= p5 -> long (literal inequalities). Fill at the open of the first 1-min bar with open_time > T allowed by protocol.entry_mask/tradable_mask (a Sunday 16:00 UTC signal fills at Sunday 17:00 CT). Exit at the open of the bar opening at next_T - 1 min (bar before the next settlement) or at the open of the 15:08 CT bar, whichever first; if no allowed entry bar exists before next_T - 1 min the signal is void. Protocol forced flat (15:10 CT, weekend) as backstop.",
+     "n": 893,
+     "mean_net": 0.7711,
+     "t_stat": 0.329,
+     "win_rate": 0.4636,
+     "avg_win": 48.36,
+     "avg_loss": 40.36,
+     "sharpe_per_trade": 0.01101,
+     "dsr": 0.0075,
+     "trades_per_day": 0.761,
+     "by_year": "2020: -57.3 (n=38); 2021: +1301.4 (n=172); 2022: +817.4 (n=212); 2023: -1319.1 (n=400); 2024: -53.8 (n=71); pos_years=2/5; ci95 [-3.67, 5.12]; long n=289 mean=+3.72, short n=604 mean=-0.64"
+    },
+    {
+     "name": "V2_fade_p90_next",
+     "rule": "As V1 with the 90th / 10th percentiles of the trailing-180-day (history-only) settled rates: rate(T) >= p90 -> short, rate(T) <= p10 -> long; fill at the open of the first allowed 1-min bar after T; exit at the open of the bar at next_T - 1 min or at the 15:08 CT bar open, whichever first; 1 MBT, $3.82 round turn, one position at a time, forced flat 15:10 CT / weekend as backstop.",
+     "n": 1230,
+     "mean_net": -1.1778,
+     "t_stat": -0.529,
+     "win_rate": 0.4561,
+     "avg_win": 52.68,
+     "avg_loss": 46.34,
+     "sharpe_per_trade": -0.01509,
+     "dsr": 0.0005,
+     "trades_per_day": 1.048,
+     "by_year": "2020: -453.1 (n=85); 2021: +277.1 (n=285); 2022: +904.0 (n=280); 2023: -1501.1 (n=453); 2024: -675.7 (n=127); pos_years=2/5; ci95 [-5.91, 3.17]; long n=478 mean=-0.24, short n=752 mean=-1.77"
+    },
+    {
+     "name": "V3_fade_p95_session",
+     "rule": "As V1 (p95/p5 of trailing-180-day history-only settled rates; short if rate >= p95, long if rate <= p5; fill at the open of the first allowed 1-min bar after T) but the signal is skipped if the fill bar's Chicago time-of-day is >= 15:08 (00:00 UTC settlement = 18:01/19:01 CT, and the Sunday 17:00 CT carry); exit at the open of the 15:08 CT bar of that same Topstep day session; a signal arriving while a position is open is skipped (one position at a time); 1 MBT, $3.82 round turn; forced flat 15:10 CT / weekend as backstop.",
+     "n": 360,
+     "mean_net": 0.806,
+     "t_stat": 0.16,
+     "win_rate": 0.4944,
+     "avg_win": 63.89,
+     "avg_loss": 60.89,
+     "sharpe_per_trade": 0.00842,
+     "dsr": 0.0047,
+     "trades_per_day": 0.307,
+     "by_year": "2020: -72.5 (n=18); 2021: +228.6 (n=68); 2022: +1200.4 (n=97); 2023: -893.2 (n=147); 2024: -173.2 (n=30); pos_years=2/5; ci95 [-8.87, 10.36]; long n=123 mean=+3.74, short n=237 mean=-0.72"
+    }
+   ],
+   "survivors": [],
+   "notes": "NO SURVIVOR. All three pre-registered variants fail the bar: t-stats 0.33 / -0.53 / 0.16 (need >= 2.5), DSR 0.007 / 0.000 / 0.005 at N=199, and only 2 of 5 calendar years positive for each (2021, 2022 positive; 2020, 2023, 2024 negative). Mean net per trade is within a few dollars of zero against a $3.82 cost, i.e. gross edge ~ cost. Data: IS only (bars 2020-01-01 .. 2024-06-30 23:59 UTC, 2,365,920 1-min bars; 4,929 settlements, 4,443 scored from 2020-06-11 after the 180-day warm-up). Results JSON: /home/user/j/research/hyp/r2_funding_fade_long_hold_results.json. Implementation choices fixed before looking at results: 1-min execution grid (so the registered '15:08 CT' and 'bar before the next settlement' exist exactly; fill = open of the first allowed bar after the settlement, T+1 min; exit = open of next_T - 1 min or 15:08 CT bar open); percentile window = settled rates with calc_time in [T-180d, T), history only, np.quantile linear, min 486 obs; Sunday 16:00 UTC signals fill at the Sunday 17:00 CT re-open (V1/V2) and Saturday / Sunday 00:00, 08:00 UTC signals are void because no tradable bar exists before the next settlement (245 void in V1, 337 in V2); V3 skips 582 evening/Sunday signals and the one-position rule drops another 196 16:00-UTC signals that arrive while the 08:00-UTC trade is held. Trade timing verified on the output (entries at :01 past the settlement or Sunday 17:00 CT, exits at :59 before the next settlement or 15:08 CT, no fills outside protocol hours, all exits reason='signal'). IMPORTANT DATA PROPERTY: Binance's clipped default rate (exactly 0.0001) is 41% of all settlements; in 2022-2023 more than 5% (10%) of the trailing window sits at 0.0001, so the literal registered rule 'rate >= p95' fires a short at EVERY default-rate settlement (567 of 774 V1 short signals are ties at the percentile; 400 of V1's 893 trades are in 2023, which contributes -$1,319). This is what the pre-registration specifies and is what was run; it is the main reason the family looks dead. POST-HOC DIAGNOSTICS (labelled, never nominated): D1 strict-inequality V1 (rate > p95 / rate < p5, ties excluded): n=377, mean_net=+7.05, t=1.63, win 0.504, by_year 2020 -57.3 / 2021 +1596.2 / 2022 +678.5 / 2023 +493.4 / 2024 -53.8 (3/5 years positive), long n=219 mean +6.26, short n=158 mean +8.14 -- better signed but still far below t>=2.5 and would need its own pre-registration. D2 breakdown of each variant's trades by entry hour (UTC) x side: V1 08:00-UTC shorts n=186 mean -5.24 (t=-1.25) vs 08:00 longs n=88 mean +8.44 (t=0.74), 16:00 shorts n=196 mean +3.21; V3 16:00-UTC entries (hold 11:01->15:08 CT) n=86 mean ~ +11.6 (t~1.2-1.3 each side) vs 08:00-UTC entries n=274 mean -2.6; nothing in the breakdown reaches significance. Family verdict: fading extreme funding into the next settlement / into the Topstep close does not pay the MBT round turn in-sample; do not forward."
+  }
+ ],
+ "survivors": [],
+ "verdicts": [],
+ "synth": {
+  "summary_markdown": "## Round 2 synthesis: nothing nominated, nothing replicated, nothing confirmed\n\n**Bottom line.** Zero of the round-2 variants met the pre-registered survivor bar (mean_net > 0, t >= 2.5, n >= 150, net > 0 in >= 3 of 5 IS calendar periods). `SURVIVORS: []`, `VERDICTS: []`, and all four family result files (`/home/user/j/research/hyp/r2_*_results.json`) carry `survivors: []`. Because nothing was nominated, the holdout replication lens and the audit lens were never exercised in this round: there are no holdout runs, no audit reports, and no OOS files anywhere under `research/`. \"Confirmed by both lenses\" is therefore the empty set, and so is \"confirmed by either lens\". The holdout data remains untouched by every round-2 rule, which is the one clean asset this round leaves behind.\n\n**Trial accounting (be careful here).** The task header says \"12 variants\"; the family records list **15** (session_continuation 5, orb_long_hold 4, oi_trend 3, funding_fade 3). The DSR deflation each family applied (N = 201 / 200 / 199 / 199) equals 196 prior trials + *that family's own* count, not the cross-family total. The correct ledger after this round is **211 pre-registered trials on the same IS data**, plus the post-hoc diagnostic cells looked at below. This under-deflation changes nothing today (the best DSR is 0.067 and the best t is 1.26), but round 3 should deflate against 211+.\n\n### What was tested and what the in-sample evidence says\n\n| Family | Best IS variant | n | mean net $/MBT | t | DSR | pos. years | trades/day | Verdict |\n|---|---|---|---|---|---|---|---|---|\n| session_continuation | V1 overnight fade, \\|z\\|>=1 | 260 | +3.37 | 0.57 | 0.014 | 2/5 | 0.22 | fail |\n| orb_long_hold | V2 US ORB30, no filter | 1144 | +2.14 | 1.18 | 0.056 | 3/5 | 0.97 | fail (t) |\n| oi_trend_long_hold | V1 OI z>=2 & \\|ret4h\\|>=1% | 122 | +11.42 | 1.26 | 0.067 | 3/3 | 0.19 | fail (n, t) |\n| funding_fade_long_hold | V3 p95 fade to session close | 360 | +0.81 | 0.16 | 0.005 | 2/5 | 0.31 | fail |\n\nHighest t-stat among all 15 variants: 1.26. Highest DSR: 0.067. Nothing is within a factor of two of the t >= 2.5 bar.\n\nFamily-level reading, skeptically:\n\n- **session_continuation (5 variants).** Overnight-fade and day-so-far-continuation at |z| >= 1 / 0.5 and previous-day continuation held overnight. Three of five are negative; V4 (day-so-far continuation, |z|>=0.5) is the most significant result in the family and it is *negative* (t = -2.01), i.e. in-sample the \"continuation\" premise runs the wrong way. V1's +$3.37 is noise (t 0.57, CI straddles zero, 2/5 years).\n- **orb_long_hold (4 variants).** US-session ORB breakouts have a small positive gross edge (~+$6/trade gross on V2) that the $3.82 round turn nearly eats; t never exceeds 1.18. The width filter (V1/V3) halves trade count without improving t, and the post-hoc width-quintile diagnostic shows no monotone relation, so the filter idea has no support. V4 (evening ORB held to next 15:10 CT) is significantly negative (t = -2.03, 73% stopped out overnight).\n- **oi_trend_long_hold (3 variants).** V1 is the best-looking number in the round (+$11.42, positive in all 3 available years) but n = 122 < 150, t = 1.26, DSR 0.067, and the only data are 2022-01..2024-06 so \"3/3 years\" is a weaker screen than 3/5. Critically, the adjacent parameter setting (V2, z>=1.5, |ret|>=0.5%) doubles n and flips the mean to -$5.29: the V1 result is not robust to its own neighbourhood, which is the signature of a parameter hit, not an effect.\n- **funding_fade_long_hold (3 variants).** Mean net within a few dollars of zero for all three, 2/5 years positive, t <= 0.33. A specification problem dominates: Binance's clipped default rate (exactly 0.0001) is 41% of settlements, so the literal registered rule `rate >= p95` fires a short at every default-rate settlement in 2022-23 (567 of 774 V1 short signals are percentile ties; 2023 alone contributes -$1,319). That is what was pre-registered and what was run; the honest conclusion is that the *registered* rule is dead, and that the pre-registration was partly a rule about Binance's clipping, not about extreme funding.\n\n**Two significantly negative variants** (session V4 t = -2.01, orb V4 t = -2.03) are two-sided p ~ 0.04 each among 15 trials. That is consistent with noise; they should not be inverted into reversal strategies.\n\n### Post-hoc diagnostics (labelled, never nominated, no standing)\n\nEach family ran D1/D2 slices after seeing results. The only cells that look alive: overnight fade at |z| >= 2 (n = 72, +$34.81, t = 2.38, a slice inside session V1); funding fade with strict inequalities / ties excluded (n = 377, +$7.05, t = 1.63, DSR 0.129 at the family's N); OI V2 restricted to 08:30-11:10 CT fills (n = 72, +$11.20, t = 1.34). None meets the bar, two have n < 150, and all were selected after looking at IS outcomes, so their in-sample statistics carry no evidential weight. If any is pursued it must be a fresh round-3 pre-registration, deflated against the 211+ ledger, and its IS numbers should be treated as already contaminated: the untouched holdout is the only clean lens left for these ideas.\n\n### Implementation integrity (what I checked and what was documented)\n\nAll four families report IS-only data (2020-01-01..2024-06-30, or 2022-01-01.. for OI), `protocol.backtest_signals` with the fixed 2026-11-10 forced-flat, and documented, pre-fixed deviations: 1-min execution grid where the registered \"15:08 CT bar\" does not exist on 5-min bars (session, funding); \"exit at 15:08 CT\" mapped to the forced flat at the 15:10 CT bar open on the 5-min grid (orb, OI); decision price at the prior bar close for session-continuation (D2 literal-open sensitivity reproduces identical trade sets). Trade-timing spot checks are reported for every family. I re-read the four JSONs and the per-variant n / mean_net / t / DSR / trades_per_day match the task text; I did not re-run the backtests.\n\n### Per-trade $ per MBT contract, trades/day, n for anything confirmed\n\nNone. No variant was nominated, no holdout replication or audit ran, and nothing is confirmed by either lens, let alone both. The table above gives the best in-sample numbers for reference only; none of them should be forwarded, sized, or traded.\n\n**Recommendation.** Close round 2 with zero survivors, update the trial ledger to 211, and do not forward anything. Any round 3 should (a) pre-register before touching IS again, (b) deflate against 211+, and (c) for funding, specify tie handling explicitly rather than inheriting the `>=` clipping artifact.",
+  "confirmed": []
+ }
+}

@@ -1,0 +1,1000 @@
+{
+ "family": "overnight_drift",
+ "symbol": "ES",
+ "data": "SPX500 Oanda CFD 1-minute bars, IS 2005-01..2017-12",
+ "bar_size": "1min",
+ "n_variants": 4,
+ "dsr_N": 22,
+ "variants": [
+  {
+   "name": "V1_long_overnight_all",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade that day); an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Enter long at the open of the 17:00 CT bar on Sun, Mon, Tue, Wed, Thu; exit at the open of the 08:30 CT bar of the next calendar day.",
+   "n": 3281,
+   "n_scheduled_days": 3390,
+   "n_entry_bar_ok": 3285,
+   "entry_lag_min_mean": 0.07792998477929985,
+   "trades_per_day": 0.9682632834545816,
+   "mean_net": 1.5499298994209056,
+   "median_net": 13.719999999995451,
+   "std_net": 419.1850030703031,
+   "t_stat": 0.2117919430218806,
+   "ci95_low": -13.358215483084312,
+   "ci95_high": 16.441121609265284,
+   "win_rate": 0.5150868637610485,
+   "avg_win": 268.9448520710059,
+   "avg_loss": 282.48364550597114,
+   "sharpe_per_trade": 0.0036974841372389485,
+   "sharpe_annual": 0.05775682639523006,
+   "total_net": 5085.3199999999915,
+   "gross_mean": 17.82992989942089,
+   "max_drawdown": 20772.63999999995,
+   "by_year": {
+    "2005": 2417.7,
+    "2006": -733.2,
+    "2007": 4812.4,
+    "2008": -15117.7,
+    "2009": -657.7,
+    "2010": 347.3,
+    "2011": 4446.0,
+    "2012": -1862.4,
+    "2013": 5673.7,
+    "2014": 4952.3,
+    "2015": -1399.0,
+    "2016": -9080.2,
+    "2017": 11286.0
+   },
+   "n_by_year": {
+    "2005": 244,
+    "2006": 233,
+    "2007": 252,
+    "2008": 256,
+    "2009": 256,
+    "2010": 256,
+    "2011": 257,
+    "2012": 248,
+    "2013": 251,
+    "2014": 256,
+    "2015": 257,
+    "2016": 258,
+    "2017": 257
+   },
+   "reasons": {
+    "signal": 3281
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 658,
+     "mean_net": 8.46,
+     "t_stat": 0.51
+    },
+    "Tue": {
+     "n": 655,
+     "mean_net": -3.94,
+     "t_stat": -0.26
+    },
+    "Wed": {
+     "n": 659,
+     "mean_net": 3.58,
+     "t_stat": 0.24
+    },
+    "Thu": {
+     "n": 651,
+     "mean_net": -5.2,
+     "t_stat": -0.28
+    },
+    "Sun": {
+     "n": 658,
+     "mean_net": 4.75,
+     "t_stat": 0.3
+    }
+   },
+   "entry_tod_ct": {
+    "17:00": 3127,
+    "17:01": 96,
+    "17:02": 29,
+    "17:04": 15,
+    "17:03": 14
+   },
+   "exit_tod_ct": {
+    "08:30": 3265,
+    "08:31": 4,
+    "17:00": 4,
+    "08:32": 3,
+    "08:33": 2
+   },
+   "hold_minutes_median": 930.0,
+   "dsr": 0.041790629888565745,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": false,
+    "pos_years": 7
+   }
+  },
+  {
+   "name": "V2_long_overnight_after_down_day",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade that day); an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. At 16:59 CT on date d compute r_cash = open(15:08 CT bar of d) / open(08:30 CT bar of d) - 1 (both bars as defined above, both must exist within 5 minutes). If r_cash < 0: enter long at the open of the 17:00 CT bar of d (Mon-Thu); exit at the open of the 08:30 CT bar of d+1. Sunday has no same-day cash session, so no Sunday entries (literal pre-registered reading).",
+   "n": 1136,
+   "n_scheduled_days": 3390,
+   "n_entry_bar_ok": 3285,
+   "entry_lag_min_mean": 0.07792998477929985,
+   "n_days_with_r_cash": 2572,
+   "n_down_days": 1163,
+   "trades_per_day": 0.33524751295471034,
+   "mean_net": 9.287781690140731,
+   "median_net": 33.72,
+   "std_net": 420.6660952388876,
+   "t_stat": 0.7441554284259442,
+   "ci95_low": -15.066311619718574,
+   "ci95_high": 33.72682218309868,
+   "win_rate": 0.539612676056338,
+   "avg_win": 280.15556280587265,
+   "avg_loss": 308.19204588910145,
+   "sharpe_per_trade": 0.022078750332532485,
+   "sharpe_annual": 0.2029352735397728,
+   "total_net": 10550.919999999871,
+   "gross_mean": 25.56778169014071,
+   "max_drawdown": 10122.080000000098,
+   "by_year": {
+    "2005": 3996.1,
+    "2006": 177.8,
+    "2007": 5067.2,
+    "2008": -6769.4,
+    "2009": 2088.6,
+    "2010": 1391.2,
+    "2011": -2250.2,
+    "2012": 1214.9,
+    "2013": 3101.3,
+    "2014": -5146.2,
+    "2015": -2475.2,
+    "2016": 2833.6,
+    "2017": 7321.1
+   },
+   "n_by_year": {
+    "2005": 89,
+    "2006": 72,
+    "2007": 92,
+    "2008": 105,
+    "2009": 87,
+    "2010": 85,
+    "2011": 90,
+    "2012": 86,
+    "2013": 81,
+    "2014": 83,
+    "2015": 90,
+    "2016": 87,
+    "2017": 89
+   },
+   "reasons": {
+    "signal": 1136
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 280,
+     "mean_net": 16.4,
+     "t_stat": 0.62
+    },
+    "Tue": {
+     "n": 287,
+     "mean_net": 15.25,
+     "t_stat": 0.64
+    },
+    "Wed": {
+     "n": 292,
+     "mean_net": 13.84,
+     "t_stat": 0.56
+    },
+    "Thu": {
+     "n": 277,
+     "mean_net": -8.88,
+     "t_stat": -0.36
+    }
+   },
+   "entry_tod_ct": {
+    "17:00": 1078,
+    "17:01": 39,
+    "17:02": 9,
+    "17:03": 6,
+    "17:04": 4
+   },
+   "exit_tod_ct": {
+    "08:30": 1133,
+    "08:31": 1,
+    "10:13": 1,
+    "08:32": 1
+   },
+   "hold_minutes_median": 930.0,
+   "dsr": 0.11555446825466531,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": true,
+    "pos_years": 9
+   }
+  },
+  {
+   "name": "V3_long_overnight_to_0900",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade that day); an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Enter long at the open of the 17:00 CT bar on Sun, Mon, Tue, Wed, Thu; exit at the open of the 09:00 CT bar of the next calendar day.",
+   "n": 3281,
+   "n_scheduled_days": 3390,
+   "n_entry_bar_ok": 3285,
+   "entry_lag_min_mean": 0.07792998477929985,
+   "trades_per_day": 0.9682632834545816,
+   "mean_net": 0.1220115818348025,
+   "median_net": 13.719999999995451,
+   "std_net": 446.102908649684,
+   "t_stat": 0.015666396645393404,
+   "ci95_low": -15.042153306918674,
+   "ci95_high": 15.226590978360061,
+   "win_rate": 0.5220969216702225,
+   "avg_win": 295.00721541155855,
+   "avg_loss": 322.0325510204081,
+   "sharpe_per_trade": 0.00027350546133877784,
+   "sharpe_annual": 0.004272312432552361,
+   "total_net": 400.319999999987,
+   "gross_mean": 16.40201158183479,
+   "max_drawdown": 28135.439999999944,
+   "by_year": {
+    "2005": 3667.7,
+    "2006": 876.8,
+    "2007": 3212.4,
+    "2008": -19692.7,
+    "2009": -1577.7,
+    "2010": -387.7,
+    "2011": 2316.0,
+    "2012": -1987.4,
+    "2013": 10168.7,
+    "2014": 10362.3,
+    "2015": -7129.0,
+    "2016": -9055.2,
+    "2017": 9626.0
+   },
+   "n_by_year": {
+    "2005": 244,
+    "2006": 233,
+    "2007": 252,
+    "2008": 256,
+    "2009": 256,
+    "2010": 256,
+    "2011": 257,
+    "2012": 248,
+    "2013": 251,
+    "2014": 256,
+    "2015": 257,
+    "2016": 258,
+    "2017": 257
+   },
+   "reasons": {
+    "signal": 3281
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 658,
+     "mean_net": 15.42,
+     "t_stat": 0.89
+    },
+    "Tue": {
+     "n": 655,
+     "mean_net": 5.57,
+     "t_stat": 0.34
+    },
+    "Wed": {
+     "n": 659,
+     "mean_net": -9.83,
+     "t_stat": -0.58
+    },
+    "Thu": {
+     "n": 651,
+     "mean_net": -20.63,
+     "t_stat": -1.15
+    },
+    "Sun": {
+     "n": 658,
+     "mean_net": 9.91,
+     "t_stat": 0.54
+    }
+   },
+   "entry_tod_ct": {
+    "17:00": 3127,
+    "17:01": 96,
+    "17:02": 29,
+    "17:04": 15,
+    "17:03": 14
+   },
+   "exit_tod_ct": {
+    "09:00": 3247,
+    "09:01": 15,
+    "09:03": 5,
+    "17:00": 4,
+    "09:02": 3
+   },
+   "hold_minutes_median": 960.0,
+   "dsr": 0.027028724631792043,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": false,
+    "pos_years": 7
+   }
+  },
+  {
+   "name": "V4_short_intraday",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade that day); an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Enter short at the open of the 09:00 CT bar on Mon-Fri; exit at the open of the 15:08 CT bar the same day (forced flat 15:10 CT backstop).",
+   "n": 3346,
+   "n_scheduled_days": 3390,
+   "n_entry_bar_ok": 3346,
+   "entry_lag_min_mean": 0.013747758517632994,
+   "trades_per_day": 0.9874455795303352,
+   "mean_net": -28.088129109384333,
+   "median_net": -56.27999999999773,
+   "std_net": 547.3455200616027,
+   "t_stat": -2.9684122368959476,
+   "ci95_low": -46.60172743574425,
+   "ci95_high": -9.250150926479337,
+   "win_rate": 0.43156007172743577,
+   "avg_win": 409.49216066482,
+   "avg_loss": 360.2994532071504,
+   "sharpe_per_trade": -0.05131699827601233,
+   "sharpe_annual": -0.8095023247327373,
+   "total_net": -93982.87999999998,
+   "gross_mean": -11.808129109384346,
+   "max_drawdown": 104367.1599999993,
+   "by_year": {
+    "2005": 1516.0,
+    "2006": -6179.0,
+    "2007": 546.0,
+    "2008": 1848.5,
+    "2009": -13240.2,
+    "2010": -10155.2,
+    "2011": -6145.2,
+    "2012": -9777.7,
+    "2013": -11085.2,
+    "2014": -746.4,
+    "2015": -6350.2,
+    "2016": -20160.2,
+    "2017": -14054.0
+   },
+   "n_by_year": {
+    "2005": 257,
+    "2006": 257,
+    "2007": 257,
+    "2008": 259,
+    "2009": 258,
+    "2010": 258,
+    "2011": 258,
+    "2012": 256,
+    "2013": 258,
+    "2014": 255,
+    "2015": 258,
+    "2016": 258,
+    "2017": 257
+   },
+   "reasons": {
+    "signal": 3346
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 665,
+     "mean_net": -3.11,
+     "t_stat": -0.16
+    },
+    "Tue": {
+     "n": 672,
+     "mean_net": -44.02,
+     "t_stat": -2.0
+    },
+    "Wed": {
+     "n": 676,
+     "mean_net": -23.73,
+     "t_stat": -1.08
+    },
+    "Thu": {
+     "n": 673,
+     "mean_net": -47.02,
+     "t_stat": -2.1
+    },
+    "Fri": {
+     "n": 660,
+     "mean_net": -22.2,
+     "t_stat": -1.12
+    }
+   },
+   "entry_tod_ct": {
+    "09:00": 3319,
+    "09:01": 17,
+    "09:03": 5,
+    "09:02": 3,
+    "09:04": 2
+   },
+   "exit_tod_ct": {
+    "15:08": 2808,
+    "15:09": 264,
+    "15:10": 85,
+    "17:00": 76,
+    "15:11": 33
+   },
+   "hold_minutes_median": 368.0,
+   "dsr": 4.6290710740087237e-07,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": false,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": false,
+    "pos_years": 3
+   }
+  }
+ ],
+ "diagnostics": [
+  {
+   "name": "D1_NAS100_V1_long_overnight_all",
+   "symbol": "NQ",
+   "data": "NAS100",
+   "rule": "1 NQ contract ($20/pt), no stop/target, $8.78 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade that day); an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Enter short at the open of the 09:00 CT bar on Mon-Fri; exit at the open of the 15:08 CT bar the same day (forced flat 15:10 CT backstop).",
+   "n": 3269,
+   "n_scheduled_days": 3390,
+   "n_entry_bar_ok": 3273,
+   "entry_lag_min_mean": 0.09960281087687137,
+   "trades_per_day": 0.9647217952659084,
+   "mean_net": 12.166466809421998,
+   "median_net": 21.22,
+   "std_net": 332.4817899467165,
+   "t_stat": 2.0922042117671955,
+   "ci95_low": 1.0063566840014344,
+   "ci95_high": 23.530064239828796,
+   "win_rate": 0.5521566228204344,
+   "avg_win": 199.67983379501402,
+   "avg_loss": 219.02316939890704,
+   "sharpe_per_trade": 0.03659288170751184,
+   "sharpe_annual": 0.5705555408470251,
+   "total_net": 39772.18000000051,
+   "gross_mean": 20.946466809421985,
+   "max_drawdown": 12277.059999999728,
+   "by_year": {
+    "2005": 1561.7,
+    "2006": 73.2,
+    "2007": 3091.7,
+    "2008": -7874.7,
+    "2009": 3077.8,
+    "2010": 4568.7,
+    "2011": 3612.3,
+    "2012": 2733.4,
+    "2013": 7759.9,
+    "2014": 8322.3,
+    "2015": 4293.5,
+    "2016": -5955.2,
+    "2017": 14507.5
+   },
+   "n_by_year": {
+    "2005": 244,
+    "2006": 242,
+    "2007": 244,
+    "2008": 247,
+    "2009": 249,
+    "2010": 253,
+    "2011": 256,
+    "2012": 252,
+    "2013": 254,
+    "2014": 256,
+    "2015": 257,
+    "2016": 258,
+    "2017": 257
+   },
+   "reasons": {
+    "signal": 3269
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 655,
+     "mean_net": 13.74,
+     "t_stat": 1.06
+    },
+    "Tue": {
+     "n": 648,
+     "mean_net": 14.12,
+     "t_stat": 1.18
+    },
+    "Wed": {
+     "n": 656,
+     "mean_net": 13.89,
+     "t_stat": 1.17
+    },
+    "Thu": {
+     "n": 654,
+     "mean_net": 6.68,
+     "t_stat": 0.45
+    },
+    "Sun": {
+     "n": 656,
+     "mean_net": 12.42,
+     "t_stat": 0.93
+    }
+   },
+   "entry_tod_ct": {
+    "17:00": 3096,
+    "17:01": 87,
+    "17:02": 40,
+    "17:03": 25,
+    "17:04": 21
+   },
+   "exit_tod_ct": {
+    "08:30": 3252,
+    "17:00": 4,
+    "08:32": 3,
+    "08:31": 2,
+    "08:38": 1
+   },
+   "hold_minutes_median": 930.0,
+   "dsr": 0.5595368796322124,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": true,
+    "pos_years": 11
+   },
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: NAS100 CFD twin of the pre-registered variant with NQ contract spec; not nominable"
+  },
+  {
+   "name": "D1_NAS100_V2_long_overnight_after_down_day",
+   "symbol": "NQ",
+   "data": "NAS100",
+   "rule": "1 NQ contract ($20/pt), no stop/target, $8.78 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade that day); an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Enter short at the open of the 09:00 CT bar on Mon-Fri; exit at the open of the 15:08 CT bar the same day (forced flat 15:10 CT backstop).",
+   "n": 3269,
+   "n_scheduled_days": 3390,
+   "n_entry_bar_ok": 3273,
+   "entry_lag_min_mean": 0.09960281087687137,
+   "trades_per_day": 0.9647217952659084,
+   "mean_net": 12.166466809421998,
+   "median_net": 21.22,
+   "std_net": 332.4817899467165,
+   "t_stat": 2.0922042117671955,
+   "ci95_low": 1.0063566840014344,
+   "ci95_high": 23.530064239828796,
+   "win_rate": 0.5521566228204344,
+   "avg_win": 199.67983379501402,
+   "avg_loss": 219.02316939890704,
+   "sharpe_per_trade": 0.03659288170751184,
+   "sharpe_annual": 0.5705555408470251,
+   "total_net": 39772.18000000051,
+   "gross_mean": 20.946466809421985,
+   "max_drawdown": 12277.059999999728,
+   "by_year": {
+    "2005": 1561.7,
+    "2006": 73.2,
+    "2007": 3091.7,
+    "2008": -7874.7,
+    "2009": 3077.8,
+    "2010": 4568.7,
+    "2011": 3612.3,
+    "2012": 2733.4,
+    "2013": 7759.9,
+    "2014": 8322.3,
+    "2015": 4293.5,
+    "2016": -5955.2,
+    "2017": 14507.5
+   },
+   "n_by_year": {
+    "2005": 244,
+    "2006": 242,
+    "2007": 244,
+    "2008": 247,
+    "2009": 249,
+    "2010": 253,
+    "2011": 256,
+    "2012": 252,
+    "2013": 254,
+    "2014": 256,
+    "2015": 257,
+    "2016": 258,
+    "2017": 257
+   },
+   "reasons": {
+    "signal": 3269
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 655,
+     "mean_net": 13.74,
+     "t_stat": 1.06
+    },
+    "Tue": {
+     "n": 648,
+     "mean_net": 14.12,
+     "t_stat": 1.18
+    },
+    "Wed": {
+     "n": 656,
+     "mean_net": 13.89,
+     "t_stat": 1.17
+    },
+    "Thu": {
+     "n": 654,
+     "mean_net": 6.68,
+     "t_stat": 0.45
+    },
+    "Sun": {
+     "n": 656,
+     "mean_net": 12.42,
+     "t_stat": 0.93
+    }
+   },
+   "entry_tod_ct": {
+    "17:00": 3096,
+    "17:01": 87,
+    "17:02": 40,
+    "17:03": 25,
+    "17:04": 21
+   },
+   "exit_tod_ct": {
+    "08:30": 3252,
+    "17:00": 4,
+    "08:32": 3,
+    "08:31": 2,
+    "08:38": 1
+   },
+   "hold_minutes_median": 930.0,
+   "dsr": 0.5595368796322124,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": true,
+    "pos_years": 11
+   },
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: NAS100 CFD twin of the pre-registered variant with NQ contract spec; not nominable"
+  },
+  {
+   "name": "D1_NAS100_V3_long_overnight_to_0900",
+   "symbol": "NQ",
+   "data": "NAS100",
+   "rule": "1 NQ contract ($20/pt), no stop/target, $8.78 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade that day); an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Enter short at the open of the 09:00 CT bar on Mon-Fri; exit at the open of the 15:08 CT bar the same day (forced flat 15:10 CT backstop).",
+   "n": 3269,
+   "n_scheduled_days": 3390,
+   "n_entry_bar_ok": 3273,
+   "entry_lag_min_mean": 0.09960281087687137,
+   "trades_per_day": 0.9647217952659084,
+   "mean_net": 12.166466809421998,
+   "median_net": 21.22,
+   "std_net": 332.4817899467165,
+   "t_stat": 2.0922042117671955,
+   "ci95_low": 1.0063566840014344,
+   "ci95_high": 23.530064239828796,
+   "win_rate": 0.5521566228204344,
+   "avg_win": 199.67983379501402,
+   "avg_loss": 219.02316939890704,
+   "sharpe_per_trade": 0.03659288170751184,
+   "sharpe_annual": 0.5705555408470251,
+   "total_net": 39772.18000000051,
+   "gross_mean": 20.946466809421985,
+   "max_drawdown": 12277.059999999728,
+   "by_year": {
+    "2005": 1561.7,
+    "2006": 73.2,
+    "2007": 3091.7,
+    "2008": -7874.7,
+    "2009": 3077.8,
+    "2010": 4568.7,
+    "2011": 3612.3,
+    "2012": 2733.4,
+    "2013": 7759.9,
+    "2014": 8322.3,
+    "2015": 4293.5,
+    "2016": -5955.2,
+    "2017": 14507.5
+   },
+   "n_by_year": {
+    "2005": 244,
+    "2006": 242,
+    "2007": 244,
+    "2008": 247,
+    "2009": 249,
+    "2010": 253,
+    "2011": 256,
+    "2012": 252,
+    "2013": 254,
+    "2014": 256,
+    "2015": 257,
+    "2016": 258,
+    "2017": 257
+   },
+   "reasons": {
+    "signal": 3269
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 655,
+     "mean_net": 13.74,
+     "t_stat": 1.06
+    },
+    "Tue": {
+     "n": 648,
+     "mean_net": 14.12,
+     "t_stat": 1.18
+    },
+    "Wed": {
+     "n": 656,
+     "mean_net": 13.89,
+     "t_stat": 1.17
+    },
+    "Thu": {
+     "n": 654,
+     "mean_net": 6.68,
+     "t_stat": 0.45
+    },
+    "Sun": {
+     "n": 656,
+     "mean_net": 12.42,
+     "t_stat": 0.93
+    }
+   },
+   "entry_tod_ct": {
+    "17:00": 3096,
+    "17:01": 87,
+    "17:02": 40,
+    "17:03": 25,
+    "17:04": 21
+   },
+   "exit_tod_ct": {
+    "08:30": 3252,
+    "17:00": 4,
+    "08:32": 3,
+    "08:31": 2,
+    "08:38": 1
+   },
+   "hold_minutes_median": 930.0,
+   "dsr": 0.5595368796322124,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": true,
+    "pos_years": 11
+   },
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: NAS100 CFD twin of the pre-registered variant with NQ contract spec; not nominable"
+  },
+  {
+   "name": "D1_NAS100_V4_short_intraday",
+   "symbol": "NQ",
+   "data": "NAS100",
+   "rule": "1 NQ contract ($20/pt), no stop/target, $8.78 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade that day); an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Enter short at the open of the 09:00 CT bar on Mon-Fri; exit at the open of the 15:08 CT bar the same day (forced flat 15:10 CT backstop).",
+   "n": 3269,
+   "n_scheduled_days": 3390,
+   "n_entry_bar_ok": 3273,
+   "entry_lag_min_mean": 0.09960281087687137,
+   "trades_per_day": 0.9647217952659084,
+   "mean_net": 12.166466809421998,
+   "median_net": 21.22,
+   "std_net": 332.4817899467165,
+   "t_stat": 2.0922042117671955,
+   "ci95_low": 1.0063566840014344,
+   "ci95_high": 23.530064239828796,
+   "win_rate": 0.5521566228204344,
+   "avg_win": 199.67983379501402,
+   "avg_loss": 219.02316939890704,
+   "sharpe_per_trade": 0.03659288170751184,
+   "sharpe_annual": 0.5705555408470251,
+   "total_net": 39772.18000000051,
+   "gross_mean": 20.946466809421985,
+   "max_drawdown": 12277.059999999728,
+   "by_year": {
+    "2005": 1561.7,
+    "2006": 73.2,
+    "2007": 3091.7,
+    "2008": -7874.7,
+    "2009": 3077.8,
+    "2010": 4568.7,
+    "2011": 3612.3,
+    "2012": 2733.4,
+    "2013": 7759.9,
+    "2014": 8322.3,
+    "2015": 4293.5,
+    "2016": -5955.2,
+    "2017": 14507.5
+   },
+   "n_by_year": {
+    "2005": 244,
+    "2006": 242,
+    "2007": 244,
+    "2008": 247,
+    "2009": 249,
+    "2010": 253,
+    "2011": 256,
+    "2012": 252,
+    "2013": 254,
+    "2014": 256,
+    "2015": 257,
+    "2016": 258,
+    "2017": 257
+   },
+   "reasons": {
+    "signal": 3269
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 655,
+     "mean_net": 13.74,
+     "t_stat": 1.06
+    },
+    "Tue": {
+     "n": 648,
+     "mean_net": 14.12,
+     "t_stat": 1.18
+    },
+    "Wed": {
+     "n": 656,
+     "mean_net": 13.89,
+     "t_stat": 1.17
+    },
+    "Thu": {
+     "n": 654,
+     "mean_net": 6.68,
+     "t_stat": 0.45
+    },
+    "Sun": {
+     "n": 656,
+     "mean_net": 12.42,
+     "t_stat": 0.93
+    }
+   },
+   "entry_tod_ct": {
+    "17:00": 3096,
+    "17:01": 87,
+    "17:02": 40,
+    "17:03": 25,
+    "17:04": 21
+   },
+   "exit_tod_ct": {
+    "08:30": 3252,
+    "17:00": 4,
+    "08:32": 3,
+    "08:31": 2,
+    "08:38": 1
+   },
+   "hold_minutes_median": 930.0,
+   "dsr": 0.5595368796322124,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": true,
+    "pos_years": 11
+   },
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: NAS100 CFD twin of the pre-registered variant with NQ contract spec; not nominable"
+  },
+  {
+   "name": "D2_V2_sunday_uses_friday",
+   "symbol": "ES",
+   "data": "SPX500",
+   "rule": "1 ES contract ($50/pt), no stop/target, $16.28 per round turn. Oanda index CFD 1-minute bars as the price proxy; 'the HH:MM bar' = the first 1-minute bar with open time >= HH:MM America/Chicago on that calendar date; an entry requires that bar to open within 5 minutes of HH:MM (else no trade that day); an exit fills at the open of the first bar >= the scheduled instant; protocol forced flat at 15:10 CT / before the weekend is the backstop. Enter short at the open of the 09:00 CT bar on Mon-Fri; exit at the open of the 15:08 CT bar the same day (forced flat 15:10 CT backstop).",
+   "n": 3281,
+   "n_scheduled_days": 3390,
+   "n_entry_bar_ok": 3285,
+   "entry_lag_min_mean": 0.07792998477929985,
+   "trades_per_day": 0.9682632834545816,
+   "mean_net": 1.5499298994209056,
+   "median_net": 13.719999999995451,
+   "std_net": 419.1850030703031,
+   "t_stat": 0.2117919430218806,
+   "ci95_low": -13.358215483084312,
+   "ci95_high": 16.441121609265284,
+   "win_rate": 0.5150868637610485,
+   "avg_win": 268.9448520710059,
+   "avg_loss": 282.48364550597114,
+   "sharpe_per_trade": 0.0036974841372389485,
+   "sharpe_annual": 0.05775682639523006,
+   "total_net": 5085.3199999999915,
+   "gross_mean": 17.82992989942089,
+   "max_drawdown": 20772.63999999995,
+   "by_year": {
+    "2005": 2417.7,
+    "2006": -733.2,
+    "2007": 4812.4,
+    "2008": -15117.7,
+    "2009": -657.7,
+    "2010": 347.3,
+    "2011": 4446.0,
+    "2012": -1862.4,
+    "2013": 5673.7,
+    "2014": 4952.3,
+    "2015": -1399.0,
+    "2016": -9080.2,
+    "2017": 11286.0
+   },
+   "n_by_year": {
+    "2005": 244,
+    "2006": 233,
+    "2007": 252,
+    "2008": 256,
+    "2009": 256,
+    "2010": 256,
+    "2011": 257,
+    "2012": 248,
+    "2013": 251,
+    "2014": 256,
+    "2015": 257,
+    "2016": 258,
+    "2017": 257
+   },
+   "reasons": {
+    "signal": 3281
+   },
+   "by_dow": {
+    "Mon": {
+     "n": 658,
+     "mean_net": 8.46,
+     "t_stat": 0.51
+    },
+    "Tue": {
+     "n": 655,
+     "mean_net": -3.94,
+     "t_stat": -0.26
+    },
+    "Wed": {
+     "n": 659,
+     "mean_net": 3.58,
+     "t_stat": 0.24
+    },
+    "Thu": {
+     "n": 651,
+     "mean_net": -5.2,
+     "t_stat": -0.28
+    },
+    "Sun": {
+     "n": 658,
+     "mean_net": 4.75,
+     "t_stat": 0.3
+    }
+   },
+   "entry_tod_ct": {
+    "17:00": 3127,
+    "17:01": 96,
+    "17:02": 29,
+    "17:04": 15,
+    "17:03": 14
+   },
+   "exit_tod_ct": {
+    "08:30": 3265,
+    "08:31": 4,
+    "17:00": 4,
+    "08:32": 3,
+    "08:33": 2
+   },
+   "hold_minutes_median": 930.0,
+   "dsr": 0.041790629888565745,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_8_of_13": false,
+    "pos_years": 7
+   },
+   "diagnostic": true,
+   "note": "post-hoc diagnostic: alternative reading of V2 (previous cash session = Friday for Sunday entries); not nominable"
+  }
+ ],
+ "survivors": []
+}

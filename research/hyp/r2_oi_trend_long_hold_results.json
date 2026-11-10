@@ -1,0 +1,200 @@
+{
+ "family": "oi_trend_long_hold",
+ "symbol": "BTCUSDT",
+ "n_variants": 3,
+ "n_prior_trials": 196,
+ "dsr_N": 199,
+ "period": [
+  "2022-01-01 00:00:00+00:00",
+  "2024-06-30 23:55:00+00:00"
+ ],
+ "variants": {
+  "V1_oi_z2_ret1": {
+   "n": 122,
+   "trades_per_day": 0.18728141478365154,
+   "mean_net": 11.42486065573768,
+   "median_net": 6.7400000000004,
+   "std_net": 100.48489686912461,
+   "win_rate": 0.5327868852459017,
+   "avg_win": 76.2682769230769,
+   "avg_loss": 62.519385964912324,
+   "t_stat": 1.255827636247051,
+   "ci95_low": -6.266296721311495,
+   "ci95_high": 29.228693032786836,
+   "sharpe_per_trade": 0.11369729194843935,
+   "sharpe_annual": 0.7810839824360727,
+   "max_drawdown": 555.3499999999995,
+   "total_net": 1393.832999999997,
+   "gross_mean": 15.24486065573768,
+   "p_win_at_1R": 0.5823189930430509,
+   "by_year": {
+    "2022": 319.0429999999993,
+    "2023": 328.4899999999974,
+    "2024": 746.3000000000008
+   },
+   "n_by_year": {
+    "2022": 52,
+    "2023": 41,
+    "2024": 29
+   },
+   "rule": "BTCUSDT 5-min bars (proxy for CME MBT), times America/Chicago. Features at bar open time t: OI_t = Binance 5-min open_interest with create_time == t (OI<=0 treated as missing); dOI_t = ln(OI_t/OI_(t-4h)); z_t = (dOI_t - m)/s with m, s the mean and sample std of dOI over the 8640 five-min bars strictly before t (>= 6912 non-missing required); ret4h_t = close_t/close_(t-4h) - 1. Trigger: z_t >= 2 and |ret4h_t| >= 1%. Evaluate the trigger on every tradable bar of a Monday-Friday calendar day with open time 00:00 .. 11:05 CT (before 11:08 CT); if flat, enter at the OPEN of the next 5-min bar with side = sign(ret4h_t) (long if up, short if down); at most one trade per day. No stop, no target. Exit at the 15:08 CT deadline = the open of the 15:10 CT bar of the same day (forced flat). Cost $3.82 per round turn.",
+   "symbol": "BTCUSDT",
+   "n_eligible_sessions": 650,
+   "n_signal_bars": 2039,
+   "reasons": {
+    "flat": 122
+   },
+   "avg_hold_bars": 108.45081967213115,
+   "share_long": 0.7049180327868853,
+   "by_side": {
+    "short": {
+     "n": 36,
+     "mean_net": 21.2402777777778
+    },
+    "long": {
+     "n": 86,
+     "mean_net": 7.316081395348799
+    }
+   },
+   "n_pos_years": 3,
+   "dsr": 0.06719290030504858
+  },
+  "V2_oi_z15_ret05": {
+   "n": 262,
+   "trades_per_day": 0.4021945137157107,
+   "mean_net": -5.293889312977133,
+   "median_net": -7.920000000000181,
+   "std_net": 101.8385765589204,
+   "win_rate": 0.4580152671755725,
+   "avg_win": 70.62437499999996,
+   "avg_loss": 69.45016901408455,
+   "t_stat": -0.8414206804841561,
+   "ci95_low": -17.934718988549655,
+   "ci95_high": 6.528051240457966,
+   "sharpe_per_trade": -0.05198314324350622,
+   "sharpe_annual": -0.5233363218384725,
+   "max_drawdown": 1920.3900000000071,
+   "total_net": -1386.999000000009,
+   "gross_mean": -1.4738893129771362,
+   "p_win_at_1R": 0.462206628261843,
+   "by_year": {
+    "2022": -380.7390000000047,
+    "2023": -190.0000000000016,
+    "2024": -816.2600000000024
+   },
+   "n_by_year": {
+    "2022": 102,
+    "2023": 92,
+    "2024": 68
+   },
+   "rule": "BTCUSDT 5-min bars (proxy for CME MBT), times America/Chicago. Features at bar open time t: OI_t = Binance 5-min open_interest with create_time == t (OI<=0 treated as missing); dOI_t = ln(OI_t/OI_(t-4h)); z_t = (dOI_t - m)/s with m, s the mean and sample std of dOI over the 8640 five-min bars strictly before t (>= 6912 non-missing required); ret4h_t = close_t/close_(t-4h) - 1. Trigger: z_t >= 1.5 and |ret4h_t| >= 0.5%. Evaluate the trigger on every tradable bar of a Monday-Friday calendar day with open time 00:00 .. 11:05 CT (before 11:08 CT); if flat, enter at the OPEN of the next 5-min bar with side = sign(ret4h_t) (long if up, short if down); at most one trade per day. No stop, no target. Exit at the 15:08 CT deadline = the open of the 15:10 CT bar of the same day (forced flat). Cost $3.82 per round turn.",
+   "symbol": "BTCUSDT",
+   "n_eligible_sessions": 650,
+   "n_signal_bars": 4668,
+   "reasons": {
+    "flat": 262
+   },
+   "avg_hold_bars": 113.86641221374046,
+   "share_long": 0.6450381679389313,
+   "by_side": {
+    "short": {
+     "n": 93,
+     "mean_net": 1.8152688172042781
+    },
+    "long": {
+     "n": 169,
+     "mean_net": -9.20602958579886
+    }
+   },
+   "n_pos_years": 0,
+   "dsr": 0.00016158316007062196
+  },
+  "V3_oi_z2_ret1_evening": {
+   "n": 21,
+   "trades_per_day": 0.032236964839808875,
+   "mean_net": -18.481571428571463,
+   "median_net": -7.910000000000146,
+   "std_net": 136.61045243266412,
+   "win_rate": 0.47619047619047616,
+   "avg_win": 90.10500000000005,
+   "avg_loss": 117.19663636363647,
+   "t_stat": -0.6199613464782829,
+   "ci95_low": -77.67414285714297,
+   "ci95_high": 34.10825833333342,
+   "sharpe_per_trade": -0.13528665705635598,
+   "sharpe_annual": -0.38559581226513584,
+   "max_drawdown": 585.480000000001,
+   "total_net": -388.11300000000074,
+   "gross_mean": -14.661571428571468,
+   "p_win_at_1R": 0.4108469583127064,
+   "by_year": {
+    "2022": -135.4629999999998,
+    "2023": 223.55999999999983,
+    "2024": -476.2100000000008
+   },
+   "n_by_year": {
+    "2022": 9,
+    "2023": 9,
+    "2024": 3
+   },
+   "rule": "BTCUSDT 5-min bars (proxy for CME MBT), times America/Chicago. Features at bar open time t: OI_t = Binance 5-min open_interest with create_time == t (OI<=0 treated as missing); dOI_t = ln(OI_t/OI_(t-4h)); z_t = (dOI_t - m)/s with m, s the mean and sample std of dOI over the 8640 five-min bars strictly before t (>= 6912 non-missing required); ret4h_t = close_t/close_(t-4h) - 1. Trigger: z_t >= 2 and |ret4h_t| >= 1%. Evaluate the trigger on every bar with open time 17:00 .. 22:55 CT on Sunday-Thursday calendar days; if flat, enter at the OPEN of the next 5-min bar with side = sign(ret4h_t); at most one trade per evening session. No stop, no target. Hold overnight; exit at the 15:08 CT deadline of the NEXT calendar day = the open of that day's 15:10 CT bar (forced flat). Cost $3.82 per round turn.",
+   "symbol": "BTCUSDT",
+   "n_eligible_sessions": 651,
+   "n_signal_bars": 150,
+   "reasons": {
+    "flat": 21
+   },
+   "avg_hold_bars": 219.9047619047619,
+   "share_long": 0.6666666666666666,
+   "by_side": {
+    "short": {
+     "n": 7,
+     "mean_net": -11.252857142857135
+    },
+    "long": {
+     "n": 14,
+     "mean_net": -22.09592857142863
+    }
+   },
+   "n_pos_years": 1,
+   "dsr": 0.0005057942830088411
+  }
+ },
+ "post_hoc_diagnostics": {
+  "D1_V2_by_entry_time_CT": {
+   "00:00-06:00": {
+    "n": 129,
+    "mean_net": -10.956333333333394,
+    "t": -1.060547289998913
+   },
+   "06:00-08:30": {
+    "n": 61,
+    "mean_net": -12.786131147540999,
+    "t": -1.0352169330594756
+   },
+   "08:30-11:10": {
+    "n": 72,
+    "mean_net": 11.198916666666657,
+    "t": 1.3361519357337936
+   }
+  },
+  "D2_V2_by_z_bucket": {
+   "z>=3": {
+    "n": 1,
+    "mean_net": 2.9599999999999276,
+    "t": 0.0
+   },
+   "z[1.5,2)": {
+    "n": 233,
+    "mean_net": -3.774416309012908,
+    "t": -0.5836639258808276
+   },
+   "z[2,3)": {
+    "n": 28,
+    "mean_net": -18.23285714285718,
+    "t": -0.7549179609311899
+   }
+  }
+ },
+ "survivors": []
+}

@@ -1,0 +1,437 @@
+{
+ "family": "funding_fade_long_hold",
+ "symbol": "BTCUSDT",
+ "n_variants": 3,
+ "n_prior_trials": 196,
+ "dsr_N": 199,
+ "bar_size": "1min",
+ "pct_window_days": 180,
+ "pct_min_obs": 486,
+ "first_scored_settlement": "2020-06-11 00:00:00+00:00",
+ "variants": [
+  {
+   "name": "V1_fade_p95_next",
+   "symbol": "BTCUSDT",
+   "n": 893,
+   "upper_pct": 0.95,
+   "lower_pct": 0.05,
+   "exit_mode": "next",
+   "rule": "1 MBT (0.1 BTC), no stop/target, Binance BTCUSDT perp 1-min bars as CME proxy, $3.82 round turn, one position at a time. Funding settlements T at 00:00/08:00/16:00 UTC (calc_time rounded to the minute). For each T compute the 95th and 5th percentiles (np.quantile, linear) of the settled rates with calc_time in [T-180d, T) (history only; need >= 486 of 540). Signal: rate(T) >= p95 -> short, rate(T) <= p5 -> long (literal inequalities; a window with p95 == p5 == rate gives no signal). Fill at the open of the first 1-min bar with open_time > T that is allowed by protocol.entry_mask and tradable_mask (first tradable bar after the settlement; a Sunday 16:00 UTC signal fills at Sunday 17:00 CT). Exit at the open of the 1-min bar opening at next_T - 1 min (the bar before the next settlement) or at the open of the 15:08 CT bar, whichever comes first; if no allowed entry bar exists before next_T - 1 min the signal is void. Protocol forced flat (15:10 CT, weekend) as backstop.",
+   "signals": {
+    "n_settlements_scored": 4443,
+    "n_short_signals": 774,
+    "n_long_signals": 364,
+    "n_conflict_dropped": 0,
+    "n_short_tied_at_pct": 567,
+    "n_long_tied_at_pct": 84,
+    "n_entry_flags": 893,
+    "skipped": {
+     "no_bar_before_exit": 245,
+     "after_1508_ct": 0,
+     "no_data": 0
+    }
+   },
+   "trades_per_day": 0.7609254585638815,
+   "mean_net": 0.7710772676372117,
+   "median_net": -2.4099999999997817,
+   "t_stat": 0.32903580700015983,
+   "ci95_low": -3.665210022396374,
+   "ci95_high": 5.120084322508438,
+   "win_rate": 0.46360582306830905,
+   "avg_win": 48.356038647343034,
+   "avg_loss": 40.35663465553233,
+   "sharpe_per_trade": 0.011010763454771831,
+   "sharpe_annual": 0.1524715307619811,
+   "total_net": 688.5720000000301,
+   "gross_mean": 4.591077267637211,
+   "max_drawdown": 2519.5399999999822,
+   "by_year": {
+    "2020": -57.3,
+    "2021": 1301.4,
+    "2022": 817.4,
+    "2023": -1319.1,
+    "2024": -53.8
+   },
+   "n_by_year": {
+    "2020": 38,
+    "2021": 172,
+    "2022": 212,
+    "2023": 400,
+    "2024": 71
+   },
+   "reasons": {
+    "signal": 893
+   },
+   "n_long": 289,
+   "n_short": 604,
+   "mean_net_long": 3.7220795847751376,
+   "mean_net_short": -0.6409089403973255,
+   "t_long": 0.694332484563534,
+   "t_short": -0.274951984162304,
+   "mean_hold_min": 393.8152295632699,
+   "dsr": 0.007478747395945242,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_3": false,
+    "pos_years": 2
+   }
+  },
+  {
+   "name": "V2_fade_p90_next",
+   "symbol": "BTCUSDT",
+   "n": 1230,
+   "upper_pct": 0.9,
+   "lower_pct": 0.1,
+   "exit_mode": "next",
+   "rule": "1 MBT (0.1 BTC), no stop/target, Binance BTCUSDT perp 1-min bars as CME proxy, $3.82 round turn, one position at a time. Funding settlements T at 00:00/08:00/16:00 UTC (calc_time rounded to the minute). For each T compute the 90th and 10th percentiles (np.quantile, linear) of the settled rates with calc_time in [T-180d, T) (history only; need >= 486 of 540). Signal: rate(T) >= p90 -> short, rate(T) <= p10 -> long (literal inequalities; a window with p90 == p10 == rate gives no signal). Fill at the open of the first 1-min bar with open_time > T that is allowed by protocol.entry_mask and tradable_mask (first tradable bar after the settlement; a Sunday 16:00 UTC signal fills at Sunday 17:00 CT). Exit at the open of the 1-min bar opening at next_T - 1 min (the bar before the next settlement) or at the open of the 15:08 CT bar, whichever comes first; if no allowed entry bar exists before next_T - 1 min the signal is void. Protocol forced flat (15:10 CT, weekend) as backstop.",
+   "signals": {
+    "n_settlements_scored": 4443,
+    "n_short_signals": 954,
+    "n_long_signals": 613,
+    "n_conflict_dropped": 0,
+    "n_short_tied_at_pct": 605,
+    "n_long_tied_at_pct": 137,
+    "n_entry_flags": 1230,
+    "skipped": {
+     "no_bar_before_exit": 337,
+     "after_1508_ct": 0,
+     "no_data": 0
+    }
+   },
+   "trades_per_day": 1.0480832184026587,
+   "mean_net": -1.1777691056910364,
+   "median_net": -3.100000000000109,
+   "t_stat": -0.5292168736070315,
+   "ci95_low": -5.90994981707316,
+   "ci95_high": 3.1736869105691303,
+   "win_rate": 0.4560975609756098,
+   "avg_win": 52.68430659536544,
+   "avg_loss": 46.34462182361732,
+   "sharpe_per_trade": -0.015089718119808769,
+   "sharpe_annual": -0.24523320899203763,
+   "total_net": -1448.655999999975,
+   "gross_mean": 2.6422308943089625,
+   "max_drawdown": 3748.709999999991,
+   "by_year": {
+    "2020": -453.1,
+    "2021": 277.1,
+    "2022": 904.0,
+    "2023": -1501.1,
+    "2024": -675.7
+   },
+   "n_by_year": {
+    "2020": 85,
+    "2021": 285,
+    "2022": 280,
+    "2023": 453,
+    "2024": 127
+   },
+   "reasons": {
+    "signal": 1230
+   },
+   "n_long": 478,
+   "n_short": 752,
+   "mean_net_long": -0.23840794979076776,
+   "mean_net_short": -1.7748630319148768,
+   "t_long": -0.05953720037810974,
+   "t_short": -0.6815174196856267,
+   "mean_hold_min": 392.830081300813,
+   "dsr": 0.0004981484002912196,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": false,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_3": false,
+    "pos_years": 2
+   }
+  },
+  {
+   "name": "V3_fade_p95_session",
+   "symbol": "BTCUSDT",
+   "n": 360,
+   "upper_pct": 0.95,
+   "lower_pct": 0.05,
+   "exit_mode": "session",
+   "rule": "1 MBT (0.1 BTC), no stop/target, Binance BTCUSDT perp 1-min bars as CME proxy, $3.82 round turn, one position at a time. Funding settlements T at 00:00/08:00/16:00 UTC (calc_time rounded to the minute). For each T compute the 95th and 5th percentiles (np.quantile, linear) of the settled rates with calc_time in [T-180d, T) (history only; need >= 486 of 540). Signal: rate(T) >= p95 -> short, rate(T) <= p5 -> long (literal inequalities; a window with p95 == p5 == rate gives no signal). Fill at the open of the first 1-min bar with open_time > T that is allowed by protocol.entry_mask and tradable_mask (first tradable bar after the settlement; a Sunday 16:00 UTC signal fills at Sunday 17:00 CT). Skip the signal if the fill bar's Chicago time-of-day is >= 15:08 (evening session / Sunday re-open). Exit at the open of the 15:08 CT bar of that same Topstep day session; a signal arriving while a position is open is skipped. Protocol forced flat (15:10 CT, weekend) as backstop.",
+   "signals": {
+    "n_settlements_scored": 4443,
+    "n_short_signals": 774,
+    "n_long_signals": 364,
+    "n_conflict_dropped": 0,
+    "n_short_tied_at_pct": 567,
+    "n_long_tied_at_pct": 84,
+    "n_entry_flags": 556,
+    "skipped": {
+     "no_bar_before_exit": 0,
+     "after_1508_ct": 582,
+     "no_data": 0
+    }
+   },
+   "trades_per_day": 0.30675606392272936,
+   "mean_net": 0.806002777777807,
+   "median_net": -1.4300000000000361,
+   "t_stat": 0.15975268611356255,
+   "ci95_low": -8.868365972222191,
+   "ci95_high": 10.36297611111114,
+   "win_rate": 0.49444444444444446,
+   "avg_win": 63.88724719101128,
+   "avg_loss": 60.88884065934064,
+   "sharpe_per_trade": 0.008419705840813503,
+   "sharpe_annual": 0.07402761668143107,
+   "total_net": 290.1610000000105,
+   "gross_mean": 4.626002777777806,
+   "max_drawdown": 1820.469999999992,
+   "by_year": {
+    "2020": -72.5,
+    "2021": 228.6,
+    "2022": 1200.4,
+    "2023": -893.2,
+    "2024": -173.2
+   },
+   "n_by_year": {
+    "2020": 18,
+    "2021": 68,
+    "2022": 97,
+    "2023": 147,
+    "2024": 30
+   },
+   "reasons": {
+    "signal": 360
+   },
+   "n_long": 123,
+   "n_short": 237,
+   "mean_net_long": 3.7434308943089762,
+   "mean_net_short": -0.7184852320674835,
+   "t_long": 0.3369854368092048,
+   "t_short": -0.14177503734200855,
+   "mean_hold_min": 636.6666666666666,
+   "dsr": 0.004654920776562573,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_3": false,
+    "pos_years": 2
+   }
+  }
+ ],
+ "survivors": [],
+ "diagnostics": {
+  "D1_strict_inequality_V1": {
+   "name": "D1_strict_V1_posthoc",
+   "symbol": "BTCUSDT",
+   "n": 377,
+   "signals": {
+    "n_settlements_scored": 4443,
+    "n_short_signals": 207,
+    "n_long_signals": 280,
+    "n_conflict_dropped": 0,
+    "n_short_tied_at_pct": 0,
+    "n_long_tied_at_pct": 0,
+    "n_entry_flags": 377,
+    "skipped": {
+     "no_bar_before_exit": 110,
+     "after_1508_ct": 0,
+     "no_data": 0
+    }
+   },
+   "trades_per_day": 0.3212417669413027,
+   "mean_net": 7.047779840848869,
+   "median_net": 0.05999999999992767,
+   "t_stat": 1.6276480638452848,
+   "ci95_low": -1.7105264588858609,
+   "ci95_high": 15.895161737400601,
+   "win_rate": 0.5039787798408488,
+   "avg_win": 62.50971052631585,
+   "avg_loss": 49.30391443850263,
+   "sharpe_per_trade": 0.08382814015315274,
+   "sharpe_annual": 0.7542339968979267,
+   "total_net": 2657.0130000000236,
+   "gross_mean": 10.86777984084887,
+   "max_drawdown": 897.5399999999943,
+   "by_year": {
+    "2020": -57.3,
+    "2021": 1596.2,
+    "2022": 678.5,
+    "2023": 493.4,
+    "2024": -53.8
+   },
+   "n_by_year": {
+    "2020": 38,
+    "2021": 102,
+    "2022": 82,
+    "2023": 84,
+    "2024": 71
+   },
+   "reasons": {
+    "signal": 377
+   },
+   "n_long": 219,
+   "n_short": 158,
+   "mean_net_long": 6.2580000000000675,
+   "mean_net_short": 8.14247468354436,
+   "t_long": 1.1187338700346006,
+   "t_short": 1.1889029496110217,
+   "mean_hold_min": 389.50663129973475,
+   "dsr": 0.12866265615946482,
+   "nominable": false
+  },
+  "D2_by_entry_hour_utc_x_side": {
+   "V1_fade_p95_next": {
+    "h00_short": {
+     "n": 189,
+     "mean_net": 0.11937566137569272,
+     "t": 0.031801636813127296,
+     "total": 22.562000000005924
+    },
+    "h00_long": {
+     "n": 103,
+     "mean_net": 2.822097087378659,
+     "t": 0.3104875566430674,
+     "total": 290.67600000000186
+    },
+    "h08_short": {
+     "n": 186,
+     "mean_net": -5.244177419354799,
+     "t": -1.2450595301295113,
+     "total": -975.4169999999928
+    },
+    "h08_long": {
+     "n": 88,
+     "mean_net": 8.440340909090985,
+     "t": 0.7384814087831699,
+     "total": 742.7500000000067
+    },
+    "h16_short": {
+     "n": 196,
+     "mean_net": 3.209943877551026,
+     "t": 0.6800823835922234,
+     "total": 629.1490000000011
+    },
+    "h16_long": {
+     "n": 86,
+     "mean_net": -2.6759651162790137,
+     "t": -0.3439970228746693,
+     "total": -230.13299999999518
+    },
+    "h22_short": {
+     "n": 14,
+     "mean_net": -5.911499999999957,
+     "t": -1.5219678284901288,
+     "total": -82.7609999999994
+    },
+    "h22_long": {
+     "n": 10,
+     "mean_net": 25.124900000000057,
+     "t": 0.9415251870199173,
+     "total": 251.24900000000056
+    },
+    "h23_short": {
+     "n": 19,
+     "mean_net": 1.0188421052631629,
+     "t": 0.2391293531343236,
+     "total": 19.358000000000096
+    },
+    "h23_long": {
+     "n": 2,
+     "mean_net": 10.569500000000406,
+     "t": 0.17758045682508103,
+     "total": 21.139000000000813
+    }
+   },
+   "V2_fade_p90_next": {
+    "h00_short": {
+     "n": 236,
+     "mean_net": -1.6750296610169275,
+     "t": -0.3582213073406289,
+     "total": -395.3069999999949
+    },
+    "h00_long": {
+     "n": 161,
+     "mean_net": -4.601118012422354,
+     "t": -0.6624575155870449,
+     "total": -740.7799999999991
+    },
+    "h08_short": {
+     "n": 233,
+     "mean_net": -2.0574420600858105,
+     "t": -0.3874775288072123,
+     "total": -479.3839999999938
+    },
+    "h08_long": {
+     "n": 151,
+     "mean_net": 0.5291854304636111,
+     "t": 0.06554457675473935,
+     "total": 79.90700000000527
+    },
+    "h16_short": {
+     "n": 241,
+     "mean_net": -1.500904564315352,
+     "t": -0.35069827712713486,
+     "total": -361.71799999999985
+    },
+    "h16_long": {
+     "n": 138,
+     "mean_net": -0.09462318840575751,
+     "t": -0.014571479831308676,
+     "total": -13.057999999994536
+    },
+    "h22_short": {
+     "n": 19,
+     "mean_net": -5.0281578947368,
+     "t": -0.6016223869978404,
+     "total": -95.5349999999992
+    },
+    "h22_long": {
+     "n": 23,
+     "mean_net": 24.598086956521744,
+     "t": 1.6342277623994816,
+     "total": 565.7560000000001
+    },
+    "h23_short": {
+     "n": 23,
+     "mean_net": -0.11969565217389853,
+     "t": -0.026910893110274323,
+     "total": -2.752999999999666
+    },
+    "h23_long": {
+     "n": 5,
+     "mean_net": -1.1567999999998222,
+     "t": -0.05886761135998919,
+     "total": -5.783999999999111
+    }
+   },
+   "V3_fade_p95_session": {
+    "h08_short": {
+     "n": 186,
+     "mean_net": -3.854860215053738,
+     "t": -0.6441500374614559,
+     "total": -717.0039999999952
+    },
+    "h08_long": {
+     "n": 88,
+     "mean_net": 0.14547727272730268,
+     "t": 0.009665122485075608,
+     "total": 12.802000000002636
+    },
+    "h16_short": {
+     "n": 51,
+     "mean_net": 10.720058823529447,
+     "t": 1.2238948446152835,
+     "total": 546.7230000000018
+    },
+    "h16_long": {
+     "n": 35,
+     "mean_net": 12.789714285714329,
+     "t": 1.311132421444159,
+     "total": 447.6400000000015
+    }
+   }
+  }
+ }
+}
