@@ -1,0 +1,2220 @@
+{
+ "n_variants": 16,
+ "variants": [
+  {
+   "name": "BTC_hw_t2",
+   "symbol": "BTCUSDT",
+   "rule": "5-min bars, UTC clock, weekday x 1-hour block grid. Cells selected on H1 by |t| >= 2.0 on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: Mon 09-10UTC:S, Tue 02-03UTC:S, Tue 21-22UTC:L, Wed 06-07UTC:L, Thu 05-06UTC:L, Thu 12-13UTC:L, Thu 19-20UTC:L, Fri 17-18UTC:S, Fri 21-22UTC:L. Tested on H2.",
+   "n_cells": 9,
+   "cells": "Mon 09-10UTC:S, Tue 02-03UTC:S, Tue 21-22UTC:L, Wed 06-07UTC:L, Thu 05-06UTC:L, Thu 12-13UTC:L, Thu 19-20UTC:L, Fri 17-18UTC:S, Fri 21-22UTC:L",
+   "select_window": "H1",
+   "fit": {
+    "n": 916,
+    "trades_per_day": 1.5620041700677105,
+    "mean_net": 0.32671397379912276,
+    "median_net": -2.9080000000000106,
+    "std_net": 25.101964542740173,
+    "win_rate": 0.36899563318777295,
+    "avg_win": 20.791937869822473,
+    "avg_loss": 11.64083910034602,
+    "t_stat": 0.39391973130522995,
+    "ci95_low": -1.3069959879912687,
+    "ci95_high": 1.9602460698689794,
+    "sharpe_per_trade": 0.013015474276638354,
+    "sharpe_annual": 0.2582268295235487,
+    "max_drawdown": 923.8930000000025,
+    "total_net": 299.26999999999646,
+    "gross_mean": 4.146713973799122,
+    "p_win_at_1R": 0.5100735738447445,
+    "by_year": {
+     "2020": -925.7,
+     "2021": 1688.5,
+     "2022": -463.5
+    },
+    "n_by_year": {
+     "2020": 404,
+     "2021": 402,
+     "2022": 110
+    },
+    "reasons": {
+     "signal": 916
+    }
+   },
+   "oos": {
+    "n": 892,
+    "trades_per_day": 1.5192278285847045,
+    "mean_net": -3.8483295964125688,
+    "median_net": -4.050000000000109,
+    "std_net": 20.519311547049266,
+    "win_rate": 0.31390134529147984,
+    "avg_win": 14.017499999999979,
+    "avg_loss": 12.022238562091513,
+    "t_stat": -5.6013395807206825,
+    "ci95_low": -5.15310874439463,
+    "ci95_high": -2.4884419843049375,
+    "sharpe_per_trade": -0.18754672093109134,
+    "sharpe_annual": -3.6696208884387906,
+    "max_drawdown": 3626.609999999998,
+    "total_net": -3432.7100000000114,
+    "gross_mean": -0.028329596412569383,
+    "p_win_at_1R": 0.35221320147910606,
+    "by_year": {
+     "2022": -1106.7,
+     "2023": -1369.5,
+     "2024": -956.5
+    },
+    "n_by_year": {
+     "2022": 290,
+     "2023": 400,
+     "2024": 202
+    },
+    "reasons": {
+     "signal": 892
+    }
+   },
+   "full_is": {
+    "n": 1808,
+    "trades_per_day": 1.5405997256875246,
+    "mean_net": -1.733097345132752,
+    "median_net": -3.3234999999998944,
+    "std_net": 23.044138033047513,
+    "win_rate": 0.3418141592920354,
+    "avg_win": 17.7226132686084,
+    "avg_loss": 11.836987394957989,
+    "t_stat": -3.1978766070579847,
+    "ci95_low": -2.8361612555309748,
+    "ci95_high": -0.6263023506637178,
+    "sharpe_per_trade": -0.07520773146937948,
+    "sharpe_annual": -1.4818616796935438,
+    "max_drawdown": 4446.077000000002,
+    "total_net": -3133.4400000000155,
+    "gross_mean": 2.086902654867248,
+    "p_win_at_1R": 0.44136939247393564,
+    "by_year": {
+     "2020": -925.6790000000016,
+     "2021": 1688.4810000000007,
+     "2022": -1570.2220000000066,
+     "2023": -1369.5300000000063,
+     "2024": -956.4900000000015
+    },
+    "n_by_year": {
+     "2020": 404,
+     "2021": 402,
+     "2022": 400,
+     "2023": 400,
+     "2024": 202
+    }
+   },
+   "windows": null,
+   "dsr_oos": 1.1216667267160872e-13
+  },
+  {
+   "name": "BTC_hw_top10",
+   "symbol": "BTCUSDT",
+   "rule": "5-min bars, UTC clock, weekday x 1-hour block grid. Cells selected on H1 by top 10 cells by |t| on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: Mon 09-10UTC:S, Tue 02-03UTC:S, Tue 21-22UTC:L, Wed 06-07UTC:L, Wed 13-14UTC:L, Thu 05-06UTC:L, Thu 12-13UTC:L, Thu 19-20UTC:L, Fri 17-18UTC:S, Fri 21-22UTC:L. Tested on H2.",
+   "n_cells": 10,
+   "cells": "Mon 09-10UTC:S, Tue 02-03UTC:S, Tue 21-22UTC:L, Wed 06-07UTC:L, Wed 13-14UTC:L, Thu 05-06UTC:L, Thu 12-13UTC:L, Thu 19-20UTC:L, Fri 17-18UTC:S, Fri 21-22UTC:L",
+   "select_window": "H1",
+   "fit": {
+    "n": 1034,
+    "trades_per_day": 1.763223047871193,
+    "mean_net": 0.45832108317214476,
+    "median_net": -2.9080000000000106,
+    "std_net": 27.1566886454741,
+    "win_rate": 0.37620889748549324,
+    "avg_win": 21.899722365038553,
+    "avg_loss": 12.473004651162787,
+    "t_stat": 0.5426918405277135,
+    "ci95_low": -1.2439510154738929,
+    "ci95_high": 2.0888649177949645,
+    "sharpe_per_trade": 0.016876913424734793,
+    "sharpe_annual": 0.3557516474826815,
+    "max_drawdown": 1056.310000000002,
+    "total_net": 473.90399999999767,
+    "gross_mean": 4.278321083172143,
+    "p_win_at_1R": 0.5133338586419436,
+    "by_year": {
+     "2020": -1015.3,
+     "2021": 2051.6,
+     "2022": -562.4
+    },
+    "n_by_year": {
+     "2020": 457,
+     "2021": 454,
+     "2022": 123
+    },
+    "reasons": {
+     "signal": 1034
+    }
+   },
+   "oos": {
+    "n": 1009,
+    "trades_per_day": 1.7184987433205905,
+    "mean_net": -3.4161050545094236,
+    "median_net": -4.07,
+    "std_net": 21.931220009475805,
+    "win_rate": 0.3211100099108028,
+    "avg_win": 15.279629629629616,
+    "avg_loss": 12.259051094890518,
+    "t_stat": -4.947821340310015,
+    "ci95_low": -4.799113230921717,
+    "ci95_high": -2.0415146184340953,
+    "sharpe_per_trade": -0.15576447881300856,
+    "sharpe_annual": -3.2414796998129445,
+    "max_drawdown": 3660.6099999999956,
+    "total_net": -3446.8500000000085,
+    "gross_mean": 0.4038949454905765,
+    "p_win_at_1R": 0.375952479761757,
+    "by_year": {
+     "2022": -939.3,
+     "2023": -1500.9,
+     "2024": -1006.7
+    },
+    "n_by_year": {
+     "2022": 329,
+     "2023": 452,
+     "2024": 228
+    },
+    "reasons": {
+     "signal": 1009
+    }
+   },
+   "full_is": {
+    "n": 2043,
+    "trades_per_day": 1.740843605962175,
+    "mean_net": -1.4551864904552183,
+    "median_net": -3.3299999999998544,
+    "std_net": 24.784228668419654,
+    "win_rate": 0.3489965736661772,
+    "avg_win": 18.89143338008414,
+    "avg_loss": 12.36281052631579,
+    "t_stat": -2.653856464833473,
+    "ci95_low": -2.5126088839941256,
+    "ci95_high": -0.32254456681351235,
+    "sharpe_per_trade": -0.05871421337834223,
+    "sharpe_annual": -1.2297685876822175,
+    "max_drawdown": 4303.026,
+    "total_net": -2972.946000000011,
+    "gross_mean": 2.364813509544781,
+    "p_win_at_1R": 0.4534403553381997,
+    "by_year": {
+     "2020": -1015.2980000000019,
+     "2021": 2051.577000000002,
+     "2022": -1501.6750000000047,
+     "2023": -1500.8900000000049,
+     "2024": -1006.6600000000005
+    },
+    "n_by_year": {
+     "2020": 457,
+     "2021": 454,
+     "2022": 452,
+     "2023": 452,
+     "2024": 228
+    }
+   },
+   "windows": null,
+   "dsr_oos": 1.0113185136695255e-11
+  },
+  {
+   "name": "BTC_blk4h_t2",
+   "symbol": "BTCUSDT",
+   "rule": "5-min bars, UTC clock, weekday x 4-hour block grid. Cells selected on H1 by |t| >= 2.0 on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: Mon 12-16UTC:L, Thu 00-04UTC:S. Tested on H2.",
+   "n_cells": 2,
+   "cells": "Mon 12-16UTC:L, Thu 00-04UTC:S",
+   "select_window": "H1",
+   "fit": {
+    "n": 235,
+    "trades_per_day": 0.4007325108798166,
+    "mean_net": 5.120438297872324,
+    "median_net": 1.903999999999979,
+    "std_net": 69.64807800435155,
+    "win_rate": 0.5617021276595745,
+    "avg_win": 40.967303030303015,
+    "avg_loss": 40.819233009708746,
+    "t_stat": 1.1270208019816153,
+    "ci95_low": -3.766428297872359,
+    "ci95_high": 13.682876914893594,
+    "sharpe_per_trade": 0.0735187308047812,
+    "sharpe_annual": 0.7387977432318475,
+    "max_drawdown": 838.6859999999997,
+    "total_net": 1203.3029999999962,
+    "gross_mean": 8.940438297872324,
+    "p_win_at_1R": 0.562607350131167,
+    "by_year": {
+     "2020": 105.0,
+     "2021": -87.4,
+     "2022": 1185.7
+    },
+    "n_by_year": {
+     "2020": 105,
+     "2021": 104,
+     "2022": 26
+    },
+    "reasons": {
+     "signal": 235
+    }
+   },
+   "oos": {
+    "n": 234,
+    "trades_per_day": 0.39854182947177225,
+    "mean_net": -2.3764957264957514,
+    "median_net": -4.125000000000109,
+    "std_net": 46.191573406431836,
+    "win_rate": 0.4017094017094017,
+    "avg_win": 31.826170212765923,
+    "avg_loss": 25.341142857142867,
+    "t_stat": -0.7870135518062511,
+    "ci95_low": -8.011732905982939,
+    "ci95_high": 3.569676282051279,
+    "sharpe_per_trade": -0.05144868536053898,
+    "sharpe_annual": -0.5155983363574327,
+    "max_drawdown": 1306.8600000000015,
+    "total_net": -556.1000000000058,
+    "gross_mean": 1.4435042735042483,
+    "p_win_at_1R": 0.4584291162400867,
+    "by_year": {
+     "2022": -624.1,
+     "2023": -678.1,
+     "2024": 746.1
+    },
+    "n_by_year": {
+     "2022": 78,
+     "2023": 104,
+     "2024": 52
+    },
+    "reasons": {
+     "signal": 234
+    }
+   },
+   "full_is": {
+    "n": 469,
+    "trades_per_day": 0.3996356589311112,
+    "mean_net": 1.379963752665225,
+    "median_net": -0.6880000000000286,
+    "std_net": 59.175839415261514,
+    "win_rate": 0.48187633262260127,
+    "avg_win": 37.16523893805307,
+    "avg_loss": 31.901814814814827,
+    "t_stat": 0.505021274061804,
+    "ci95_low": -3.9179571961620607,
+    "ci95_high": 6.90500842217483,
+    "sharpe_per_trade": 0.02331971572015134,
+    "sharpe_annual": 0.2340214352894289,
+    "max_drawdown": 1370.310000000002,
+    "total_net": 647.2029999999905,
+    "gross_mean": 5.199963752665225,
+    "p_win_at_1R": 0.5199800581852375,
+    "by_year": {
+     "2020": 104.96100000000038,
+     "2021": -87.35000000000309,
+     "2022": 561.6019999999983,
+     "2023": -678.0899999999997,
+     "2024": 746.0799999999948
+    },
+    "n_by_year": {
+     "2020": 105,
+     "2021": 104,
+     "2022": 104,
+     "2023": 104,
+     "2024": 52
+    }
+   },
+   "windows": null,
+   "dsr_oos": 0.004936883715156444
+  },
+  {
+   "name": "BTC_hour_t2",
+   "symbol": "BTCUSDT",
+   "rule": "5-min bars, UTC clock, hour-of-day (all days) grid. Cells selected on H1 by |t| >= 2.0 on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: 13-14UTC:L. Tested on H2.",
+   "n_cells": 1,
+   "cells": "13-14UTC:L",
+   "select_window": "H1",
+   "fit": {
+    "n": 587,
+    "trades_per_day": 1.0009786548359674,
+    "mean_net": -0.4295110732538256,
+    "median_net": -3.1089999999999414,
+    "std_net": 35.25793479266986,
+    "win_rate": 0.4071550255536627,
+    "avg_win": 25.796615062761504,
+    "avg_loss": 18.441132183908028,
+    "t_stat": -0.2951457577282439,
+    "ci95_low": -3.1671033645655715,
+    "ci95_high": 2.3936375212947154,
+    "sharpe_per_trade": -0.012181969130623077,
+    "sharpe_annual": -0.19347736914055408,
+    "max_drawdown": 1104.7120000000014,
+    "total_net": -252.1229999999956,
+    "gross_mean": 3.390488926746174,
+    "p_win_at_1R": 0.49029084661886435,
+    "by_year": {
+     "2020": -674.8,
+     "2021": 841.5,
+     "2022": -418.8
+    },
+    "n_by_year": {
+     "2020": 262,
+     "2021": 261,
+     "2022": 64
+    },
+    "reasons": {
+     "signal": 587
+    }
+   },
+   "oos": {
+    "n": 586,
+    "trades_per_day": 0.9980577438908484,
+    "mean_net": -5.251945392491465,
+    "median_net": -5.929999999999854,
+    "std_net": 26.31085934795333,
+    "win_rate": 0.3395904436860068,
+    "avg_win": 17.922060301507535,
+    "avg_loss": 17.168294573643404,
+    "t_stat": -4.832078453696678,
+    "ci95_low": -7.326839163822507,
+    "ci95_high": -3.0255814846416356,
+    "sharpe_per_trade": -0.19961132105325946,
+    "sharpe_annual": -3.1656527465843993,
+    "max_drawdown": 3222.4799999999973,
+    "total_net": -3077.6399999999985,
+    "gross_mean": -1.4319453924914658,
+    "p_win_at_1R": 0.3503307985576799,
+    "by_year": {
+     "2022": -850.0,
+     "2023": -1298.5,
+     "2024": -929.1
+    },
+    "n_by_year": {
+     "2022": 196,
+     "2023": 260,
+     "2024": 130
+    },
+    "reasons": {
+     "signal": 586
+    }
+   },
+   "full_is": {
+    "n": 1173,
+    "trades_per_day": 0.999515198136873,
+    "mean_net": -2.8386726342710955,
+    "median_net": -4.3399999999997085,
+    "std_net": 31.191663962771536,
+    "win_rate": 0.3734015345268542,
+    "avg_win": 22.21890639269406,
+    "avg_loss": 17.770944217687067,
+    "t_stat": -3.1169208470425853,
+    "ci95_low": -4.663502152600173,
+    "ci95_high": -1.0482090153452768,
+    "sharpe_per_trade": -0.09100741267471853,
+    "sharpe_annual": -1.4443476498361958,
+    "max_drawdown": 3801.3839999999946,
+    "total_net": -3329.762999999995,
+    "gross_mean": 0.9813273657289047,
+    "p_win_at_1R": 0.4290151728265223,
+    "by_year": {
+     "2020": -674.8100000000003,
+     "2021": 841.4509999999996,
+     "2022": -1268.8039999999933,
+     "2023": -1298.4899999999975,
+     "2024": -929.1100000000035
+    },
+    "n_by_year": {
+     "2020": 262,
+     "2021": 261,
+     "2022": 260,
+     "2023": 260,
+     "2024": 130
+    }
+   },
+   "windows": null,
+   "dsr_oos": 2.6576977873182863e-11
+  },
+  {
+   "name": "BTC_dow_t15",
+   "symbol": "BTCUSDT",
+   "rule": "5-min bars, UTC clock, weekday grid. Cells selected on H1 by |t| >= 1.5 on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: Wed:L. Tested on H2.",
+   "n_cells": 1,
+   "cells": "Wed:L",
+   "select_window": "H1",
+   "fit": {
+    "n": 236,
+    "trades_per_day": 0.40243775560696476,
+    "mean_net": 4.676533898305084,
+    "median_net": -2.5754999999997557,
+    "std_net": 89.9826409708462,
+    "win_rate": 0.4576271186440678,
+    "avg_win": 60.13612962962962,
+    "avg_loss": 42.1175,
+    "t_stat": 0.7984015156738445,
+    "ci95_low": -6.407893432203385,
+    "ci95_high": 15.99740508474575,
+    "sharpe_per_trade": 0.0519715119255085,
+    "sharpe_annual": 0.5233774185317523,
+    "max_drawdown": 1460.335,
+    "total_net": 1103.6619999999998,
+    "gross_mean": 8.496533898305083,
+    "p_win_at_1R": 0.5457346493737566,
+    "by_year": {
+     "2020": 142.5,
+     "2021": 962.7,
+     "2022": -1.5
+    },
+    "n_by_year": {
+     "2020": 106,
+     "2021": 104,
+     "2022": 26
+    },
+    "reasons": {
+     "signal": 236
+    }
+   },
+   "oos": {
+    "n": 234,
+    "trades_per_day": 0.39854182947177225,
+    "mean_net": -0.9470085470085146,
+    "median_net": -3.700000000000109,
+    "std_net": 84.69185966289042,
+    "win_rate": 0.41452991452991456,
+    "avg_win": 55.18752577319591,
+    "avg_loss": 40.69189781021896,
+    "t_stat": -0.17104884979346188,
+    "ci95_low": -11.701744658119662,
+    "ci95_high": 10.082767094017107,
+    "sharpe_per_trade": -0.01118181311377517,
+    "sharpe_annual": -0.11205969984500695,
+    "max_drawdown": 1555.4799999999998,
+    "total_net": -221.5999999999924,
+    "gross_mean": 2.872991452991485,
+    "p_win_at_1R": 0.4901229219824771,
+    "by_year": {
+     "2022": -839.3,
+     "2023": 137.9,
+     "2024": 479.8
+    },
+    "n_by_year": {
+     "2022": 78,
+     "2023": 104,
+     "2024": 52
+    },
+    "reasons": {
+     "signal": 234
+    }
+   },
+   "full_is": {
+    "n": 470,
+    "trades_per_day": 0.4004877605493012,
+    "mean_net": 1.8767276595744833,
+    "median_net": -3.1769999999999703,
+    "std_net": 87.34075668813105,
+    "win_rate": 0.43617021276595747,
+    "avg_win": 57.79459512195124,
+    "avg_loss": 41.38049056603773,
+    "t_stat": 0.4658361990851407,
+    "ci95_low": -6.032518563829768,
+    "ci95_high": 9.798843085106421,
+    "sharpe_per_trade": 0.021487421574279953,
+    "sharpe_annual": 0.21586349232950436,
+    "max_drawdown": 1847.4239999999977,
+    "total_net": 882.0620000000072,
+    "gross_mean": 5.696727659574482,
+    "p_win_at_1R": 0.5189233782512555,
+    "by_year": {
+     "2020": 142.49799999999993,
+     "2021": 962.6830000000025,
+     "2022": -840.8389999999998,
+     "2023": 137.8899999999993,
+     "2024": 479.8300000000064
+    },
+    "n_by_year": {
+     "2020": 106,
+     "2021": 104,
+     "2022": 104,
+     "2023": 104,
+     "2024": 52
+    }
+   },
+   "windows": null,
+   "dsr_oos": 0.024579084382509327
+  },
+  {
+   "name": "BTC_hw_t2_CT",
+   "symbol": "BTCUSDT",
+   "rule": "5-min bars, CT clock, weekday x 1-hour block grid. Cells selected on H1 by |t| >= 2.0 on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: Mon 03-04CT:S, Mon 08-09CT:L, Mon 10-11CT:L, Mon 15-16CT:S, Tue 05-06CT:L, Wed 00-01CT:L, Wed 04-05CT:L, Thu 06-07CT:L, Fri 05-06CT:L, Fri 15-16CT:L. Tested on H2.",
+   "n_cells": 10,
+   "cells": "Mon 03-04CT:S, Mon 08-09CT:L, Mon 10-11CT:L, Mon 15-16CT:S, Tue 05-06CT:L, Wed 00-01CT:L, Wed 04-05CT:L, Thu 06-07CT:L, Fri 05-06CT:L, Fri 15-16CT:L",
+   "select_window": "H1",
+   "fit": {
+    "n": 1173,
+    "trades_per_day": 2.0002520649447866,
+    "mean_net": 0.5612173913043527,
+    "median_net": -2.792999999999956,
+    "std_net": 26.392353539964336,
+    "win_rate": 0.38704177323103156,
+    "avg_win": 20.246455947136564,
+    "avg_loss": 11.868682892906802,
+    "t_stat": 0.728286075608387,
+    "ci95_low": -0.9329754262574668,
+    "ci95_high": 2.0795592710997455,
+    "sharpe_per_trade": 0.021264393509072062,
+    "sharpe_annual": 0.477414532314402,
+    "max_drawdown": 1231.4909999999986,
+    "total_net": 658.3080000000057,
+    "gross_mean": 4.381217391304352,
+    "p_win_at_1R": 0.5174751662790443,
+    "by_year": {
+     "2020": -1060.6,
+     "2021": 1368.0,
+     "2022": 351.0
+    },
+    "n_by_year": {
+     "2020": 523,
+     "2021": 522,
+     "2022": 128
+    },
+    "reasons": {
+     "signal": 1173
+    }
+   },
+   "oos": {
+    "n": 1172,
+    "trades_per_day": 1.996115487781697,
+    "mean_net": -3.6975597269624627,
+    "median_net": -3.92,
+    "std_net": 18.203889948048616,
+    "win_rate": 0.3191126279863481,
+    "avg_win": 12.543636363636363,
+    "avg_loss": 11.309348370927324,
+    "t_stat": -6.953681622832163,
+    "ci95_low": -4.731540315699656,
+    "ci95_high": -2.715975895904431,
+    "sharpe_per_trade": -0.20311920899954827,
+    "sharpe_annual": -4.555584421720549,
+    "max_drawdown": 4532.589999999992,
+    "total_net": -4333.540000000006,
+    "gross_mean": 0.12244027303753803,
+    "p_win_at_1R": 0.3449854486510199,
+    "by_year": {
+     "2022": -1469.6,
+     "2023": -1997.3,
+     "2024": -866.6
+    },
+    "n_by_year": {
+     "2022": 392,
+     "2023": 520,
+     "2024": 260
+    },
+    "reasons": {
+     "signal": 1172
+    }
+   },
+   "full_is": {
+    "n": 2345,
+    "trades_per_day": 1.998178294655556,
+    "mean_net": -1.567263113006396,
+    "median_net": -3.231000000000058,
+    "std_net": 22.767604664088246,
+    "win_rate": 0.353091684434968,
+    "avg_win": 16.76716304347826,
+    "avg_loss": 11.574451549110085,
+    "t_stat": -3.333465724654477,
+    "ci95_low": -2.4691617377398662,
+    "ci95_high": -0.6115382515991507,
+    "sharpe_per_trade": -0.06883741773145194,
+    "sharpe_annual": -1.5446922207801659,
+    "max_drawdown": 4549.119999999994,
+    "total_net": -3675.231999999999,
+    "gross_mean": 2.252736886993603,
+    "p_win_at_1R": 0.44470099408464,
+    "by_year": {
+     "2020": -1060.6400000000012,
+     "2021": 1367.982000000005,
+     "2022": -1118.6239999999991,
+     "2023": -1997.3400000000004,
+     "2024": -866.6100000000042
+    },
+    "n_by_year": {
+     "2020": 523,
+     "2021": 522,
+     "2022": 520,
+     "2023": 520,
+     "2024": 260
+    }
+   },
+   "windows": null,
+   "dsr_oos": 2.327751968773219e-18
+  },
+  {
+   "name": "BTC_hw_t2_volgate",
+   "symbol": "BTCUSDT",
+   "rule": "5-min bars, UTC clock, weekday x 1-hour block grid. Cells selected on H1 by |t| >= 2.0 on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Each scheduled block is traded only if the quote volume of the last completed hour before the block start exceeds the trailing-24h average hourly quote volume. Selected cells: Mon 09-10UTC:S, Tue 02-03UTC:S, Tue 21-22UTC:L, Wed 06-07UTC:L, Thu 05-06UTC:L, Thu 12-13UTC:L, Thu 19-20UTC:L, Fri 17-18UTC:S, Fri 21-22UTC:L. Tested on H2.",
+   "n_cells": 9,
+   "cells": "Mon 09-10UTC:S, Tue 02-03UTC:S, Tue 21-22UTC:L, Wed 06-07UTC:L, Thu 05-06UTC:L, Thu 12-13UTC:L, Thu 19-20UTC:L, Fri 17-18UTC:S, Fri 21-22UTC:L",
+   "select_window": "H1",
+   "fit": {
+    "n": 315,
+    "trades_per_day": 0.537152089051669,
+    "mean_net": 0.5624222222221942,
+    "median_net": -3.1830000000001015,
+    "std_net": 27.379378006830386,
+    "win_rate": 0.3746031746031746,
+    "avg_win": 23.663677966101677,
+    "avg_loss": 13.274878172588867,
+    "t_stat": 0.3645811169586766,
+    "ci95_low": -2.402276746031798,
+    "ci95_high": 3.762206746031725,
+    "sharpe_per_trade": 0.020541818812753364,
+    "sharpe_annual": 0.2389944408838076,
+    "max_drawdown": 391.5260000000019,
+    "total_net": 177.16299999999117,
+    "gross_mean": 4.382422222222194,
+    "p_win_at_1R": 0.5152258853895239,
+    "by_year": {
+     "2020": -305.7,
+     "2021": 794.4,
+     "2022": -311.6
+    },
+    "n_by_year": {
+     "2020": 124,
+     "2021": 154,
+     "2022": 37
+    },
+    "reasons": {
+     "signal": 315
+    }
+   },
+   "oos": {
+    "n": 298,
+    "trades_per_day": 0.5075447230025134,
+    "mean_net": -5.41204697986578,
+    "median_net": -4.345,
+    "std_net": 24.422744136343475,
+    "win_rate": 0.33557046979865773,
+    "avg_win": 16.17009999999997,
+    "avg_loss": 16.31212121212121,
+    "t_stat": -3.825385702093566,
+    "ci95_low": -8.174424496644303,
+    "ci95_high": -2.6873489932886025,
+    "sharpe_per_trade": -0.22159864385640904,
+    "sharpe_annual": -2.50613537644713,
+    "max_drawdown": 1736.4799999999996,
+    "total_net": -1612.7900000000022,
+    "gross_mean": -1.5920469798657801,
+    "p_win_at_1R": 0.3333843321698024,
+    "by_year": {
+     "2022": -510.7,
+     "2023": -505.9,
+     "2024": -596.2
+    },
+    "n_by_year": {
+     "2022": 91,
+     "2023": 127,
+     "2024": 80
+    },
+    "reasons": {
+     "signal": 298
+    }
+   },
+   "full_is": {
+    "n": 613,
+    "trades_per_day": 0.5223382919504715,
+    "mean_net": -2.3419690048939827,
+    "median_net": -3.5429999999995925,
+    "std_net": 26.134443333282253,
+    "win_rate": 0.3556280587275693,
+    "avg_win": 20.22625688073392,
+    "avg_loss": 14.797344303797484,
+    "t_stat": -2.2186976649199406,
+    "ci95_low": -4.527133523654184,
+    "ci95_high": -0.2532727977161523,
+    "sharpe_per_trade": -0.08961235466268691,
+    "sharpe_annual": -1.0281206727032388,
+    "max_drawdown": 2153.166000000001,
+    "total_net": -1435.6270000000115,
+    "gross_mean": 1.4780309951060173,
+    "p_win_at_1R": 0.4331316904691017,
+    "by_year": {
+     "2020": -305.6990000000006,
+     "2021": 794.4179999999943,
+     "2022": -822.2760000000025,
+     "2023": -505.89000000000374,
+     "2024": -596.1799999999987
+    },
+    "n_by_year": {
+     "2020": 124,
+     "2021": 154,
+     "2022": 128,
+     "2023": 127,
+     "2024": 80
+    }
+   },
+   "windows": null,
+   "dsr_oos": 1.4391704274622288e-08
+  },
+  {
+   "name": "BTC_hw_t2_hurdle10",
+   "symbol": "BTCUSDT",
+   "rule": "5-min bars, UTC clock, weekday x 1-hour block grid. Cells selected on H1 by |t| >= 2.0 and |mean| >= 10 bp/hour on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: Mon 09-10UTC:S, Tue 02-03UTC:S, Tue 21-22UTC:L, Wed 06-07UTC:L, Thu 05-06UTC:L, Thu 12-13UTC:L, Thu 19-20UTC:L, Fri 21-22UTC:L. Tested on H2.",
+   "n_cells": 8,
+   "cells": "Mon 09-10UTC:S, Tue 02-03UTC:S, Tue 21-22UTC:L, Wed 06-07UTC:L, Thu 05-06UTC:L, Thu 12-13UTC:L, Thu 19-20UTC:L, Fri 21-22UTC:L",
+   "select_window": "H1",
+   "fit": {
+    "n": 799,
+    "trades_per_day": 1.3624905369913765,
+    "mean_net": 0.5975832290362881,
+    "median_net": -2.8970000000000433,
+    "std_net": 26.011315311434103,
+    "win_rate": 0.37296620775969963,
+    "avg_win": 21.47011409395971,
+    "avg_loss": 11.817614770459082,
+    "t_stat": 0.6493958017361346,
+    "ci95_low": -1.3235786295369356,
+    "ci95_high": 2.483851032540665,
+    "sharpe_per_trade": 0.02297397197648061,
+    "sharpe_annual": 0.4256994653011906,
+    "max_drawdown": 860.9120000000022,
+    "total_net": 477.4689999999942,
+    "gross_mean": 4.417583229036287,
+    "p_win_at_1R": 0.5179520576927987,
+    "by_year": {
+     "2020": -770.3,
+     "2021": 1727.8,
+     "2022": -480.1
+    },
+    "n_by_year": {
+     "2020": 352,
+     "2021": 349,
+     "2022": 98
+    },
+    "reasons": {
+     "signal": 799
+    }
+   },
+   "oos": {
+    "n": 774,
+    "trades_per_day": 1.3182537436374004,
+    "mean_net": -3.869147286821721,
+    "median_net": -4.050000000000109,
+    "std_net": 19.735243906608076,
+    "win_rate": 0.30361757105943155,
+    "avg_win": 13.453872340425516,
+    "avg_loss": 11.421855287569588,
+    "t_stat": -5.454353036222574,
+    "ci95_low": -5.233458979328192,
+    "ci95_high": -2.3751944444444644,
+    "sharpe_per_trade": -0.1960526713088248,
+    "sharpe_annual": -3.5733251923402687,
+    "max_drawdown": 3111.0700000000015,
+    "total_net": -2994.720000000012,
+    "gross_mean": -0.049147286821721536,
+    "p_win_at_1R": 0.34446094021115636,
+    "by_year": {
+     "2022": -1111.3,
+     "2023": -1223.8,
+     "2024": -659.6
+    },
+    "n_by_year": {
+     "2022": 250,
+     "2023": 348,
+     "2024": 176
+    },
+    "reasons": {
+     "signal": 774
+    }
+   },
+   "full_is": {
+    "n": 1573,
+    "trades_per_day": 1.340355845412874,
+    "mean_net": -1.6002867132867247,
+    "median_net": -3.3599999999999635,
+    "std_net": 23.237210015597064,
+    "win_rate": 0.33884297520661155,
+    "avg_win": 17.935748592870524,
+    "avg_loss": 11.612504807692316,
+    "t_stat": -2.7313551738607242,
+    "ci95_low": -2.761574237126518,
+    "ci95_high": -0.3984900349650449,
+    "sharpe_per_trade": -0.06886742049551539,
+    "sharpe_annual": -1.265680657234788,
+    "max_drawdown": 3932.4420000000055,
+    "total_net": -2517.251000000018,
+    "gross_mean": 2.219713286713275,
+    "p_win_at_1R": 0.44584158015728126,
+    "by_year": {
+     "2020": -770.2560000000022,
+     "2021": 1727.8079999999998,
+     "2022": -1591.423000000007,
+     "2023": -1223.7600000000061,
+     "2024": -659.620000000002
+    },
+    "n_by_year": {
+     "2020": 352,
+     "2021": 349,
+     "2022": 348,
+     "2023": 348,
+     "2024": 176
+    }
+   },
+   "windows": null,
+   "dsr_oos": 3.449229033777383e-13
+  },
+  {
+   "name": "BTC_hw_t2_reverse",
+   "symbol": "BTCUSDT",
+   "rule": "5-min bars, UTC clock, weekday x 1-hour block grid. Cells selected on H2 by |t| >= 2.0 on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H2. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: Thu 00-01UTC:L, Fri 16-17UTC:S, Sun 23-24UTC:S. Tested on H1.",
+   "n_cells": 3,
+   "cells": "Thu 00-01UTC:L, Fri 16-17UTC:S, Sun 23-24UTC:S",
+   "select_window": "H2",
+   "fit": {
+    "n": 353,
+    "trades_per_day": 0.601219084630494,
+    "mean_net": 0.43920679886686564,
+    "median_net": -1.0400000000000724,
+    "std_net": 19.85571856157105,
+    "win_rate": 0.4447592067988669,
+    "avg_win": 15.016242038216596,
+    "avg_loss": 11.237295918367357,
+    "t_stat": 0.4155954637695235,
+    "ci95_low": -1.5553980169971715,
+    "ci95_high": 2.6061444759206918,
+    "sharpe_per_trade": 0.02211991459815062,
+    "sharpe_annual": 0.27227019055195895,
+    "max_drawdown": 498.7200000000008,
+    "total_net": 155.04000000000357,
+    "gross_mean": 4.259206798866866,
+    "p_win_at_1R": 0.5167294327946653,
+    "by_year": {
+     "2022": 328.6,
+     "2023": -154.5,
+     "2024": -19.1
+    },
+    "n_by_year": {
+     "2022": 118,
+     "2023": 157,
+     "2024": 78
+    },
+    "reasons": {
+     "signal": 353
+    }
+   },
+   "oos": {
+    "n": 352,
+    "trades_per_day": 0.6002461439561508,
+    "mean_net": -5.2030227272727485,
+    "median_net": -4.441000000000003,
+    "std_net": 30.520922720096323,
+    "win_rate": 0.36079545454545453,
+    "avg_win": 20.129944881889735,
+    "avg_loss": 19.502075555555574,
+    "t_stat": -3.198375097965264,
+    "ci95_low": -8.239011292613654,
+    "ci95_high": -2.0252531250000287,
+    "sharpe_per_trade": -0.170473965515035,
+    "sharpe_annual": -2.096635927421172,
+    "max_drawdown": 1859.0370000000023,
+    "total_net": -1831.4640000000074,
+    "gross_mean": -1.383022727272749,
+    "p_win_at_1R": 0.36871669246625627,
+    "by_year": {
+     "2020": -574.1,
+     "2021": -966.4,
+     "2022": -290.9
+    },
+    "n_by_year": {
+     "2020": 157,
+     "2021": 157,
+     "2022": 38
+    },
+    "reasons": {
+     "signal": 352
+    }
+   },
+   "full_is": {
+    "n": 705,
+    "trades_per_day": 0.6007316408239518,
+    "mean_net": -2.377906382978729,
+    "median_net": -2.6999999999999273,
+    "std_net": 25.87537299631852,
+    "win_rate": 0.40283687943262414,
+    "avg_win": 17.303003521126765,
+    "avg_loss": 15.654339667458444,
+    "t_stat": -2.4400722856587826,
+    "ci95_low": -4.165501702127674,
+    "ci95_high": -0.5131880851064007,
+    "sharpe_per_trade": -0.09189843884828447,
+    "sharpe_annual": -1.130703294748616,
+    "max_drawdown": 1905.0359999999985,
+    "total_net": -1676.4240000000038,
+    "gross_mean": 1.4420936170212708,
+    "p_win_at_1R": 0.42784896618116,
+    "by_year": {
+     "2020": -574.1400000000006,
+     "2021": -966.4220000000013,
+     "2022": 37.67799999999439,
+     "2023": -154.47999999999791,
+     "2024": -19.059999999998528
+    },
+    "n_by_year": {
+     "2020": 157,
+     "2021": 157,
+     "2022": 156,
+     "2023": 157,
+     "2024": 78
+    }
+   },
+   "windows": null,
+   "dsr_oos": 3.6009151665743736e-07
+  },
+  {
+   "name": "ETH_hw_t2",
+   "symbol": "ETHUSDT",
+   "rule": "5-min bars, UTC clock, weekday x 1-hour block grid. Cells selected on H1 by |t| >= 2.0 on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: Mon 09-10UTC:S, Tue 10-11UTC:L, Tue 12-13UTC:S, Wed 16-17UTC:L, Wed 22-23UTC:L, Thu 03-04UTC:S, Thu 12-13UTC:L, Fri 21-22UTC:L. Tested on H2.",
+   "n_cells": 8,
+   "cells": "Mon 09-10UTC:S, Tue 10-11UTC:L, Tue 12-13UTC:S, Wed 16-17UTC:L, Wed 22-23UTC:L, Thu 03-04UTC:S, Thu 12-13UTC:L, Fri 21-22UTC:L",
+   "select_window": "H1",
+   "fit": {
+    "n": 823,
+    "trades_per_day": 1.403416410442932,
+    "mean_net": -0.46144714459295305,
+    "median_net": -0.8340000000000043,
+    "std_net": 2.2368136942940726,
+    "win_rate": 0.24058323207776428,
+    "avg_win": 2.220257575757575,
+    "avg_loss": 1.3110112000000005,
+    "t_stat": -5.918233113786663,
+    "ci95_low": -0.6167438335358437,
+    "ci95_high": -0.3080456865127581,
+    "sharpe_per_trade": -0.20629663783356955,
+    "sharpe_annual": -3.879588789042514,
+    "max_drawdown": 386.3450000000015,
+    "total_net": -379.77100000000036,
+    "gross_mean": 0.45855285540704693,
+    "p_win_at_1R": 0.3693253972167675,
+    "by_year": {
+     "2020": -312.2,
+     "2021": -35.3,
+     "2022": -32.3
+    },
+    "n_by_year": {
+     "2020": 367,
+     "2021": 365,
+     "2022": 91
+    },
+    "reasons": {
+     "signal": 823
+    }
+   },
+   "oos": {
+    "n": 819,
+    "trades_per_day": 1.3948964031512028,
+    "mean_net": -0.9163333333333329,
+    "median_net": -0.9820000000000118,
+    "std_net": 1.3881614813444827,
+    "win_rate": 0.16361416361416362,
+    "avg_win": 1.104410447761194,
+    "avg_loss": 1.3116321167883207,
+    "t_stat": -18.891021685426086,
+    "ci95_low": -1.0087197802197796,
+    "ci95_high": -0.8204696581196581,
+    "sharpe_per_trade": -0.6601057194339034,
+    "sharpe_annual": -12.376126600035642,
+    "max_drawdown": 756.154000000003,
+    "total_net": -750.4769999999996,
+    "gross_mean": 0.0036666666666669867,
+    "p_win_at_1R": 0.12072963995806563,
+    "by_year": {
+     "2022": -253.1,
+     "2023": -327.8,
+     "2024": -169.6
+    },
+    "n_by_year": {
+     "2022": 273,
+     "2023": 364,
+     "2024": 182
+    },
+    "reasons": {
+     "signal": 819
+    }
+   },
+   "full_is": {
+    "n": 1642,
+    "trades_per_day": 1.399150857067984,
+    "mean_net": -0.6883361753958588,
+    "median_net": -0.880499999999999,
+    "std_net": 1.87578335980943,
+    "win_rate": 0.20219244823386115,
+    "avg_win": 1.7698855421686743,
+    "avg_loss": 1.3113358778625954,
+    "t_stat": -14.869778246903037,
+    "ci95_low": -0.7713315773447013,
+    "ci95_high": -0.5969947777101092,
+    "sharpe_per_trade": -0.3669593142492693,
+    "sharpe_annual": -6.890495562271927,
+    "max_drawdown": 1132.879000000004,
+    "total_net": -1130.248,
+    "gross_mean": 0.23166382460414123,
+    "p_win_at_1R": 0.2766028202579245,
+    "by_year": {
+     "2020": -312.15399999999994,
+     "2021": -35.30500000000013,
+     "2022": -285.40200000000004,
+     "2023": -327.76,
+     "2024": -169.6269999999999
+    },
+    "n_by_year": {
+     "2020": 367,
+     "2021": 365,
+     "2022": 364,
+     "2023": 364,
+     "2024": 182
+    }
+   },
+   "windows": null,
+   "dsr_oos": 1.2105607487591685e-78
+  },
+  {
+   "name": "ETH_hw_top10",
+   "symbol": "ETHUSDT",
+   "rule": "5-min bars, UTC clock, weekday x 1-hour block grid. Cells selected on H1 by top 10 cells by |t| on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: Mon 09-10UTC:S, Mon 15-16UTC:L, Tue 02-03UTC:S, Tue 10-11UTC:L, Tue 12-13UTC:S, Wed 16-17UTC:L, Wed 22-23UTC:L, Thu 03-04UTC:S, Thu 12-13UTC:L, Fri 21-22UTC:L. Tested on H2.",
+   "n_cells": 10,
+   "cells": "Mon 09-10UTC:S, Mon 15-16UTC:L, Tue 02-03UTC:S, Tue 10-11UTC:L, Tue 12-13UTC:S, Wed 16-17UTC:L, Wed 22-23UTC:L, Thu 03-04UTC:S, Thu 12-13UTC:L, Fri 21-22UTC:L",
+   "select_window": "H1",
+   "fit": {
+    "n": 1057,
+    "trades_per_day": 1.8024436765956005,
+    "mean_net": -0.4687000946073792,
+    "median_net": -0.849000000000002,
+    "std_net": 2.3371315740137275,
+    "win_rate": 0.23651844843897823,
+    "avg_win": 2.3650519999999995,
+    "avg_loss": 1.3465662949194543,
+    "t_stat": -6.520026669663167,
+    "ci95_low": -0.6104006859035003,
+    "ci95_high": -0.32790610217597,
+    "sharpe_per_trade": -0.20054501844003852,
+    "sharpe_annual": -4.274083478218874,
+    "max_drawdown": 498.9300000000016,
+    "total_net": -495.4159999999998,
+    "gross_mean": 0.45129990539262066,
+    "p_win_at_1R": 0.3737208254283727,
+    "by_year": {
+     "2020": -405.5,
+     "2021": -33.0,
+     "2022": -56.9
+    },
+    "n_by_year": {
+     "2020": 471,
+     "2021": 469,
+     "2022": 117
+    },
+    "reasons": {
+     "signal": 1057
+    }
+   },
+   "oos": {
+    "n": 1053,
+    "trades_per_day": 1.793438232622975,
+    "mean_net": -0.9075004748338077,
+    "median_net": -0.98400000000001,
+    "std_net": 1.4494195571051138,
+    "win_rate": 0.16999050332383667,
+    "avg_win": 1.1707150837988822,
+    "avg_loss": 1.333130434782608,
+    "t_stat": -20.317343798994475,
+    "ci95_low": -0.9943982668565992,
+    "ci95_high": -0.8198721035137689,
+    "sharpe_per_trade": -0.6261130328932043,
+    "sharpe_annual": -13.310556899460426,
+    "max_drawdown": 959.7770000000032,
+    "total_net": -955.5979999999995,
+    "gross_mean": 0.012499525166192165,
+    "p_win_at_1R": 0.1375573220875319,
+    "by_year": {
+     "2022": -322.4,
+     "2023": -440.8,
+     "2024": -192.5
+    },
+    "n_by_year": {
+     "2022": 351,
+     "2023": 468,
+     "2024": 234
+    },
+    "reasons": {
+     "signal": 1053
+    }
+   },
+   "full_is": {
+    "n": 2110,
+    "trades_per_day": 1.7979344143809053,
+    "mean_net": -0.6876843601895732,
+    "median_net": -0.8895000000000006,
+    "std_net": 1.9573079033309653,
+    "win_rate": 0.2033175355450237,
+    "avg_win": 1.8667156177156172,
+    "avg_loss": 1.3395806067816771,
+    "t_stat": -16.13879946892371,
+    "ci95_low": -0.7665818127962082,
+    "ci95_high": -0.6072785189573457,
+    "sharpe_per_trade": -0.35134194217438425,
+    "sharpe_annual": -7.478546369323036,
+    "max_drawdown": 1452.568000000001,
+    "total_net": -1451.0139999999994,
+    "gross_mean": 0.23231563981042677,
+    "p_win_at_1R": 0.28552064062721055,
+    "by_year": {
+     "2020": -405.5209999999999,
+     "2021": -33.004999999999725,
+     "2022": -379.26500000000004,
+     "2023": -440.7629999999999,
+     "2024": -192.45999999999978
+    },
+    "n_by_year": {
+     "2020": 471,
+     "2021": 469,
+     "2022": 468,
+     "2023": 468,
+     "2024": 234
+    }
+   },
+   "windows": null,
+   "dsr_oos": 3.6310414317534613e-91
+  },
+  {
+   "name": "ETH_blk4h_t2",
+   "symbol": "ETHUSDT",
+   "rule": "5-min bars, UTC clock, weekday x 4-hour block grid. Cells selected on H1 by |t| >= 2.0 on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: Mon 12-16UTC:L, Thu 00-04UTC:S, Thu 12-16UTC:L. Tested on H2.",
+   "n_cells": 3,
+   "cells": "Mon 12-16UTC:L, Thu 00-04UTC:S, Thu 12-16UTC:L",
+   "select_window": "H1",
+   "fit": {
+    "n": 353,
+    "trades_per_day": 0.601951388683299,
+    "mean_net": -0.1699461756373932,
+    "median_net": -0.6610000000000025,
+    "std_net": 4.6333026152988985,
+    "win_rate": 0.34560906515580736,
+    "avg_win": 3.9013278688524595,
+    "avg_loss": 2.320142857142857,
+    "t_stat": -0.6891409898988935,
+    "ci95_low": -0.650488385269121,
+    "ci95_high": 0.3278406515580746,
+    "sharpe_per_trade": -0.03667927388904854,
+    "sharpe_annual": -0.45175369186678904,
+    "max_drawdown": 175.58499999999978,
+    "total_net": -59.9909999999998,
+    "gross_mean": 0.7500538243626069,
+    "p_win_at_1R": 0.47268392264110426,
+    "by_year": {
+     "2020": -126.1,
+     "2021": -11.6,
+     "2022": 77.7
+    },
+    "n_by_year": {
+     "2020": 158,
+     "2021": 156,
+     "2022": 39
+    },
+    "reasons": {
+     "signal": 353
+    }
+   },
+   "oos": {
+    "n": 351,
+    "trades_per_day": 0.5978127442076584,
+    "mean_net": -1.1555754985754976,
+    "median_net": -1.1879999999999835,
+    "std_net": 3.3646785946057256,
+    "win_rate": 0.2678062678062678,
+    "avg_win": 2.5432234042553192,
+    "avg_loss": 2.5084435797665354,
+    "t_stat": -6.4344035895480705,
+    "ci95_low": -1.499285683760683,
+    "ci95_high": -0.7984799857549841,
+    "sharpe_per_trade": -0.34344305587705276,
+    "sharpe_annual": -4.215388386399736,
+    "max_drawdown": 403.27399999999983,
+    "total_net": -405.60699999999963,
+    "gross_mean": -0.23557549857549748,
+    "p_win_at_1R": 0.27124867845989864,
+    "by_year": {
+     "2022": -136.9,
+     "2023": -183.7,
+     "2024": -85.0
+    },
+    "n_by_year": {
+     "2022": 117,
+     "2023": 156,
+     "2024": 78
+    },
+    "reasons": {
+     "signal": 351
+    }
+   },
+   "full_is": {
+    "n": 704,
+    "trades_per_day": 0.5998795392057618,
+    "mean_net": -0.6613607954545446,
+    "median_net": -0.7654999999999983,
+    "std_net": 4.077818041275209,
+    "win_rate": 0.3068181818181818,
+    "avg_win": 3.3103009259259264,
+    "avg_loss": 2.4193094262295074,
+    "t_stat": -4.303253528963771,
+    "ci95_low": -0.9511805752840903,
+    "ci95_high": -0.36446115056818107,
+    "sharpe_per_trade": -0.16218496969710913,
+    "sharpe_annual": -1.9940814753462432,
+    "max_drawdown": 468.8319999999996,
+    "total_net": -465.5979999999994,
+    "gross_mean": 0.2586392045454554,
+    "p_win_at_1R": 0.38457141850741283,
+    "by_year": {
+     "2020": -126.10499999999999,
+     "2021": -11.616999999999898,
+     "2022": -59.1509999999998,
+     "2023": -183.74699999999996,
+     "2024": -84.97799999999972
+    },
+    "n_by_year": {
+     "2020": 158,
+     "2021": 156,
+     "2022": 156,
+     "2023": 156,
+     "2024": 78
+    }
+   },
+   "windows": null,
+   "dsr_oos": 6.700541528588838e-16
+  },
+  {
+   "name": "ETH_hour_t2",
+   "symbol": "ETHUSDT",
+   "rule": "5-min bars, UTC clock, hour-of-day (all days) grid. Cells selected on H1 by |t| >= 2.0 on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: 03-04UTC:S, 13-14UTC:L, 15-16UTC:L. Tested on H2.",
+   "n_cells": 3,
+   "cells": "03-04UTC:S, 13-14UTC:L, 15-16UTC:L",
+   "select_window": "H1",
+   "fit": {
+    "n": 1761,
+    "trades_per_day": 3.0029359645079023,
+    "mean_net": -0.7065928449744463,
+    "median_net": -0.8940000000000008,
+    "std_net": 2.47034122172307,
+    "win_rate": 0.21521862578080636,
+    "avg_win": 2.385036939313984,
+    "avg_loss": 1.554442112879884,
+    "t_stat": -12.00305975180243,
+    "ci95_low": -0.8223547700170358,
+    "ci95_high": -0.5945651476433851,
+    "sharpe_per_trade": -0.28603046363028173,
+    "sharpe_annual": -7.868384896637709,
+    "max_drawdown": 1243.4599999999984,
+    "total_net": -1244.31,
+    "gross_mean": 0.21340715502555366,
+    "p_win_at_1R": 0.32063799918394037,
+    "by_year": {
+     "2020": -697.0,
+     "2021": -404.5,
+     "2022": -142.8
+    },
+    "n_by_year": {
+     "2020": 786,
+     "2021": 783,
+     "2022": 192
+    },
+    "reasons": {
+     "signal": 1761
+    }
+   },
+   "oos": {
+    "n": 1758,
+    "trades_per_day": 2.994173231672545,
+    "mean_net": -1.0386990898748574,
+    "median_net": -0.9910000000000035,
+    "std_net": 1.6777160986912942,
+    "win_rate": 0.1621160409556314,
+    "avg_win": 1.2792000000000003,
+    "avg_loss": 1.4871724372029869,
+    "t_stat": -25.95856701854993,
+    "ci95_low": -1.11414960182025,
+    "ci95_high": -0.9608744169510807,
+    "sharpe_per_trade": -0.6191149329049752,
+    "sharpe_annual": -17.0063068650719,
+    "max_drawdown": 1826.943999999995,
+    "total_net": -1826.0329999999994,
+    "gross_mean": -0.1186990898748576,
+    "p_win_at_1R": 0.1245266631831175,
+    "by_year": {
+     "2022": -586.5,
+     "2023": -755.0,
+     "2024": -484.6
+    },
+    "n_by_year": {
+     "2022": 588,
+     "2023": 780,
+     "2024": 390
+    },
+    "reasons": {
+     "signal": 1758
+    }
+   },
+   "full_is": {
+    "n": 3519,
+    "trades_per_day": 2.998545594410619,
+    "mean_net": -0.8725044046604147,
+    "median_net": -0.9169999999999998,
+    "std_net": 2.118106341398858,
+    "win_rate": 0.18868996874111962,
+    "avg_win": 1.910393072289157,
+    "avg_loss": 1.5197352014010506,
+    "t_stat": -24.435965373086912,
+    "ci95_low": -0.9428463199772663,
+    "ci95_high": -0.8022572108553564,
+    "sharpe_per_trade": -0.4119266288038153,
+    "sharpe_annual": -11.32336395118427,
+    "max_drawdown": 3069.4929999999868,
+    "total_net": -3070.3429999999994,
+    "gross_mean": 0.04749559533958521,
+    "p_win_at_1R": 0.24563505063274055,
+    "by_year": {
+     "2020": -697.0290000000001,
+     "2021": -404.4939999999996,
+     "2022": -729.286,
+     "2023": -754.9669999999996,
+     "2024": -484.5670000000001
+    },
+    "n_by_year": {
+     "2020": 786,
+     "2021": 783,
+     "2022": 780,
+     "2023": 780,
+     "2024": 390
+    }
+   },
+   "windows": null,
+   "dsr_oos": 7.245147954363085e-143
+  },
+  {
+   "name": "BTC_bestwin_dow",
+   "symbol": "BTCUSDT",
+   "rule": "5-min bars, UTC clock, best contiguous 2-8 hour window per weekday (window sum of hourly returns) grid. Cells selected on H1 by |t| >= 2.0 on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: Mon 12-13UTC:L, Mon 13-14UTC:L, Mon 14-15UTC:L, Mon 15-16UTC:L, Mon 16-17UTC:L, Mon 17-18UTC:L, Mon 18-19UTC:L, Mon 19-20UTC:L, Tue 19-20UTC:L, Tue 20-21UTC:L, Tue 21-22UTC:L, Wed 12-13UTC:L, Wed 13-14UTC:L, Wed 14-15UTC:L, Wed 15-16UTC:L, Wed 16-17UTC:L, Wed 17-18UTC:L, Thu 11-12UTC:L, Thu 12-13UTC:L, Thu 13-14UTC:L, Fri 06-07UTC:L, Fri 07-08UTC:L, Fri 08-09UTC:L, Fri 09-10UTC:L, Fri 10-11UTC:L, Fri 11-12UTC:L, Fri 12-13UTC:L, Fri 13-14UTC:L. Tested on H2.",
+   "n_cells": 28,
+   "cells": "Mon 12-13UTC:L, Mon 13-14UTC:L, Mon 14-15UTC:L, Mon 15-16UTC:L, Mon 16-17UTC:L, Mon 17-18UTC:L, Mon 18-19UTC:L, Mon 19-20UTC:L, Tue 19-20UTC:L, Tue 20-21UTC:L, Tue 21-22UTC:L, Wed 12-13UTC:L, Wed 13-14UTC:L, Wed 14-15UTC:L, Wed 15-16UTC:L, Wed 16-17UTC:L, Wed 17-18UTC:L, Thu 11-12UTC:L, Thu 12-13UTC:L, Thu 13-14UTC:L, Fri 06-07UTC:L, Fri 07-08UTC:L, Fri 08-09UTC:L, Fri 09-10UTC:L, Fri 10-11UTC:L, Fri 11-12UTC:L, Fri 12-13UTC:L, Fri 13-14UTC:L",
+   "select_window": "H1",
+   "fit": {
+    "n": 587,
+    "trades_per_day": 1.0009786548359674,
+    "mean_net": 7.03243441226576,
+    "median_net": -0.6099999999999635,
+    "std_net": 71.87064406877438,
+    "win_rate": 0.4906303236797274,
+    "avg_win": 49.944402777777796,
+    "avg_loss": 34.300832775919744,
+    "t_stat": 2.3706814651566215,
+    "ci95_low": 1.407990885860318,
+    "ci95_high": 12.670898424190783,
+    "sharpe_per_trade": 0.09784849577160168,
+    "sharpe_annual": 1.554056600641035,
+    "max_drawdown": 646.2560000000012,
+    "total_net": 4128.039000000001,
+    "gross_mean": 10.852434412265756,
+    "p_win_at_1R": 0.5834757522611865,
+    "by_year": {
+     "2020": 218.6,
+     "2021": 3320.0,
+     "2022": 589.5
+    },
+    "n_by_year": {
+     "2020": 262,
+     "2021": 261,
+     "2022": 64
+    },
+    "reasons": {
+     "signal": 587
+    }
+   },
+   "oos": {
+    "n": 586,
+    "trades_per_day": 0.9980577438908484,
+    "mean_net": -3.090955631399309,
+    "median_net": -5.485000000000327,
+    "std_net": 60.81667817055279,
+    "win_rate": 0.3873720136518771,
+    "avg_win": 41.0327753303965,
+    "avg_loss": 30.990919220055705,
+    "t_stat": -1.23032226648492,
+    "ci95_low": -7.931418515358351,
+    "ci95_high": 1.7637116040955685,
+    "sharpe_per_trade": -0.05082414436926511,
+    "sharpe_annual": -0.8060243846211393,
+    "max_drawdown": 3724.4799999999877,
+    "total_net": -1811.299999999995,
+    "gross_mean": 0.7290443686006916,
+    "p_win_at_1R": 0.4570841838829288,
+    "by_year": {
+     "2022": -2228.3,
+     "2023": -1185.4,
+     "2024": 1602.4
+    },
+    "n_by_year": {
+     "2022": 196,
+     "2023": 260,
+     "2024": 130
+    },
+    "reasons": {
+     "signal": 586
+    }
+   },
+   "full_is": {
+    "n": 1173,
+    "trades_per_day": 0.999515198136873,
+    "mean_net": 1.9750545609548218,
+    "median_net": -2.799999999999927,
+    "std_net": 66.74215796249172,
+    "win_rate": 0.4390451832907076,
+    "avg_win": 46.016365048543705,
+    "avg_loss": 32.49496808510639,
+    "t_stat": 1.0135095821988966,
+    "ci95_low": -1.6293951193520926,
+    "ci95_high": 5.970197996589944,
+    "sharpe_per_trade": 0.02959230898804289,
+    "sharpe_annual": 0.46964945693901383,
+    "max_drawdown": 3724.479999999993,
+    "total_net": 2316.739000000006,
+    "gross_mean": 5.795054560954821,
+    "p_win_at_1R": 0.5251562988695234,
+    "by_year": {
+     "2020": 218.62700000000143,
+     "2021": 3319.9569999999994,
+     "2022": -1638.8649999999989,
+     "2023": -1185.4299999999948,
+     "2024": 1602.4499999999982
+    },
+    "n_by_year": {
+     "2020": 262,
+     "2021": 261,
+     "2022": 260,
+     "2023": 260,
+     "2024": 130
+    }
+   },
+   "windows": [
+    {
+     "dow": 0,
+     "h0": 12,
+     "len": 8,
+     "t": 2.3,
+     "mean_bp": 52.0,
+     "n": 117
+    },
+    {
+     "dow": 1,
+     "h0": 19,
+     "len": 3,
+     "t": 2.72,
+     "mean_bp": 42.7,
+     "n": 46
+    },
+    {
+     "dow": 2,
+     "h0": 12,
+     "len": 6,
+     "t": 2.51,
+     "mean_bp": 45.2,
+     "n": 118
+    },
+    {
+     "dow": 3,
+     "h0": 11,
+     "len": 3,
+     "t": 2.85,
+     "mean_bp": 34.5,
+     "n": 118
+    },
+    {
+     "dow": 4,
+     "h0": 6,
+     "len": 8,
+     "t": 2.44,
+     "mean_bp": 58.8,
+     "n": 117
+    }
+   ],
+   "dsr_oos": 0.0012381251947668813
+  },
+  {
+   "name": "BTC_bestwin_all",
+   "symbol": "BTCUSDT",
+   "rule": "5-min bars, UTC clock, best contiguous 2-8 hour window pooled over all days (window sum of hourly returns) grid. Cells selected on H1 by |t| >= 2.0 on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: Mon 11-12UTC:L, Mon 12-13UTC:L, Mon 13-14UTC:L, Tue 11-12UTC:L, Tue 12-13UTC:L, Tue 13-14UTC:L, Wed 11-12UTC:L, Wed 12-13UTC:L, Wed 13-14UTC:L, Thu 11-12UTC:L, Thu 12-13UTC:L, Thu 13-14UTC:L, Fri 11-12UTC:L, Fri 12-13UTC:L, Fri 13-14UTC:L, Sat 11-12UTC:L, Sat 12-13UTC:L, Sat 13-14UTC:L, Sun 11-12UTC:L, Sun 12-13UTC:L, Sun 13-14UTC:L. Tested on H2.",
+   "n_cells": 21,
+   "cells": "Mon 11-12UTC:L, Mon 12-13UTC:L, Mon 13-14UTC:L, Tue 11-12UTC:L, Tue 12-13UTC:L, Tue 13-14UTC:L, Wed 11-12UTC:L, Wed 12-13UTC:L, Wed 13-14UTC:L, Thu 11-12UTC:L, Thu 12-13UTC:L, Thu 13-14UTC:L, Fri 11-12UTC:L, Fri 12-13UTC:L, Fri 13-14UTC:L, Sat 11-12UTC:L, Sat 12-13UTC:L, Sat 13-14UTC:L, Sun 11-12UTC:L, Sun 12-13UTC:L, Sun 13-14UTC:L",
+   "select_window": "H1",
+   "fit": {
+    "n": 587,
+    "trades_per_day": 1.0009786548359674,
+    "mean_net": 1.8177189097104014,
+    "median_net": -1.5080000000001017,
+    "std_net": 55.24128694715437,
+    "win_rate": 0.4599659284497445,
+    "avg_win": 37.55208148148147,
+    "avg_loss": 28.61848895899051,
+    "t_stat": 0.79722698056674,
+    "ci95_low": -2.7615259795570446,
+    "ci95_high": 6.224564608177189,
+    "sharpe_per_trade": 0.032905078975609146,
+    "sharpe_annual": 0.522607473660327,
+    "max_drawdown": 567.5269999999991,
+    "total_net": 1067.0010000000057,
+    "gross_mean": 5.637718909710402,
+    "p_win_at_1R": 0.5274702015958235,
+    "by_year": {
+     "2020": -314.5,
+     "2021": 1446.5,
+     "2022": -65.0
+    },
+    "n_by_year": {
+     "2020": 262,
+     "2021": 261,
+     "2022": 64
+    },
+    "reasons": {
+     "signal": 587
+    }
+   },
+   "oos": {
+    "n": 586,
+    "trades_per_day": 0.9980577438908484,
+    "mean_net": -4.583549488054609,
+    "median_net": -5.8300000000000365,
+    "std_net": 37.5426179302245,
+    "win_rate": 0.3771331058020478,
+    "avg_win": 25.968868778280562,
+    "avg_loss": 23.082410958904124,
+    "t_stat": -2.955467439599791,
+    "ci95_low": -7.664491467576786,
+    "ci95_high": -1.679668515358377,
+    "sharpe_per_trade": -0.12208923460195147,
+    "sharpe_annual": -1.9362234506876117,
+    "max_drawdown": 2836.6999999999953,
+    "total_net": -2685.960000000001,
+    "gross_mean": -0.7635494880546088,
+    "p_win_at_1R": 0.40655596525486937,
+    "by_year": {
+     "2022": -1377.4,
+     "2023": -892.9,
+     "2024": -415.7
+    },
+    "n_by_year": {
+     "2022": 196,
+     "2023": 260,
+     "2024": 130
+    },
+    "reasons": {
+     "signal": 586
+    }
+   },
+   "full_is": {
+    "n": 1173,
+    "trades_per_day": 0.999515198136873,
+    "mean_net": -1.380186700767259,
+    "median_net": -3.4099999999999633,
+    "std_net": 47.32413933696774,
+    "win_rate": 0.4185848252344416,
+    "avg_win": 32.338456211812634,
+    "avg_loss": 25.655631964809377,
+    "t_stat": -0.9988588456619647,
+    "ci95_low": -4.161996696504688,
+    "ci95_high": 1.583886082693938,
+    "sharpe_per_trade": -0.02916453886123,
+    "sharpe_annual": -0.4628604629529892,
+    "max_drawdown": 3039.5399999999977,
+    "total_net": -1618.9589999999948,
+    "gross_mean": 2.4398132992327413,
+    "p_win_at_1R": 0.47620125181442846,
+    "by_year": {
+     "2020": -314.51199999999994,
+     "2021": 1446.5100000000039,
+     "2022": -1442.3969999999983,
+     "2023": -892.909999999997,
+     "2024": -415.6500000000036
+    },
+    "n_by_year": {
+     "2020": 262,
+     "2021": 261,
+     "2022": 260,
+     "2023": 260,
+     "2024": 130
+    }
+   },
+   "windows": [
+    {
+     "dow": null,
+     "h0": 11,
+     "len": 3,
+     "t": 2.91,
+     "mean_bp": 18.8,
+     "n": 587
+    }
+   ],
+   "dsr_oos": 1.099356719700187e-06
+  },
+  {
+   "name": "ETH_bestwin_dow",
+   "symbol": "ETHUSDT",
+   "rule": "5-min bars, UTC clock, best contiguous 2-8 hour window per weekday (window sum of hourly returns) grid. Cells selected on H1 by |t| >= 2.0 on hourly open-to-open returns (tradable bars only) with the same sign in both halves of H1. Schedule: hold +1 (long) in positive cells and -1 (short) in negative cells, entering at the open of the first 5-min bar of the cell and exiting at the open of the first bar after the last adjacent same-sign cell; forced flat at 15:10 CT and before the weekend; no stop/target. Selected cells: Mon 11-12UTC:L, Mon 12-13UTC:L, Mon 13-14UTC:L, Mon 14-15UTC:L, Mon 15-16UTC:L, Tue 10-11UTC:L, Tue 11-12UTC:L, Wed 12-13UTC:L, Wed 13-14UTC:L, Wed 14-15UTC:L, Wed 15-16UTC:L, Wed 16-17UTC:L, Thu 11-12UTC:L, Thu 12-13UTC:L, Thu 13-14UTC:L, Fri 03-04UTC:S, Fri 04-05UTC:S. Tested on H2.",
+   "n_cells": 17,
+   "cells": "Mon 11-12UTC:L, Mon 12-13UTC:L, Mon 13-14UTC:L, Mon 14-15UTC:L, Mon 15-16UTC:L, Tue 10-11UTC:L, Tue 11-12UTC:L, Wed 12-13UTC:L, Wed 13-14UTC:L, Wed 14-15UTC:L, Wed 15-16UTC:L, Wed 16-17UTC:L, Thu 11-12UTC:L, Thu 12-13UTC:L, Thu 13-14UTC:L, Fri 03-04UTC:S, Fri 04-05UTC:S",
+   "select_window": "H1",
+   "fit": {
+    "n": 587,
+    "trades_per_day": 1.0009786548359674,
+    "mean_net": -0.0829914821124356,
+    "median_net": -0.7890000000000054,
+    "std_net": 4.610404624354419,
+    "win_rate": 0.29982964224872233,
+    "avg_win": 4.390403409090908,
+    "avg_loss": 1.998605839416057,
+    "t_stat": -0.4361275572785369,
+    "ci95_low": -0.4417886286201033,
+    "ci95_high": 0.29758888415672974,
+    "sharpe_per_trade": -0.0180009107387308,
+    "sharpe_annual": -0.2858953929794968,
+    "max_drawdown": 241.65999999999977,
+    "total_net": -48.715999999999696,
+    "gross_mean": 0.8370085178875643,
+    "p_win_at_1R": 0.4870102735988636,
+    "by_year": {
+     "2020": -209.4,
+     "2021": 136.7,
+     "2022": 23.9
+    },
+    "n_by_year": {
+     "2020": 262,
+     "2021": 261,
+     "2022": 64
+    },
+    "reasons": {
+     "signal": 587
+    }
+   },
+   "oos": {
+    "n": 586,
+    "trades_per_day": 0.9980577438908484,
+    "mean_net": -1.098203071672355,
+    "median_net": -1.0104999999999857,
+    "std_net": 2.8518037491469617,
+    "win_rate": 0.23378839590443687,
+    "avg_win": 1.9841897810218974,
+    "avg_loss": 2.038710467706013,
+    "t_stat": -9.322058553326567,
+    "ci95_low": -1.3370656996587036,
+    "ci95_high": -0.8777314419795214,
+    "sharpe_per_trade": -0.38509068935786767,
+    "sharpe_annual": -6.107185664707605,
+    "max_drawdown": 644.4510000000012,
+    "total_net": -643.547,
+    "gross_mean": -0.17820307167235494,
+    "p_win_at_1R": 0.22701210475710398,
+    "by_year": {
+     "2022": -241.9,
+     "2023": -265.8,
+     "2024": -135.8
+    },
+    "n_by_year": {
+     "2022": 196,
+     "2023": 260,
+     "2024": 130
+    },
+    "reasons": {
+     "signal": 586
+    }
+   },
+   "full_is": {
+    "n": 1173,
+    "trades_per_day": 0.999515198136873,
+    "mean_net": -0.5901645353793689,
+    "median_net": -0.8459999999999763,
+    "std_net": 3.86590892041257,
+    "win_rate": 0.2668371696504689,
+    "avg_win": 3.337204472843449,
+    "avg_loss": 2.0195441860465104,
+    "t_stat": -5.228420346778979,
+    "ci95_low": -0.8096013427109974,
+    "ci95_high": -0.35518876811594186,
+    "sharpe_per_trade": -0.15265867549626247,
+    "sharpe_annual": -2.4227938439281105,
+    "max_drawdown": 695.5120000000005,
+    "total_net": -692.2629999999997,
+    "gross_mean": 0.32983546462063107,
+    "p_win_at_1R": 0.38982784652403973,
+    "by_year": {
+     "2020": -209.378,
+     "2021": 136.73400000000024,
+     "2022": -218.00399999999996,
+     "2023": -265.82699999999977,
+     "2024": -135.78800000000015
+    },
+    "n_by_year": {
+     "2020": 262,
+     "2021": 261,
+     "2022": 260,
+     "2023": 260,
+     "2024": 130
+    }
+   },
+   "windows": [
+    {
+     "dow": 0,
+     "h0": 11,
+     "len": 5,
+     "t": 2.38,
+     "mean_bp": 68.3,
+     "n": 117
+    },
+    {
+     "dow": 1,
+     "h0": 10,
+     "len": 2,
+     "t": 2.42,
+     "mean_bp": 29.6,
+     "n": 117
+    },
+    {
+     "dow": 2,
+     "h0": 12,
+     "len": 5,
+     "t": 2.82,
+     "mean_bp": 64.6,
+     "n": 118
+    },
+    {
+     "dow": 3,
+     "h0": 11,
+     "len": 3,
+     "t": 3.35,
+     "mean_bp": 49.7,
+     "n": 118
+    },
+    {
+     "dow": 4,
+     "h0": 3,
+     "len": 2,
+     "t": -2.2,
+     "mean_bp": -23.6,
+     "n": 117
+    }
+   ],
+   "dsr_oos": 3.986812680414177e-27
+  }
+ ],
+ "diagnostics": {
+  "BTCUSDT": {
+   "cell_mean_corr_H1_H2": -0.03258162764668282,
+   "cell_sign_agreement_H1_H2": 0.44166666666666665,
+   "n_cells_abs_t_ge2_H1": 10,
+   "n_cells_abs_t_ge2_H2": 3,
+   "n_cells": 120,
+   "hour_of_day_UTC_full_IS": {
+    "0": {
+     "mean_bp": 0.808,
+     "std_bp": 79.393,
+     "n": 1173,
+     "t": 0.349
+    },
+    "1": {
+     "mean_bp": -2.117,
+     "std_bp": 80.341,
+     "n": 1173,
+     "t": -0.902
+    },
+    "2": {
+     "mean_bp": -2.539,
+     "std_bp": 78.302,
+     "n": 1173,
+     "t": -1.111
+    },
+    "3": {
+     "mean_bp": -1.904,
+     "std_bp": 69.393,
+     "n": 1173,
+     "t": -0.94
+    },
+    "4": {
+     "mean_bp": -1.345,
+     "std_bp": 59.66,
+     "n": 1173,
+     "t": -0.772
+    },
+    "5": {
+     "mean_bp": 1.106,
+     "std_bp": 57.355,
+     "n": 1173,
+     "t": 0.66
+    },
+    "6": {
+     "mean_bp": 3.359,
+     "std_bp": 64.256,
+     "n": 1173,
+     "t": 1.791
+    },
+    "7": {
+     "mean_bp": 1.63,
+     "std_bp": 65.838,
+     "n": 1173,
+     "t": 0.848
+    },
+    "8": {
+     "mean_bp": 3.267,
+     "std_bp": 79.557,
+     "n": 1173,
+     "t": 1.406
+    },
+    "9": {
+     "mean_bp": -0.86,
+     "std_bp": 65.729,
+     "n": 1173,
+     "t": -0.448
+    },
+    "10": {
+     "mean_bp": 0.695,
+     "std_bp": 92.37,
+     "n": 1173,
+     "t": 0.258
+    },
+    "11": {
+     "mean_bp": 1.712,
+     "std_bp": 62.523,
+     "n": 1173,
+     "t": 0.938
+    },
+    "12": {
+     "mean_bp": 2.972,
+     "std_bp": 92.333,
+     "n": 1173,
+     "t": 1.102
+    },
+    "13": {
+     "mean_bp": 3.296,
+     "std_bp": 82.22,
+     "n": 1173,
+     "t": 1.373
+    },
+    "14": {
+     "mean_bp": -2.728,
+     "std_bp": 99.52,
+     "n": 1173,
+     "t": -0.939
+    },
+    "15": {
+     "mean_bp": 0.868,
+     "std_bp": 87.013,
+     "n": 1173,
+     "t": 0.342
+    },
+    "16": {
+     "mean_bp": -1.389,
+     "std_bp": 81.138,
+     "n": 1173,
+     "t": -0.586
+    },
+    "17": {
+     "mean_bp": -0.397,
+     "std_bp": 70.885,
+     "n": 1173,
+     "t": -0.192
+    },
+    "18": {
+     "mean_bp": 0.125,
+     "std_bp": 74.526,
+     "n": 1173,
+     "t": 0.058
+    },
+    "19": {
+     "mean_bp": 0.708,
+     "std_bp": 77.973,
+     "n": 1173,
+     "t": 0.311
+    },
+    "20": {
+     "mean_bp": 2.769,
+     "std_bp": 59.558,
+     "n": 1173,
+     "t": 1.592
+    },
+    "21": {
+     "mean_bp": 0.993,
+     "std_bp": 33.989,
+     "n": 413,
+     "t": 0.594
+    },
+    "22": {
+     "mean_bp": 2.59,
+     "std_bp": 75.671,
+     "n": 761,
+     "t": 0.944
+    },
+    "23": {
+     "mean_bp": -3.821,
+     "std_bp": 93.671,
+     "n": 1173,
+     "t": -1.397
+    }
+   },
+   "relative_volume_by_UTC_hour": {
+    "0": 0.983,
+    "1": 0.843,
+    "2": 0.766,
+    "3": 0.712,
+    "4": 0.693,
+    "5": 0.69,
+    "6": 0.745,
+    "7": 0.836,
+    "8": 0.967,
+    "9": 0.925,
+    "10": 0.925,
+    "11": 0.95,
+    "12": 1.261,
+    "13": 1.421,
+    "14": 1.635,
+    "15": 1.533,
+    "16": 1.439,
+    "17": 1.159,
+    "18": 1.109,
+    "19": 1.042,
+    "20": 1.01,
+    "21": 0.801,
+    "22": 0.782,
+    "23": 0.775
+   },
+   "hourly_ret_std_bp_by_UTC_hour": {
+    "0": 79.4,
+    "1": 80.3,
+    "2": 78.3,
+    "3": 69.4,
+    "4": 59.7,
+    "5": 57.4,
+    "6": 64.3,
+    "7": 65.8,
+    "8": 79.6,
+    "9": 65.7,
+    "10": 92.4,
+    "11": 62.5,
+    "12": 92.3,
+    "13": 82.2,
+    "14": 99.5,
+    "15": 87.0,
+    "16": 81.1,
+    "17": 70.9,
+    "18": 74.5,
+    "19": 78.0,
+    "20": 59.6,
+    "21": 34.0,
+    "22": 75.7,
+    "23": 93.7
+   }
+  },
+  "ETHUSDT": {
+   "cell_mean_corr_H1_H2": -0.027718072880971632,
+   "cell_sign_agreement_H1_H2": 0.475,
+   "n_cells_abs_t_ge2_H1": 9,
+   "n_cells_abs_t_ge2_H2": 7,
+   "n_cells": 120,
+   "hour_of_day_UTC_full_IS": {
+    "0": {
+     "mean_bp": 2.543,
+     "std_bp": 110.329,
+     "n": 1173,
+     "t": 0.789
+    },
+    "1": {
+     "mean_bp": -2.154,
+     "std_bp": 101.307,
+     "n": 1173,
+     "t": -0.728
+    },
+    "2": {
+     "mean_bp": -5.289,
+     "std_bp": 90.986,
+     "n": 1173,
+     "t": -1.991
+    },
+    "3": {
+     "mean_bp": -4.93,
+     "std_bp": 89.565,
+     "n": 1173,
+     "t": -1.885
+    },
+    "4": {
+     "mean_bp": -0.249,
+     "std_bp": 78.391,
+     "n": 1173,
+     "t": -0.109
+    },
+    "5": {
+     "mean_bp": 2.979,
+     "std_bp": 74.434,
+     "n": 1173,
+     "t": 1.371
+    },
+    "6": {
+     "mean_bp": 1.377,
+     "std_bp": 79.58,
+     "n": 1173,
+     "t": 0.593
+    },
+    "7": {
+     "mean_bp": 2.304,
+     "std_bp": 85.439,
+     "n": 1173,
+     "t": 0.924
+    },
+    "8": {
+     "mean_bp": 1.297,
+     "std_bp": 97.243,
+     "n": 1173,
+     "t": 0.457
+    },
+    "9": {
+     "mean_bp": -3.351,
+     "std_bp": 82.708,
+     "n": 1173,
+     "t": -1.388
+    },
+    "10": {
+     "mean_bp": 2.28,
+     "std_bp": 109.683,
+     "n": 1173,
+     "t": 0.712
+    },
+    "11": {
+     "mean_bp": 3.836,
+     "std_bp": 82.623,
+     "n": 1173,
+     "t": 1.59
+    },
+    "12": {
+     "mean_bp": 2.918,
+     "std_bp": 112.056,
+     "n": 1173,
+     "t": 0.892
+    },
+    "13": {
+     "mean_bp": 3.226,
+     "std_bp": 103.141,
+     "n": 1173,
+     "t": 1.071
+    },
+    "14": {
+     "mean_bp": -3.002,
+     "std_bp": 117.101,
+     "n": 1173,
+     "t": -0.878
+    },
+    "15": {
+     "mean_bp": 2.495,
+     "std_bp": 106.759,
+     "n": 1173,
+     "t": 0.8
+    },
+    "16": {
+     "mean_bp": 0.364,
+     "std_bp": 103.462,
+     "n": 1173,
+     "t": 0.12
+    },
+    "17": {
+     "mean_bp": 0.567,
+     "std_bp": 88.353,
+     "n": 1173,
+     "t": 0.22
+    },
+    "18": {
+     "mean_bp": 0.433,
+     "std_bp": 93.675,
+     "n": 1173,
+     "t": 0.158
+    },
+    "19": {
+     "mean_bp": 2.25,
+     "std_bp": 95.585,
+     "n": 1173,
+     "t": 0.806
+    },
+    "20": {
+     "mean_bp": 1.951,
+     "std_bp": 68.405,
+     "n": 1173,
+     "t": 0.977
+    },
+    "21": {
+     "mean_bp": 1.038,
+     "std_bp": 42.424,
+     "n": 413,
+     "t": 0.497
+    },
+    "22": {
+     "mean_bp": 3.371,
+     "std_bp": 94.721,
+     "n": 761,
+     "t": 0.982
+    },
+    "23": {
+     "mean_bp": -3.401,
+     "std_bp": 107.813,
+     "n": 1173,
+     "t": -1.081
+    }
+   },
+   "relative_volume_by_UTC_hour": {
+    "0": 1.055,
+    "1": 0.886,
+    "2": 0.796,
+    "3": 0.737,
+    "4": 0.715,
+    "5": 0.702,
+    "6": 0.761,
+    "7": 0.855,
+    "8": 0.998,
+    "9": 0.928,
+    "10": 0.913,
+    "11": 0.944,
+    "12": 1.238,
+    "13": 1.387,
+    "14": 1.605,
+    "15": 1.478,
+    "16": 1.465,
+    "17": 1.132,
+    "18": 1.077,
+    "19": 1.001,
+    "20": 0.969,
+    "21": 0.771,
+    "22": 0.789,
+    "23": 0.797
+   },
+   "hourly_ret_std_bp_by_UTC_hour": {
+    "0": 110.3,
+    "1": 101.3,
+    "2": 91.0,
+    "3": 89.6,
+    "4": 78.4,
+    "5": 74.4,
+    "6": 79.6,
+    "7": 85.4,
+    "8": 97.2,
+    "9": 82.7,
+    "10": 109.7,
+    "11": 82.6,
+    "12": 112.1,
+    "13": 103.1,
+    "14": 117.1,
+    "15": 106.8,
+    "16": 103.5,
+    "17": 88.4,
+    "18": 93.7,
+    "19": 95.6,
+    "20": 68.4,
+    "21": 42.4,
+    "22": 94.7,
+    "23": 107.8
+   }
+  }
+ }
+}

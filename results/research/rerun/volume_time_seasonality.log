@@ -1,0 +1,97 @@
+BTC_hw_t2            BTCUSDT cells= 9 | FIT n=  916 mean=   0.33 t=  0.39 | OOS n=  892 mean=  -3.85 t= -5.60 wr=0.314 tpd=1.52 gross= -0.03 by_year={'2022': -1106.7, '2023': -1369.5, '2024': -956.5} | FULL n=1808 mean=-1.73 t=-3.20
+    cells: Mon 09-10UTC:S, Tue 02-03UTC:S, Tue 21-22UTC:L, Wed 06-07UTC:L, Thu 05-06UTC:L, Thu 12-13UTC:L, Thu 19-20UTC:L, Fri 17-18UTC:S, Fri 21-22UTC:L
+BTC_hw_top10         BTCUSDT cells=10 | FIT n= 1034 mean=   0.46 t=  0.54 | OOS n= 1009 mean=  -3.42 t= -4.95 wr=0.321 tpd=1.72 gross=  0.40 by_year={'2022': -939.3, '2023': -1500.9, '2024': -1006.7} | FULL n=2043 mean=-1.46 t=-2.65
+    cells: Mon 09-10UTC:S, Tue 02-03UTC:S, Tue 21-22UTC:L, Wed 06-07UTC:L, Wed 13-14UTC:L, Thu 05-06UTC:L, Thu 12-13UTC:L, Thu 19-20UTC:L, Fri 17-18UTC:S, Fri 21-22UTC:L
+BTC_blk4h_t2         BTCUSDT cells= 2 | FIT n=  235 mean=   5.12 t=  1.13 | OOS n=  234 mean=  -2.38 t= -0.79 wr=0.402 tpd=0.40 gross=  1.44 by_year={'2022': -624.1, '2023': -678.1, '2024': 746.1} | FULL n=469 mean=1.38 t=0.51
+    cells: Mon 12-16UTC:L, Thu 00-04UTC:S
+BTC_hour_t2          BTCUSDT cells= 1 | FIT n=  587 mean=  -0.43 t= -0.30 | OOS n=  586 mean=  -5.25 t= -4.83 wr=0.340 tpd=1.00 gross= -1.43 by_year={'2022': -850.0, '2023': -1298.5, '2024': -929.1} | FULL n=1173 mean=-2.84 t=-3.12
+    cells: 13-14UTC:L
+BTC_dow_t15          BTCUSDT cells= 1 | FIT n=  236 mean=   4.68 t=  0.80 | OOS n=  234 mean=  -0.95 t= -0.17 wr=0.415 tpd=0.40 gross=  2.87 by_year={'2022': -839.3, '2023': 137.9, '2024': 479.8} | FULL n=470 mean=1.88 t=0.47
+    cells: Wed:L
+BTC_hw_t2_CT         BTCUSDT cells=10 | FIT n= 1173 mean=   0.56 t=  0.73 | OOS n= 1172 mean=  -3.70 t= -6.95 wr=0.319 tpd=2.00 gross=  0.12 by_year={'2022': -1469.6, '2023': -1997.3, '2024': -866.6} | FULL n=2345 mean=-1.57 t=-3.33
+    cells: Mon 03-04CT:S, Mon 08-09CT:L, Mon 10-11CT:L, Mon 15-16CT:S, Tue 05-06CT:L, Wed 00-01CT:L, Wed 04-05CT:L, Thu 06-07CT:L, Fri 05-06CT:L, Fri 15-16CT:L
+BTC_hw_t2_volgate    BTCUSDT cells= 9 | FIT n=  315 mean=   0.56 t=  0.36 | OOS n=  298 mean=  -5.41 t= -3.83 wr=0.336 tpd=0.51 gross= -1.59 by_year={'2022': -510.7, '2023': -505.9, '2024': -596.2} | FULL n=613 mean=-2.34 t=-2.22
+    cells: Mon 09-10UTC:S, Tue 02-03UTC:S, Tue 21-22UTC:L, Wed 06-07UTC:L, Thu 05-06UTC:L, Thu 12-13UTC:L, Thu 19-20UTC:L, Fri 17-18UTC:S, Fri 21-22UTC:L
+BTC_hw_t2_hurdle10   BTCUSDT cells= 8 | FIT n=  799 mean=   0.60 t=  0.65 | OOS n=  774 mean=  -3.87 t= -5.45 wr=0.304 tpd=1.32 gross= -0.05 by_year={'2022': -1111.3, '2023': -1223.8, '2024': -659.6} | FULL n=1573 mean=-1.60 t=-2.73
+    cells: Mon 09-10UTC:S, Tue 02-03UTC:S, Tue 21-22UTC:L, Wed 06-07UTC:L, Thu 05-06UTC:L, Thu 12-13UTC:L, Thu 19-20UTC:L, Fri 21-22UTC:L
+BTC_hw_t2_reverse    BTCUSDT cells= 3 | FIT n=  353 mean=   0.44 t=  0.42 | OOS n=  352 mean=  -5.20 t= -3.20 wr=0.361 tpd=0.60 gross= -1.38 by_year={'2020': -574.1, '2021': -966.4, '2022': -290.9} | FULL n=705 mean=-2.38 t=-2.44
+    cells: Thu 00-01UTC:L, Fri 16-17UTC:S, Sun 23-24UTC:S
+ETH_hw_t2            ETHUSDT cells= 8 | FIT n=  823 mean=  -0.46 t= -5.92 | OOS n=  819 mean=  -0.92 t=-18.89 wr=0.164 tpd=1.39 gross=  0.00 by_year={'2022': -253.1, '2023': -327.8, '2024': -169.6} | FULL n=1642 mean=-0.69 t=-14.87
+    cells: Mon 09-10UTC:S, Tue 10-11UTC:L, Tue 12-13UTC:S, Wed 16-17UTC:L, Wed 22-23UTC:L, Thu 03-04UTC:S, Thu 12-13UTC:L, Fri 21-22UTC:L
+ETH_hw_top10         ETHUSDT cells=10 | FIT n= 1057 mean=  -0.47 t= -6.52 | OOS n= 1053 mean=  -0.91 t=-20.32 wr=0.170 tpd=1.79 gross=  0.01 by_year={'2022': -322.4, '2023': -440.8, '2024': -192.5} | FULL n=2110 mean=-0.69 t=-16.14
+    cells: Mon 09-10UTC:S, Mon 15-16UTC:L, Tue 02-03UTC:S, Tue 10-11UTC:L, Tue 12-13UTC:S, Wed 16-17UTC:L, Wed 22-23UTC:L, Thu 03-04UTC:S, Thu 12-13UTC:L, Fri 21-22UTC:L
+ETH_blk4h_t2         ETHUSDT cells= 3 | FIT n=  353 mean=  -0.17 t= -0.69 | OOS n=  351 mean=  -1.16 t= -6.43 wr=0.268 tpd=0.60 gross= -0.24 by_year={'2022': -136.9, '2023': -183.7, '2024': -85.0} | FULL n=704 mean=-0.66 t=-4.30
+    cells: Mon 12-16UTC:L, Thu 00-04UTC:S, Thu 12-16UTC:L
+ETH_hour_t2          ETHUSDT cells= 3 | FIT n= 1761 mean=  -0.71 t=-12.00 | OOS n= 1758 mean=  -1.04 t=-25.96 wr=0.162 tpd=2.99 gross= -0.12 by_year={'2022': -586.5, '2023': -755.0, '2024': -484.6} | FULL n=3519 mean=-0.87 t=-24.44
+    cells: 03-04UTC:S, 13-14UTC:L, 15-16UTC:L
+BTC_bestwin_dow      BTCUSDT cells=28 | FIT n=  587 mean=   7.03 t=  2.37 | OOS n=  586 mean=  -3.09 t= -1.23 wr=0.387 tpd=1.00 gross=  0.73 by_year={'2022': -2228.3, '2023': -1185.4, '2024': 1602.4} | FULL n=1173 mean=1.98 t=1.01
+    windows: [{'dow': 0, 'h0': 12, 'len': 8, 't': 2.3, 'mean_bp': 52.0, 'n': 117}, {'dow': 1, 'h0': 19, 'len': 3, 't': 2.72, 'mean_bp': 42.7, 'n': 46}, {'dow': 2, 'h0': 12, 'len': 6, 't': 2.51, 'mean_bp': 45.2, 'n': 118}, {'dow': 3, 'h0': 11, 'len': 3, 't': 2.85, 'mean_bp': 34.5, 'n': 118}, {'dow': 4, 'h0': 6, 'len': 8, 't': 2.44, 'mean_bp': 58.8, 'n': 117}]
+    cells: Mon 12-13UTC:L, Mon 13-14UTC:L, Mon 14-15UTC:L, Mon 15-16UTC:L, Mon 16-17UTC:L, Mon 17-18UTC:L, Mon 18-19UTC:L, Mon 19-20UTC:L, Tue 19-20UTC:L, Tue 20-21UTC:L, Tue 21-22UTC:L, Wed 12-13UTC:L, Wed 13-14UTC:L, Wed 14-15UTC:L, Wed 15-16UTC:L, Wed 16-17UTC:L, Wed 17-18UTC:L, Thu 11-12UTC:L, Thu 12-13UTC:L, Thu 13-14UTC:L, Fri 06-07UTC:L, Fri 07-08UTC:L, Fri 08-09UTC:L, Fri 09-10UTC:L, Fri 10-11UTC:L, Fri 11-12UTC:L, Fri 12-13UTC:L, Fri 13-14UTC:L
+BTC_bestwin_all      BTCUSDT cells=21 | FIT n=  587 mean=   1.82 t=  0.80 | OOS n=  586 mean=  -4.58 t= -2.96 wr=0.377 tpd=1.00 gross= -0.76 by_year={'2022': -1377.4, '2023': -892.9, '2024': -415.7} | FULL n=1173 mean=-1.38 t=-1.00
+    windows: [{'dow': None, 'h0': 11, 'len': 3, 't': 2.91, 'mean_bp': 18.8, 'n': 587}]
+    cells: Mon 11-12UTC:L, Mon 12-13UTC:L, Mon 13-14UTC:L, Tue 11-12UTC:L, Tue 12-13UTC:L, Tue 13-14UTC:L, Wed 11-12UTC:L, Wed 12-13UTC:L, Wed 13-14UTC:L, Thu 11-12UTC:L, Thu 12-13UTC:L, Thu 13-14UTC:L, Fri 11-12UTC:L, Fri 12-13UTC:L, Fri 13-14UTC:L, Sat 11-12UTC:L, Sat 12-13UTC:L, Sat 13-14UTC:L, Sun 11-12UTC:L, Sun 12-13UTC:L, Sun 13-14UTC:L
+ETH_bestwin_dow      ETHUSDT cells=17 | FIT n=  587 mean=  -0.08 t= -0.44 | OOS n=  586 mean=  -1.10 t= -9.32 wr=0.234 tpd=1.00 gross= -0.18 by_year={'2022': -241.9, '2023': -265.8, '2024': -135.8} | FULL n=1173 mean=-0.59 t=-5.23
+    windows: [{'dow': 0, 'h0': 11, 'len': 5, 't': 2.38, 'mean_bp': 68.3, 'n': 117}, {'dow': 1, 'h0': 10, 'len': 2, 't': 2.42, 'mean_bp': 29.6, 'n': 117}, {'dow': 2, 'h0': 12, 'len': 5, 't': 2.82, 'mean_bp': 64.6, 'n': 118}, {'dow': 3, 'h0': 11, 'len': 3, 't': 3.35, 'mean_bp': 49.7, 'n': 118}, {'dow': 4, 'h0': 3, 'len': 2, 't': -2.2, 'mean_bp': -23.6, 'n': 117}]
+    cells: Mon 11-12UTC:L, Mon 12-13UTC:L, Mon 13-14UTC:L, Mon 14-15UTC:L, Mon 15-16UTC:L, Tue 10-11UTC:L, Tue 11-12UTC:L, Wed 12-13UTC:L, Wed 13-14UTC:L, Wed 14-15UTC:L, Wed 15-16UTC:L, Wed 16-17UTC:L, Thu 11-12UTC:L, Thu 12-13UTC:L, Thu 13-14UTC:L, Fri 03-04UTC:S, Fri 04-05UTC:S
+
+BTCUSDT: 168-cell mean-return correlation H1 vs H2 = -0.033, sign agreement = 0.442 (chance 0.5); cells with |t|>=2: H1 10, H2 3 (chance ~5.5)
+BTCUSDT hour-of-day UTC (full IS, bp/hour):
+      mean_bp  std_bp     n     t
+hour                             
+0        0.81   79.39  1173  0.35
+1       -2.12   80.34  1173 -0.90
+2       -2.54   78.30  1173 -1.11
+3       -1.90   69.39  1173 -0.94
+4       -1.35   59.66  1173 -0.77
+5        1.11   57.36  1173  0.66
+6        3.36   64.26  1173  1.79
+7        1.63   65.84  1173  0.85
+8        3.27   79.56  1173  1.41
+9       -0.86   65.73  1173 -0.45
+10       0.70   92.37  1173  0.26
+11       1.71   62.52  1173  0.94
+12       2.97   92.33  1173  1.10
+13       3.30   82.22  1173  1.37
+14      -2.73   99.52  1173 -0.94
+15       0.87   87.01  1173  0.34
+16      -1.39   81.14  1173 -0.59
+17      -0.40   70.89  1173 -0.19
+18       0.13   74.53  1173  0.06
+19       0.71   77.97  1173  0.31
+20       2.77   59.56  1173  1.59
+21       0.99   33.99   413  0.59
+22       2.59   75.67   761  0.94
+23      -3.82   93.67  1173 -1.40
+BTCUSDT relative volume by UTC hour: {0: 0.983, 1: 0.843, 2: 0.766, 3: 0.712, 4: 0.693, 5: 0.69, 6: 0.745, 7: 0.836, 8: 0.967, 9: 0.925, 10: 0.925, 11: 0.95, 12: 1.261, 13: 1.421, 14: 1.635, 15: 1.533, 16: 1.439, 17: 1.159, 18: 1.109, 19: 1.042, 20: 1.01, 21: 0.801, 22: 0.782, 23: 0.775}
+
+ETHUSDT: 168-cell mean-return correlation H1 vs H2 = -0.028, sign agreement = 0.475 (chance 0.5); cells with |t|>=2: H1 9, H2 7 (chance ~5.5)
+ETHUSDT hour-of-day UTC (full IS, bp/hour):
+      mean_bp  std_bp     n     t
+hour                             
+0        2.54  110.33  1173  0.79
+1       -2.15  101.31  1173 -0.73
+2       -5.29   90.99  1173 -1.99
+3       -4.93   89.57  1173 -1.89
+4       -0.25   78.39  1173 -0.11
+5        2.98   74.43  1173  1.37
+6        1.38   79.58  1173  0.59
+7        2.30   85.44  1173  0.92
+8        1.30   97.24  1173  0.46
+9       -3.35   82.71  1173 -1.39
+10       2.28  109.68  1173  0.71
+11       3.84   82.62  1173  1.59
+12       2.92  112.06  1173  0.89
+13       3.23  103.14  1173  1.07
+14      -3.00  117.10  1173 -0.88
+15       2.50  106.76  1173  0.80
+16       0.36  103.46  1173  0.12
+17       0.57   88.35  1173  0.22
+18       0.43   93.67  1173  0.16
+19       2.25   95.59  1173  0.81
+20       1.95   68.41  1173  0.98
+21       1.04   42.42   413  0.50
+22       3.37   94.72   761  0.98
+23      -3.40  107.81  1173 -1.08
+ETHUSDT relative volume by UTC hour: {0: 1.055, 1: 0.886, 2: 0.796, 3: 0.737, 4: 0.715, 5: 0.702, 6: 0.761, 7: 0.855, 8: 0.998, 9: 0.928, 10: 0.913, 11: 0.944, 12: 1.238, 13: 1.387, 14: 1.605, 15: 1.478, 16: 1.465, 17: 1.132, 18: 1.077, 19: 1.001, 20: 0.969, 21: 0.771, 22: 0.789, 23: 0.797}
+
+wrote /home/user/j/research/hyp/volume_time_seasonality_results.json; n_variants=16

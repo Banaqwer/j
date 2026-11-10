@@ -1,0 +1,92 @@
+BTCUSDT bars 473184 2020-01-01 00:00:00+00:00 -> 2024-06-30 23:55:00+00:00 | settlement bars 4929
+
+[diag] BTCUSDT: mean forward return (bp) after settlement, by funding-rate bucket
+                  fwd_1h       fwd_4h       fwd_~8h      
+                    mean count   mean count    mean count
+bucket                                                   
+(-1.0, -0.0001]     19.9   149   21.4   149    53.6   149
+(-0.0001, 0.0]       3.8   455    5.6   455    20.7   455
+(0.0, 5e-05]         0.7   725    4.2   725     5.9   725
+(5e-05, 0.00015]     0.4  2723   -0.3  2723     2.8  2723
+(0.00015, 0.0003]   -2.4   273   -1.9   273     6.1   273
+(0.0003, 0.0005]    -0.2   276  -12.5   276    -7.7   276
+(0.0005, 0.001]      6.8   239    1.5   239     0.4   239
+(0.001, 1.0]       -13.3    89  -49.2    89   -24.4    89
+[diag] BTCUSDT: by z-score bucket
+          fwd_1h       fwd_4h       fwd_~8h      
+            mean count   mean count    mean count
+z                                                
+(-99, -2]   80.2    22   65.3    22    84.5    22
+(-2, -1]     7.1   300   12.1   300    30.4   300
+(-1, 1]      0.3  4099   -0.5  4099     3.5  4099
+(1, 2]       0.1   188  -12.7   188    -0.7   188
+(2, 99]      3.6   185  -15.2   185   -12.4   185
+ETHUSDT bars 473184 2020-01-01 00:00:00+00:00 -> 2024-06-30 23:55:00+00:00 | settlement bars 4929
+
+[diag] ETHUSDT: mean forward return (bp) after settlement, by funding-rate bucket
+                  fwd_1h       fwd_4h       fwd_~8h      
+                    mean count   mean count    mean count
+bucket                                                   
+(-1.0, -0.0001]     24.3   134   11.8   134    40.1   134
+(-0.0001, 0.0]       2.3   417    4.8   417     1.1   417
+(0.0, 5e-05]         0.2   613    5.5   613    11.0   613
+(5e-05, 0.00015]     0.8  2733    1.6  2733     7.1  2733
+(0.00015, 0.0003]   -8.2   289   -8.1   289    12.9   289
+(0.0003, 0.0005]    12.1   296    3.2   296     6.8   296
+(0.0005, 0.001]      4.8   303   -9.5   303    -0.4   303
+(0.001, 1.0]        -0.1   144  -26.7   144     2.3   144
+[diag] ETHUSDT: by z-score bucket
+          fwd_1h       fwd_4h       fwd_~8h      
+            mean count   mean count    mean count
+z                                                
+(-99, -2]    1.8    45  -74.2    45   -85.1    45
+(-2, -1]    20.8   216   51.9   216    76.3   216
+(-1, 1]      0.4  4152   -1.1  4152     4.3  4152
+(1, 2]       5.9   210   -1.7   210    -1.9   210
+(2, 99]     -2.4   171  -24.7   171    -1.4   171
+
+A1_fade_abs_8h                     BTCUSDT  n=  355 tpd=0.30 mean=    2.67 t=  0.53 wr=0.493 aw=   62.5 al=   55.5 spt=0.028 L/S net=927/20 by_year={'2020': -23, '2021': 635, '2022': 257, '2023': 48, '2024': 30}
+A2_follow_abs_8h                   BTCUSDT  n=  355 tpd=0.30 mean=  -10.31 t= -2.04 wr=0.411 aw=   60.0 al=   59.4 spt=-0.108 L/S net=-1876/-1783 by_year={'2020': -939, '2021': -1972, '2022': -494, '2023': -78, '2024': -175}
+A3_fade_z2_8h                      BTCUSDT  n=  157 tpd=0.13 mean=    7.62 t=  1.04 wr=0.516 aw=   68.0 al=   56.7 spt=0.083 L/S net=738/457 by_year={'2020': -70, '2021': 1222, '2022': 97, '2023': 198, '2024': -252}
+A4_follow_z2_8h                    BTCUSDT  n=  157 tpd=0.13 mean=  -15.26 t= -2.08 wr=0.408 aw=   59.1 al=   66.5 spt=-0.166 L/S net=-1519/-876 by_year={'2020': -274, '2021': -1681, '2022': -174, '2023': -321, '2024': 53}
+A5_fade_pct95_8h                   BTCUSDT  n=  307 tpd=0.26 mean=    7.49 t=  1.56 wr=0.505 aw=   62.5 al=   48.6 spt=0.089 L/S net=1332/968 by_year={'2020': 47, '2021': 1384, '2022': 574, '2023': 325, '2024': -30}
+A6_fade_abs_4h                     BTCUSDT  n=  355 tpd=0.30 mean=    1.80 t=  0.43 wr=0.456 aw=   50.7 al=   39.2 spt=0.023 L/S net=67/573 by_year={'2020': -330, '2021': 1221, '2022': -196, '2023': 6, '2024': -60}
+A7_fade_abs_2h                     BTCUSDT  n=  355 tpd=0.30 mean=   -0.41 t= -0.14 wr=0.408 aw=   40.0 al=   28.3 spt=-0.007 L/S net=29/-176 by_year={'2020': -384, '2021': 584, '2022': -162, '2023': 36, '2024': -219}
+A8_fade_abs_8h_stop1               BTCUSDT  n=  355 tpd=0.30 mean=   -0.24 t= -0.07 wr=0.349 aw=   60.3 al=   32.7 spt=-0.004 L/S net=221/-306 by_year={'2020': -331, '2021': 377, '2022': 103, '2023': 48, '2024': -281}
+A9_fade_cum24h_8h                  BTCUSDT  n=  304 tpd=0.26 mean=    5.27 t=  0.89 wr=0.500 aw=   69.7 al=   59.2 spt=0.051 L/S net=1682/-80 by_year={'2020': -181, '2021': 1368, '2022': 398, '2023': 35, '2024': -18}
+A10_fade_jump_8h                   BTCUSDT  n=  179 tpd=0.15 mean=   -1.66 t= -0.22 wr=0.514 aw=   63.3 al=   70.3 spt=-0.016 L/S net=447/-744 by_year={'2020': -194, '2021': 184, '2022': -78, '2024': -210}
+A11_short_only_abs_8h              BTCUSDT  n=  243 tpd=0.21 mean=    0.08 t=  0.01 wr=0.490 aw=   72.4 al=   69.3 spt=0.001 L/S net=0/20 by_year={'2020': -54, '2021': 43, '2023': 1, '2024': 30}
+A12_long_only_abs_8h               BTCUSDT  n=  112 tpd=0.10 mean=    8.28 t=  1.62 wr=0.500 aw=   41.6 al=   25.0 spt=0.153 L/S net=927/0 by_year={'2020': 31, '2021': 592, '2022': 257, '2023': 47}
+E1_fade_abs_8h                     ETHUSDT  n=  428 tpd=0.36 mean=   -0.51 t= -1.89 wr=0.327 aw=    4.4 al=    2.9 spt=-0.091 L/S net=-52/-165 by_year={'2020': -138, '2021': -47, '2022': -61, '2023': 4, '2024': 25}
+E2_follow_abs_8h                   ETHUSDT  n=  428 tpd=0.36 mean=   -1.33 t= -4.95 wr=0.304 aw=    3.4 al=    3.4 spt=-0.239 L/S net=-427/-143 by_year={'2020': -123, '2021': -266, '2022': -104, '2023': -15, '2024': -62}
+E3_fade_z2_8h                      ETHUSDT  n=  163 tpd=0.14 mean=   -0.52 t= -1.03 wr=0.325 aw=    4.6 al=    3.0 spt=-0.081 L/S net=-85/1 by_year={'2020': -50, '2021': 47, '2022': -75, '2023': -22, '2024': 17}
+M1_post_settle_long_1h             BTCUSDT  n=  426 tpd=0.36 mean=   -3.31 t= -1.55 wr=0.399 aw=   29.9 al=   25.4 spt=-0.075 L/S net=-1412/0 by_year={'2020': -582, '2021': -947, '2023': -44, '2024': 161}
+M2_pre_settle_short_1h             BTCUSDT  n=  430 tpd=0.37 mean=   -3.79 t= -1.53 wr=0.405 aw=   31.7 al=   27.9 spt=-0.074 L/S net=0/-1629 by_year={'2020': -537, '2021': -887, '2023': 68, '2024': -273}
+A13_fade_abs_mom_8h                BTCUSDT  n=  176 tpd=0.15 mean=    0.77 t=  0.10 wr=0.449 aw=   64.9 al=   51.5 spt=0.008 L/S net=141/-5 by_year={'2020': -216, '2021': 563, '2022': -40, '2023': 18, '2024': -190}
+A14_tail_short_abs1e-3_4h          BTCUSDT  n=   63 tpd=0.05 mean=   26.77 t=  2.57 wr=0.619 aw=   70.2 al=   43.9 spt=0.324 L/S net=0/1686 by_year={'2020': -10, '2021': 1696}
+E4_fade_pct95_8h                   ETHUSDT  n=  289 tpd=0.25 mean=   -0.74 t= -2.22 wr=0.363 aw=    4.3 al=    3.6 spt=-0.131 L/S net=-141/-72 by_year={'2020': -36, '2021': -80, '2022': -59, '2023': -21, '2024': -17}
+
+variants tried: 20
+
+screen (mean_net>0, t>=2.5, n>=150, >=3 positive years of 5):
+  A1_fade_abs_8h                     BTCUSDT  t= 0.53 n= 355 posyrs=4 DSR_p=0.085 -> fail   [protocol as-is: n=355 mean=2.67 t=0.53 zero-hold=0]
+  A2_follow_abs_8h                   BTCUSDT  t=-2.04 n= 355 posyrs=0 DSR_p=0.000 -> fail   [protocol as-is: n=355 mean=-10.31 t=-2.04 zero-hold=0]
+  A3_fade_z2_8h                      BTCUSDT  t= 1.04 n= 157 posyrs=3 DSR_p=0.196 -> fail   [protocol as-is: n=157 mean=7.62 t=1.04 zero-hold=0]
+  A4_follow_z2_8h                    BTCUSDT  t=-2.08 n= 157 posyrs=1 DSR_p=0.000 -> fail   [protocol as-is: n=157 mean=-15.26 t=-2.08 zero-hold=0]
+  A5_fade_pct95_8h                   BTCUSDT  t= 1.56 n= 307 posyrs=4 DSR_p=0.368 -> fail   [protocol as-is: n=307 mean=7.49 t=1.56 zero-hold=0]
+  A6_fade_abs_4h                     BTCUSDT  t= 0.43 n= 355 posyrs=2 DSR_p=0.072 -> fail   [protocol as-is: n=355 mean=1.80 t=0.43 zero-hold=0]
+  A7_fade_abs_2h                     BTCUSDT  t=-0.14 n= 355 posyrs=2 DSR_p=0.021 -> fail   [protocol as-is: n=355 mean=-0.41 t=-0.14 zero-hold=0]
+  A8_fade_abs_8h_stop1               BTCUSDT  t=-0.07 n= 355 posyrs=3 DSR_p=0.025 -> fail   [protocol as-is: n=355 mean=-0.24 t=-0.07 zero-hold=11]
+  A9_fade_cum24h_8h                  BTCUSDT  t= 0.89 n= 304 posyrs=3 DSR_p=0.158 -> fail   [protocol as-is: n=304 mean=5.27 t=0.89 zero-hold=0]
+  A10_fade_jump_8h                   BTCUSDT  t=-0.22 n= 179 posyrs=1 DSR_p=0.017 -> fail   [protocol as-is: n=179 mean=-1.66 t=-0.22 zero-hold=0]
+  A11_short_only_abs_8h              BTCUSDT  t= 0.01 n= 243 posyrs=3 DSR_p=0.030 -> fail   [protocol as-is: n=243 mean=0.08 t=0.01 zero-hold=0]
+  A12_long_only_abs_8h               BTCUSDT  t= 1.62 n= 112 posyrs=4 DSR_p=0.389 -> fail   [protocol as-is: n=112 mean=8.28 t=1.62 zero-hold=0]
+  E1_fade_abs_8h                     ETHUSDT  t=-1.89 n= 428 posyrs=2 DSR_p=0.000 -> fail   [protocol as-is: n=428 mean=-0.51 t=-1.89 zero-hold=0]
+  E2_follow_abs_8h                   ETHUSDT  t=-4.95 n= 428 posyrs=0 DSR_p=0.000 -> fail   [protocol as-is: n=428 mean=-1.33 t=-4.95 zero-hold=0]
+  E3_fade_z2_8h                      ETHUSDT  t=-1.03 n= 163 posyrs=2 DSR_p=0.002 -> fail   [protocol as-is: n=163 mean=-0.52 t=-1.03 zero-hold=0]
+  M1_post_settle_long_1h             BTCUSDT  t=-1.55 n= 426 posyrs=1 DSR_p=0.000 -> fail   [protocol as-is: n=426 mean=-3.31 t=-1.55 zero-hold=0]
+  M2_pre_settle_short_1h             BTCUSDT  t=-1.53 n= 430 posyrs=1 DSR_p=0.000 -> fail   [protocol as-is: n=430 mean=-3.79 t=-1.53 zero-hold=0]
+  A13_fade_abs_mom_8h                BTCUSDT  t= 0.10 n= 176 posyrs=2 DSR_p=0.037 -> fail   [protocol as-is: n=176 mean=0.77 t=0.10 zero-hold=0]
+  A14_tail_short_abs1e-3_4h          BTCUSDT  t= 2.57 n=  63 posyrs=1 DSR_p=0.742 -> fail   [protocol as-is: n=63 mean=26.77 t=2.57 zero-hold=0]
+  E4_fade_pct95_8h                   ETHUSDT  t=-2.22 n= 289 posyrs=0 DSR_p=0.000 -> fail   [protocol as-is: n=289 mean=-0.74 t=-2.22 zero-hold=0]
+wrote /home/user/j/results/research/funding_signal.json

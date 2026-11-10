@@ -1,0 +1,998 @@
+{
+ "family": "vol_regime_reversal",
+ "n_variants": 15,
+ "variants": {
+  "BTC_15m_z3_rev_h30": {
+   "n": 2623,
+   "trades_per_day": 2.2350625445123766,
+   "mean_net": -4.90802325581396,
+   "median_net": -2.999999999999927,
+   "std_net": 33.003684179938396,
+   "win_rate": 0.3961113229126954,
+   "avg_win": 18.151792107795952,
+   "avg_loss": 20.033748106060614,
+   "t_stat": -7.616287589998674,
+   "ci95_low": -6.206023379717889,
+   "ci95_high": -3.668220873046137,
+   "sharpe_per_trade": -0.1487113750408916,
+   "sharpe_annual": -3.529305882608084,
+   "max_drawdown": 12870.223000000131,
+   "total_net": -12873.745000000017,
+   "gross_mean": -1.0880232558139598,
+   "p_win_at_1R": 0.3714690632022809,
+   "by_year": {
+    "2020": -2106.988000000001,
+    "2021": -3706.2250000000154,
+    "2022": -3464.8020000000024,
+    "2023": -2456.8200000000015,
+    "2024": -1138.9099999999953
+   },
+   "n_by_year": {
+    "2020": 512,
+    "2021": 554,
+    "2022": 636,
+    "2023": 590,
+    "2024": 331
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 15 min before the decision bar (>=200 obs); r = close[i]/close[i-3] - 1 (15-min return); z = r/(sigma5*sqrt(3)). Event when |z| >= 3 at bar i and |z| < 3 at bar i-1 (fresh crossing). Enter at the open of bar i+1, side = -sign(z) (fade the move). Exit at the open of the bar 6 bars (30 min) after entry, or at the 15:10 CT Topstep flat if earlier. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 4444,
+   "reasons": {
+    "time": 2571,
+    "flat": 52
+   },
+   "avg_hold_bars": 5.9393823865802515,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 5.1113150786748925e-21
+  },
+  "BTC_30m_z3_rev_h60": {
+   "n": 1812,
+   "trades_per_day": 1.5440081321602845,
+   "mean_net": -4.747115342163359,
+   "median_net": -2.8140000000000507,
+   "std_net": 43.13906445348675,
+   "win_rate": 0.4282560706401766,
+   "avg_win": 24.130231958762877,
+   "avg_loss": 26.377251930501938,
+   "t_stat": -4.684229429390809,
+   "ci95_low": -6.690723841059613,
+   "ci95_high": -2.789864210816782,
+   "sharpe_per_trade": -0.11004214862567956,
+   "sharpe_annual": -2.170621616539794,
+   "max_drawdown": 8686.594000000061,
+   "total_net": -8601.773000000007,
+   "gross_mean": -0.9271153421633596,
+   "p_win_at_1R": 0.4060116446788128,
+   "by_year": {
+    "2020": -1452.8969999999974,
+    "2021": -1084.2960000000114,
+    "2022": -2754.8699999999985,
+    "2023": -2150.8899999999967,
+    "2024": -1158.8200000000027
+   },
+   "n_by_year": {
+    "2020": 367,
+    "2021": 371,
+    "2022": 448,
+    "2023": 403,
+    "2024": 223
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 30 min before the decision bar (>=200 obs); r = close[i]/close[i-6] - 1 (30-min return); z = r/(sigma5*sqrt(6)). Event when |z| >= 3 at bar i and |z| < 3 at bar i-1 (fresh crossing). Enter at the open of bar i+1, side = -sign(z) (fade the move). Exit at the open of the bar 12 bars (60 min) after entry, or at the 15:10 CT Topstep flat if earlier. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 3372,
+   "reasons": {
+    "time": 1740,
+    "flat": 72
+   },
+   "avg_hold_bars": 11.79083885209713,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 6.22767405366868e-11
+  },
+  "BTC_60m_z3_rev_h120": {
+   "n": 1159,
+   "trades_per_day": 0.9875857754822129,
+   "mean_net": -6.449111302847292,
+   "median_net": -2.6710000000002037,
+   "std_net": 57.13227075933529,
+   "win_rate": 0.43054357204486626,
+   "avg_win": 32.15922244488977,
+   "avg_loss": 35.639351515151525,
+   "t_stat": -3.8429090361894094,
+   "ci95_low": -9.638657420189823,
+   "ci95_high": -3.1893496548749027,
+   "sharpe_per_trade": -0.11288036020856954,
+   "sharpe_annual": -1.7807627807491195,
+   "max_drawdown": 7466.913000000049,
+   "total_net": -7474.520000000012,
+   "gross_mean": -2.6291113028472943,
+   "p_win_at_1R": 0.4048783635678203,
+   "by_year": {
+    "2020": -905.1759999999992,
+    "2021": -1842.564,
+    "2022": -1496.1500000000015,
+    "2023": -1778.180000000003,
+    "2024": -1452.4500000000082
+   },
+   "n_by_year": {
+    "2020": 241,
+    "2021": 236,
+    "2022": 273,
+    "2023": 263,
+    "2024": 146
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 60 min before the decision bar (>=200 obs); r = close[i]/close[i-12] - 1 (60-min return); z = r/(sigma5*sqrt(12)). Event when |z| >= 3 at bar i and |z| < 3 at bar i-1 (fresh crossing). Enter at the open of bar i+1, side = -sign(z) (fade the move). Exit at the open of the bar 24 bars (120 min) after entry, or at the 15:10 CT Topstep flat if earlier. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 2503,
+   "reasons": {
+    "time": 1055,
+    "flat": 104
+   },
+   "avg_hold_bars": 23.10957722174288,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 1.1134963682743982e-08
+  },
+  "BTC_30m_z3_rev_h240": {
+   "n": 1414,
+   "trades_per_day": 1.2048716881206636,
+   "mean_net": -6.236787835926447,
+   "median_net": -2.4500000000001085,
+   "std_net": 68.05780810198335,
+   "win_rate": 0.45544554455445546,
+   "avg_win": 38.97101708074535,
+   "avg_loss": 44.04695194805195,
+   "t_stat": -3.445940046684339,
+   "ci95_low": -9.836539957567172,
+   "ci95_high": -2.8322225601131685,
+   "sharpe_per_trade": -0.0916395636277433,
+   "sharpe_annual": -1.5968116138166901,
+   "max_drawdown": 9346.337000000036,
+   "total_net": -8818.817999999996,
+   "gross_mean": -2.416787835926448,
+   "p_win_at_1R": 0.42487424218047265,
+   "by_year": {
+    "2020": -1037.339999999999,
+    "2021": -1843.6260000000016,
+    "2022": -1671.561999999998,
+    "2023": -2645.9700000000003,
+    "2024": -1620.319999999997
+   },
+   "n_by_year": {
+    "2020": 279,
+    "2021": 310,
+    "2022": 344,
+    "2023": 316,
+    "2024": 165
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 30 min before the decision bar (>=200 obs); r = close[i]/close[i-6] - 1 (30-min return); z = r/(sigma5*sqrt(6)). Event when |z| >= 3 at bar i and |z| < 3 at bar i-1 (fresh crossing). Enter at the open of bar i+1, side = -sign(z) (fade the move). Exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 3372,
+   "reasons": {
+    "time": 1176,
+    "flat": 238
+   },
+   "avg_hold_bars": 44.02050919377652,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 9.759682588009654e-08
+  },
+  "BTC_30m_z4_rev_h60": {
+   "n": 903,
+   "trades_per_day": 0.7694477612255722,
+   "mean_net": -5.7042768549280325,
+   "median_net": -3.0519999999999707,
+   "std_net": 48.85523167017353,
+   "win_rate": 0.40753045404208194,
+   "avg_win": 26.66579619565216,
+   "avg_loss": 27.97004672897198,
+   "t_stat": -3.5085962413384917,
+   "ci95_low": -9.039669518272433,
+   "ci95_high": -2.5535072259136222,
+   "sharpe_per_trade": -0.11675877198655338,
+   "sharpe_annual": -1.62584582159334,
+   "max_drawdown": 5616.440000000006,
+   "total_net": -5150.962000000013,
+   "gross_mean": -1.8842768549280329,
+   "p_win_at_1R": 0.39559460329370816,
+   "by_year": {
+    "2020": -812.381999999998,
+    "2021": -689.6390000000049,
+    "2022": -1504.591,
+    "2023": -961.3899999999992,
+    "2024": -1182.960000000011
+   },
+   "n_by_year": {
+    "2020": 194,
+    "2021": 158,
+    "2022": 225,
+    "2023": 224,
+    "2024": 102
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 30 min before the decision bar (>=200 obs); r = close[i]/close[i-6] - 1 (30-min return); z = r/(sigma5*sqrt(6)). Event when |z| >= 4 at bar i and |z| < 4 at bar i-1 (fresh crossing). Enter at the open of bar i+1, side = -sign(z) (fade the move). Exit at the open of the bar 12 bars (60 min) after entry, or at the 15:10 CT Topstep flat if earlier. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 1594,
+   "reasons": {
+    "time": 863,
+    "flat": 40
+   },
+   "avg_hold_bars": 11.738648947951274,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 7.263444388954345e-08
+  },
+  "BTC_30m_z3_rev_h60_down_only": {
+   "n": 958,
+   "trades_per_day": 0.8163133502260224,
+   "mean_net": -4.592868475991659,
+   "median_net": -2.424999999999927,
+   "std_net": 42.516499299997356,
+   "win_rate": 0.4394572025052192,
+   "avg_win": 23.480057007125872,
+   "avg_loss": 26.601623836126635,
+   "t_stat": -3.343561107163166,
+   "ci95_low": -7.33514572025052,
+   "ci95_high": -1.9417413100208927,
+   "sharpe_per_trade": -0.10802555599849079,
+   "sharpe_annual": -1.5493703126266294,
+   "max_drawdown": 5653.977000000001,
+   "total_net": -4399.968000000009,
+   "gross_mean": -0.7728684759916591,
+   "p_win_at_1R": 0.40829244548787036,
+   "by_year": {
+    "2020": -601.8149999999994,
+    "2021": 1030.814999999993,
+    "2022": -1968.6580000000015,
+    "2023": -1071.3399999999988,
+    "2024": -1788.970000000002
+   },
+   "n_by_year": {
+    "2020": 184,
+    "2021": 187,
+    "2022": 250,
+    "2023": 210,
+    "2024": 127
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 30 min before the decision bar (>=200 obs); r = close[i]/close[i-6] - 1 (30-min return); z = r/(sigma5*sqrt(6)). Event when |z| >= 3 at bar i and |z| < 3 at bar i-1 (fresh crossing). Only down moves (z <= -3). Enter at the open of bar i+1, side = -sign(z) (fade the move). Exit at the open of the bar 12 bars (60 min) after entry, or at the 15:10 CT Topstep flat if earlier. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 1648,
+   "reasons": {
+    "time": 916,
+    "flat": 42
+   },
+   "avg_hold_bars": 11.775574112734864,
+   "n_pos_years": 1,
+   "n_years": 5,
+   "dsr": 1.7279444003705662e-07
+  },
+  "BTC_30m_z3_rev_h60_hivol": {
+   "n": 563,
+   "trades_per_day": 0.4797332110409714,
+   "mean_net": -4.7210142095914875,
+   "median_net": -3.168999999999978,
+   "std_net": 41.7128382823465,
+   "win_rate": 0.4227353463587922,
+   "avg_win": 22.334726890756272,
+   "avg_loss": 24.534141538461537,
+   "t_stat": -2.6854666496136583,
+   "ci95_low": -8.310119182948503,
+   "ci95_high": -1.2113068383659171,
+   "sharpe_per_trade": -0.11317892533794545,
+   "sharpe_annual": -1.2444164078671507,
+   "max_drawdown": 2980.7120000000023,
+   "total_net": -2657.9310000000073,
+   "gross_mean": -0.9010142095914884,
+   "p_win_at_1R": 0.3992718542646011,
+   "by_year": {
+    "2020": -617.0319999999989,
+    "2021": -218.96000000000186,
+    "2022": -359.03900000000226,
+    "2023": -1092.6099999999997,
+    "2024": -370.2900000000046
+   },
+   "n_by_year": {
+    "2020": 133,
+    "2021": 51,
+    "2022": 127,
+    "2023": 171,
+    "2024": 81
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 30 min before the decision bar (>=200 obs); r = close[i]/close[i-6] - 1 (30-min return); z = r/(sigma5*sqrt(6)). Event when |z| >= 3 at bar i and |z| < 3 at bar i-1 (fresh crossing). Only if volume over the 30-min move >= 4 x (6 x mean 5-min volume over the 288 bars ending 30 min before). Enter at the open of bar i+1, side = -sign(z) (fade the move). Exit at the open of the bar 12 bars (60 min) after entry, or at the 15:10 CT Topstep flat if earlier. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 999,
+   "reasons": {
+    "time": 545,
+    "flat": 18
+   },
+   "avg_hold_bars": 11.850799289520426,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 4.540052096138675e-06
+  },
+  "BTC_30m_z3_rev_h60_oi_drop": {
+   "n": 418,
+   "trades_per_day": 0.35617847640342104,
+   "mean_net": -7.77746411483255,
+   "median_net": -2.665000000000073,
+   "std_net": 40.30507843706118,
+   "win_rate": 0.42822966507177035,
+   "avg_win": 19.76332402234636,
+   "avg_loss": 28.404246861924708,
+   "t_stat": -3.9451760335760637,
+   "ci95_low": -11.58659844497611,
+   "ci95_high": -3.855760526315814,
+   "sharpe_per_trade": -0.1929648673672111,
+   "sharpe_annual": -1.828152209156122,
+   "max_drawdown": 3641.1900000000037,
+   "total_net": -3250.980000000006,
+   "gross_mean": -3.9574641148325505,
+   "p_win_at_1R": 0.3385331879508948,
+   "by_year": {
+    "2022": -954.7999999999993,
+    "2023": -701.420000000003,
+    "2024": -1594.7600000000039
+   },
+   "n_by_year": {
+    "2022": 179,
+    "2023": 144,
+    "2024": 95
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 30 min before the decision bar (>=200 obs); r = close[i]/close[i-6] - 1 (30-min return); z = r/(sigma5*sqrt(6)). Event when |z| >= 3 at bar i and |z| < 3 at bar i-1 (fresh crossing). Only if open interest (latest Binance 5-min OI snapshot with timestamp <= bar open) changed by <= -0.5% over the 30-min move. Enter at the open of bar i+1, side = -sign(z) (fade the move). Exit at the open of the bar 12 bars (60 min) after entry, or at the 15:10 CT Topstep flat if earlier. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 658,
+   "reasons": {
+    "time": 386,
+    "flat": 32
+   },
+   "avg_hold_bars": 11.607655502392344,
+   "n_pos_years": 0,
+   "n_years": 3,
+   "dsr": 7.72016771233292e-09
+  },
+  "BTC_30m_z3_cont_h60_oi_build": {
+   "n": 338,
+   "trades_per_day": 0.28801034694822086,
+   "mean_net": -2.007520710059162,
+   "median_net": -5.849999999999927,
+   "std_net": 41.54180202229091,
+   "win_rate": 0.3816568047337278,
+   "avg_win": 32.64720930232562,
+   "avg_loss": 23.397282296650722,
+   "t_stat": -0.8884501248653722,
+   "ci95_low": -6.319609689349097,
+   "ci95_high": 2.5103067307692397,
+   "sharpe_per_trade": -0.0483253160029492,
+   "sharpe_annual": -0.41169824734674854,
+   "max_drawdown": 1269.5999999999958,
+   "total_net": -678.5419999999967,
+   "gross_mean": 1.812479289940837,
+   "p_win_at_1R": 0.464179874724819,
+   "by_year": {
+    "2022": 109.50800000000169,
+    "2023": -119.19000000000186,
+    "2024": -668.8599999999967
+   },
+   "n_by_year": {
+    "2022": 136,
+    "2023": 127,
+    "2024": 75
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 30 min before the decision bar (>=200 obs); r = close[i]/close[i-6] - 1 (30-min return); z = r/(sigma5*sqrt(6)). Event when |z| >= 3 at bar i and |z| < 3 at bar i-1 (fresh crossing). Only if open interest (latest Binance 5-min OI snapshot with timestamp <= bar open) changed by >= +0.3% over the 30-min move. Enter at the open of bar i+1, side = +sign(z) (follow the move). Exit at the open of the bar 12 bars (60 min) after entry, or at the 15:10 CT Topstep flat if earlier. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 508,
+   "reasons": {
+    "time": 328,
+    "flat": 10
+   },
+   "avg_hold_bars": 11.855029585798816,
+   "n_pos_years": 1,
+   "n_years": 3,
+   "dsr": 0.003981424432733237
+  },
+  "BTC_30m_z3_rev_h60_stop1pct": {
+   "n": 1938,
+   "trades_per_day": 1.651372936052225,
+   "mean_net": -5.957431212590313,
+   "median_net": -4.9550000000000365,
+   "std_net": 34.29400697675965,
+   "win_rate": 0.38183694530443757,
+   "avg_win": 23.345593243243236,
+   "avg_loss": 24.05779690317197,
+   "t_stat": -7.647468397194267,
+   "ci95_low": -7.471583947884426,
+   "ci95_high": -4.4078903110165255,
+   "sharpe_per_trade": -0.17371639355609694,
+   "sharpe_annual": -3.543754733831137,
+   "max_drawdown": 11622.660790000093,
+   "total_net": -11545.501690000026,
+   "gross_mean": -2.1374312125903128,
+   "p_win_at_1R": 0.3743247857549945,
+   "by_year": {
+    "2020": -1773.7363399999986,
+    "2021": -3302.8624900000145,
+    "2022": -2937.1228600000068,
+    "2023": -2376.888700000002,
+    "2024": -1154.891300000005
+   },
+   "n_by_year": {
+    "2020": 395,
+    "2021": 404,
+    "2022": 476,
+    "2023": 422,
+    "2024": 241
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 30 min before the decision bar (>=200 obs); r = close[i]/close[i-6] - 1 (30-min return); z = r/(sigma5*sqrt(6)). Event when |z| >= 3 at bar i and |z| < 3 at bar i-1 (fresh crossing). Enter at the open of bar i+1, side = -sign(z) (fade the move). Exit at the open of the bar 12 bars (60 min) after entry, or at the 15:10 CT Topstep flat if earlier; stop 1.0% from entry checked on bar high/low. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 3372,
+   "reasons": {
+    "time": 1233,
+    "stop": 649,
+    "flat": 56
+   },
+   "avg_hold_bars": 9.024767801857585,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 4.573984109095859e-21
+  },
+  "ETH_30m_z3_rev_h60": {
+   "n": 1789,
+   "trades_per_day": 1.5244097949419144,
+   "mean_net": -1.087614868641699,
+   "median_net": -0.8750000000000011,
+   "std_net": 3.085074861731193,
+   "win_rate": 0.23756288429290107,
+   "avg_win": 1.9561058823529422,
+   "avg_loss": 2.0359882697947214,
+   "t_stat": -14.911268809864952,
+   "ci95_low": -1.2292742873113467,
+   "ci95_high": -0.944002850754612,
+   "sharpe_per_trade": -0.3525408352753498,
+   "sharpe_annual": -6.9097218436070085,
+   "max_drawdown": 1955.2169999999924,
+   "total_net": -1945.7429999999995,
+   "gross_mean": -0.1676148686416991,
+   "p_win_at_1R": 0.22755781121630486,
+   "by_year": {
+    "2020": -339.32399999999996,
+    "2021": -436.42700000000025,
+    "2022": -547.3249999999997,
+    "2023": -405.8330000000001,
+    "2024": -216.83399999999972
+   },
+   "n_by_year": {
+    "2020": 375,
+    "2021": 357,
+    "2022": 440,
+    "2023": 400,
+    "2024": 217
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 30 min before the decision bar (>=200 obs); r = close[i]/close[i-6] - 1 (30-min return); z = r/(sigma5*sqrt(6)). Event when |z| >= 3 at bar i and |z| < 3 at bar i-1 (fresh crossing). Enter at the open of bar i+1, side = -sign(z) (fade the move). Exit at the open of the bar 12 bars (60 min) after entry, or at the 15:10 CT Topstep flat if earlier. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "ETHUSDT",
+   "n_signals": 3300,
+   "reasons": {
+    "time": 1718,
+    "flat": 71
+   },
+   "avg_hold_bars": 11.803242034656233,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 3.3747485635082123e-59
+  },
+  "ETH_60m_z3_rev_h120": {
+   "n": 1166,
+   "trades_per_day": 0.9935504868095429,
+   "mean_net": -1.0799759862778733,
+   "median_net": -0.8824999999999943,
+   "std_net": 3.930665942040954,
+   "win_rate": 0.27358490566037735,
+   "avg_win": 2.4931536050156726,
+   "avg_loss": 2.4257001180637543,
+   "t_stat": -9.382039095654093,
+   "ci95_low": -1.308209219554031,
+   "ci95_high": -0.8574163807890223,
+   "sharpe_per_trade": -0.2747564922083172,
+   "sharpe_annual": -4.347536169016536,
+   "max_drawdown": 1259.996999999998,
+   "total_net": -1259.2520000000002,
+   "gross_mean": -0.15997598627787324,
+   "p_win_at_1R": 0.2804415323003834,
+   "by_year": {
+    "2020": -225.21999999999997,
+    "2021": -313.73199999999997,
+    "2022": -336.8110000000002,
+    "2023": -262.90700000000004,
+    "2024": -120.58200000000006
+   },
+   "n_by_year": {
+    "2020": 251,
+    "2021": 239,
+    "2022": 282,
+    "2023": 254,
+    "2024": 140
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 60 min before the decision bar (>=200 obs); r = close[i]/close[i-12] - 1 (60-min return); z = r/(sigma5*sqrt(12)). Event when |z| >= 3 at bar i and |z| < 3 at bar i-1 (fresh crossing). Enter at the open of bar i+1, side = -sign(z) (fade the move). Exit at the open of the bar 24 bars (120 min) after entry, or at the 15:10 CT Topstep flat if earlier. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "ETHUSDT",
+   "n_signals": 2424,
+   "reasons": {
+    "time": 1060,
+    "flat": 106
+   },
+   "avg_hold_bars": 23.08319039451115,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 3.5768102024465336e-28
+  },
+  "ETH_30m_z3_rev_h60_oi_drop": {
+   "n": 352,
+   "trades_per_day": 0.2999397696028809,
+   "mean_net": -1.20259659090909,
+   "median_net": -0.7954999999999994,
+   "std_net": 2.7561089064175115,
+   "win_rate": 0.2755681818181818,
+   "avg_win": 1.3197525773195902,
+   "avg_loss": 2.1620784313725485,
+   "t_stat": -8.186437030228795,
+   "ci95_low": -1.496327272727272,
+   "ci95_high": -0.9116269886363624,
+   "sharpe_per_trade": -0.4363385598112188,
+   "sharpe_annual": -3.7935070107288547,
+   "max_drawdown": 424.91700000000003,
+   "total_net": -423.31399999999974,
+   "gross_mean": -0.28259659090909006,
+   "p_win_at_1R": 0.15460799564743527,
+   "by_year": {
+    "2022": -202.88099999999974,
+    "2023": -106.21000000000012,
+    "2024": -114.22299999999984
+   },
+   "n_by_year": {
+    "2022": 151,
+    "2023": 116,
+    "2024": 85
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 30 min before the decision bar (>=200 obs); r = close[i]/close[i-6] - 1 (30-min return); z = r/(sigma5*sqrt(6)). Event when |z| >= 3 at bar i and |z| < 3 at bar i-1 (fresh crossing). Only if open interest (latest Binance 5-min OI snapshot with timestamp <= bar open) changed by <= -0.5% over the 30-min move. Enter at the open of bar i+1, side = -sign(z) (fade the move). Exit at the open of the bar 12 bars (60 min) after entry, or at the 15:10 CT Topstep flat if earlier. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "ETHUSDT",
+   "n_signals": 548,
+   "reasons": {
+    "time": 332,
+    "flat": 20
+   },
+   "avg_hold_bars": 11.605113636363637,
+   "n_pos_years": 0,
+   "n_years": 3,
+   "dsr": 1.0393124823869098e-21
+  },
+  "BTC_60m_z3_rev_h60_down_only": {
+   "n": 655,
+   "trades_per_day": 0.5581265599144516,
+   "mean_net": -2.898847328244311,
+   "median_net": -2.531999999999898,
+   "std_net": 43.44088211026499,
+   "win_rate": 0.4396946564885496,
+   "avg_win": 27.29690972222218,
+   "avg_loss": 26.594700272479596,
+   "t_stat": -1.7078406947303773,
+   "ci95_low": -6.266694656488579,
+   "ci95_high": 0.503388320610637,
+   "sharpe_per_trade": -0.0667308578330945,
+   "sharpe_annual": -0.7913950384941345,
+   "max_drawdown": 3484.08900000002,
+   "total_net": -1898.7450000000235,
+   "gross_mean": 0.921152671755688,
+   "p_win_at_1R": 0.4462096729244255,
+   "by_year": {
+    "2020": -363.42099999999886,
+    "2021": 1225.0309999999904,
+    "2022": -1121.7550000000006,
+    "2023": -752.2200000000025,
+    "2024": -886.3800000000122
+   },
+   "n_by_year": {
+    "2020": 123,
+    "2021": 135,
+    "2022": 168,
+    "2023": 136,
+    "2024": 93
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 60 min before the decision bar (>=200 obs); r = close[i]/close[i-12] - 1 (60-min return); z = r/(sigma5*sqrt(12)). Event when |z| >= 3 at bar i and |z| < 3 at bar i-1 (fresh crossing). Only down moves (z <= -3). Enter at the open of bar i+1, side = -sign(z) (fade the move). Exit at the open of the bar 12 bars (60 min) after entry, or at the 15:10 CT Topstep flat if earlier. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 1232,
+   "reasons": {
+    "time": 625,
+    "flat": 30
+   },
+   "avg_hold_bars": 11.790839694656489,
+   "n_pos_years": 1,
+   "n_years": 5,
+   "dsr": 0.00025830054256123356
+  },
+  "ETH_60m_z3_rev_h60_down_only": {
+   "n": 646,
+   "trades_per_day": 0.5504576453507416,
+   "mean_net": -0.9212801857585128,
+   "median_net": -0.8174999999999979,
+   "std_net": 3.290339523558161,
+   "win_rate": 0.29256965944272445,
+   "avg_win": 2.1319629629629633,
+   "avg_loss": 2.1839999999999984,
+   "t_stat": -7.116513466798724,
+   "ci95_low": -1.1838167956656327,
+   "ci95_high": -0.6705102941176465,
+   "sharpe_per_trade": -0.27999547741572994,
+   "sharpe_annual": -3.2977159206821343,
+   "max_drawdown": 595.7370000000005,
+   "total_net": -595.1469999999993,
+   "gross_mean": -0.0012801857585127412,
+   "p_win_at_1R": 0.2865412206581952,
+   "by_year": {
+    "2020": -112.07599999999996,
+    "2021": -52.52099999999958,
+    "2022": -245.20999999999987,
+    "2023": -110.49199999999973,
+    "2024": -74.84800000000001
+   },
+   "n_by_year": {
+    "2020": 128,
+    "2021": 130,
+    "2022": 167,
+    "2023": 124,
+    "2024": 97
+   },
+   "rule": "5-min bars. r5 = ln(close/prev close); sigma5 = std of r5 over the 288 bars ending 60 min before the decision bar (>=200 obs); r = close[i]/close[i-12] - 1 (60-min return); z = r/(sigma5*sqrt(12)). Event when |z| >= 3 at bar i and |z| < 3 at bar i-1 (fresh crossing). Only down moves (z <= -3). Enter at the open of bar i+1, side = -sign(z) (fade the move). Exit at the open of the bar 12 bars (60 min) after entry, or at the 15:10 CT Topstep flat if earlier. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "ETHUSDT",
+   "n_signals": 1222,
+   "reasons": {
+    "time": 614,
+    "flat": 32
+   },
+   "avg_hold_bars": 11.792569659442725,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 1.5031706062131914e-18
+  }
+ },
+ "diagnostics": {
+  "BTCUSDT": {
+   "k3": {
+    "n_events": 4441,
+    "rev_bp_H6": 0.3948413963728481,
+    "t_H6": 0.26771774333694875,
+    "rev_bp_H12": 1.105085604346645,
+    "t_H12": 0.5868790447159888,
+    "H12_down": {
+     "n": 2166,
+     "rev_bp": 5.299796159877674,
+     "t": 1.9608557840261391
+    },
+    "H12_up": {
+     "n": 2275,
+     "rev_bp": -2.888647610282019,
+     "t": -1.1014491413054988
+    },
+    "H12_down_topstep_hrs": {
+     "n": 1553,
+     "rev_bp": 1.52308991755369,
+     "t": 0.4541328348214198
+    },
+    "H12_down_off_hrs": {
+     "n": 613,
+     "rev_bp": 14.867862708538606,
+     "t": 3.425583267725549
+    },
+    "H12_vr>=4": {
+     "n": 1970,
+     "rev_bp": 2.949406512889214,
+     "t": 1.0864312280465271
+    },
+    "H12_vr<4": {
+     "n": 2471,
+     "rev_bp": -0.3652956946532982,
+     "t": -0.14040528438134314
+    },
+    "H12_oi_drop": {
+     "n": 575,
+     "rev_bp": 4.021881157741591,
+     "t": 0.9226147951872649
+    },
+    "H12_oi_mid": {
+     "n": 1551,
+     "rev_bp": 2.908281496616823,
+     "t": 1.2865797079035377
+    },
+    "H12_oi_build": {
+     "n": 479,
+     "rev_bp": -4.462387661684353,
+     "t": -0.8499025485949391
+    },
+    "rev_bp_H24": 2.2320811986824776,
+    "t_H24": 0.9925698708926219,
+    "rev_bp_H48": 1.9961628442221455,
+    "t_H48": 0.7238992764100256
+   },
+   "k6": {
+    "n_events": 3370,
+    "rev_bp_H6": 0.8115253766174374,
+    "t_H6": 0.4253570857966104,
+    "rev_bp_H12": 0.7543540481624121,
+    "t_H12": 0.3441343010256635,
+    "H12_down": {
+     "n": 1647,
+     "rev_bp": 5.541413194806456,
+     "t": 1.5712501297929942
+    },
+    "H12_up": {
+     "n": 1723,
+     "rev_bp": -3.821552170365005,
+     "t": -1.444687233809093
+    },
+    "H12_down_topstep_hrs": {
+     "n": 1183,
+     "rev_bp": 0.24583497105933794,
+     "t": 0.0550509407041401
+    },
+    "H12_down_off_hrs": {
+     "n": 464,
+     "rev_bp": 19.04285508854102,
+     "t": 3.6914998960176217
+    },
+    "H12_vr>=4": {
+     "n": 999,
+     "rev_bp": -1.8344092735123814,
+     "t": -0.5190095997529063
+    },
+    "H12_vr<4": {
+     "n": 2371,
+     "rev_bp": 1.8451067087921538,
+     "t": 0.6741778818181899
+    },
+    "H12_oi_drop": {
+     "n": 658,
+     "rev_bp": 0.09538892640949842,
+     "t": 0.024172905004738662
+    },
+    "H12_oi_mid": {
+     "n": 837,
+     "rev_bp": 0.7637965862932233,
+     "t": 0.23006581686641342
+    },
+    "H12_oi_build": {
+     "n": 507,
+     "rev_bp": -6.062748519030517,
+     "t": -1.3597804289473483
+    },
+    "rev_bp_H24": 0.7387193246399131,
+    "t_H24": 0.2708504778562131,
+    "rev_bp_H48": 1.0842227866007614,
+    "t_H48": 0.33219267532835883
+   },
+   "k12": {
+    "n_events": 2502,
+    "rev_bp_H6": 3.880091312696607,
+    "t_H6": 1.5547901431813693,
+    "rev_bp_H12": 2.5874621391135038,
+    "t_H12": 0.9690631293732807,
+    "H12_down": {
+     "n": 1232,
+     "rev_bp": 11.256849709122113,
+     "t": 2.58109639258427
+    },
+    "H12_up": {
+     "n": 1270,
+     "rev_bp": -5.822526432737366,
+     "t": -1.8725270969340286
+    },
+    "H12_down_topstep_hrs": {
+     "n": 913,
+     "rev_bp": 7.168287473490625,
+     "t": 1.3186068279681304
+    },
+    "H12_down_off_hrs": {
+     "n": 319,
+     "rev_bp": 22.95859679730878,
+     "t": 3.5764732501866097
+    },
+    "H12_vr>=4": {
+     "n": 489,
+     "rev_bp": 7.6181653489481205,
+     "t": 1.6336106306409441
+    },
+    "H12_vr<4": {
+     "n": 2013,
+     "rev_bp": 1.3653986172013692,
+     "t": 0.4377360485559353
+    },
+    "H12_oi_drop": {
+     "n": 648,
+     "rev_bp": 3.804283356569001,
+     "t": 0.9472044316201446
+    },
+    "H12_oi_mid": {
+     "n": 398,
+     "rev_bp": 3.7419568161278396,
+     "t": 0.8035094422994085
+    },
+    "H12_oi_build": {
+     "n": 438,
+     "rev_bp": 2.891614228894449,
+     "t": 0.6249720013100988
+    },
+    "rev_bp_H24": 2.7771303957281614,
+    "t_H24": 0.8705740747201438,
+    "rev_bp_H48": 0.8132878990410037,
+    "t_H48": 0.2033262532036444
+   }
+  },
+  "ETHUSDT": {
+   "k3": {
+    "n_events": 4462,
+    "rev_bp_H6": 1.2625576784191315,
+    "t_H6": 0.6340590979874894,
+    "rev_bp_H12": 2.7047892612893643,
+    "t_H12": 1.1147150993990134,
+    "H12_down": {
+     "n": 2253,
+     "rev_bp": 12.801170709319795,
+     "t": 3.6633848857940743
+    },
+    "H12_up": {
+     "n": 2209,
+     "rev_bp": -7.592697113727639,
+     "t": -2.2656854660286876
+    },
+    "H12_down_topstep_hrs": {
+     "n": 1588,
+     "rev_bp": 10.08481671699764,
+     "t": 2.228129015059783
+    },
+    "H12_down_off_hrs": {
+     "n": 665,
+     "rev_bp": 19.28774234812819,
+     "t": 3.9962883660770125
+    },
+    "H12_vr>=4": {
+     "n": 1781,
+     "rev_bp": 3.9069110473176245,
+     "t": 1.1926731365537588
+    },
+    "H12_vr<4": {
+     "n": 2681,
+     "rev_bp": 1.9062145127193042,
+     "t": 0.5602769635991242
+    },
+    "H12_oi_drop": {
+     "n": 498,
+     "rev_bp": -6.712047816382999,
+     "t": -1.0923450927070049
+    },
+    "H12_oi_mid": {
+     "n": 1511,
+     "rev_bp": 3.22876591643152,
+     "t": 1.2499044758849585
+    },
+    "H12_oi_build": {
+     "n": 544,
+     "rev_bp": -5.566725226007991,
+     "t": -1.065992554524582
+    },
+    "rev_bp_H24": 4.54827282955252,
+    "t_H24": 1.544208303976558,
+    "rev_bp_H48": 7.884721600003606,
+    "t_H48": 2.1532896354563156
+   },
+   "k6": {
+    "n_events": 3299,
+    "rev_bp_H6": 0.9690747019800651,
+    "t_H6": 0.4301504156677255,
+    "rev_bp_H12": 0.21578608988327136,
+    "t_H12": 0.08249450299096456,
+    "H12_down": {
+     "n": 1695,
+     "rev_bp": 9.857631856828954,
+     "t": 2.509043916510142
+    },
+    "H12_up": {
+     "n": 1604,
+     "rev_bp": -9.97307212394025,
+     "t": -2.929538488708503
+    },
+    "H12_down_topstep_hrs": {
+     "n": 1222,
+     "rev_bp": 4.261448012054976,
+     "t": 0.8743828019551734
+    },
+    "H12_down_off_hrs": {
+     "n": 473,
+     "rev_bp": 24.31542606045221,
+     "t": 3.885393418177756
+    },
+    "H12_vr>=4": {
+     "n": 855,
+     "rev_bp": -6.546262650606267,
+     "t": -1.4124231780525156
+    },
+    "H12_vr<4": {
+     "n": 2444,
+     "rev_bp": 2.581396430766478,
+     "t": 0.8232361179544961
+    },
+    "H12_oi_drop": {
+     "n": 548,
+     "rev_bp": -2.2285821439601015,
+     "t": -0.41367774003911617
+    },
+    "H12_oi_mid": {
+     "n": 852,
+     "rev_bp": -0.44872669122222053,
+     "t": -0.12574270231944948
+    },
+    "H12_oi_build": {
+     "n": 506,
+     "rev_bp": -7.3571169657898565,
+     "t": -1.2817251474985025
+    },
+    "rev_bp_H24": -0.3440953624165072,
+    "t_H24": -0.10753335092374029,
+    "rev_bp_H48": -0.022296531337388077,
+    "t_H48": -0.005628413660841381
+   },
+   "k12": {
+    "n_events": 2423,
+    "rev_bp_H6": 6.950637682267796,
+    "t_H6": 2.3480192232030785,
+    "rev_bp_H12": 5.5721477872701035,
+    "t_H12": 1.7570869314103612,
+    "H12_down": {
+     "n": 1222,
+     "rev_bp": 16.684743817267485,
+     "t": 3.232787334201527
+    },
+    "H12_up": {
+     "n": 1201,
+     "rev_bp": -5.734756749496593,
+     "t": -1.5806869563758834
+    },
+    "H12_down_topstep_hrs": {
+     "n": 882,
+     "rev_bp": 11.84421532895203,
+     "t": 1.8423760703709546
+    },
+    "H12_down_off_hrs": {
+     "n": 340,
+     "rev_bp": 29.241644189897574,
+     "t": 3.6117338719784273
+    },
+    "H12_vr>=4": {
+     "n": 360,
+     "rev_bp": 12.926945692357974,
+     "t": 1.6897895141777228
+    },
+    "H12_vr<4": {
+     "n": 2063,
+     "rev_bp": 4.288712379692967,
+     "t": 1.2334022618862301
+    },
+    "H12_oi_drop": {
+     "n": 552,
+     "rev_bp": 1.7002819283750046,
+     "t": 0.30353737414119186
+    },
+    "H12_oi_mid": {
+     "n": 409,
+     "rev_bp": 7.971597313909703,
+     "t": 1.5932289096730787
+    },
+    "H12_oi_build": {
+     "n": 418,
+     "rev_bp": -11.166426679741555,
+     "t": -1.8030778460378496
+    },
+    "rev_bp_H24": 3.0746825064496504,
+    "t_H24": 0.7659747153362098,
+    "rev_bp_H48": 5.306130257616135,
+    "t_H48": 1.0474161467881493
+   }
+  }
+ },
+ "screen_passers": []
+}

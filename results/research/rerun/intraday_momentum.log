@@ -1,0 +1,36 @@
+loaded 473184 5-min bars per symbol in 1.1s
+
+[diag] BTCUSDT predictive regressions (no costs, no hours filter):
+   utc_h1->last1h           n=1643 beta=+0.0120 t=+0.46 corr=+0.011 sign-hit=0.512 E[y|sign x]=+0.1bp
+   utc_penult1h->last1h     n=1643 beta=+0.0590 t=+1.97 corr=+0.049 sign-hit=0.485 E[y|sign x]=+4.9bp
+   utc_daysofar->last1h     n=1643 beta=+0.0459 t=+7.55 corr=+0.183 sign-hit=0.542 E[y|sign x]=+9.2bp
+   us_h1->last1h            n=1173 beta=+0.0040 t=+0.16 corr=+0.005 sign-hit=0.487 E[y|sign x]=+1.8bp
+   overnight->us            n=1172 beta=-0.0972 t=-4.40 corr=-0.128 sign-hit=0.509 E[y|sign x]=+1.6bp
+
+[diag] ETHUSDT predictive regressions (no costs, no hours filter):
+   utc_h1->last1h           n=1643 beta=+0.0304 t=+1.33 corr=+0.033 sign-hit=0.525 E[y|sign x]=+2.8bp
+   utc_penult1h->last1h     n=1643 beta=+0.0386 t=+1.39 corr=+0.034 sign-hit=0.484 E[y|sign x]=+2.4bp
+   utc_daysofar->last1h     n=1643 beta=+0.0416 t=+7.51 corr=+0.182 sign-hit=0.528 E[y|sign x]=+9.2bp
+   us_h1->last1h            n=1173 beta=+0.0122 t=+0.52 corr=+0.015 sign-hit=0.519 E[y|sign x]=+2.6bp
+   overnight->us            n=1172 beta=-0.0856 t=-4.03 corr=-0.117 sign-hit=0.515 E[y|sign x]=-1.1bp
+
+variant                              n  t/day    mean$      t   win%    avgW    avgL    SRtr  by_year
+BTC_utc_h1_last1h_sign            1172   1.00    -4.24  -5.44   34.4   16.14   14.93  -0.159  2020:-910 2021:-2062 2022:-973 2023:-879 2024:-148
+BTC_utc_h1_last1h_z1               262   0.22    -2.59  -1.50   40.1   19.49   17.36  -0.093  2020:-289 2021:-41 2022:-214 2023:-295 2024:+160
+BTC_utc_30m_last30m_sign          1172   1.00    -4.30  -8.62   28.5   10.44   10.17  -0.252  2020:-980 2021:-2085 2022:-774 2023:-948 2024:-250
+BTC_utc_penult1h_last1h_sign      1172   1.00    -3.09  -3.96   34.2   17.96   14.04  -0.116  2020:-801 2021:-1110 2022:-361 2023:-871 2024:-479
+BTC_utc_h1_and_penult_agree        580   0.49    -3.51  -3.56   34.8   16.75   14.34  -0.148  2020:-359 2021:-1093 2022:-155 2023:-394 2024:-35
+BTC_utc_daysofar_last1h_sign      1172   1.00     0.15   0.19   38.1   19.96   12.02   0.005  2020:-668 2021:+1424 2022:+146 2023:-755 2024:+24
+BTC_us_h1_last1h_sign             1172   1.00    -2.96  -3.24   35.2   21.34   16.13  -0.095  2020:-1108 2021:-642 2022:-531 2023:-502 2024:-685
+BTC_us_h1_last1h_z1                334   0.28    -2.19  -1.23   35.0   24.63   16.65  -0.067  2020:-261 2021:+131 2022:-584 2023:+5 2024:-22
+BTC_overnight_us_sign             1172   1.00    -3.98  -1.59   45.8   52.65   51.88  -0.047  2020:-648 2021:-2734 2022:-1929 2023:+154 2024:+489
+BTC_overnight_us_z1                324   0.28   -11.54  -2.22   45.7   51.70   64.73  -0.124  2020:-107 2021:-2426 2022:-1051 2023:+209 2024:-365
+ETH_utc_h1_last1h_sign            1170   1.00    -0.87 -13.42   18.2    1.69    1.44  -0.392  2020:-231 2021:-237 2022:-229 2023:-248 2024:-71
+ETH_us_h1_last1h_sign             1172   1.00    -0.79 -11.77   19.5    1.96    1.46  -0.344  2020:-244 2021:-148 2022:-211 2023:-222 2024:-105
+ETH_overnight_us_sign             1172   1.00    -1.05  -5.84   32.0    4.31    3.57  -0.171  2020:-222 2021:-364 2022:-333 2023:-189 2024:-123
+BTC_utc_daysofar_last1h_z1         315   0.27     2.13   1.02   41.0   25.95   14.39   0.057  2020:-194 2021:+822 2022:+28 2023:-147 2024:+160
+BTC_overnight_us_z1_reversal       324   0.28     3.90   0.75   45.1   69.51   49.91   0.042  2020:-428 2021:+1861 2022:+509 2023:-720 2024:+44
+
+variants passing the numeric screen (n>=150, mean_net>0, t>=2.5, >=3 positive years): none
+
+wrote /home/user/j/research/hyp/intraday_momentum_results.json  (4.5s)

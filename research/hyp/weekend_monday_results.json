@@ -1,0 +1,635 @@
+{
+ "n_variants": 15,
+ "variants": [
+  {
+   "name": "BTC_gapfill_fade_50bp",
+   "symbol": "BTCUSDT",
+   "rule": "Weekend gap g = S/F - 1 with F = Binance BTCUSDT close of the Friday 15:55 CT 5-min bar and S = close of the Sunday 16:55 CT bar. Filter: |g| >= 0.50%. At the Sunday 17:00 CT bar open enter AGAINST the gap (short if g>0, long if g<0), 1 contract. Target: limit at F (gap fill). Stop: S*(1 + 1.0*g) (one gap-width beyond S, stop checked before target on bar high/low). Time exit: Monday 15:10 CT forced flat.",
+   "n": 167,
+   "n_signals": 168,
+   "trades_per_day": 0.14230097023773042,
+   "mean_net": -8.83097933507569,
+   "t_stat": -1.2096762133614392,
+   "ci95_low": -22.25856781233224,
+   "ci95_high": 5.3048883172730275,
+   "win_rate": 0.40718562874251496,
+   "avg_win": 69.49655882352943,
+   "avg_loss": 62.63171261573374,
+   "sharpe_per_trade": -0.09360755577430031,
+   "total_net": -1474.7735489576403,
+   "gross_mean": -5.0109793350756915,
+   "max_drawdown": 2246.4157039789834,
+   "by_year": {
+    "2020": -258.6,
+    "2021": 674.8,
+    "2022": -644.1,
+    "2023": -940.3,
+    "2024": -306.6
+   },
+   "n_by_year": {
+    "2020": 41,
+    "2021": 42,
+    "2022": 35,
+    "2023": 31,
+    "2024": 18
+   },
+   "reasons": {
+    "stop": 83,
+    "target": 58,
+    "flat": 26
+   },
+   "dsr": 0.0015137688045216442,
+   "years_positive": 1
+  },
+  {
+   "name": "BTC_gapfill_fade_1pct",
+   "symbol": "BTCUSDT",
+   "rule": "Weekend gap g = S/F - 1 with F = Binance BTCUSDT close of the Friday 15:55 CT 5-min bar and S = close of the Sunday 16:55 CT bar. Filter: |g| >= 1.00%. At the Sunday 17:00 CT bar open enter AGAINST the gap (short if g>0, long if g<0), 1 contract. Target: limit at F (gap fill). Stop: S*(1 + 1.0*g) (one gap-width beyond S, stop checked before target on bar high/low). Time exit: Monday 15:10 CT forced flat.",
+   "n": 126,
+   "n_signals": 127,
+   "trades_per_day": 0.10736480389194032,
+   "mean_net": -9.660174713965748,
+   "t_stat": -1.008178639369857,
+   "ci95_low": -27.89929097709443,
+   "ci95_high": 9.578632183229153,
+   "win_rate": 0.42063492063492064,
+   "avg_win": 82.23769811320754,
+   "avg_loss": 76.38054813643403,
+   "sharpe_per_trade": -0.08981569174252207,
+   "total_net": -1217.1820139596844,
+   "gross_mean": -5.840174713965748,
+   "max_drawdown": 2090.6656996644338,
+   "by_year": {
+    "2020": -140.7,
+    "2021": 662.0,
+    "2022": -644.3,
+    "2023": -770.9,
+    "2024": -323.3
+   },
+   "n_by_year": {
+    "2020": 30,
+    "2021": 37,
+    "2022": 26,
+    "2023": 22,
+    "2024": 11
+   },
+   "reasons": {
+    "stop": 57,
+    "target": 44,
+    "flat": 25
+   },
+   "dsr": 0.0028703070757641097,
+   "years_positive": 1
+  },
+  {
+   "name": "BTC_gapfill_fade_z1",
+   "symbol": "BTCUSDT",
+   "rule": "Weekend gap g = S/F - 1 with F = Binance BTCUSDT close of the Friday 15:55 CT 5-min bar and S = close of the Sunday 16:55 CT bar. Filter: |g| >= 0.50% and |z| >= 1.0 where z = g / (sigma5 * sqrt(588)), sigma5 = std of the 2016 5-min log returns ending at the Friday 15:55 CT bar. At the Sunday 17:00 CT bar open enter AGAINST the gap (short if g>0, long if g<0), 1 contract. Target: limit at F (gap fill). Stop: S*(1 + 1.0*g) (one gap-width beyond S, stop checked before target on bar high/low). Time exit: Monday 15:10 CT forced flat.",
+   "n": 22,
+   "n_signals": 22,
+   "trades_per_day": 0.018746235600180055,
+   "mean_net": -23.409826284353155,
+   "t_stat": -0.799059988122793,
+   "ci95_low": -73.61890656212869,
+   "ci95_high": 34.74103120814244,
+   "win_rate": 0.22727272727272727,
+   "avg_win": 153.46819999999997,
+   "avg_loss": 75.43277519151583,
+   "sharpe_per_trade": -0.170360161878885,
+   "total_net": -515.0161782557694,
+   "gross_mean": -19.589826284353162,
+   "max_drawdown": 1027.1389083501035,
+   "by_year": {
+    "2020": -111.0,
+    "2021": 368.7,
+    "2022": -466.0,
+    "2023": -291.5,
+    "2024": -15.3
+   },
+   "n_by_year": {
+    "2020": 9,
+    "2021": 5,
+    "2022": 3,
+    "2023": 4,
+    "2024": 1
+   },
+   "reasons": {
+    "flat": 13,
+    "stop": 6,
+    "target": 3
+   },
+   "dsr": 0.006339983844844724,
+   "years_positive": 1
+  },
+  {
+   "name": "BTC_gapfill_fade_evening",
+   "symbol": "BTCUSDT",
+   "rule": "Weekend gap g = S/F - 1 with F = Binance BTCUSDT close of the Friday 15:55 CT 5-min bar and S = close of the Sunday 16:55 CT bar. Filter: |g| >= 0.50%. At the Sunday 17:00 CT bar open enter AGAINST the gap (short if g>0, long if g<0), 1 contract. Target: limit at F (gap fill). Stop: S*(1 + 1.0*g) (one gap-width beyond S, stop checked before target on bar high/low). Time exit: open of the 02:00 CT bar Monday.",
+   "n": 167,
+   "n_signals": 168,
+   "trades_per_day": 0.14230097023773042,
+   "mean_net": -4.719446033233419,
+   "t_stat": -0.8381978748213618,
+   "ci95_low": -15.1143666724237,
+   "ci95_high": 6.438089912647393,
+   "win_rate": 0.40119760479041916,
+   "avg_win": 57.84097014925372,
+   "avg_loss": 46.63492487549981,
+   "sharpe_per_trade": -0.06486169889975099,
+   "total_net": -788.147487549981,
+   "gross_mean": -0.8994460332334192,
+   "max_drawdown": 1839.812663626359,
+   "by_year": {
+    "2020": -295.1,
+    "2021": 688.7,
+    "2022": -598.8,
+    "2023": -918.5,
+    "2024": 335.6
+   },
+   "n_by_year": {
+    "2020": 41,
+    "2021": 42,
+    "2022": 35,
+    "2023": 31,
+    "2024": 18
+   },
+   "reasons": {
+    "signal": 67,
+    "stop": 60,
+    "target": 40
+   },
+   "dsr": 0.004684056769253979,
+   "years_positive": 2
+  },
+  {
+   "name": "BTC_gapfollow_1pct",
+   "symbol": "BTCUSDT",
+   "rule": "Weekend gap g = S/F - 1 with F = Binance BTCUSDT close of the Friday 15:55 CT 5-min bar and S = close of the Sunday 16:55 CT bar. Filter: |g| >= 1.00%. At the Sunday 17:00 CT bar open enter WITH the gap (long if g>0, short if g<0), 1 contract. Stop: F (full gap fill). No target. Time exit: Monday 15:10 CT forced flat.",
+   "n": 126,
+   "n_signals": 127,
+   "trades_per_day": 0.10736480389194032,
+   "mean_net": 16.140309523809563,
+   "t_stat": 1.2049946360004768,
+   "ci95_low": -11.06300555555556,
+   "ci95_high": 41.67399682539684,
+   "win_rate": 0.4444444444444444,
+   "avg_win": 133.65239285714293,
+   "avg_loss": 77.86935714285715,
+   "sharpe_per_trade": 0.10734945430509905,
+   "total_net": 2033.6790000000049,
+   "gross_mean": 19.960309523809553,
+   "max_drawdown": 806.5499999999972,
+   "by_year": {
+    "2020": -55.9,
+    "2021": 25.5,
+    "2022": 811.8,
+    "2023": 727.5,
+    "2024": 524.7
+   },
+   "n_by_year": {
+    "2020": 30,
+    "2021": 37,
+    "2022": 26,
+    "2023": 22,
+    "2024": 11
+   },
+   "reasons": {
+    "flat": 71,
+    "stop": 55
+   },
+   "dsr": 0.2871206482214616,
+   "years_positive": 4
+  },
+  {
+   "name": "BTC_gapfollow_z1",
+   "symbol": "BTCUSDT",
+   "rule": "Weekend gap g = S/F - 1 with F = Binance BTCUSDT close of the Friday 15:55 CT 5-min bar and S = close of the Sunday 16:55 CT bar. Filter: |g| >= 0.50% and |z| >= 1.0 where z = g / (sigma5 * sqrt(588)), sigma5 = std of the 2016 5-min log returns ending at the Friday 15:55 CT bar. At the Sunday 17:00 CT bar open enter WITH the gap (long if g>0, short if g<0), 1 contract. Stop: F (full gap fill). No target. Time exit: Monday 15:10 CT forced flat.",
+   "n": 22,
+   "n_signals": 22,
+   "trades_per_day": 0.018746235600180055,
+   "mean_net": 53.33550000000007,
+   "t_stat": 1.3393439710790487,
+   "ci95_low": -22.258102272727204,
+   "ci95_high": 127.35233863636365,
+   "win_rate": 0.7272727272727273,
+   "avg_win": 123.96375000000009,
+   "avg_loss": 135.00649999999996,
+   "sharpe_per_trade": 0.2855490940806212,
+   "total_net": 1173.3810000000014,
+   "gross_mean": 57.15550000000007,
+   "max_drawdown": 646.0189999999993,
+   "by_year": {
+    "2020": 106.1,
+    "2021": -222.2,
+    "2022": 816.1,
+    "2023": 465.7,
+    "2024": 7.6
+   },
+   "n_by_year": {
+    "2020": 9,
+    "2021": 5,
+    "2022": 3,
+    "2023": 4,
+    "2024": 1
+   },
+   "reasons": {
+    "flat": 19,
+    "stop": 3
+   },
+   "dsr": 0.3397743801052808,
+   "years_positive": 4
+  },
+  {
+   "name": "BTC_MonUS_gapfade",
+   "symbol": "BTCUSDT",
+   "rule": "Weekend gap g = S/F - 1 (F = Binance BTCUSDT close of the Friday 15:55 CT 5-min bar, S = close of the Sunday 16:55 CT bar). Filter |g| >= 0.00%. At the Monday 08:30 CT bar open enter AGAINST the weekend gap (short if g>0, long if g<0), 1 contract; exit at the Monday 15:10 CT forced flat. No stop/target.",
+   "n": 234,
+   "n_signals": 234,
+   "trades_per_day": 0.19939177865646057,
+   "mean_net": -5.23627350427354,
+   "t_stat": -0.9303961156730907,
+   "ci95_low": -16.052018376068403,
+   "ci95_high": 6.023903525640953,
+   "win_rate": 0.47435897435897434,
+   "avg_win": 50.33475675675672,
+   "avg_loss": 55.385739837398404,
+   "sharpe_per_trade": -0.06082189678446179,
+   "total_net": -1225.2880000000084,
+   "gross_mean": -1.4162735042735408,
+   "max_drawdown": 1598.720000000004,
+   "by_year": {
+    "2020": -172.4,
+    "2021": 34.3,
+    "2022": -46.8,
+    "2023": -157.0,
+    "2024": -883.4
+   },
+   "n_by_year": {
+    "2020": 52,
+    "2021": 52,
+    "2022": 52,
+    "2023": 52,
+    "2024": 26
+   },
+   "reasons": {
+    "flat": 234
+   },
+   "dsr": 0.003542679955032264,
+   "years_positive": 1
+  },
+  {
+   "name": "BTC_MonUS_overnight_follow",
+   "symbol": "BTCUSDT",
+   "rule": "Sunday-night return r = Monday 08:25 CT bar close / Sunday 17:00 CT bar open - 1 (Binance BTCUSDT). Filter |r| >= 0.00%. At the Monday 08:30 CT bar open enter WITH r (long if r>0, short if r<0), 1 contract; exit at the Monday 15:10 CT forced flat. No stop/target.",
+   "n": 234,
+   "n_signals": 234,
+   "trades_per_day": 0.19939177865646057,
+   "mean_net": 0.3313076923076819,
+   "t_stat": 0.058928527647342875,
+   "ci95_low": -10.581425747863255,
+   "ci95_high": 11.344610576923062,
+   "win_rate": 0.46153846153846156,
+   "avg_win": 57.854685185185176,
+   "avg_loss": 48.97444444444446,
+   "sharpe_per_trade": 0.00385227836386017,
+   "total_net": 77.52599999999757,
+   "gross_mean": 4.151307692307681,
+   "max_drawdown": 1298.5089999999998,
+   "by_year": {
+    "2020": -210.9,
+    "2021": -444.3,
+    "2022": -545.4,
+    "2023": 141.1,
+    "2024": 1137.0
+   },
+   "n_by_year": {
+    "2020": 52,
+    "2021": 52,
+    "2022": 52,
+    "2023": 52,
+    "2024": 26
+   },
+   "reasons": {
+    "flat": 234
+   },
+   "dsr": 0.043810758433166314,
+   "years_positive": 2
+  },
+  {
+   "name": "BTC_FriPM_short",
+   "symbol": "BTCUSDT",
+   "rule": "Short 1 contract at the open of the Friday 12:00 CT 5-min bar; exit at the Friday 15:10 CT forced flat. No stop/target. Unconditional.",
+   "n": 235,
+   "n_signals": 235,
+   "trades_per_day": 0.2002438802746506,
+   "mean_net": -3.884480851063822,
+   "t_stat": -1.3819298877746065,
+   "ci95_low": -9.025202872340419,
+   "ci95_high": 1.8441018085106526,
+   "win_rate": 0.35319148936170214,
+   "avg_win": 31.412265060240962,
+   "avg_loss": 23.15836184210525,
+   "sharpe_per_trade": -0.09014716607869687,
+   "total_net": -912.8529999999981,
+   "gross_mean": -0.06448085106382231,
+   "max_drawdown": 1055.9889999999996,
+   "by_year": {
+    "2020": -293.7,
+    "2021": 1.2,
+    "2022": -185.4,
+    "2023": -333.5,
+    "2024": -101.5
+   },
+   "n_by_year": {
+    "2020": 52,
+    "2021": 53,
+    "2022": 52,
+    "2023": 52,
+    "2024": 26
+   },
+   "reasons": {
+    "flat": 235
+   },
+   "dsr": 0.0008461258674586883,
+   "years_positive": 1
+  },
+  {
+   "name": "BTC_FriPM_long",
+   "symbol": "BTCUSDT",
+   "rule": "Long 1 contract at the open of the Friday 12:00 CT 5-min bar; exit at the Friday 15:10 CT forced flat. No stop/target. Unconditional.",
+   "n": 235,
+   "n_signals": 235,
+   "trades_per_day": 0.2002438802746506,
+   "mean_net": -3.755519148936177,
+   "t_stat": -1.3360509048727673,
+   "ci95_low": -9.48410180851065,
+   "ci95_high": 1.3852028723404128,
+   "win_rate": 0.425531914893617,
+   "avg_win": 25.540239999999987,
+   "avg_loss": 25.456081481481487,
+   "sharpe_per_trade": -0.087154351227696,
+   "total_net": -882.5470000000016,
+   "gross_mean": 0.06448085106382231,
+   "max_drawdown": 910.6080000000023,
+   "by_year": {
+    "2020": -103.6,
+    "2021": -406.1,
+    "2022": -211.9,
+    "2023": -63.8,
+    "2024": -97.2
+   },
+   "n_by_year": {
+    "2020": 52,
+    "2021": 53,
+    "2022": 52,
+    "2023": 52,
+    "2024": 26
+   },
+   "reasons": {
+    "flat": 235
+   },
+   "dsr": 0.0009865897638604208,
+   "years_positive": 0
+  },
+  {
+   "name": "BTC_FriPM_weekmom",
+   "symbol": "BTCUSDT",
+   "rule": "Week-to-date return w = Friday 11:55 CT bar close / Sunday 17:00 CT bar open - 1 (Binance BTCUSDT). Filter |w| >= 0.00%. At the Friday 12:00 CT bar open enter WITH w (long if w>0, short if w<0), 1 contract; exit at the Friday 15:10 CT forced flat. No stop/target.",
+   "n": 234,
+   "n_signals": 234,
+   "trades_per_day": 0.19939177865646057,
+   "mean_net": -1.3438675213675517,
+   "t_stat": -0.4768466949506398,
+   "ci95_low": -7.0733743589743865,
+   "ci95_high": 4.237046901709378,
+   "win_rate": 0.41025641025641024,
+   "avg_win": 29.743999999999982,
+   "avg_loss": 22.97021014492757,
+   "sharpe_per_trade": -0.031172443622378695,
+   "total_net": -314.4650000000071,
+   "gross_mean": 2.4761324786324472,
+   "max_drawdown": 696.5780000000002,
+   "by_year": {
+    "2020": -258.8,
+    "2021": 277.9,
+    "2022": -206.4,
+    "2023": -114.4,
+    "2024": -12.9
+   },
+   "n_by_year": {
+    "2020": 51,
+    "2021": 53,
+    "2022": 52,
+    "2023": 52,
+    "2024": 26
+   },
+   "reasons": {
+    "flat": 234
+   },
+   "dsr": 0.01247516793017255,
+   "years_positive": 1
+  },
+  {
+   "name": "BTC_FriPM_weekcontra",
+   "symbol": "BTCUSDT",
+   "rule": "Week-to-date return w = Friday 11:55 CT bar close / Sunday 17:00 CT bar open - 1 (Binance BTCUSDT). Filter |w| >= 0.00%. At the Friday 12:00 CT bar open enter AGAINST w (short if w>0, long if w<0), 1 contract; exit at the Friday 15:10 CT forced flat. No stop/target.",
+   "n": 234,
+   "n_signals": 234,
+   "trades_per_day": 0.19939177865646057,
+   "mean_net": -6.296132478632447,
+   "t_stat": -2.2340669118575467,
+   "ci95_low": -11.877046901709377,
+   "ci95_high": -0.5666256410256101,
+   "win_rate": 0.36752136752136755,
+   "avg_win": 26.81118604651164,
+   "avg_loss": 25.534168918918873,
+   "sharpe_per_trade": -0.14604552279786667,
+   "total_net": -1473.2949999999926,
+   "gross_mean": -2.4761324786324472,
+   "max_drawdown": 1954.8529999999914,
+   "by_year": {
+    "2020": -130.9,
+    "2021": -682.9,
+    "2022": -190.9,
+    "2023": -282.9,
+    "2024": -185.8
+   },
+   "n_by_year": {
+    "2020": 51,
+    "2021": 53,
+    "2022": 52,
+    "2023": 52,
+    "2024": 26
+   },
+   "reasons": {
+    "flat": 234
+   },
+   "dsr": 3.5184171990088974e-05,
+   "years_positive": 0
+  },
+  {
+   "name": "ETH_gapfill_fade_50bp",
+   "symbol": "ETHUSDT",
+   "rule": "Weekend gap g = S/F - 1 with F = Binance ETHUSDT close of the Friday 15:55 CT 5-min bar and S = close of the Sunday 16:55 CT bar. Filter: |g| >= 0.50%. At the Sunday 17:00 CT bar open enter AGAINST the gap (short if g>0, long if g<0), 1 contract. Target: limit at F (gap fill). Stop: S*(1 + 1.0*g) (one gap-width beyond S, stop checked before target on bar high/low). Time exit: Monday 15:10 CT forced flat.",
+   "n": 195,
+   "n_signals": 195,
+   "trades_per_day": 0.16615981554705048,
+   "mean_net": -1.2702073162667444,
+   "t_stat": -2.836154971343525,
+   "ci95_low": -2.1504041344681135,
+   "ci95_high": -0.3873479202495792,
+   "win_rate": 0.3333333333333333,
+   "avg_win": 4.935784615384615,
+   "avg_loss": 4.373203282092424,
+   "sharpe_per_trade": -0.20310127600599795,
+   "total_net": -247.69042667201518,
+   "gross_mean": -0.35020731626674456,
+   "max_drawdown": 263.19036337854163,
+   "by_year": {
+    "2020": -57.7,
+    "2021": 14.1,
+    "2022": -108.6,
+    "2023": -65.3,
+    "2024": -30.2
+   },
+   "n_by_year": {
+    "2020": 45,
+    "2021": 49,
+    "2022": 47,
+    "2023": 33,
+    "2024": 21
+   },
+   "reasons": {
+    "stop": 80,
+    "target": 66,
+    "flat": 49
+   },
+   "dsr": 2.7035598855495384e-06,
+   "years_positive": 1
+  },
+  {
+   "name": "ETH_MonUS_gapfade",
+   "symbol": "ETHUSDT",
+   "rule": "Weekend gap g = S/F - 1 (F = Binance ETHUSDT close of the Friday 15:55 CT 5-min bar, S = close of the Sunday 16:55 CT bar). Filter |g| >= 0.00%. At the Monday 08:30 CT bar open enter AGAINST the weekend gap (short if g>0, long if g<0), 1 contract; exit at the Monday 15:10 CT forced flat. No stop/target.",
+   "n": 234,
+   "n_signals": 234,
+   "trades_per_day": 0.19939177865646057,
+   "mean_net": -0.22649145299145093,
+   "t_stat": -0.5359492089354634,
+   "ci95_low": -1.021216559829058,
+   "ci95_high": 0.6207420940170961,
+   "win_rate": 0.34615384615384615,
+   "avg_win": 5.3351975308642,
+   "avg_loss": 3.170915032679737,
+   "sharpe_per_trade": -0.03503609582893005,
+   "total_net": -52.99899999999952,
+   "gross_mean": 0.6935085470085488,
+   "max_drawdown": 117.2069999999998,
+   "by_year": {
+    "2020": -46.7,
+    "2021": 23.9,
+    "2022": 29.3,
+    "2023": -55.8,
+    "2024": -3.7
+   },
+   "n_by_year": {
+    "2020": 52,
+    "2021": 52,
+    "2022": 52,
+    "2023": 52,
+    "2024": 26
+   },
+   "reasons": {
+    "flat": 234
+   },
+   "dsr": 0.010696225644824899,
+   "years_positive": 2
+  },
+  {
+   "name": "ETH_FriPM_weekmom",
+   "symbol": "ETHUSDT",
+   "rule": "Week-to-date return w = Friday 11:55 CT bar close / Sunday 17:00 CT bar open - 1 (Binance ETHUSDT). Filter |w| >= 0.00%. At the Friday 12:00 CT bar open enter WITH w (long if w>0, short if w<0), 1 contract; exit at the Friday 15:10 CT forced flat. No stop/target.",
+   "n": 234,
+   "n_signals": 234,
+   "trades_per_day": 0.19939177865646057,
+   "mean_net": -0.9024358974358979,
+   "t_stat": -4.325113137951343,
+   "ci95_low": -1.3099226495726495,
+   "ci95_high": -0.5112120726495746,
+   "win_rate": 0.24786324786324787,
+   "avg_win": 2.4718103448275848,
+   "avg_loss": 2.0144034090909093,
+   "sharpe_per_trade": -0.28274149088346684,
+   "total_net": -211.1700000000001,
+   "gross_mean": 0.017564102564102083,
+   "max_drawdown": 210.3669999999999,
+   "by_year": {
+    "2020": -51.7,
+    "2021": -39.9,
+    "2022": -30.8,
+    "2023": -35.9,
+    "2024": -52.9
+   },
+   "n_by_year": {
+    "2020": 51,
+    "2021": 53,
+    "2022": 52,
+    "2023": 52,
+    "2024": 26
+   },
+   "reasons": {
+    "flat": 234
+   },
+   "dsr": 1.225348601566172e-09,
+   "years_positive": 0
+  }
+ ],
+ "diagnostics": {
+  "BTCUSDT_gap": {
+   "n_weekends": 234,
+   "abs_gap_quantiles_pct": {
+    "0.25": 0.438,
+    "0.5": 1.147,
+    "0.75": 2.558,
+    "0.9": 4.714
+   },
+   "share_abs_gap_ge_50bp": 0.7136752136752137,
+   "share_abs_gap_ge_1pct": 0.5384615384615384,
+   "fill_rate_all": 0.5897435897435898,
+   "fill_rate_ge_1pct": 0.4365079365079365,
+   "fill_rate_by_year": {
+    "2020": 0.519,
+    "2021": 0.673,
+    "2022": 0.635,
+    "2023": 0.509,
+    "2024": 0.64
+   },
+   "median_bars_to_fill": 31.0,
+   "corr_gap_vs_next": -0.008805513042349894,
+   "sign_agreement": 0.5256410256410257
+  },
+  "ETHUSDT_gap": {
+   "n_weekends": 234,
+   "abs_gap_quantiles_pct": {
+    "0.25": 0.647,
+    "0.5": 1.842,
+    "0.75": 4.046,
+    "0.9": 7.544
+   },
+   "share_abs_gap_ge_50bp": 0.8290598290598291,
+   "share_abs_gap_ge_1pct": 0.6452991452991453,
+   "fill_rate_all": 0.5555555555555556,
+   "fill_rate_ge_1pct": 0.37748344370860926,
+   "fill_rate_by_year": {
+    "2020": 0.385,
+    "2021": 0.538,
+    "2022": 0.596,
+    "2023": 0.66,
+    "2024": 0.64
+   },
+   "median_bars_to_fill": 33.0,
+   "corr_gap_vs_next": 0.04032485155061768,
+   "sign_agreement": 0.48717948717948717
+  }
+ }
+}

@@ -1,0 +1,1007 @@
+{
+ "family": "cross_asset_leadlag",
+ "n_variants": 14,
+ "variants": {
+  "ETH_followBTC_5m_h3": {
+   "n": 10484,
+   "trades_per_day": 8.933433365103987,
+   "mean_net": -0.9043458603586417,
+   "median_net": -0.9555000000000131,
+   "std_net": 1.5725806207104336,
+   "win_rate": 0.13906905761159863,
+   "avg_win": 1.4553593964334712,
+   "avg_loss": 1.2855169510303568,
+   "t_stat": -58.88235097957244,
+   "ci95_low": -0.9336596575734453,
+   "ci95_high": -0.8743394052842427,
+   "sharpe_per_trade": -0.5750712227078646,
+   "sharpe_annual": -27.28544914281987,
+   "max_drawdown": 9480.237999999994,
+   "total_net": -9481.162,
+   "gross_mean": 0.015654139641358183,
+   "p_win_at_1R": 0.17005229506415132,
+   "by_year": {
+    "2020": -2045.444,
+    "2021": -1978.7059999999997,
+    "2022": -2210.1719999999996,
+    "2023": -2058.1780000000003,
+    "2024": -1188.6620000000005
+   },
+   "n_by_year": {
+    "2020": 2196,
+    "2021": 2282,
+    "2022": 2397,
+    "2023": 2255,
+    "2024": 1354
+   },
+   "rule": "5-min bars on both BTCUSDT and ETHUSDT (same clock). Leader = BTC, traded instrument = MET (ETHUSDT proxy). Signal on decision bar i: r_L = BTC close[i]/close[i-1] - 1 (5-min return); sd = std of r_L over the previous 2016 bars (bars i-2016..i-1); z = r_L/sd. z >= 2.0 -> LONG the follower, z <= -2.0 -> SHORT the follower. Entry at the open of bar i+1, one position at a time; exit at the open of the 3th bar after entry (15 min); Topstep forced flat at 15:10 CT / Friday 15:10 CT; no entries 15:08-17:00 CT.",
+   "symbol": "ETHUSDT",
+   "bar": "5min",
+   "n_signals": 21156,
+   "reasons": {
+    "time": 10293,
+    "flat": 191
+   },
+   "avg_hold_bars": 2.979969477298741,
+   "n_pos_years": 0,
+   "dsr": 0.0,
+   "gross_mean_bp": -0.2445579910166919,
+   "n_long": 5291,
+   "n_short": 5193,
+   "mean_net_long": -0.8984384804384806,
+   "mean_net_short": -0.9103647217408046
+  },
+  "ETH_followBTC_15m_h6": {
+   "n": 7176,
+   "trades_per_day": 6.114681212131458,
+   "mean_net": -0.9042909698996657,
+   "median_net": -0.9715,
+   "std_net": 2.1615388451972923,
+   "win_rate": 0.18478260869565216,
+   "avg_win": 1.8450542986425342,
+   "avg_loss": 1.5274758974358977,
+   "t_stat": -35.4394003156238,
+   "ci95_low": -0.9548801595596434,
+   "ci95_high": -0.8543845317725757,
+   "sharpe_per_trade": -0.4183551787232061,
+   "sharpe_annual": -16.422237544480076,
+   "max_drawdown": 6489.565999999966,
+   "total_net": -6489.192000000001,
+   "gross_mean": 0.015709030100334153,
+   "p_win_at_1R": 0.23186571585002486,
+   "by_year": {
+    "2020": -1365.6979999999999,
+    "2021": -1554.665,
+    "2022": -1329.3410000000003,
+    "2023": -1383.7020000000007,
+    "2024": -855.7860000000006
+   },
+   "n_by_year": {
+    "2020": 1464,
+    "2021": 1616,
+    "2022": 1634,
+    "2023": 1523,
+    "2024": 939
+   },
+   "rule": "5-min bars on both BTCUSDT and ETHUSDT (same clock). Leader = BTC, traded instrument = MET (ETHUSDT proxy). Signal on decision bar i: r_L = BTC close[i]/close[i-3] - 1 (15-min return); sd = std of r_L over the previous 2016 bars (bars i-2016..i-1); z = r_L/sd. z >= 2.0 -> LONG the follower, z <= -2.0 -> SHORT the follower. Entry at the open of bar i+1, one position at a time; exit at the open of the 6th bar after entry (30 min); Topstep forced flat at 15:10 CT / Friday 15:10 CT; no entries 15:08-17:00 CT.",
+   "symbol": "ETHUSDT",
+   "bar": "5min",
+   "n_signals": 22420,
+   "reasons": {
+    "time": 6987,
+    "flat": 189
+   },
+   "avg_hold_bars": 5.925863991081382,
+   "n_pos_years": 0,
+   "dsr": 1.2578655802812408e-278,
+   "gross_mean_bp": -0.33312252602790454,
+   "n_long": 3612,
+   "n_short": 3564,
+   "mean_net_long": -0.8954263565891475,
+   "mean_net_short": -0.913274971941639
+  },
+  "ETH_lagBTC_5m_h3": {
+   "n": 1464,
+   "trades_per_day": 1.2474767690301636,
+   "mean_net": -0.8613285519125684,
+   "median_net": -0.9410000000000036,
+   "std_net": 1.5955663055000613,
+   "win_rate": 0.13046448087431695,
+   "avg_win": 1.5809476439790577,
+   "avg_loss": 1.2277659073055773,
+   "t_stat": -20.6549679594121,
+   "ci95_low": -0.9393064378415299,
+   "ci95_high": -0.7787899590163937,
+   "sharpe_per_trade": -0.5398262353269124,
+   "sharpe_annual": -9.571290351477828,
+   "max_drawdown": 1260.0600000000013,
+   "total_net": -1260.9850000000001,
+   "gross_mean": 0.05867144808743158,
+   "p_win_at_1R": 0.19333698998296983,
+   "by_year": {
+    "2020": -336.826,
+    "2021": -227.41600000000025,
+    "2022": -184.72399999999976,
+    "2023": -350.394,
+    "2024": -161.6250000000001
+   },
+   "n_by_year": {
+    "2020": 354,
+    "2021": 283,
+    "2022": 204,
+    "2023": 387,
+    "2024": 236
+   },
+   "rule": "5-min bars on both BTCUSDT and ETHUSDT (same clock). Leader = BTC, traded instrument = MET (ETHUSDT proxy). Signal on decision bar i: r_L = BTC close[i]/close[i-1] - 1 (5-min return); sd = std of r_L over the previous 2016 bars (bars i-2016..i-1); z = r_L/sd. z >= 2.0 -> LONG the follower, z <= -2.0 -> SHORT the follower. Filter: follower lag only: capture = (ETH close[i]/close[i-1] - 1) / r_L must be < 0.5 (the follower has moved less than half of the leader's move, or against it). Entry at the open of bar i+1, one position at a time; exit at the open of the 3th bar after entry (15 min); Topstep forced flat at 15:10 CT / Friday 15:10 CT; no entries 15:08-17:00 CT.",
+   "symbol": "ETHUSDT",
+   "bar": "5min",
+   "n_signals": 2241,
+   "reasons": {
+    "time": 1423,
+    "flat": 41
+   },
+   "avg_hold_bars": 2.9719945355191255,
+   "n_pos_years": 0,
+   "dsr": 2.0003779010706659e-97,
+   "gross_mean_bp": 0.7516009481362512,
+   "n_long": 847,
+   "n_short": 617,
+   "mean_net_long": -0.7923860684769779,
+   "mean_net_short": -0.9559708265802266
+  },
+  "ETH_lagBTC_15m_h6": {
+   "n": 1151,
+   "trades_per_day": 0.9807689625366929,
+   "mean_net": -0.8304474370112943,
+   "median_net": -0.9589999999999985,
+   "std_net": 2.1336562525331626,
+   "win_rate": 0.17984361424847958,
+   "avg_win": 1.9158599033816432,
+   "avg_loss": 1.432656779661017,
+   "t_stat": -13.204603291942282,
+   "ci95_low": -0.9520227845351865,
+   "ci95_high": -0.7065453518679409,
+   "sharpe_per_trade": -0.38921332151106985,
+   "sharpe_annual": -6.118871369426072,
+   "max_drawdown": 954.8770000000052,
+   "total_net": -955.8449999999997,
+   "gross_mean": 0.08955256298870555,
+   "p_win_at_1R": 0.25199543092713494,
+   "by_year": {
+    "2020": -269.14899999999994,
+    "2021": -141.24199999999962,
+    "2022": -112.04400000000012,
+    "2023": -230.6350000000004,
+    "2024": -202.77499999999975
+   },
+   "n_by_year": {
+    "2020": 289,
+    "2021": 238,
+    "2022": 141,
+    "2023": 293,
+    "2024": 190
+   },
+   "rule": "5-min bars on both BTCUSDT and ETHUSDT (same clock). Leader = BTC, traded instrument = MET (ETHUSDT proxy). Signal on decision bar i: r_L = BTC close[i]/close[i-3] - 1 (15-min return); sd = std of r_L over the previous 2016 bars (bars i-2016..i-1); z = r_L/sd. z >= 2.0 -> LONG the follower, z <= -2.0 -> SHORT the follower. Filter: follower lag only: capture = (ETH close[i]/close[i-3] - 1) / r_L must be < 0.5 (the follower has moved less than half of the leader's move, or against it). Entry at the open of bar i+1, one position at a time; exit at the open of the 6th bar after entry (30 min); Topstep forced flat at 15:10 CT / Friday 15:10 CT; no entries 15:08-17:00 CT.",
+   "symbol": "ETHUSDT",
+   "bar": "5min",
+   "n_signals": 2286,
+   "reasons": {
+    "time": 1106,
+    "flat": 45
+   },
+   "avg_hold_bars": 5.905299739357081,
+   "n_pos_years": 0,
+   "dsr": 2.54594008770633e-47,
+   "gross_mean_bp": 4.325995648618654,
+   "n_long": 685,
+   "n_short": 466,
+   "mean_net_long": -0.6830335766423354,
+   "mean_net_short": -1.047139484978541
+  },
+  "ETH_lagBTC_1h_h12": {
+   "n": 641,
+   "trades_per_day": 0.5461971372597916,
+   "mean_net": -0.6859422776911074,
+   "median_net": -0.9359999999999996,
+   "std_net": 2.577425838792539,
+   "win_rate": 0.22308892355694226,
+   "avg_win": 2.486790209790208,
+   "avg_loss": 1.596987951807228,
+   "t_stat": -6.737990711076609,
+   "ci95_low": -0.8845032761310445,
+   "ci95_high": -0.48543404836193393,
+   "sharpe_per_trade": -0.2661346322237751,
+   "sharpe_annual": -3.122312540402042,
+   "max_drawdown": 438.7530000000004,
+   "total_net": -439.68899999999985,
+   "gross_mean": 0.2340577223088925,
+   "p_win_at_1R": 0.332032434048085,
+   "by_year": {
+    "2020": -163.347,
+    "2021": -20.271999999999867,
+    "2022": -24.67900000000005,
+    "2023": -144.74400000000009,
+    "2024": -86.64699999999985
+   },
+   "n_by_year": {
+    "2020": 165,
+    "2021": 123,
+    "2022": 75,
+    "2023": 178,
+    "2024": 100
+   },
+   "rule": "5-min bars on both BTCUSDT and ETHUSDT (same clock). Leader = BTC, traded instrument = MET (ETHUSDT proxy). Signal on decision bar i: r_L = BTC close[i]/close[i-12] - 1 (60-min return); sd = std of r_L over the previous 2016 bars (bars i-2016..i-1); z = r_L/sd. z >= 2.0 -> LONG the follower, z <= -2.0 -> SHORT the follower. Filter: follower lag only: capture = (ETH close[i]/close[i-12] - 1) / r_L must be < 0.5 (the follower has moved less than half of the leader's move, or against it). Entry at the open of bar i+1, one position at a time; exit at the open of the 12th bar after entry (60 min); Topstep forced flat at 15:10 CT / Friday 15:10 CT; no entries 15:08-17:00 CT.",
+   "symbol": "ETHUSDT",
+   "bar": "5min",
+   "n_signals": 2606,
+   "reasons": {
+    "time": 601,
+    "flat": 40
+   },
+   "avg_hold_bars": 11.669266770670827,
+   "n_pos_years": 0,
+   "dsr": 4.262513693169496e-17,
+   "gross_mean_bp": 5.325473405121236,
+   "n_long": 408,
+   "n_short": 233,
+   "mean_net_long": -0.5801470588235291,
+   "mean_net_short": -0.8711974248927038
+  },
+  "BTC_followETH_5m_h3": {
+   "n": 10594,
+   "trades_per_day": 9.027164543104886,
+   "mean_net": -3.8714799886728324,
+   "median_net": -4.338000000000029,
+   "std_net": 22.184693908296346,
+   "win_rate": 0.2949782895978856,
+   "avg_win": 15.680778560000006,
+   "avg_loss": 12.05206747891284,
+   "t_stat": -17.96195326749872,
+   "ci95_low": -4.306461461676415,
+   "ci95_high": -3.4297068670945845,
+   "sharpe_per_trade": -0.1745113096748667,
+   "sharpe_annual": -8.32337626186274,
+   "max_drawdown": 41010.91399999921,
+   "total_net": -41014.45899999999,
+   "gross_mean": -0.05147998867283315,
+   "p_win_at_1R": 0.36040091293765397,
+   "by_year": {
+    "2020": -8971.544999999991,
+    "2021": -10598.266000000012,
+    "2022": -9720.527999999998,
+    "2023": -7600.389999999999,
+    "2024": -4123.729999999989
+   },
+   "n_by_year": {
+    "2020": 2368,
+    "2021": 2386,
+    "2022": 2467,
+    "2023": 2139,
+    "2024": 1234
+   },
+   "rule": "5-min bars on both BTCUSDT and ETHUSDT (same clock). Leader = ETH, traded instrument = MBT (BTCUSDT proxy). Signal on decision bar i: r_L = ETH close[i]/close[i-1] - 1 (5-min return); sd = std of r_L over the previous 2016 bars (bars i-2016..i-1); z = r_L/sd. z >= 2.0 -> LONG the follower, z <= -2.0 -> SHORT the follower. Entry at the open of bar i+1, one position at a time; exit at the open of the 3th bar after entry (15 min); Topstep forced flat at 15:10 CT / Friday 15:10 CT; no entries 15:08-17:00 CT.",
+   "symbol": "BTCUSDT",
+   "bar": "5min",
+   "n_signals": 21623,
+   "reasons": {
+    "time": 10429,
+    "flat": 165
+   },
+   "avg_hold_bars": 2.98074381725505,
+   "n_pos_years": 0,
+   "dsr": 2.0157147956669284e-85,
+   "gross_mean_bp": 0.27469631727162963,
+   "n_long": 5324,
+   "n_short": 5270,
+   "mean_net_long": -3.6601833208114183,
+   "mean_net_short": -4.08494174573055
+  },
+  "ETH_ratioZ24h_fade_h24": {
+   "n": 3799,
+   "trades_per_day": 3.2371340475038197,
+   "mean_net": -0.9328836535930507,
+   "median_net": -0.9059999999999899,
+   "std_net": 2.9422655075911006,
+   "win_rate": 0.2382205843643064,
+   "avg_win": 2.236554696132596,
+   "avg_loss": 1.924017622667588,
+   "t_stat": -19.54250669821399,
+   "ci95_low": -1.025773598315346,
+   "ci95_high": -0.8395140365885762,
+   "sharpe_per_trade": -0.3170630424705701,
+   "sharpe_annual": -9.0557877490714,
+   "max_drawdown": 3546.9009999999907,
+   "total_net": -3544.0249999999996,
+   "gross_mean": -0.012883653593050876,
+   "p_win_at_1R": 0.2757799691697046,
+   "by_year": {
+    "2020": -759.3549999999999,
+    "2021": -737.7959999999996,
+    "2022": -912.5050000000003,
+    "2023": -780.4600000000003,
+    "2024": -353.9089999999999
+   },
+   "n_by_year": {
+    "2020": 826,
+    "2021": 828,
+    "2022": 855,
+    "2023": 837,
+    "2024": 453
+   },
+   "rule": "5-min bars. x[i] = ln(ETHUSDT close[i] / BTCUSDT close[i]); m, s = mean and std of x over the previous 288 bars (i-288..i-1, at least 144); z = (x[i]-m)/s. Traded instrument = MET. z <= -2.0 (ETH cheap vs BTC) -> LONG MET; z >= +2.0 -> SHORT MET. Entry at the open of bar i+1, one position at a time. Exit at the open of the bar after |z| <= 0.5, or at the open of the 24th bar after entry (120 min); Topstep forced flat at 15:10 CT / Friday; no entries 15:08-17:00 CT.",
+   "symbol": "ETHUSDT",
+   "bar": "5min",
+   "n_signals": 72803,
+   "reasons": {
+    "time": 3034,
+    "signal": 406,
+    "flat": 359
+   },
+   "avg_hold_bars": 21.837588839168202,
+   "n_pos_years": 0,
+   "dsr": 4.703381922562258e-96,
+   "gross_mean_bp": -0.3674934436788149,
+   "n_long": 2086,
+   "n_short": 1713,
+   "mean_net_long": -0.8371356663470758,
+   "mean_net_short": -1.049480443666083
+  },
+  "BTC_ratioZ24h_fade_h24": {
+   "n": 3799,
+   "trades_per_day": 3.2371340475038197,
+   "mean_net": -4.245384838115292,
+   "median_net": -4.197000000000044,
+   "std_net": 40.918851692629836,
+   "win_rate": 0.3750987101868913,
+   "avg_win": 26.799910175438605,
+   "avg_loss": 22.88040817186184,
+   "t_stat": -6.394819251587501,
+   "ci95_low": -5.579521183206102,
+   "ci95_high": -2.9761964924980244,
+   "sharpe_per_trade": -0.10375131907428274,
+   "sharpe_annual": -2.9632905711806408,
+   "max_drawdown": 16356.195000000163,
+   "total_net": -16128.216999999997,
+   "gross_mean": -0.42538483811529354,
+   "p_win_at_1R": 0.41454594134367134,
+   "by_year": {
+    "2020": -2820.4749999999995,
+    "2021": -4985.9650000000065,
+    "2022": -1597.0569999999998,
+    "2023": -3920.059999999995,
+    "2024": -2804.6599999999976
+   },
+   "n_by_year": {
+    "2020": 826,
+    "2021": 828,
+    "2022": 855,
+    "2023": 837,
+    "2024": 453
+   },
+   "rule": "5-min bars. x[i] = ln(ETHUSDT close[i] / BTCUSDT close[i]); m, s = mean and std of x over the previous 288 bars (i-288..i-1, at least 144); z = (x[i]-m)/s. Traded instrument = MBT. z <= -2.0 (BTC rich vs ETH) -> SHORT MBT; z >= +2.0 -> LONG MBT. Entry at the open of bar i+1, one position at a time. Exit at the open of the bar after |z| <= 0.5, or at the open of the 24th bar after entry (120 min); Topstep forced flat at 15:10 CT / Friday; no entries 15:08-17:00 CT.",
+   "symbol": "BTCUSDT",
+   "bar": "5min",
+   "n_signals": 72803,
+   "reasons": {
+    "time": 3034,
+    "signal": 406,
+    "flat": 359
+   },
+   "avg_hold_bars": 21.837588839168202,
+   "n_pos_years": 0,
+   "dsr": 2.5228063945771494e-16,
+   "gross_mean_bp": 0.3369805436542339,
+   "n_long": 1713,
+   "n_short": 2086,
+   "mean_net_long": -3.4346976065382444,
+   "mean_net_short": -4.911112176414182
+  },
+  "ETH_spread1h_fade_h6": {
+   "n": 4866,
+   "trades_per_day": 4.146326474112552,
+   "mean_net": -0.9207404438964243,
+   "median_net": -0.8869999999999916,
+   "std_net": 2.1058162336987225,
+   "win_rate": 0.18495684340320592,
+   "avg_win": 1.5721877777777777,
+   "avg_loss": 1.486457892082703,
+   "t_stat": -30.500208141475003,
+   "ci95_low": -0.9783828606658445,
+   "ci95_high": -0.8614726469379366,
+   "sharpe_per_trade": -0.4372368439192847,
+   "sharpe_annual": -14.133468929906503,
+   "max_drawdown": 4479.3329999999805,
+   "total_net": -4480.323,
+   "gross_mean": -0.0007404438964242206,
+   "p_win_at_1R": 0.19897119729516638,
+   "by_year": {
+    "2020": -1016.4609999999999,
+    "2021": -1040.304,
+    "2022": -978.5299999999996,
+    "2023": -899.4000000000001,
+    "2024": -545.6280000000002
+   },
+   "n_by_year": {
+    "2020": 1090,
+    "2021": 1061,
+    "2022": 1102,
+    "2023": 1023,
+    "2024": 590
+   },
+   "rule": "5-min bars. s[i] = (ETHUSDT close[i]/close[i-12] - 1) - (BTCUSDT close[i]/close[i-12] - 1) (1-h return spread); sd = std of s over the previous 2016 bars (i-2016..i-1); z = s/sd. Traded instrument = MET. z <= -2.0 (ETH lagged BTC over the hour) -> LONG MET; z >= +2.0 -> SHORT MET (fade). Entry at the open of bar i+1, one position at a time; exit at the open of the 6th bar after entry (30 min); Topstep forced flat at 15:10 CT / Friday; no entries 15:08-17:00 CT.",
+   "symbol": "ETHUSDT",
+   "bar": "5min",
+   "n_signals": 25548,
+   "reasons": {
+    "time": 4730,
+    "flat": 136
+   },
+   "avg_hold_bars": 5.930538429921907,
+   "n_pos_years": 0,
+   "dsr": 1.4366976420405757e-208,
+   "gross_mean_bp": -0.2530635584015298,
+   "n_long": 2352,
+   "n_short": 2514,
+   "mean_net_long": -0.8619443027210881,
+   "mean_net_short": -0.9757478122513925
+  },
+  "ETH_spread1h_follow_h6": {
+   "n": 4866,
+   "trades_per_day": 4.146326474112552,
+   "mean_net": -0.9192595561035757,
+   "median_net": -0.9530000000000083,
+   "std_net": 2.1058162336987225,
+   "win_rate": 0.18002466091245375,
+   "avg_win": 1.7411175799086758,
+   "avg_loss": 1.503342355889724,
+   "t_stat": -30.451152638140197,
+   "ci95_low": -0.9785273530620634,
+   "ci95_high": -0.8616171393341553,
+   "sharpe_per_trade": -0.43653360696576976,
+   "sharpe_annual": -14.110737136437834,
+   "max_drawdown": 4472.2669999999825,
+   "total_net": -4473.116999999999,
+   "gross_mean": 0.0007404438964242206,
+   "p_win_at_1R": 0.21666792800837487,
+   "by_year": {
+    "2020": -989.1389999999999,
+    "2021": -911.9359999999999,
+    "2022": -1049.15,
+    "2023": -982.9199999999998,
+    "2024": -539.9719999999996
+   },
+   "n_by_year": {
+    "2020": 1090,
+    "2021": 1061,
+    "2022": 1102,
+    "2023": 1023,
+    "2024": 590
+   },
+   "rule": "5-min bars. s[i] = (ETHUSDT close[i]/close[i-12] - 1) - (BTCUSDT close[i]/close[i-12] - 1) (1-h return spread); sd = std of s over the previous 2016 bars (i-2016..i-1); z = s/sd. Traded instrument = MET. z <= -2.0 -> SHORT MET; z >= +2.0 -> LONG MET (relative momentum). Entry at the open of bar i+1, one position at a time; exit at the open of the 6th bar after entry (30 min); Topstep forced flat at 15:10 CT / Friday; no entries 15:08-17:00 CT.",
+   "symbol": "ETHUSDT",
+   "bar": "5min",
+   "n_signals": 25548,
+   "reasons": {
+    "time": 4730,
+    "flat": 136
+   },
+   "avg_hold_bars": 5.930538429921907,
+   "n_pos_years": 0,
+   "dsr": 5.329269406761868e-208,
+   "gross_mean_bp": 0.2530635584015298,
+   "n_long": 2514,
+   "n_short": 2352,
+   "mean_net_long": -0.8642521877486072,
+   "mean_net_short": -0.9780556972789116
+  },
+  "ETH_followBTC_1min_h5": {
+   "n": 15541,
+   "trades_per_day": 13.242488859508715,
+   "mean_net": -0.8985096197155908,
+   "median_net": -0.9349999999999976,
+   "std_net": 1.2195622142084785,
+   "win_rate": 0.09227205456534329,
+   "avg_win": 1.1778451882845185,
+   "avg_loss": 1.1095745374636703,
+   "t_stat": -91.84557792979234,
+   "ci95_low": -0.9167649298629431,
+   "ci95_high": -0.8779312286854125,
+   "sharpe_per_trade": -0.7367476699815125,
+   "sharpe_annual": -42.560218562071164,
+   "max_drawdown": 13962.804999999935,
+   "total_net": -13963.737999999998,
+   "gross_mean": 0.021490380284409,
+   "p_win_at_1R": 0.10719512488172728,
+   "by_year": {
+    "2020": -2991.3169999999996,
+    "2021": -2888.7249999999985,
+    "2022": -3178.059,
+    "2023": -3126.475,
+    "2024": -1779.1620000000007
+   },
+   "n_by_year": {
+    "2020": 3237,
+    "2021": 3274,
+    "2022": 3601,
+    "2023": 3462,
+    "2024": 1967
+   },
+   "rule": "1-min bars on both BTCUSDT and ETHUSDT (same clock). Leader = BTC, traded instrument = MET (ETHUSDT proxy). Signal on decision bar i: r_L = BTC close[i]/close[i-1] - 1 (1-min return); sd = std of r_L over the previous 1440 bars (bars i-1440..i-1); z = r_L/sd. z >= 3.0 -> LONG the follower, z <= -3.0 -> SHORT the follower. Entry at the open of bar i+1, one position at a time; exit at the open of the 5th bar after entry (5 min); Topstep forced flat at 15:10 CT / Friday 15:10 CT; no entries 15:08-17:00 CT.",
+   "symbol": "ETHUSDT",
+   "bar": "1m",
+   "n_signals": 35174,
+   "reasons": {
+    "time": 15495,
+    "flat": 46
+   },
+   "avg_hold_bars": 4.997040087510456,
+   "n_pos_years": 0,
+   "dsr": 0.0,
+   "gross_mean_bp": 0.7728959008264522,
+   "n_long": 8109,
+   "n_short": 7432,
+   "mean_net_long": -0.8906022937476874,
+   "mean_net_short": -0.9071372443487622
+  },
+  "ETH_lagBTC_1min_h5": {
+   "n": 2479,
+   "trades_per_day": 2.112356340179017,
+   "mean_net": -0.8914727712787415,
+   "median_net": -0.9349999999999976,
+   "std_net": 1.6862626066710384,
+   "win_rate": 0.09156918112141993,
+   "avg_win": 1.299471365638767,
+   "avg_loss": 1.1123183836589698,
+   "t_stat": -26.322136485132585,
+   "ci95_low": -0.9518043868495364,
+   "ci95_high": -0.8246149858814039,
+   "sharpe_per_trade": -0.528667817071895,
+   "sharpe_annual": -12.197385079162549,
+   "max_drawdown": 2209.0429999999938,
+   "total_net": -2209.9610000000002,
+   "gross_mean": 0.028527228721258593,
+   "p_win_at_1R": 0.1303687866911617,
+   "by_year": {
+    "2020": -554.249,
+    "2021": -396.4079999999997,
+    "2022": -316.452,
+    "2023": -569.0230000000001,
+    "2024": -373.829
+   },
+   "n_by_year": {
+    "2020": 602,
+    "2021": 508,
+    "2022": 348,
+    "2023": 648,
+    "2024": 373
+   },
+   "rule": "1-min bars on both BTCUSDT and ETHUSDT (same clock). Leader = BTC, traded instrument = MET (ETHUSDT proxy). Signal on decision bar i: r_L = BTC close[i]/close[i-1] - 1 (1-min return); sd = std of r_L over the previous 1440 bars (bars i-1440..i-1); z = r_L/sd. z >= 3.0 -> LONG the follower, z <= -3.0 -> SHORT the follower. Filter: follower lag only: capture = (ETH close[i]/close[i-1] - 1) / r_L must be < 0.5 (the follower has moved less than half of the leader's move, or against it). Entry at the open of bar i+1, one position at a time; exit at the open of the 5th bar after entry (5 min); Topstep forced flat at 15:10 CT / Friday 15:10 CT; no entries 15:08-17:00 CT.",
+   "symbol": "ETHUSDT",
+   "bar": "1m",
+   "n_signals": 4572,
+   "reasons": {
+    "time": 2470,
+    "flat": 9
+   },
+   "avg_hold_bars": 4.996369503832191,
+   "n_pos_years": 0,
+   "dsr": 1.6764591508178947e-152,
+   "gross_mean_bp": 2.1160799545263567,
+   "n_long": 1363,
+   "n_short": 1116,
+   "mean_net_long": -0.8086170212765954,
+   "mean_net_short": -0.9926666666666669
+  },
+  "BTC_lagETH_15m_h12": {
+   "n": 2528,
+   "trades_per_day": 2.1541128907843263,
+   "mean_net": -2.9934790348101266,
+   "median_net": -4.41250000000011,
+   "std_net": 35.63391117758456,
+   "win_rate": 0.3500791139240506,
+   "avg_win": 24.493675706214685,
+   "avg_loss": 17.799402312842357,
+   "t_stat": -4.223779738460351,
+   "ci95_low": -4.407528688686711,
+   "ci95_high": -1.5206207772943077,
+   "sharpe_per_trade": -0.0840064684421498,
+   "sharpe_annual": -1.9572541742467933,
+   "max_drawdown": 7569.758000000015,
+   "total_net": -7567.514999999999,
+   "gross_mean": 0.8265209651898736,
+   "p_win_at_1R": 0.42922059176063565,
+   "by_year": {
+    "2020": -2614.6389999999947,
+    "2021": -907.0540000000008,
+    "2022": -975.0419999999997,
+    "2023": -2150.5099999999993,
+    "2024": -920.2700000000036
+   },
+   "n_by_year": {
+    "2020": 785,
+    "2021": 590,
+    "2022": 575,
+    "2023": 331,
+    "2024": 247
+   },
+   "rule": "5-min bars on both BTCUSDT and ETHUSDT (same clock). Leader = ETH, traded instrument = MBT (BTCUSDT proxy). Signal on decision bar i: r_L = ETH close[i]/close[i-3] - 1 (15-min return); sd = std of r_L over the previous 2016 bars (bars i-2016..i-1); z = r_L/sd. z >= 2.0 -> LONG the follower, z <= -2.0 -> SHORT the follower. Filter: follower lag only: capture = (BTC close[i]/close[i-3] - 1) / r_L must be < 0.5 (the follower has moved less than half of the leader's move, or against it). Entry at the open of bar i+1, one position at a time; exit at the open of the 12th bar after entry (60 min); Topstep forced flat at 15:10 CT / Friday 15:10 CT; no entries 15:08-17:00 CT.",
+   "symbol": "BTCUSDT",
+   "bar": "5min",
+   "n_signals": 7387,
+   "reasons": {
+    "time": 2414,
+    "flat": 114
+   },
+   "avg_hold_bars": 11.750395569620252,
+   "n_pos_years": 0,
+   "dsr": 1.3361950865771143e-09,
+   "gross_mean_bp": 2.39906825532476,
+   "n_long": 1397,
+   "n_short": 1131,
+   "mean_net_long": -2.903115962777377,
+   "mean_net_short": -3.1050946065428855
+  },
+  "BTC_lagETH_1h_h12": {
+   "n": 1507,
+   "trades_per_day": 1.2841171386123338,
+   "mean_net": -3.372655607166567,
+   "median_net": -4.474999999999927,
+   "std_net": 32.979453392477154,
+   "win_rate": 0.35169210351692104,
+   "avg_win": 22.512452830188664,
+   "avg_loss": 17.414730808597756,
+   "t_stat": -3.969951207290502,
+   "ci95_low": -5.0480028367617855,
+   "ci95_high": -1.7965746018579982,
+   "sharpe_per_trade": -0.10226535798000502,
+   "sharpe_annual": -1.83963275861014,
+   "max_drawdown": 5081.277000000019,
+   "total_net": -5082.592000000017,
+   "gross_mean": 0.44734439283343225,
+   "p_win_at_1R": 0.4155298395780094,
+   "by_year": {
+    "2020": -1188.751999999996,
+    "2021": -1290.690000000005,
+    "2022": -954.6200000000065,
+    "2023": -949.9600000000023,
+    "2024": -698.5700000000068
+   },
+   "n_by_year": {
+    "2020": 478,
+    "2021": 353,
+    "2022": 318,
+    "2023": 218,
+    "2024": 140
+   },
+   "rule": "5-min bars on both BTCUSDT and ETHUSDT (same clock). Leader = ETH, traded instrument = MBT (BTCUSDT proxy). Signal on decision bar i: r_L = ETH close[i]/close[i-12] - 1 (60-min return); sd = std of r_L over the previous 2016 bars (bars i-2016..i-1); z = r_L/sd. z >= 2.0 -> LONG the follower, z <= -2.0 -> SHORT the follower. Filter: follower lag only: capture = (BTC close[i]/close[i-12] - 1) / r_L must be < 0.5 (the follower has moved less than half of the leader's move, or against it). Entry at the open of bar i+1, one position at a time; exit at the open of the 12th bar after entry (60 min); Topstep forced flat at 15:10 CT / Friday 15:10 CT; no entries 15:08-17:00 CT.",
+   "symbol": "BTCUSDT",
+   "bar": "5min",
+   "n_signals": 8149,
+   "reasons": {
+    "time": 1432,
+    "flat": 75
+   },
+   "avg_hold_bars": 11.731917717319178,
+   "n_pos_years": 0,
+   "dsr": 6.291378530427568e-09,
+   "gross_mean_bp": 4.499704053732181,
+   "n_long": 864,
+   "n_short": 643,
+   "mean_net_long": -3.3404965277777925,
+   "mean_net_short": -3.4158678071539716
+  }
+ },
+ "diagnostics": {
+  "5min": {
+   "xcorr_rBTC_t_vs_rETH_t+lag": {
+    "-3": {
+     "corr": 0.01657684926869864,
+     "t": 11.404439329731487
+    },
+    "-2": {
+     "corr": -0.018757168310202244,
+     "t": -12.904952760251808
+    },
+    "-1": {
+     "corr": -0.02284918195805991,
+     "t": -15.72161819478562
+    },
+    "0": {
+     "corr": 0.8388264615456863,
+     "t": 1059.9088742383756
+    },
+    "1": {
+     "corr": -0.03325803045812505,
+     "t": -22.89022362033368
+    },
+    "2": {
+     "corr": -0.016554225189731528,
+     "t": -11.388882319261798
+    },
+    "3": {
+     "corr": 0.018022018255456386,
+     "t": 12.398987917847732
+    }
+   },
+   "conditional_fwd_ETH_after_BTC_move_bp_signed": {
+    "BTC1bar_move->ETH_fwd3bar": {
+     "all": {
+      "n": 21156,
+      "mean_bp": -0.760527396513987,
+      "t": -1.141912772301984
+     },
+     "lag(<50% captured)": {
+      "n": 2241,
+      "mean_bp": 0.05617059855989522,
+      "t": 0.030279069649394898
+     },
+     "overshoot(>=100%)": {
+      "n": 10017,
+      "mean_bp": -1.112544315094901,
+      "t": -1.0280726874251294
+     }
+    },
+    "BTC1bar_move->ETH_fwd12bar": {
+     "all": {
+      "n": 21156,
+      "mean_bp": -3.3184985559247613,
+      "t": -2.966063346720212
+     },
+     "lag(<50% captured)": {
+      "n": 2241,
+      "mean_bp": 2.9139542740834163,
+      "t": 0.8711621829835228
+     },
+     "overshoot(>=100%)": {
+      "n": 10017,
+      "mean_bp": -4.816657839142775,
+      "t": -2.671410200597428
+     }
+    },
+    "BTC3bar_move->ETH_fwd3bar": {
+     "all": {
+      "n": 22420,
+      "mean_bp": -1.1555082857817636,
+      "t": -1.7525004105104065
+     },
+     "lag(<50% captured)": {
+      "n": 2286,
+      "mean_bp": 0.3664898250684404,
+      "t": 0.2158594159008451
+     },
+     "overshoot(>=100%)": {
+      "n": 10927,
+      "mean_bp": -1.5617233085693238,
+      "t": -1.4499633103659884
+     }
+    },
+    "BTC3bar_move->ETH_fwd12bar": {
+     "all": {
+      "n": 22420,
+      "mean_bp": -3.192295902735732,
+      "t": -2.957624659011972
+     },
+     "lag(<50% captured)": {
+      "n": 2286,
+      "mean_bp": 2.5583663957598985,
+      "t": 0.9005395440337626
+     },
+     "overshoot(>=100%)": {
+      "n": 10927,
+      "mean_bp": -4.932907650816272,
+      "t": -2.848067902221946
+     }
+    },
+    "BTC12bar_move->ETH_fwd3bar": {
+     "all": {
+      "n": 25194,
+      "mean_bp": -1.9838333636733443,
+      "t": -3.33064539363029
+     },
+     "lag(<50% captured)": {
+      "n": 2606,
+      "mean_bp": -0.2380106512861595,
+      "t": -0.18919356050982344
+     },
+     "overshoot(>=100%)": {
+      "n": 12533,
+      "mean_bp": -3.694756773048096,
+      "t": -3.6400495674049878
+     }
+    },
+    "BTC12bar_move->ETH_fwd12bar": {
+     "all": {
+      "n": 25190,
+      "mean_bp": -4.215705145183636,
+      "t": -4.343996812741783
+     },
+     "lag(<50% captured)": {
+      "n": 2606,
+      "mean_bp": 3.3603177036126954,
+      "t": 1.2605094287890324
+     },
+     "overshoot(>=100%)": {
+      "n": 12533,
+      "mean_bp": -8.172776305506193,
+      "t": -5.2868974965463345
+     }
+    }
+   },
+   "ratio_z_vs_fwd2h_ratio_change": {
+    "n": 473016,
+    "corr": 0.023409194763439452,
+    "t": 16.104324006806458,
+    "decile_means_bp": [
+     2.342925477671349,
+     -0.557231074825564,
+     -1.6738963662881132,
+     -3.0383073163660175,
+     -2.7852683632999526,
+     -1.4064950080929344,
+     1.005731493580391,
+     2.0247782234068303,
+     4.016213661341552,
+     5.669781612798958
+    ]
+   },
+   "spread1h_z_vs_fwd1h_spread": {
+    "n": 472872,
+    "corr": -0.009152836990500115,
+    "t": -6.294261774857203
+   }
+  },
+  "1m": {
+   "xcorr_rBTC_t_vs_rETH_t+lag": {
+    "-5": {
+     "corr": 0.00414377323309534,
+     "t": 6.373808380475589
+    },
+    "-4": {
+     "corr": -0.008228721336405303,
+     "t": -12.657456529633134
+    },
+    "-3": {
+     "corr": -0.0052538851781153825,
+     "t": -8.081389673181121
+    },
+    "-2": {
+     "corr": -0.01414778074042512,
+     "t": -21.763631202327797
+    },
+    "-1": {
+     "corr": 0.006575570719140297,
+     "t": 10.114455378389446
+    },
+    "0": {
+     "corr": 0.8024519943304601,
+     "t": 2068.476708268005
+    },
+    "1": {
+     "corr": 0.01668429653988974,
+     "t": 25.666580686925897
+    },
+    "2": {
+     "corr": -0.018034874976813577,
+     "t": -27.744911570190666
+    },
+    "3": {
+     "corr": -0.007959923142422751,
+     "t": -12.243965873057828
+    },
+    "4": {
+     "corr": -0.007686733585492274,
+     "t": -11.823717510863423
+    },
+    "5": {
+     "corr": -0.0009744687062241839,
+     "t": -1.4988818356699831
+    }
+   },
+   "conditional_fwd_ETH_after_BTC_move_bp_signed": {
+    "BTC1bar_move->ETH_fwd5bar": {
+     "all": {
+      "n": 35174,
+      "mean_bp": 0.23776514437880167,
+      "t": 0.5794038929080557
+     },
+     "lag(<50% captured)": {
+      "n": 4572,
+      "mean_bp": 1.980108243111068,
+      "t": 1.3800208162959107
+     },
+     "overshoot(>=100%)": {
+      "n": 14679,
+      "mean_bp": -0.9385894368620701,
+      "t": -1.2844327973338268
+     }
+    },
+    "BTC1bar_move->ETH_fwd15bar": {
+     "all": {
+      "n": 35174,
+      "mean_bp": 0.5314297010457476,
+      "t": 0.9772438293771386
+     },
+     "lag(<50% captured)": {
+      "n": 4572,
+      "mean_bp": 4.690691085320284,
+      "t": 2.2856917711852787
+     },
+     "overshoot(>=100%)": {
+      "n": 14679,
+      "mean_bp": -1.9105500146095247,
+      "t": -2.125538947533062
+     }
+    },
+    "BTC3bar_move->ETH_fwd5bar": {
+     "all": {
+      "n": 36749,
+      "mean_bp": -0.7266531459258843,
+      "t": -1.8622743239861947
+     },
+     "lag(<50% captured)": {
+      "n": 4112,
+      "mean_bp": 2.247442077557345,
+      "t": 1.8747864513821482
+     },
+     "overshoot(>=100%)": {
+      "n": 16444,
+      "mean_bp": -2.8144795899155173,
+      "t": -4.149778558846709
+     }
+    },
+    "BTC3bar_move->ETH_fwd15bar": {
+     "all": {
+      "n": 36749,
+      "mean_bp": -0.6699434074126754,
+      "t": -1.2307278163588502
+     },
+     "lag(<50% captured)": {
+      "n": 4112,
+      "mean_bp": 2.53212576528577,
+      "t": 1.6116490645869248
+     },
+     "overshoot(>=100%)": {
+      "n": 16444,
+      "mean_bp": -3.613848290825727,
+      "t": -3.909333217267369
+     }
+    },
+    "BTC5bar_move->ETH_fwd5bar": {
+     "all": {
+      "n": 38128,
+      "mean_bp": -1.406223197424475,
+      "t": -3.581489144663734
+     },
+     "lag(<50% captured)": {
+      "n": 3947,
+      "mean_bp": 0.061599098500977674,
+      "t": 0.060099067522618774
+     },
+     "overshoot(>=100%)": {
+      "n": 17355,
+      "mean_bp": -4.204453360167614,
+      "t": -6.089150120082006
+     }
+    },
+    "BTC5bar_move->ETH_fwd15bar": {
+     "all": {
+      "n": 38128,
+      "mean_bp": -1.6314433648203468,
+      "t": -3.070336269058009
+     },
+     "lag(<50% captured)": {
+      "n": 3947,
+      "mean_bp": 2.1287795110781103,
+      "t": 1.3397054545134894
+     },
+     "overshoot(>=100%)": {
+      "n": 17355,
+      "mean_bp": -5.058850361338227,
+      "t": -5.644270133166283
+     }
+    }
+   }
+  }
+ },
+ "screen_passers": []
+}

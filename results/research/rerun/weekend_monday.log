@@ -1,0 +1,21 @@
+BTC_gapfill_fade_50bp        BTCUSDT  n= 167 mean_net=   -8.83 t= -1.21 wr=0.407 tpd=0.142 by_year={'2020': -258.6, '2021': 674.8, '2022': -644.1, '2023': -940.3, '2024': -306.6} reasons={'stop': 83, 'target': 58, 'flat': 26}
+BTC_gapfill_fade_1pct        BTCUSDT  n= 126 mean_net=   -9.66 t= -1.01 wr=0.421 tpd=0.107 by_year={'2020': -140.7, '2021': 662.0, '2022': -644.3, '2023': -770.9, '2024': -323.3} reasons={'stop': 57, 'target': 44, 'flat': 25}
+BTC_gapfill_fade_z1          BTCUSDT  n=  22 mean_net=  -23.41 t= -0.80 wr=0.227 tpd=0.019 by_year={'2020': -111.0, '2021': 368.7, '2022': -466.0, '2023': -291.5, '2024': -15.3} reasons={'flat': 13, 'stop': 6, 'target': 3}
+BTC_gapfill_fade_evening     BTCUSDT  n= 167 mean_net=   -4.72 t= -0.84 wr=0.401 tpd=0.142 by_year={'2020': -295.1, '2021': 688.7, '2022': -598.8, '2023': -918.5, '2024': 335.6} reasons={'signal': 67, 'stop': 60, 'target': 40}
+BTC_gapfollow_1pct           BTCUSDT  n= 126 mean_net=   16.14 t=  1.20 wr=0.444 tpd=0.107 by_year={'2020': -55.9, '2021': 25.5, '2022': 811.8, '2023': 727.5, '2024': 524.7} reasons={'flat': 71, 'stop': 55}
+BTC_gapfollow_z1             BTCUSDT  n=  22 mean_net=   53.34 t=  1.34 wr=0.727 tpd=0.019 by_year={'2020': 106.1, '2021': -222.2, '2022': 816.1, '2023': 465.7, '2024': 7.6} reasons={'flat': 19, 'stop': 3}
+BTC_MonUS_gapfade            BTCUSDT  n= 234 mean_net=   -5.24 t= -0.93 wr=0.474 tpd=0.199 by_year={'2020': -172.4, '2021': 34.3, '2022': -46.8, '2023': -157.0, '2024': -883.4} reasons={'flat': 234}
+BTC_MonUS_overnight_follow   BTCUSDT  n= 234 mean_net=    0.33 t=  0.06 wr=0.462 tpd=0.199 by_year={'2020': -210.9, '2021': -444.3, '2022': -545.4, '2023': 141.1, '2024': 1137.0} reasons={'flat': 234}
+BTC_FriPM_short              BTCUSDT  n= 235 mean_net=   -3.88 t= -1.38 wr=0.353 tpd=0.200 by_year={'2020': -293.7, '2021': 1.2, '2022': -185.4, '2023': -333.5, '2024': -101.5} reasons={'flat': 235}
+BTC_FriPM_long               BTCUSDT  n= 235 mean_net=   -3.76 t= -1.34 wr=0.426 tpd=0.200 by_year={'2020': -103.6, '2021': -406.1, '2022': -211.9, '2023': -63.8, '2024': -97.2} reasons={'flat': 235}
+BTC_FriPM_weekmom            BTCUSDT  n= 234 mean_net=   -1.34 t= -0.48 wr=0.410 tpd=0.199 by_year={'2020': -258.8, '2021': 277.9, '2022': -206.4, '2023': -114.4, '2024': -12.9} reasons={'flat': 234}
+BTC_FriPM_weekcontra         BTCUSDT  n= 234 mean_net=   -6.30 t= -2.23 wr=0.368 tpd=0.199 by_year={'2020': -130.9, '2021': -682.9, '2022': -190.9, '2023': -282.9, '2024': -185.8} reasons={'flat': 234}
+ETH_gapfill_fade_50bp        ETHUSDT  n= 195 mean_net=   -1.27 t= -2.84 wr=0.333 tpd=0.166 by_year={'2020': -57.7, '2021': 14.1, '2022': -108.6, '2023': -65.3, '2024': -30.2} reasons={'stop': 80, 'target': 66, 'flat': 49}
+ETH_MonUS_gapfade            ETHUSDT  n= 234 mean_net=   -0.23 t= -0.54 wr=0.346 tpd=0.199 by_year={'2020': -46.7, '2021': 23.9, '2022': 29.3, '2023': -55.8, '2024': -3.7} reasons={'flat': 234}
+ETH_FriPM_weekmom            ETHUSDT  n= 234 mean_net=   -0.90 t= -4.33 wr=0.248 tpd=0.199 by_year={'2020': -51.7, '2021': -39.9, '2022': -30.8, '2023': -35.9, '2024': -52.9} reasons={'flat': 234}
+
+BTCUSDT weekend-gap diagnostics: {"n_weekends": 234, "abs_gap_quantiles_pct": {"0.25": 0.438, "0.5": 1.147, "0.75": 2.558, "0.9": 4.714}, "share_abs_gap_ge_50bp": 0.7136752136752137, "share_abs_gap_ge_1pct": 0.5384615384615384, "fill_rate_all": 0.5897435897435898, "fill_rate_ge_1pct": 0.4365079365079365, "fill_rate_by_year": {"2020": 0.519, "2021": 0.673, "2022": 0.635, "2023": 0.509, "2024": 0.64}, "median_bars_to_fill": 31.0, "corr_gap_vs_next": -0.008805513042349894, "sign_agreement": 0.5256410256410257}
+
+ETHUSDT weekend-gap diagnostics: {"n_weekends": 234, "abs_gap_quantiles_pct": {"0.25": 0.647, "0.5": 1.842, "0.75": 4.046, "0.9": 7.544}, "share_abs_gap_ge_50bp": 0.8290598290598291, "share_abs_gap_ge_1pct": 0.6452991452991453, "fill_rate_all": 0.5555555555555556, "fill_rate_ge_1pct": 0.37748344370860926, "fill_rate_by_year": {"2020": 0.385, "2021": 0.538, "2022": 0.596, "2023": 0.66, "2024": 0.64}, "median_bars_to_fill": 33.0, "corr_gap_vs_next": 0.04032485155061768, "sign_agreement": 0.48717948717948717}
+
+wrote /home/user/j/research/hyp/weekend_monday_results.json; n_variants=15

@@ -55,10 +55,10 @@ def entry_mask(ts_utc: pd.Series) -> np.ndarray:
 
 
 def forced_flat_time(ts_utc: pd.Series) -> np.ndarray:
-    """True on the bar at/after which any open position must be closed (15:10 CT, or Friday 15:10)."""
-    t = ct(ts_utc)
-    minutes = (t.dt.hour * 60 + t.dt.minute).values
-    return minutes >= 15 * 60 + 10
+    """True on bars inside the daily break (15:10-17:00 CT) and from Friday 15:10 CT to Sunday 17:00 CT:
+    any open position must be closed at the open of such a bar.  (Earlier version had no upper bound and
+    closed evening-session positions one bar after entry; fixed 2026-11-10.)"""
+    return ~tradable_mask(ts_utc)
 
 
 # ------------------------------------------------------------------ trade statistics

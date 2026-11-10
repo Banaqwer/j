@@ -1,0 +1,40 @@
+5min: 473184 aligned bars per symbol (0.8s)
+1m: 2365920 aligned bars per symbol (1.5s)
+
+[diag 5min] corr(rBTC[t], rETH[t+lag]):  lag-3:+0.017(t=+11)  lag-2:-0.019(t=-13)  lag-1:-0.023(t=-16)  lag+0:+0.839(t=+1060)  lag+1:-0.033(t=-23)  lag+2:-0.017(t=-11)  lag+3:+0.018(t=+12)
+   BTC1bar_move->ETH_fwd3bar    all: n= 21156  -0.76bp t= -1.1 | lag: n=  2241  +0.06bp t= +0.0 | overshoot: n= 10017  -1.11bp t= -1.0
+   BTC1bar_move->ETH_fwd12bar   all: n= 21156  -3.32bp t= -3.0 | lag: n=  2241  +2.91bp t= +0.9 | overshoot: n= 10017  -4.82bp t= -2.7
+   BTC3bar_move->ETH_fwd3bar    all: n= 22420  -1.16bp t= -1.8 | lag: n=  2286  +0.37bp t= +0.2 | overshoot: n= 10927  -1.56bp t= -1.4
+   BTC3bar_move->ETH_fwd12bar   all: n= 22420  -3.19bp t= -3.0 | lag: n=  2286  +2.56bp t= +0.9 | overshoot: n= 10927  -4.93bp t= -2.8
+   BTC12bar_move->ETH_fwd3bar   all: n= 25194  -1.98bp t= -3.3 | lag: n=  2606  -0.24bp t= -0.2 | overshoot: n= 12533  -3.69bp t= -3.6
+   BTC12bar_move->ETH_fwd12bar  all: n= 25190  -4.22bp t= -4.3 | lag: n=  2606  +3.36bp t= +1.3 | overshoot: n= 12533  -8.17bp t= -5.3
+   ratio z -> fwd 2h ratio change: n=473016 corr=+0.0234 t=+16.1 deciles(bp)=+2.3 -0.6 -1.7 -3.0 -2.8 -1.4 +1.0 +2.0 +4.0 +5.7
+   spread1h z -> fwd 1h spread: n=472872 corr=-0.0092 t=-6.3
+
+[diag 1m] corr(rBTC[t], rETH[t+lag]):  lag-5:+0.004(t=+6)  lag-4:-0.008(t=-13)  lag-3:-0.005(t=-8)  lag-2:-0.014(t=-22)  lag-1:+0.007(t=+10)  lag+0:+0.802(t=+2068)  lag+1:+0.017(t=+26)  lag+2:-0.018(t=-28)  lag+3:-0.008(t=-12)  lag+4:-0.008(t=-12)  lag+5:-0.001(t=-1)
+   BTC1bar_move->ETH_fwd5bar    all: n= 35174  +0.24bp t= +0.6 | lag: n=  4572  +1.98bp t= +1.4 | overshoot: n= 14679  -0.94bp t= -1.3
+   BTC1bar_move->ETH_fwd15bar   all: n= 35174  +0.53bp t= +1.0 | lag: n=  4572  +4.69bp t= +2.3 | overshoot: n= 14679  -1.91bp t= -2.1
+   BTC3bar_move->ETH_fwd5bar    all: n= 36749  -0.73bp t= -1.9 | lag: n=  4112  +2.25bp t= +1.9 | overshoot: n= 16444  -2.81bp t= -4.1
+   BTC3bar_move->ETH_fwd15bar   all: n= 36749  -0.67bp t= -1.2 | lag: n=  4112  +2.53bp t= +1.6 | overshoot: n= 16444  -3.61bp t= -3.9
+   BTC5bar_move->ETH_fwd5bar    all: n= 38128  -1.41bp t= -3.6 | lag: n=  3947  +0.06bp t= +0.1 | overshoot: n= 17355  -4.20bp t= -6.1
+   BTC5bar_move->ETH_fwd15bar   all: n= 38128  -1.63bp t= -3.1 | lag: n=  3947  +2.13bp t= +1.3 | overshoot: n= 17355  -5.06bp t= -5.6
+
+variant                        n  t/day    mean$  gross$      t   win%    avgW    avgL    SRtr  by_year
+ETH_followBTC_5m_h3        10484   8.93    -0.90    0.02 -58.88   13.9    1.46    1.29  -0.575  2020:-2045 2021:-1979 2022:-2210 2023:-2058 2024:-1189   [1s]
+ETH_followBTC_15m_h6        7176   6.11    -0.90    0.02 -35.44   18.5    1.85    1.53  -0.418  2020:-1366 2021:-1555 2022:-1329 2023:-1384 2024:-856   [0s]
+ETH_lagBTC_5m_h3            1464   1.25    -0.86    0.06 -20.65   13.0    1.58    1.23  -0.540  2020:-337 2021:-227 2022:-185 2023:-350 2024:-162   [0s]
+ETH_lagBTC_15m_h6           1151   0.98    -0.83    0.09 -13.20   18.0    1.92    1.43  -0.389  2020:-269 2021:-141 2022:-112 2023:-231 2024:-203   [0s]
+ETH_lagBTC_1h_h12            641   0.55    -0.69    0.23  -6.74   22.3    2.49    1.60  -0.266  2020:-163 2021:-20 2022:-25 2023:-145 2024:-87   [0s]
+BTC_followETH_5m_h3        10594   9.03    -3.87   -0.05 -17.96   29.5   15.68   12.05  -0.175  2020:-8972 2021:-10598 2022:-9721 2023:-7600 2024:-4124   [0s]
+ETH_ratioZ24h_fade_h24      3799   3.24    -0.93   -0.01 -19.54   23.8    2.24    1.92  -0.317  2020:-759 2021:-738 2022:-913 2023:-780 2024:-354   [0s]
+BTC_ratioZ24h_fade_h24      3799   3.24    -4.25   -0.43  -6.39   37.5   26.80   22.88  -0.104  2020:-2820 2021:-4986 2022:-1597 2023:-3920 2024:-2805   [0s]
+ETH_spread1h_fade_h6        4866   4.15    -0.92   -0.00 -30.50   18.5    1.57    1.49  -0.437  2020:-1016 2021:-1040 2022:-979 2023:-899 2024:-546   [0s]
+ETH_spread1h_follow_h6      4866   4.15    -0.92    0.00 -30.45   18.0    1.74    1.50  -0.437  2020:-989 2021:-912 2022:-1049 2023:-983 2024:-540   [0s]
+ETH_followBTC_1min_h5      15541  13.24    -0.90    0.02 -91.85    9.2    1.18    1.11  -0.737  2020:-2991 2021:-2889 2022:-3178 2023:-3126 2024:-1779   [1s]
+ETH_lagBTC_1min_h5          2479   2.11    -0.89    0.03 -26.32    9.2    1.30    1.11  -0.529  2020:-554 2021:-396 2022:-316 2023:-569 2024:-374   [1s]
+BTC_lagETH_15m_h12          2528   2.15    -2.99    0.83  -4.22   35.0   24.49   17.80  -0.084  2020:-2615 2021:-907 2022:-975 2023:-2151 2024:-920   [0s]
+BTC_lagETH_1h_h12           1507   1.28    -3.37    0.45  -3.97   35.2   22.51   17.41  -0.102  2020:-1189 2021:-1291 2022:-955 2023:-950 2024:-699   [0s]
+
+variants passing the numeric screen (n>=150, mean_net>0, t>=2.5, >=3 positive years): none
+
+wrote /home/user/j/research/hyp/cross_asset_leadlag_results.json  (7.3s)

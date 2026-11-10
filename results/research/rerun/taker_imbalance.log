@@ -1,0 +1,42 @@
+loaded 473184 5-min bars per symbol in 1.3s
+
+[diag] BTCUSDT decile sorts (no costs, no hours filter), fwd return in bp:
+   imb5m->fwd5m       n=473138 corr=-0.0190 t=-13.0 bottom-decile=+0.69bp top-decile=-0.54bp
+   imb5m->fwd15m      n=473136 corr=-0.0131 t=-9.0 bottom-decile=+0.93bp top-decile=-0.49bp
+   imb5m->fwd60m      n=473127 corr=-0.0076 t=-5.2 bottom-decile=+1.49bp top-decile=+0.31bp
+   imb15m->fwd5m      n=473146 corr=-0.0122 t=-8.4 bottom-decile=+0.73bp top-decile=-0.36bp
+   imb15m->fwd15m     n=473144 corr=-0.0133 t=-9.1 bottom-decile=+1.12bp top-decile=-0.25bp
+   imb15m->fwd60m     n=473135 corr=-0.0071 t=-4.9 bottom-decile=+2.08bp top-decile=+0.85bp
+   imb60m->fwd5m      n=473164 corr=-0.0064 t=-4.4 bottom-decile=+0.44bp top-decile=-0.13bp
+   imb60m->fwd15m     n=473162 corr=-0.0050 t=-3.5 bottom-decile=+0.69bp top-decile=+0.18bp
+   imb60m->fwd60m     n=473153 corr=-0.0026 t=-1.8 bottom-decile=+1.35bp top-decile=+1.36bp
+
+[diag] ETHUSDT decile sorts (no costs, no hours filter), fwd return in bp:
+   imb5m->fwd5m       n=473157 corr=-0.0130 t=-9.0 bottom-decile=+0.72bp top-decile=-0.26bp
+   imb5m->fwd15m      n=473155 corr=-0.0095 t=-6.6 bottom-decile=+1.10bp top-decile=-0.23bp
+   imb5m->fwd60m      n=473146 corr=-0.0047 t=-3.2 bottom-decile=+1.66bp top-decile=+0.77bp
+   imb15m->fwd5m      n=473163 corr=-0.0077 t=-5.3 bottom-decile=+0.62bp top-decile=-0.20bp
+   imb15m->fwd15m     n=473161 corr=-0.0098 t=-6.7 bottom-decile=+1.32bp top-decile=-0.03bp
+   imb15m->fwd60m     n=473152 corr=-0.0027 t=-1.8 bottom-decile=+1.65bp top-decile=+1.47bp
+   imb60m->fwd5m      n=473172 corr=-0.0031 t=-2.1 bottom-decile=+0.30bp top-decile=-0.03bp
+   imb60m->fwd15m     n=473170 corr=-0.0018 t=-1.3 bottom-decile=+0.37bp top-decile=+0.08bp
+   imb60m->fwd60m     n=473161 corr=-0.0011 t=-0.7 bottom-decile=+0.61bp top-decile=+1.65bp
+
+variant                          n  t/day    mean$  gross$      t   win%    avgW    avgL    SRtr  by_year
+BTC_fade5_q2_h3               8060   6.87    -3.55    0.27 -25.78   23.7    8.71    7.35  -0.287  2020:-6640 2021:-6053 2022:-6652 2023:-5677 2024:-3587
+BTC_fade5_q2_h12              5918   5.04    -3.68    0.14 -11.50   32.6   16.37   13.38  -0.149  2020:-5082 2021:-3308 2022:-5737 2023:-3667 2024:-4001
+BTC_fade15_q2_h3              6802   5.80    -3.61    0.21 -21.43   23.8    9.25    7.63  -0.260  2020:-5984 2021:-4884 2022:-5435 2023:-5089 2024:-3150
+BTC_fade15_q2_h12             5271   4.49    -4.07   -0.25 -11.56   32.5   15.89   13.67  -0.159  2020:-4760 2021:-4715 2022:-5274 2023:-3684 2024:-3014
+BTC_follow15_q2_h12           5271   4.49    -3.57    0.25 -10.14   29.3   18.98   12.93  -0.140  2020:-4515 2021:-5851 2022:-3550 2023:-3719 2024:-1188
+BTC_follow60_q2_h12           3274   2.79    -3.46    0.36  -6.61   28.9   22.51   14.01  -0.116  2020:-2928 2021:-3090 2022:-2248 2023:-2458 2024:-604
+BTC_fade5_q2_vol2_h3          1475   1.26    -3.83   -0.01  -8.52   29.6    9.99    9.65  -0.222  2020:-1116 2021:-1800 2022:-1579 2023:-788 2024:-369
+BTC_fade5_q2_US_h6            1315   1.12    -3.42    0.40  -6.96   31.0   12.31   10.47  -0.192  2020:-1361 2021:-1212 2022:-1002 2023:-603 2024:-321
+BTC_fade5_q2_h12_brk          6947   5.92    -3.87   -0.05 -30.23   34.9    7.88   10.17  -0.363  2020:-5662 2021:-7764 2022:-5829 2023:-4041 2024:-3572
+BTC_diverge5_q2_follow_h6      171   0.15    -3.51    0.31  -3.85   22.8    9.60    7.38  -0.295  2020:-254 2021:-118 2022:-108 2023:-73 2024:-46
+BTC_fade5_fix05_h3            3569   3.04    -3.68    0.14 -35.79   10.9    5.88    4.84  -0.599  2020:-6314 2021:-347 2022:-1161 2023:-3888 2024:-1410
+ETH_fade5_q2_h3               7860   6.70    -0.90    0.02 -92.73    7.4    0.81    1.04  -1.046  2020:-1523 2021:-1748 2022:-1481 2023:-1460 2024:-891
+ETH_fade15_q2_h12             5031   4.29    -0.92    0.00 -36.89   15.7    1.43    1.36  -0.520  2020:-995 2021:-1141 2022:-948 2023:-954 2024:-583
+
+variants passing the numeric screen (n>=150, mean_net>0, t>=2.5, >=3 positive years): none
+
+wrote /home/user/j/research/hyp/taker_imbalance_results.json  (8.0s)

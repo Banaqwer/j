@@ -1,0 +1,129 @@
+/usr/local/lib/python3.13/site-packages/pandas/core/arraylike.py:402: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+BTCUSDT bars 473184 2020-01-01 00:00:00+00:00 -> 2024-06-30 23:55:00+00:00 | OI rows 262534 | top_sum rows 170779
+
+[diag] BTCUSDT: OI z (1h) x price change (1h) -> forward 1h / 4h return (bp), count
+                        fwd12         fwd48        
+                         mean   count  mean   count
+zoi12     dp12                                     
+(-99, -2] (-1.0, -0.01]   4.2    1938  13.3    1938
+          (-0.01, 0.01]   2.7    3954   8.8    3954
+          (0.01, 1.0]    -3.0    1467  -9.2    1467
+(-2, 2]   (-1.0, -0.01]   2.6    6257   6.6    6257
+          (-0.01, 0.01]   0.1  235171   0.8  235141
+          (0.01, 1.0]     0.9    6270   4.0    6264
+(2, 99]   (-1.0, -0.01]  -1.3     448 -29.4     448
+          (-0.01, 0.01]   4.6    3925   8.7    3925
+          (0.01, 1.0]     7.1     889  30.3     889
+[diag] BTCUSDT: taker z (1h) -> fwd 1h / 4h
+          fwd12         fwd48        
+           mean   count  mean   count
+zti12                                
+(-99, -2]   2.9   10759   2.7   10759
+(-2, -1]    1.1   64990   1.8   64990
+(-1, 1]     0.6  319327   2.9  319309
+(1, 2]      0.9   64558   4.8   64544
+(2, 99]     1.9   11502   4.6   11498
+[diag] BTCUSDT: top-trader 4h change z -> fwd 1h / 4h
+          fwd12         fwd48        
+           mean   count  mean   count
+ztop4h                               
+(-99, -2]   4.2    4005  16.6    4005
+(-2, -1]    3.5   13725   5.0   13724
+(-1, 1]     0.8  130922   3.7  130887
+(1, 2]     -3.0   12423  -6.0   12423
+(2, 99]     2.4    5168   2.8    5168
+[diag] BTCUSDT: retail count_ls 30d percentile -> fwd 1h / 4h
+              fwd12         fwd48        
+               mean   count  mean   count
+pct_cnt                                  
+(-0.01, 0.05]   4.1   22051  13.8   22051
+(0.05, 0.5]     0.6   95028   1.8   95028
+(0.5, 0.95]     0.0  108290   0.8  108254
+(0.95, 1.01]   -1.6   29776  -5.6   29776
+/usr/local/lib/python3.13/site-packages/pandas/core/arraylike.py:402: RuntimeWarning: divide by zero encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+ETHUSDT bars 473184 2020-01-01 00:00:00+00:00 -> 2024-06-30 23:55:00+00:00 | OI rows 262534 | top_sum rows 170779
+
+[diag] ETHUSDT: OI z (1h) x price change (1h) -> forward 1h / 4h return (bp), count
+                        fwd12         fwd48        
+                         mean   count  mean   count
+zoi12     dp12                                     
+(-99, -2] (-1.0, -0.01]   8.0    2125   8.6    2125
+          (-0.01, 0.01]   1.1    3830   5.0    3830
+          (0.01, 1.0]    19.3    1301  -9.4    1301
+(-2, 2]   (-1.0, -0.01]   3.5   10515  11.2   10515
+          (-0.01, 0.01]   0.1  226278   0.7  226247
+          (0.01, 1.0]    -4.4   10299  -2.1   10294
+(2, 99]   (-1.0, -0.01]  -7.3     657 -13.9     657
+          (-0.01, 0.01]   2.6    3831  -1.3    3831
+          (0.01, 1.0]    10.3    1483  23.5    1483
+[diag] ETHUSDT: taker z (1h) -> fwd 1h / 4h
+          fwd12         fwd48        
+           mean   count  mean   count
+zti12                                
+(-99, -2]  -0.1   10907  -0.5   10907
+(-2, -1]    1.2   63415   2.5   63406
+(-1, 1]     1.2  320965   5.0  320949
+(1, 2]      1.7   63908   7.5   63905
+(2, 99]     1.6   11949   3.3   11941
+[diag] ETHUSDT: top-trader 4h change z -> fwd 1h / 4h
+          fwd12         fwd48        
+           mean   count  mean   count
+ztop4h                               
+(-99, -2]   6.7    4343  10.9    4343
+(-2, -1]    2.7   13351   3.9   13351
+(-1, 1]     0.3  128756   1.7  128720
+(1, 2]     -2.6   14330  -2.9   14330
+(2, 99]     8.1    5463  31.5    5463
+[diag] ETHUSDT: retail count_ls 30d percentile -> fwd 1h / 4h
+              fwd12         fwd48        
+               mean   count  mean   count
+pct_cnt                                  
+(-0.01, 0.05]   6.4   22415  21.5   22415
+(0.05, 0.5]     0.8   95395   3.4   95359
+(0.5, 0.95]    -0.4  111906  -1.7  111906
+(0.95, 1.01]   -3.1   25429  -9.0   25429
+
+O1_oi_build_follow_1h_h4       BTCUSDT  n=  243 tpd=0.37 mean=   4.97 t= 1.03 wr=0.498 aw=  59.3 al=  48.9 spt=0.066 L/S n=150/93 t=1.1/0.3 by_year={'2022': 154, '2023': -168, '2024': 1221} [asis n=243 t=1.03]
+O2_oi_build_follow_1h_h2       BTCUSDT  n=  264 tpd=0.41 mean=  -1.14 t=-0.31 wr=0.455 aw=  44.8 al=  39.4 spt=-0.019 L/S n=162/102 t=0.2/-0.7 by_year={'2022': -385, '2023': -253, '2024': 338} [asis n=264 t=-0.31]
+O3_oi_build_follow_1h_h4_stop1 BTCUSDT  n=  271 tpd=0.42 mean=   3.46 t= 0.93 wr=0.395 aw=  61.1 al=  34.1 spt=0.056 L/S n=163/108 t=1.2/-0.0 by_year={'2022': 774, '2023': -208, '2024': 371} [asis n=271 t=0.93]
+O4_oi_build_follow_4h_h4       BTCUSDT  n=  201 tpd=0.31 mean=   6.57 t= 1.65 wr=0.507 aw=  46.6 al=  34.7 spt=0.116 L/S n=133/68 t=1.5/0.8 by_year={'2022': 444, '2023': 333, '2024': 543} [asis n=201 t=1.65]
+O5_oi_build_fade_1h_h4         BTCUSDT  n=  243 tpd=0.37 mean= -12.61 t=-2.63 wr=0.440 aw=  47.5 al=  59.9 spt=-0.168 L/S n=93/150 t=-1.3/-2.3 by_year={'2022': -1094, '2023': -321, '2024': -1648} [asis n=243 t=-2.63]
+O6_oi_drop_reversal_1h_h4      BTCUSDT  n=  434 tpd=0.67 mean=  -2.03 t=-0.70 wr=0.468 aw=  38.1 al=  37.3 spt=-0.033 L/S n=258/176 t=-0.8/-0.2 by_year={'2022': 155, '2023': -804, '2024': -230} [asis n=434 t=-0.70]
+O7_oi_drop_short_only_1h_h4    BTCUSDT  n=  212 tpd=0.33 mean=  -5.04 t=-1.09 wr=0.443 aw=  37.5 al=  38.9 spt=-0.075 L/S n=0/212 t=0.0/-1.1 by_year={'2022': 47, '2023': -781, '2024': -335} [asis n=212 t=-1.09]
+O8_oi_build_follow_taker_1h_h4 BTCUSDT  n=  159 tpd=0.24 mean=   1.32 t= 0.23 wr=0.484 aw=  53.2 al=  47.4 spt=0.019 L/S n=109/50 t=0.5/-0.5 by_year={'2022': -75, '2023': -132, '2024': 418} [asis n=159 t=0.23]
+E1_oi_build_follow_1h_h4       ETHUSDT  n=  303 tpd=0.47 mean=  -0.80 t=-2.63 wr=0.393 aw=   3.6 al=   3.6 spt=-0.151 L/S n=201/102 t=-2.4/-1.2 by_year={'2022': -123, '2023': -51, '2024': -67} [asis n=303 t=-2.63]
+T1_taker_fade_1h_h1            BTCUSDT  n= 3464 tpd=2.95 mean=  -4.25 t=-8.48 wr=0.345 aw=  17.0 al=  15.4 spt=-0.144 L/S n=1727/1737 t=-5.7/-6.3 by_year={'2020': -2734, '2021': -3263, '2022': -3949, '2023': -2674, '2024': -2106} [asis n=3464 t=-8.48]
+T2_taker_follow_1h_h4          BTCUSDT  n= 2414 tpd=2.06 mean=  -1.61 t=-1.54 wr=0.384 aw=  36.2 al=  25.2 spt=-0.031 L/S n=1206/1208 t=-0.6/-1.5 by_year={'2020': -2080, '2021': -95, '2022': -754, '2023': -1460, '2024': 504} [asis n=2414 t=-1.54]
+P1_top_follow_4h               BTCUSDT  n=  368 tpd=0.94 mean=  -7.13 t=-2.13 wr=0.408 aw=  35.0 al=  36.1 spt=-0.111 L/S n=195/173 t=-1.4/-1.7 by_year={'2023': -1244, '2024': -1380} [asis n=368 t=-2.13]
+P2_retail_fade_level_h4        BTCUSDT  n=  931 tpd=1.48 mean=   1.27 t= 0.83 wr=0.441 aw=  32.6 al=  23.5 spt=0.027 L/S n=390/541 t=1.2/0.1 by_year={'2022': -508, '2023': -9, '2024': 1696} [asis n=931 t=0.83]
+P3_top_vs_retail_divergence_h4 BTCUSDT  n=  136 tpd=0.35 mean=   3.22 t= 0.72 wr=0.412 aw=  36.5 al=  20.1 spt=0.061 L/S n=70/66 t=0.5/0.7 by_year={'2023': -117, '2024': 554} [asis n=136 t=0.72]
+O9_oi_build_follow_4h_relaxed_h4 BTCUSDT  n=  449 tpd=0.69 mean=   2.76 t= 1.01 wr=0.448 aw=  48.3 al=  34.1 spt=0.048 L/S n=285/164 t=1.0/0.3 by_year={'2022': 960, '2023': 142, '2024': 139} [asis n=449 t=1.01]
+O10_oi_cascade_reversal_15m_h1 BTCUSDT  n=  310 tpd=0.48 mean=  -4.44 t=-1.67 wr=0.468 aw=  26.8 al=  31.9 spt=-0.095 L/S n=179/131 t=-1.6/-0.8 by_year={'2022': -764, '2023': -339, '2024': -276} [asis n=310 t=-1.67]
+E2_retail_fade_level_h4        ETHUSDT  n=  840 tpd=1.33 mean=  -0.58 t=-4.64 wr=0.314 aw=   2.7 al=   2.1 spt=-0.160 L/S n=383/457 t=-3.5/-3.1 by_year={'2022': -138, '2023': -267, '2024': -85} [asis n=840 t=-4.64]
+E3_top_follow_4h               ETHUSDT  n=  385 tpd=0.99 mean=  -0.97 t=-5.35 wr=0.281 aw=   2.5 al=   2.3 spt=-0.273 L/S n=210/175 t=-2.8/-4.8 by_year={'2023': -249, '2024': -126} [asis n=385 t=-5.35]
+E4_oi_build_follow_4h_h4       ETHUSDT  n=  238 tpd=0.37 mean=  -0.50 t=-1.72 wr=0.395 aw=   3.2 al=   2.9 spt=-0.111 L/S n=162/76 t=-1.9/-0.5 by_year={'2022': -47, '2023': -36, '2024': -36} [asis n=238 t=-1.72]
+
+variants tried: 19
+screen (mean_net>0, t>=2.5, n>=150, net>0 in >=3 calendar years):
+  O1_oi_build_follow_1h_h4       BTCUSDT  t= 1.03 n= 243 posyrs=2/3 DSR_p=0.200 -> fail
+  O2_oi_build_follow_1h_h2       BTCUSDT  t=-0.31 n= 264 posyrs=1/3 DSR_p=0.015 -> fail
+  O3_oi_build_follow_1h_h4_stop1 BTCUSDT  t= 0.93 n= 271 posyrs=2/3 DSR_p=0.172 -> fail
+  O4_oi_build_follow_4h_h4       BTCUSDT  t= 1.65 n= 201 posyrs=3/3 DSR_p=0.410 -> fail
+  O5_oi_build_fade_1h_h4         BTCUSDT  t=-2.63 n= 243 posyrs=0/3 DSR_p=0.000 -> fail
+  O6_oi_drop_reversal_1h_h4      BTCUSDT  t=-0.70 n= 434 posyrs=1/3 DSR_p=0.005 -> fail
+  O7_oi_drop_short_only_1h_h4    BTCUSDT  t=-1.09 n= 212 posyrs=1/3 DSR_p=0.002 -> fail
+  O8_oi_build_follow_taker_1h_h4 BTCUSDT  t= 0.23 n= 159 posyrs=1/3 DSR_p=0.051 -> fail
+  E1_oi_build_follow_1h_h4       ETHUSDT  t=-2.63 n= 303 posyrs=0/3 DSR_p=0.000 -> fail
+  T1_taker_fade_1h_h1            BTCUSDT  t=-8.48 n=3464 posyrs=0/5 DSR_p=0.000 -> fail
+  T2_taker_follow_1h_h4          BTCUSDT  t=-1.54 n=2414 posyrs=1/5 DSR_p=0.000 -> fail
+  P1_top_follow_4h               BTCUSDT  t=-2.13 n= 368 posyrs=0/2 DSR_p=0.000 -> fail
+  P2_retail_fade_level_h4        BTCUSDT  t= 0.83 n= 931 posyrs=1/3 DSR_p=0.147 -> fail
+  P3_top_vs_retail_divergence_h4 BTCUSDT  t= 0.72 n= 136 posyrs=1/2 DSR_p=0.124 -> fail
+  O9_oi_build_follow_4h_relaxed_h4 BTCUSDT  t= 1.01 n= 449 posyrs=3/3 DSR_p=0.193 -> fail
+  O10_oi_cascade_reversal_15m_h1 BTCUSDT  t=-1.67 n= 310 posyrs=0/3 DSR_p=0.000 -> fail
+  E2_retail_fade_level_h4        ETHUSDT  t=-4.64 n= 840 posyrs=0/3 DSR_p=0.000 -> fail
+  E3_top_follow_4h               ETHUSDT  t=-5.35 n= 385 posyrs=0/2 DSR_p=0.000 -> fail
+  E4_oi_build_follow_4h_h4       ETHUSDT  t=-1.72 n= 238 posyrs=0/3 DSR_p=0.000 -> fail
+wrote /home/user/j/results/research/positioning_metrics.json

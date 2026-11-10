@@ -1,0 +1,906 @@
+{
+ "family": "range_breakout",
+ "n_variants": 15,
+ "variants": {
+  "BTC_us_orb30_rangestop_flat": {
+   "n": 1119,
+   "trades_per_day": 0.9535017107546128,
+   "mean_net": 2.460495978552285,
+   "median_net": -8.10799999999992,
+   "std_net": 61.93395116107113,
+   "win_rate": 0.3744414655942806,
+   "avg_win": 57.12060381861577,
+   "avg_loss": 30.257482857142858,
+   "t_stat": 1.3289508385317723,
+   "ci95_low": -1.2274508489722977,
+   "ci95_high": 5.97197057640751,
+   "sharpe_per_trade": 0.03972774112462634,
+   "sharpe_annual": 0.6158215477953015,
+   "max_drawdown": 1798.0579999999975,
+   "total_net": 2753.295000000007,
+   "gross_mean": 6.280495978552283,
+   "p_win_at_1R": 0.5281591881003604,
+   "by_year": {
+    "2020": -1084.3590000000006,
+    "2021": -60.53799999999433,
+    "2022": 1681.8320000000015,
+    "2023": 499.35999999999774,
+    "2024": 1717.0000000000025
+   },
+   "n_by_year": {
+    "2020": 250,
+    "2021": 255,
+    "2022": 241,
+    "2023": 247,
+    "2024": 126
+   },
+   "rule": "5-min bars, CT (America/Chicago), Mon-Fri. Opening range OR = [min low, max high] of the bars from 08:30 to 09:00 (bar open times, exclusive end). From the 09:00 bar until the 13:00 bar, the FIRST 5-min close above OR high -> long, first close below OR low -> short (one trade per session, whichever happens first). Fill at the open of the next bar. Stop = the opposite side of the OR (OR low for longs, OR high for shorts), checked on bar highs/lows. No target. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT; no weekend positions.",
+   "symbol": "BTCUSDT",
+   "skipped_entries": 0,
+   "reasons": {
+    "flat": 634,
+    "stop": 485
+   },
+   "avg_hold_bars": 47.37265415549598,
+   "share_long": 0.4897229669347632,
+   "by_side": {
+    "short": {
+     "n": 571,
+     "mean_net": 3.1056917688266332
+    },
+    "long": {
+     "n": 548,
+     "mean_net": 1.788220802919707
+    }
+   },
+   "n_pos_years": 3,
+   "dsr": 0.3294784064209564
+  },
+  "BTC_us_orb60_rangestop_flat": {
+   "n": 1021,
+   "trades_per_day": 0.8699957521719925,
+   "mean_net": 0.865541625857005,
+   "median_net": -5.974000000000087,
+   "std_net": 59.831639562531365,
+   "win_rate": 0.4015670910871694,
+   "avg_win": 50.17842439024389,
+   "avg_loss": 32.224936170212764,
+   "t_stat": 0.46224255605071307,
+   "ci95_low": -2.7431587414299763,
+   "ci95_high": 4.726348457394701,
+   "sharpe_per_trade": 0.01446628626903009,
+   "sharpe_annual": 0.21419823673725835,
+   "max_drawdown": 2102.705,
+   "total_net": 883.7180000000021,
+   "gross_mean": 4.685541625857004,
+   "p_win_at_1R": 0.5105037175664939,
+   "by_year": {
+    "2020": -934.6140000000008,
+    "2021": -433.25199999999495,
+    "2022": 664.8839999999977,
+    "2023": 555.9699999999968,
+    "2024": 1030.7300000000037
+   },
+   "n_by_year": {
+    "2020": 230,
+    "2021": 242,
+    "2022": 209,
+    "2023": 227,
+    "2024": 113
+   },
+   "rule": "5-min bars, CT (America/Chicago), Mon-Fri. Opening range OR = [min low, max high] of the bars from 08:30 to 09:30 (bar open times, exclusive end). From the 09:30 bar until the 13:00 bar, the FIRST 5-min close above OR high -> long, first close below OR low -> short (one trade per session, whichever happens first). Fill at the open of the next bar. Stop = the opposite side of the OR (OR low for longs, OR high for shorts), checked on bar highs/lows. No target. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT; no weekend positions.",
+   "symbol": "BTCUSDT",
+   "skipped_entries": 0,
+   "reasons": {
+    "flat": 741,
+    "stop": 280
+   },
+   "avg_hold_bars": 49.01958863858962,
+   "share_long": 0.48971596474045054,
+   "by_side": {
+    "short": {
+     "n": 521,
+     "mean_net": 1.902936660268724
+    },
+    "long": {
+     "n": 500,
+     "mean_net": -0.21542400000000658
+    }
+   },
+   "n_pos_years": 3,
+   "dsr": 0.09548340602787014
+  },
+  "BTC_us_orb60_rangestop_tgt2R": {
+   "n": 1021,
+   "trades_per_day": 0.8699957521719925,
+   "mean_net": 1.6173770812928636,
+   "median_net": -4.968999999999796,
+   "std_net": 59.770732726745,
+   "win_rate": 0.42311459353574926,
+   "avg_win": 48.1740902777778,
+   "avg_loss": 32.52948217317487,
+   "t_stat": 0.8646405035258405,
+   "ci95_low": -1.9982857492654065,
+   "ci95_high": 5.432570617042128,
+   "sharpe_per_trade": 0.02705968301722278,
+   "sharpe_annual": 0.4006651244947929,
+   "max_drawdown": 1311.497000000002,
+   "total_net": 1651.3420000000137,
+   "gross_mean": 5.437377081292863,
+   "p_win_at_1R": 0.520040960172808,
+   "by_year": {
+    "2020": -782.6010000000006,
+    "2021": 855.0450000000053,
+    "2022": 396.10800000000575,
+    "2023": 201.92000000000138,
+    "2024": 980.8700000000022
+   },
+   "n_by_year": {
+    "2020": 230,
+    "2021": 242,
+    "2022": 209,
+    "2023": 227,
+    "2024": 113
+   },
+   "rule": "5-min bars, CT (America/Chicago), Mon-Fri. Opening range OR = [min low, max high] of the bars from 08:30 to 09:30 (bar open times, exclusive end). From the 09:30 bar until the 13:00 bar, the FIRST 5-min close above OR high -> long, first close below OR low -> short (one trade per session, whichever happens first). Fill at the open of the next bar. Stop = the opposite side of the OR (OR low for longs, OR high for shorts), checked on bar highs/lows. Target = 2 x the stop distance from the fill. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT; no weekend positions.",
+   "symbol": "BTCUSDT",
+   "skipped_entries": 0,
+   "reasons": {
+    "flat": 598,
+    "stop": 268,
+    "target": 155
+   },
+   "avg_hold_bars": 44.143976493633694,
+   "share_long": 0.48971596474045054,
+   "by_side": {
+    "short": {
+     "n": 521,
+     "mean_net": 3.326262955854136
+    },
+    "long": {
+     "n": 500,
+     "mean_net": -0.16328199999998214
+    }
+   },
+   "n_pos_years": 4,
+   "dsr": 0.18261981365528962
+  },
+  "BTC_us_orb60_narrow_rangestop_flat": {
+   "n": 414,
+   "trades_per_day": 0.352770069930661,
+   "mean_net": -2.184949275362316,
+   "median_net": -8.748999999999906,
+   "std_net": 54.03185884142247,
+   "win_rate": 0.3357487922705314,
+   "avg_win": 50.531489208633076,
+   "avg_loss": 28.830712727272715,
+   "t_stat": -0.8227949565120419,
+   "ci95_low": -7.346504347826099,
+   "ci95_high": 3.157838224637687,
+   "sharpe_per_trade": -0.04043816596750633,
+   "sharpe_annual": -0.38127434736202215,
+   "max_drawdown": 2051.051999999999,
+   "total_net": -904.5689999999988,
+   "gross_mean": 1.6350507246376838,
+   "p_win_at_1R": 0.47246864096428526,
+   "by_year": {
+    "2020": -313.8260000000009,
+    "2021": -1303.7229999999995,
+    "2022": 153.09999999999988,
+    "2023": 1.4799999999986113,
+    "2024": 558.400000000003
+   },
+   "n_by_year": {
+    "2020": 96,
+    "2021": 115,
+    "2022": 82,
+    "2023": 81,
+    "2024": 40
+   },
+   "rule": "5-min bars, CT (America/Chicago), Mon-Fri. Opening range OR = [min low, max high] of the bars from 08:30 to 09:30 (bar open times, exclusive end). Trade only if (OR high - OR low)/OR low is below the median of that quantity over the previous 20 sessions. From the 09:30 bar until the 13:00 bar, the FIRST 5-min close above OR high -> long, first close below OR low -> short (one trade per session, whichever happens first). Fill at the open of the next bar. Stop = the opposite side of the OR (OR low for longs, OR high for shorts), checked on bar highs/lows. No target. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT; no weekend positions.",
+   "symbol": "BTCUSDT",
+   "skipped_entries": 0,
+   "reasons": {
+    "flat": 249,
+    "stop": 165
+   },
+   "avg_hold_bars": 45.63526570048309,
+   "share_long": 0.5048309178743962,
+   "by_side": {
+    "short": {
+     "n": 205,
+     "mean_net": 1.5004000000000142
+    },
+    "long": {
+     "n": 209,
+     "mean_net": -5.79976555023924
+    }
+   },
+   "n_pos_years": 3,
+   "dsr": 0.004808859451197214
+  },
+  "ETH_us_orb60_rangestop_flat": {
+   "n": 1046,
+   "trades_per_day": 0.8912982926267426,
+   "mean_net": -0.6134760994263865,
+   "median_net": -1.0495,
+   "std_net": 4.16903902009838,
+   "win_rate": 0.2858508604206501,
+   "avg_win": 3.9580969899665552,
+   "avg_loss": 2.443329317269076,
+   "t_stat": -4.759129581748829,
+   "ci95_low": -0.8554493068833648,
+   "ci95_high": -0.35756340822179833,
+   "sharpe_per_trade": -0.14715048155435828,
+   "sharpe_annual": -2.2053295428361346,
+   "max_drawdown": 643.0460000000041,
+   "total_net": -641.6960000000003,
+   "gross_mean": 0.3065239005736134,
+   "p_win_at_1R": 0.4041657171413557,
+   "by_year": {
+    "2020": -224.95199999999994,
+    "2021": -182.97400000000084,
+    "2022": -42.09599999999997,
+    "2023": -138.85100000000003,
+    "2024": -52.822999999999546
+   },
+   "n_by_year": {
+    "2020": 238,
+    "2021": 248,
+    "2022": 213,
+    "2023": 227,
+    "2024": 120
+   },
+   "rule": "5-min bars, CT (America/Chicago), Mon-Fri. Opening range OR = [min low, max high] of the bars from 08:30 to 09:30 (bar open times, exclusive end). From the 09:30 bar until the 13:00 bar, the FIRST 5-min close above OR high -> long, first close below OR low -> short (one trade per session, whichever happens first). Fill at the open of the next bar. Stop = the opposite side of the OR (OR low for longs, OR high for shorts), checked on bar highs/lows. No target. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT; no weekend positions.",
+   "symbol": "ETHUSDT",
+   "skipped_entries": 0,
+   "reasons": {
+    "flat": 735,
+    "stop": 311
+   },
+   "avg_hold_bars": 48.41300191204589,
+   "share_long": 0.4847036328871893,
+   "by_side": {
+    "short": {
+     "n": 539,
+     "mean_net": -0.6675491651205945
+    },
+    "long": {
+     "n": 507,
+     "mean_net": -0.555990138067061
+    }
+   },
+   "n_pos_years": 0,
+   "dsr": 4.2454295239955354e-11
+  },
+  "BTC_utc_orb60_rangestop_flat": {
+   "n": 1147,
+   "trades_per_day": 0.9773605560639329,
+   "mean_net": -1.9923687881429843,
+   "median_net": -17.50000000000029,
+   "std_net": 82.66342075274515,
+   "win_rate": 0.28945074106364427,
+   "avg_win": 90.61184036144579,
+   "avg_loss": 39.71580122699387,
+   "t_stat": -0.8162779504743091,
+   "ci95_low": -6.639889777680913,
+   "ci95_high": 2.7725245422842018,
+   "sharpe_per_trade": -0.02410218171471957,
+   "sharpe_annual": -0.37825443674622994,
+   "max_drawdown": 4573.691999999989,
+   "total_net": -2285.247000000003,
+   "gross_mean": 1.8276312118570137,
+   "p_win_at_1R": 0.4847126153449882,
+   "by_year": {
+    "2020": -341.82800000000054,
+    "2021": -1715.106999999994,
+    "2022": -752.4020000000032,
+    "2023": -147.27000000000328,
+    "2024": 671.3599999999976
+   },
+   "n_by_year": {
+    "2020": 254,
+    "2021": 258,
+    "2022": 253,
+    "2023": 253,
+    "2024": 129
+   },
+   "rule": "5-min bars, UTC. Opening range OR = [min low, max high] of the bars from 00:00 to 01:00 (bar open times, exclusive end). From the 01:00 bar until the 12:00 bar, the FIRST 5-min close above OR high -> long, first close below OR low -> short (one trade per session, whichever happens first). Fill at the open of the next bar. Stop = the opposite side of the OR (OR low for longs, OR high for shorts), checked on bar highs/lows. No target. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT; no weekend positions.",
+   "symbol": "BTCUSDT",
+   "skipped_entries": 0,
+   "reasons": {
+    "stop": 740,
+    "flat": 407
+   },
+   "avg_hold_bars": 128.45510026155188,
+   "share_long": 0.4742807323452485,
+   "by_side": {
+    "short": {
+     "n": 603,
+     "mean_net": -2.8643034825870726
+    },
+    "long": {
+     "n": 544,
+     "mean_net": -1.0258676470588195
+    }
+   },
+   "n_pos_years": 1,
+   "dsr": 0.004862587393615676
+  },
+  "BTC_utc_orb60_rangestop_4h": {
+   "n": 1147,
+   "trades_per_day": 0.9773605560639329,
+   "mean_net": -1.6483836094158686,
+   "median_net": -4.707000000000262,
+   "std_net": 46.47122093806024,
+   "win_rate": 0.36704446381865735,
+   "avg_win": 35.65286460807604,
+   "avg_loss": 23.278997245179077,
+   "t_stat": -1.2013122719286957,
+   "ci95_low": -4.410441303400154,
+   "ci95_high": 1.1152930470793407,
+   "sharpe_per_trade": -0.035471063082524505,
+   "sharpe_annual": -0.5566752066629835,
+   "max_drawdown": 2000.7300000000048,
+   "total_net": -1890.6960000000013,
+   "gross_mean": 2.171616390584131,
+   "p_win_at_1R": 0.4720289914898587,
+   "by_year": {
+    "2020": -759.1369999999998,
+    "2021": -246.4129999999967,
+    "2022": 723.8539999999994,
+    "2023": -793.9600000000029,
+    "2024": -815.0400000000011
+   },
+   "n_by_year": {
+    "2020": 254,
+    "2021": 258,
+    "2022": 253,
+    "2023": 253,
+    "2024": 129
+   },
+   "rule": "5-min bars, UTC. Opening range OR = [min low, max high] of the bars from 00:00 to 01:00 (bar open times, exclusive end). From the 01:00 bar until the 12:00 bar, the FIRST 5-min close above OR high -> long, first close below OR low -> short (one trade per session, whichever happens first). Fill at the open of the next bar. Stop = the opposite side of the OR (OR low for longs, OR high for shorts), checked on bar highs/lows. No target. Time exit at the open of the bar 48 bars (4h) after entry. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT; no weekend positions.",
+   "symbol": "BTCUSDT",
+   "skipped_entries": 0,
+   "reasons": {
+    "time": 886,
+    "stop": 261
+   },
+   "avg_hold_bars": 42.1743679163034,
+   "share_long": 0.4742807323452485,
+   "by_side": {
+    "short": {
+     "n": 603,
+     "mean_net": -0.2885688225539082
+    },
+    "long": {
+     "n": 544,
+     "mean_net": -3.15567830882352
+    }
+   },
+   "n_pos_years": 1,
+   "dsr": 0.0014901686571269824
+  },
+  "ETH_utc_orb60_rangestop_flat": {
+   "n": 1144,
+   "trades_per_day": 0.9748042512093629,
+   "mean_net": -0.6234335664335662,
+   "median_net": -1.6430000000000018,
+   "std_net": 6.383714925715321,
+   "win_rate": 0.27797202797202797,
+   "avg_win": 6.506185534591196,
+   "avg_loss": 3.3682506053268764,
+   "t_stat": -3.3031607475119595,
+   "ci95_low": -0.9905500437062933,
+   "ci95_high": -0.24613496503496415,
+   "sharpe_per_trade": -0.0976599947974193,
+   "sharpe_annual": -1.5306492197987112,
+   "max_drawdown": 734.5170000000037,
+   "total_net": -713.2079999999997,
+   "gross_mean": 0.2965664335664337,
+   "p_win_at_1R": 0.43686388188655206,
+   "by_year": {
+    "2020": -207.129,
+    "2021": -140.33299999999983,
+    "2022": -97.52699999999992,
+    "2023": -160.54699999999994,
+    "2024": -107.67200000000014
+   },
+   "n_by_year": {
+    "2020": 255,
+    "2021": 257,
+    "2022": 255,
+    "2023": 248,
+    "2024": 129
+   },
+   "rule": "5-min bars, UTC. Opening range OR = [min low, max high] of the bars from 00:00 to 01:00 (bar open times, exclusive end). From the 01:00 bar until the 12:00 bar, the FIRST 5-min close above OR high -> long, first close below OR low -> short (one trade per session, whichever happens first). Fill at the open of the next bar. Stop = the opposite side of the OR (OR low for longs, OR high for shorts), checked on bar highs/lows. No target. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT; no weekend positions.",
+   "symbol": "ETHUSDT",
+   "skipped_entries": 0,
+   "reasons": {
+    "stop": 694,
+    "flat": 450
+   },
+   "avg_hold_bars": 133.4055944055944,
+   "share_long": 0.4763986013986014,
+   "by_side": {
+    "short": {
+     "n": 599,
+     "mean_net": -0.5070667779632715
+    },
+    "long": {
+     "n": 545,
+     "mean_net": -0.7513302752293581
+    }
+   },
+   "n_pos_years": 0,
+   "dsr": 2.1010214580085417e-07
+  },
+  "BTC_pdhl_break_qstop_6h": {
+   "n": 869,
+   "trades_per_day": 0.7404763062071121,
+   "mean_net": -5.1673955696202505,
+   "median_net": -12.2325,
+   "std_net": 59.71495506779282,
+   "win_rate": 0.3429228998849252,
+   "avg_win": 51.41339597315438,
+   "avg_loss": 34.69642513134851,
+   "t_stat": -2.550929680344766,
+   "ci95_low": -9.25754455552357,
+   "ci95_high": -1.1557922540276153,
+   "sharpe_per_trade": -0.08653436251863277,
+   "sharpe_annual": -1.182073421017169,
+   "max_drawdown": 4588.7447499999935,
+   "total_net": -4490.466749999998,
+   "gross_mean": -1.3473955696202518,
+   "p_win_at_1R": 0.43999063633695046,
+   "by_year": {
+    "2020": -378.6409999999985,
+    "2021": -1762.164750000002,
+    "2022": -1754.5835000000015,
+    "2023": -304.94249999999937,
+    "2024": -290.1349999999965
+   },
+   "n_by_year": {
+    "2020": 173,
+    "2021": 214,
+    "2022": 209,
+    "2023": 176,
+    "2024": 97
+   },
+   "rule": "5-min bars, UTC days. PDH/PDL = previous UTC calendar day's high/low. The FIRST 5-min close of the day above PDH -> long, first close below PDL -> short (one trade per UTC day). Fill at the open of the next bar. Stop = fill price -/+ 0.25 x (PDH - PDL), checked on bar highs/lows. No target. Time exit at the open of the bar 72 bars (6h) after entry. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT; no weekend positions.",
+   "symbol": "BTCUSDT",
+   "skipped_entries": 0,
+   "reasons": {
+    "stop": 400,
+    "time": 372,
+    "flat": 97
+   },
+   "avg_hold_bars": 47.192174913693904,
+   "share_long": 0.5408515535097813,
+   "by_side": {
+    "short": {
+     "n": 399,
+     "mean_net": -6.490016290726797
+    },
+    "long": {
+     "n": 470,
+     "mean_net": -4.044575000000012
+    }
+   },
+   "n_pos_years": 0,
+   "dsr": 8.123847497085368e-06
+  },
+  "ETH_pdhl_break_qstop_6h": {
+   "n": 896,
+   "trades_per_day": 0.7634830498982422,
+   "mean_net": -0.7349522879464284,
+   "median_net": -1.1862500000000038,
+   "std_net": 4.5617677317038305,
+   "win_rate": 0.2845982142857143,
+   "avg_win": 4.328599999999999,
+   "avg_loss": 2.749313962558502,
+   "t_stat": -4.822586012890321,
+   "ci95_low": -1.0339621861049104,
+   "ci95_high": -0.45098814871651755,
+   "sharpe_per_trade": -0.1611112908793193,
+   "sharpe_annual": -2.2347345716077727,
+   "max_drawdown": 670.2920000000024,
+   "total_net": -658.5172499999999,
+   "gross_mean": 0.18504771205357148,
+   "p_win_at_1R": 0.39616258521447745,
+   "by_year": {
+    "2020": -163.24174999999997,
+    "2021": -183.73099999999982,
+    "2022": -111.61974999999993,
+    "2023": -153.13725,
+    "2024": -46.78750000000012
+   },
+   "n_by_year": {
+    "2020": 184,
+    "2021": 215,
+    "2022": 208,
+    "2023": 182,
+    "2024": 107
+   },
+   "rule": "5-min bars, UTC days. PDH/PDL = previous UTC calendar day's high/low. The FIRST 5-min close of the day above PDH -> long, first close below PDL -> short (one trade per UTC day). Fill at the open of the next bar. Stop = fill price -/+ 0.25 x (PDH - PDL), checked on bar highs/lows. No target. Time exit at the open of the bar 72 bars (6h) after entry. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT; no weekend positions.",
+   "symbol": "ETHUSDT",
+   "skipped_entries": 0,
+   "reasons": {
+    "time": 416,
+    "stop": 375,
+    "flat": 105
+   },
+   "avg_hold_bars": 49.511160714285715,
+   "share_long": 0.5491071428571429,
+   "by_side": {
+    "short": {
+     "n": 404,
+     "mean_net": -0.8617221534653463
+    },
+    "long": {
+     "n": 492,
+     "mean_net": -0.6308567073170731
+    }
+   },
+   "n_pos_years": 0,
+   "dsr": 2.9306526748246784e-11
+  },
+  "BTC_pdhl_failed_fade_4h": {
+   "n": 1081,
+   "trades_per_day": 0.9211218492633927,
+   "mean_net": -2.6671778908417925,
+   "median_net": -6.500000000000291,
+   "std_net": 50.27485402572542,
+   "win_rate": 0.40425531914893614,
+   "avg_win": 36.34580091533183,
+   "avg_loss": 29.14027065217389,
+   "t_stat": -1.7442712041870554,
+   "ci95_low": -5.531056024514307,
+   "ci95_high": 0.27812303885292866,
+   "sharpe_per_trade": -0.053051927102105746,
+   "sharpe_annual": -0.8082765453716716,
+   "max_drawdown": 3550.9994999999712,
+   "total_net": -2883.2192999999775,
+   "gross_mean": 1.1528221091582067,
+   "p_win_at_1R": 0.45927106593816125,
+   "by_year": {
+    "2020": -873.7573000000003,
+    "2021": -1089.5810999999828,
+    "2022": -803.5249000000026,
+    "2023": -719.6549999999963,
+    "2024": 603.2990000000043
+   },
+   "n_by_year": {
+    "2020": 197,
+    "2021": 279,
+    "2022": 288,
+    "2023": 204,
+    "2024": 113
+   },
+   "rule": "5-min bars, UTC days. PDH/PDL = previous UTC calendar day's high/low. Break event: a 5-min close above PDH whose previous close was <= PDH (resp. close below PDL, previous close >= PDL). If any of the next 6 closes (same UTC day) is back inside (< PDH resp. > PDL), on that bar fade: short after a failed upside break, long after a failed downside break; fill at the open of the next bar. Stop = highest high (resp. lowest low) from the break bar to the signal bar, plus (minus) 0.10 x (PDH - PDL), checked on bar highs/lows. No target. Time exit at the open of the bar 48 bars (4h) after entry. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT; no weekend positions. Every failed-break event is eligible, one position at a time.",
+   "symbol": "BTCUSDT",
+   "skipped_entries": 0,
+   "n_break_events": {
+    "up": 2819,
+    "dn": 2338
+   },
+   "reasons": {
+    "time": 511,
+    "stop": 441,
+    "flat": 129
+   },
+   "avg_hold_bars": 31.731729879740982,
+   "share_long": 0.486586493987049,
+   "by_side": {
+    "short": {
+     "n": 555,
+     "mean_net": -0.05474882882881133
+    },
+    "long": {
+     "n": 526,
+     "mean_net": -5.423638212927732
+    }
+   },
+   "n_pos_years": 1,
+   "dsr": 0.00022333662968665165
+  },
+  "ETH_pdhl_failed_fade_4h": {
+   "n": 1100,
+   "trades_per_day": 0.9373117800090027,
+   "mean_net": -0.8533463636363636,
+   "median_net": -1.065650000000002,
+   "std_net": 3.527631629571605,
+   "win_rate": 0.27454545454545454,
+   "avg_win": 3.035701986754968,
+   "avg_loss": 2.3251416040100255,
+   "t_stat": -8.023030751483823,
+   "ci95_low": -1.0534021363636366,
+   "ci95_high": -0.6414364704545449,
+   "sharpe_per_trade": -0.24190347894686323,
+   "sharpe_annual": -3.7177862958772994,
+   "max_drawdown": 941.4751000000033,
+   "total_net": -938.681,
+   "gross_mean": 0.06665363636363633,
+   "p_win_at_1R": 0.3408186418446521,
+   "by_year": {
+    "2020": -184.4954,
+    "2021": -123.8092000000003,
+    "2022": -283.6619,
+    "2023": -227.7474,
+    "2024": -118.96709999999968
+   },
+   "n_by_year": {
+    "2020": 198,
+    "2021": 282,
+    "2022": 258,
+    "2023": 230,
+    "2024": 132
+   },
+   "rule": "5-min bars, UTC days. PDH/PDL = previous UTC calendar day's high/low. Break event: a 5-min close above PDH whose previous close was <= PDH (resp. close below PDL, previous close >= PDL). If any of the next 6 closes (same UTC day) is back inside (< PDH resp. > PDL), on that bar fade: short after a failed upside break, long after a failed downside break; fill at the open of the next bar. Stop = highest high (resp. lowest low) from the break bar to the signal bar, plus (minus) 0.10 x (PDH - PDL), checked on bar highs/lows. No target. Time exit at the open of the bar 48 bars (4h) after entry. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT; no weekend positions. Every failed-break event is eligible, one position at a time.",
+   "symbol": "ETHUSDT",
+   "skipped_entries": 0,
+   "n_break_events": {
+    "up": 2884,
+    "dn": 2231
+   },
+   "reasons": {
+    "time": 509,
+    "stop": 465,
+    "flat": 126
+   },
+   "avg_hold_bars": 31.93090909090909,
+   "share_long": 0.4690909090909091,
+   "by_side": {
+    "short": {
+     "n": 584,
+     "mean_net": -0.7873462328767121
+    },
+    "long": {
+     "n": 516,
+     "mean_net": -0.9280441860465117
+    }
+   },
+   "n_pos_years": 0,
+   "dsr": 2.4791596654026014e-22
+  },
+  "BTC_us_orb60_failed_fade_flat": {
+   "n": 1015,
+   "trades_per_day": 0.8648831424628526,
+   "mean_net": -5.5335148768473,
+   "median_net": -9.465000000000073,
+   "std_net": 35.943120090161976,
+   "win_rate": 0.26108374384236455,
+   "avg_win": 34.662607547169834,
+   "avg_loss": 19.736144800000016,
+   "t_stat": -4.9047664122816625,
+   "ci95_low": -7.670616096059128,
+   "ci95_high": -3.235445854679816,
+   "sharpe_per_trade": -0.15395199033825344,
+   "sharpe_annual": -2.272816086201287,
+   "max_drawdown": 5960.989600000017,
+   "total_net": -5616.517600000009,
+   "gross_mean": -1.7135148768473005,
+   "p_win_at_1R": 0.39827864357011883,
+   "by_year": {
+    "2020": -1206.360300000002,
+    "2021": -1908.5433000000085,
+    "2022": -788.8240000000045,
+    "2023": -920.9440000000016,
+    "2024": -791.8459999999927
+   },
+   "n_by_year": {
+    "2020": 243,
+    "2021": 246,
+    "2022": 202,
+    "2023": 221,
+    "2024": 103
+   },
+   "rule": "5-min bars, CT (America/Chicago), Mon-Fri. OR = [min low, max high] of the bars from 08:30 to 09:30. Break event (from the 09:30 bar until the 14:30 bar): a close above OR high whose previous close was <= OR high (resp. below OR low). If any of the next 6 closes (same day) is back inside the OR, on that bar fade: short after a failed upside break, long after a failed downside break; fill at the open of the next bar. Stop = highest high (lowest low) from the break bar to the signal bar plus (minus) 0.10 x (OR high - OR low). No target. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT. Every failed-break event is eligible, one position at a time.",
+   "symbol": "BTCUSDT",
+   "skipped_entries": 0,
+   "n_break_events": {
+    "up": 1551,
+    "dn": 1607
+   },
+   "reasons": {
+    "stop": 607,
+    "flat": 408
+   },
+   "avg_hold_bars": 23.391133004926107,
+   "share_long": 0.5192118226600986,
+   "by_side": {
+    "short": {
+     "n": 488,
+     "mean_net": -4.498405942622974
+    },
+    "long": {
+     "n": 527,
+     "mean_net": -6.492021821631875
+    }
+   },
+   "n_pos_years": 0,
+   "dsr": 1.6450282317480356e-11
+  },
+  "BTC_us_orb30_wide_rangestop_flat": {
+   "n": 659,
+   "trades_per_day": 0.5615349663872117,
+   "mean_net": 5.576216995447659,
+   "median_net": -5.245,
+   "std_net": 69.26905278092902,
+   "win_rate": 0.4264036418816389,
+   "avg_win": 60.63148754448401,
+   "avg_loss": 35.35111375661376,
+   "t_stat": 2.066536708218305,
+   "ci95_low": 0.2275441578148871,
+   "ci95_high": 10.821428945371792,
+   "sharpe_per_trade": 0.08050084087453971,
+   "sharpe_annual": 0.9576109193300144,
+   "max_drawdown": 811.1909999999979,
+   "total_net": 3674.727000000007,
+   "gross_mean": 9.396216995447658,
+   "p_win_at_1R": 0.5580961228374615,
+   "by_year": {
+    "2020": -740.1560000000003,
+    "2021": 1333.8550000000055,
+    "2022": 1179.7980000000016,
+    "2023": 498.7299999999985,
+    "2024": 1402.5000000000025
+   },
+   "n_by_year": {
+    "2020": 141,
+    "2021": 141,
+    "2022": 143,
+    "2023": 156,
+    "2024": 78
+   },
+   "rule": "[post-hoc] 5-min bars, CT (America/Chicago), Mon-Fri. Opening range OR = [min low, max high] of the bars from 08:30 to 09:00 (bar open times, exclusive end). Trade only if (OR high - OR low)/OR low is ABOVE the median of that quantity over the previous 20 sessions. From the 09:00 bar until the 13:00 bar, the FIRST 5-min close above OR high -> long, first close below OR low -> short (one trade per session, whichever happens first). Fill at the open of the next bar. Stop = the opposite side of the OR (OR low for longs, OR high for shorts), checked on bar highs/lows. No target. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT; no weekend positions.",
+   "symbol": "BTCUSDT",
+   "skipped_entries": 0,
+   "reasons": {
+    "flat": 429,
+    "stop": 230
+   },
+   "avg_hold_bars": 51.35811836115326,
+   "share_long": 0.49165402124430957,
+   "by_side": {
+    "short": {
+     "n": 335,
+     "mean_net": 6.334035820895539
+    },
+    "long": {
+     "n": 324,
+     "mean_net": 4.792669753086424
+    }
+   },
+   "n_pos_years": 4,
+   "dsr": 0.6160634387769458
+  },
+  "BTC_us_orb30_early_rangestop_flat": {
+   "n": 1031,
+   "trades_per_day": 0.8785167683538926,
+   "mean_net": 2.403024248302625,
+   "median_net": -8.279999999999854,
+   "std_net": 62.42902605505636,
+   "win_rate": 0.37536372453928224,
+   "avg_win": 56.93253488372094,
+   "avg_loss": 30.36548602484472,
+   "t_stat": 1.2359500692808707,
+   "ci95_low": -1.3529223084384079,
+   "ci95_high": 6.1095761639185335,
+   "sharpe_per_trade": 0.038492098950628995,
+   "sharpe_annual": 0.5727259900021194,
+   "max_drawdown": 1897.1899999999982,
+   "total_net": 2477.5180000000064,
+   "gross_mean": 6.223024248302623,
+   "p_win_at_1R": 0.5275266749840699,
+   "by_year": {
+    "2020": -957.6640000000002,
+    "2021": -296.7269999999962,
+    "2022": 1441.6190000000013,
+    "2023": 532.5199999999984,
+    "2024": 1757.7700000000025
+   },
+   "n_by_year": {
+    "2020": 229,
+    "2021": 233,
+    "2022": 220,
+    "2023": 229,
+    "2024": 120
+   },
+   "rule": "[post-hoc] 5-min bars, CT (America/Chicago), Mon-Fri. Opening range OR = [min low, max high] of the bars from 08:30 to 09:00 (bar open times, exclusive end). From the 09:00 bar until the 10:30 bar, the FIRST 5-min close above OR high -> long, first close below OR low -> short (one trade per session, whichever happens first). Fill at the open of the next bar. Stop = the opposite side of the OR (OR low for longs, OR high for shorts), checked on bar highs/lows. No target. Forced flat at the open of the 15:10 CT bar; no entries 15:08-17:00 CT; no weekend positions.",
+   "symbol": "BTCUSDT",
+   "skipped_entries": 0,
+   "reasons": {
+    "flat": 572,
+    "stop": 459
+   },
+   "avg_hold_bars": 47.98448108632396,
+   "share_long": 0.48205625606207564,
+   "by_side": {
+    "short": {
+     "n": 534,
+     "mean_net": 2.8440861423221127
+    },
+    "long": {
+     "n": 497,
+     "mean_net": 1.9291267605633755
+    }
+   },
+   "n_pos_years": 3,
+   "dsr": 0.2965777360909688
+  }
+ },
+ "diagnostics": {
+  "BTCUSDT": {
+   "us_orb60": {
+    "n_breaks": 1021,
+    "share_long": 0.48971596474045054,
+    "range_pct_median": 1.1236749116607774,
+    "fwd_1h_bp": 8.067254113430286,
+    "fwd_1h_t": 2.798056798945982,
+    "fwd_4h_bp": 16.684281643671497,
+    "fwd_4h_t": 3.2504944681408254,
+    "fwd_12h_bp": 24.581164390470438,
+    "fwd_12h_t": 3.004884337894577
+   },
+   "utc_orb60": {
+    "n_breaks": 1606,
+    "share_long": 0.4850560398505604,
+    "range_pct_median": 0.8346689635752438,
+    "fwd_1h_bp": 1.0408936597008631,
+    "fwd_1h_t": 0.5349245634488574,
+    "fwd_4h_bp": 1.462045533707571,
+    "fwd_4h_t": 0.4395416559257484,
+    "fwd_12h_bp": 5.659848219210315,
+    "fwd_12h_t": 0.8779655210670605
+   },
+   "pdhl": {
+    "n_breaks": 1188,
+    "share_long": 0.5496632996632996,
+    "range_pct_median": 3.901823322193848,
+    "fwd_1h_bp": -1.5233453973189448,
+    "fwd_1h_t": -0.4467748743644959,
+    "fwd_4h_bp": -6.22975868965742,
+    "fwd_4h_t": -1.2041359167763128,
+    "fwd_12h_bp": -8.00020323088564,
+    "fwd_12h_t": -0.9062338557480962
+   }
+  },
+  "ETHUSDT": {
+   "us_orb60": {
+    "n_breaks": 1046,
+    "share_long": 0.4847036328871893,
+    "range_pct_median": 1.3757797764624307,
+    "fwd_1h_bp": 4.772417034209174,
+    "fwd_1h_t": 1.434284337121851,
+    "fwd_4h_bp": 8.02194913722762,
+    "fwd_4h_t": 1.3165883324276821,
+    "fwd_12h_bp": 16.444453633524915,
+    "fwd_12h_t": 1.759242541529579
+   },
+   "utc_orb60": {
+    "n_breaks": 1602,
+    "share_long": 0.4893882646691635,
+    "range_pct_median": 1.1437448386852316,
+    "fwd_1h_bp": 5.286404090569988,
+    "fwd_1h_t": 2.3108919119494913,
+    "fwd_4h_bp": 6.93687114320928,
+    "fwd_4h_t": 1.6737070886789451,
+    "fwd_12h_bp": 7.7778532015500375,
+    "fwd_12h_t": 1.0090222134302698
+   },
+   "pdhl": {
+    "n_breaks": 1234,
+    "share_long": 0.559967585089141,
+    "range_pct_median": 5.114848149136448,
+    "fwd_1h_bp": 4.442869006545655,
+    "fwd_1h_t": 1.0841197685542154,
+    "fwd_4h_bp": -1.2199193719778232,
+    "fwd_4h_t": -0.19653123778906656,
+    "fwd_12h_bp": -1.3870218282544238,
+    "fwd_12h_t": -0.1380809814370109
+   }
+  }
+ },
+ "screen_passers": []
+}

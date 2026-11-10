@@ -1,0 +1,1291 @@
+{
+ "family": "vwap_reversion",
+ "n_variants": 18,
+ "variants": {
+  "BTC_utc0_k2.0": {
+   "n": 2382,
+   "trades_per_day": 2.029706054528586,
+   "mean_net": -7.455015952980686,
+   "median_net": 2.669999999999964,
+   "std_net": 55.854414288081784,
+   "win_rate": 0.5356842989084802,
+   "avg_win": 25.098122257053284,
+   "avg_loss": 45.01180108499096,
+   "t_stat": -6.514212982275459,
+   "ci95_low": -9.678225199412257,
+   "ci95_high": -5.304324968513854,
+   "sharpe_per_trade": -0.13347227874469783,
+   "sharpe_annual": -3.018616343886081,
+   "max_drawdown": 17822.61200000009,
+   "total_net": -17757.847999999994,
+   "gross_mean": -3.635015952980687,
+   "p_win_at_1R": 0.39366675075923263,
+   "by_year": {
+    "2020": -976.8279999999995,
+    "2021": -6141.007999999994,
+    "2022": -3855.221999999996,
+    "2023": -2651.6299999999937,
+    "2024": -4133.160000000011
+   },
+   "n_by_year": {
+    "2020": 292,
+    "2021": 675,
+    "2022": 554,
+    "2023": 486,
+    "2024": 375
+   },
+   "rule": "MBT (BTCUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.0 and |z[i-1]| < 2.0 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $114.6. Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 3.5 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 6942,
+   "reasons": {
+    "signal": 1312,
+    "time": 810,
+    "flat": 260
+   },
+   "avg_hold_bars": 29.25776658270361,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 4.0658025356124485e-17,
+   "mean_net_by_side": {
+    "-1": -9.030955499580175,
+    "1": -5.879076406381198
+   },
+   "n_by_side": {
+    "-1": 1191,
+    "1": 1191
+   }
+  },
+  "BTC_utc0_k2.5": {
+   "n": 931,
+   "trades_per_day": 0.7933066065348924,
+   "mean_net": -5.963834586466176,
+   "median_net": 1.990000000000037,
+   "std_net": 55.419378892618205,
+   "win_rate": 0.5295381310418904,
+   "avg_win": 28.07619878296146,
+   "avg_loss": 44.27830136986303,
+   "t_stat": -3.28351326891232,
+   "ci95_low": -9.320203893662748,
+   "ci95_high": -2.552134693877564,
+   "sharpe_per_trade": -0.10761280089446387,
+   "sharpe_annual": -1.5215447891977476,
+   "max_drawdown": 6204.965000000009,
+   "total_net": -5552.33000000001,
+   "gross_mean": -2.143834586466178,
+   "p_win_at_1R": 0.4175747939123401,
+   "by_year": {
+    "2020": -592.4169999999999,
+    "2021": -443.2700000000001,
+    "2022": -1628.3630000000053,
+    "2023": -1055.7800000000027,
+    "2024": -1832.500000000002
+   },
+   "n_by_year": {
+    "2020": 118,
+    "2021": 256,
+    "2022": 239,
+    "2023": 188,
+    "2024": 130
+   },
+   "rule": "MBT (BTCUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.5 and |z[i-1]| < 2.5 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $114.6. Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.0 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 2015,
+   "reasons": {
+    "signal": 472,
+    "time": 334,
+    "flat": 125
+   },
+   "avg_hold_bars": 30.471535982814178,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 1.5291496360036611e-07,
+   "mean_net_by_side": {
+    "-1": -8.494190274841444,
+    "1": -3.35060698689958
+   },
+   "n_by_side": {
+    "-1": 473,
+    "1": 458
+   }
+  },
+  "BTC_utc0_k3.0": {
+   "n": 159,
+   "trades_per_day": 0.1354841572922104,
+   "mean_net": -2.699823899371088,
+   "median_net": -2.730000000000036,
+   "std_net": 72.12956922880758,
+   "win_rate": 0.46540880503144655,
+   "avg_win": 38.98878378378376,
+   "avg_loss": 38.99343529411766,
+   "t_stat": -0.47197681054282026,
+   "ci95_low": -13.238675943396235,
+   "ci95_high": 8.305494339622596,
+   "sharpe_per_trade": -0.03743019580231757,
+   "sharpe_annual": -0.21870898573876818,
+   "max_drawdown": 1191.2390000000023,
+   "total_net": -429.272000000003,
+   "gross_mean": 1.1201761006289113,
+   "p_win_at_1R": 0.46537898085877677,
+   "by_year": {
+    "2020": -101.09399999999988,
+    "2021": 317.4589999999985,
+    "2022": -305.7770000000017,
+    "2023": -88.93000000000035,
+    "2024": -250.92999999999952
+   },
+   "n_by_year": {
+    "2020": 15,
+    "2021": 43,
+    "2022": 52,
+    "2023": 34,
+    "2024": 15
+   },
+   "rule": "MBT (BTCUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 3.0 and |z[i-1]| < 3.0 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $114.6. Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.5 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 314,
+   "reasons": {
+    "signal": 69,
+    "time": 53,
+    "flat": 37
+   },
+   "avg_hold_bars": 28.440251572327043,
+   "n_pos_years": 1,
+   "n_years": 5,
+   "dsr": 0.010232658172699879,
+   "mean_net_by_side": {
+    "-1": -13.273309523809525,
+    "1": 9.14247999999996
+   },
+   "n_by_side": {
+    "-1": 84,
+    "1": 75
+   }
+  },
+  "BTC_ct17_k2.5": {
+   "n": 1010,
+   "trades_per_day": 0.8606226343719026,
+   "mean_net": -7.649276237623778,
+   "median_net": 3.1550000000000002,
+   "std_net": 57.70637572303547,
+   "win_rate": 0.5386138613861386,
+   "avg_win": 26.99844669117646,
+   "avg_loss": 48.096403433476425,
+   "t_stat": -4.2126679891368735,
+   "ci95_low": -11.26921534653466,
+   "ci95_high": -4.231307722772293,
+   "sharpe_per_trade": -0.1325551317645878,
+   "sharpe_annual": -1.9521051089324903,
+   "max_drawdown": 7829.975000000037,
+   "total_net": -7725.769000000016,
+   "gross_mean": -3.8292762376237786,
+   "p_win_at_1R": 0.39813847121438495,
+   "by_year": {
+    "2020": -407.88999999999993,
+    "2021": -2126.602000000005,
+    "2022": -1632.3870000000024,
+    "2023": -995.3599999999992,
+    "2024": -2563.5300000000097
+   },
+   "n_by_year": {
+    "2020": 117,
+    "2021": 304,
+    "2022": 227,
+    "2023": 207,
+    "2024": 155
+   },
+   "rule": "MBT (BTCUSDT perp as proxy), 5-min bars. Session = day anchored at 17:00 CT. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.5 and |z[i-1]| < 2.5 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $114.6. Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.0 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 2087,
+   "reasons": {
+    "signal": 485,
+    "time": 398,
+    "flat": 127
+   },
+   "avg_hold_bars": 31.38019801980198,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 7.846931292947693e-10,
+   "mean_net_by_side": {
+    "-1": -10.929860040567974,
+    "1": -4.5209825918762165
+   },
+   "n_by_side": {
+    "-1": 493,
+    "1": 517
+   }
+  },
+  "BTC_utc0_k2.5_lowvol": {
+   "n": 414,
+   "trades_per_day": 0.352770069930661,
+   "mean_net": -12.938437198067652,
+   "median_net": -2.7350000000001455,
+   "std_net": 54.80135946502765,
+   "win_rate": 0.46859903381642515,
+   "avg_win": 25.02568556701031,
+   "avg_loss": 46.415890909090955,
+   "t_stat": -4.803863520898874,
+   "ci95_low": -18.370002717391337,
+   "ci95_high": -7.749878743961387,
+   "sharpe_per_trade": -0.23609701154082716,
+   "sharpe_annual": -2.226058769868186,
+   "max_drawdown": 5512.087000000008,
+   "total_net": -5356.513000000008,
+   "gross_mean": -9.118437198067653,
+   "p_win_at_1R": 0.31889485316164834,
+   "by_year": {
+    "2020": -584.5129999999996,
+    "2021": -2042.7039999999993,
+    "2022": -1435.916000000005,
+    "2023": -611.9700000000031,
+    "2024": -681.4100000000013
+   },
+   "n_by_year": {
+    "2020": 33,
+    "2021": 129,
+    "2022": 120,
+    "2023": 59,
+    "2024": 73
+   },
+   "rule": "MBT (BTCUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.5 and |z[i-1]| < 2.5 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $114.6, and rv24[i] / median(rv24 over the previous 30 days ending at bar i-1) <= 1.0 (rv24 = st.dev. of 5-min log returns over the 288 bars ending at i). Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.0 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 1010,
+   "reasons": {
+    "signal": 204,
+    "time": 160,
+    "flat": 50
+   },
+   "avg_hold_bars": 31.036231884057973,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 2.7101102283699358e-11,
+   "mean_net_by_side": {
+    "-1": -16.969865284974116,
+    "1": -9.417778280543006
+   },
+   "n_by_side": {
+    "-1": 193,
+    "1": 221
+   }
+  },
+  "BTC_utc0_k2.5_lowvol_strict": {
+   "n": 85,
+   "trades_per_day": 0.07242863754615021,
+   "mean_net": -13.761611764705883,
+   "median_net": -5.580000000000582,
+   "std_net": 51.75746683999049,
+   "win_rate": 0.38823529411764707,
+   "avg_win": 29.037212121212153,
+   "avg_loss": 40.92240384615387,
+   "t_stat": -2.451352417631844,
+   "ci95_low": -25.15543411764706,
+   "ci95_high": -3.0781547058823246,
+   "sharpe_per_trade": -0.2658865011158728,
+   "sharpe_annual": -1.1359303867745787,
+   "max_drawdown": 1201.2680000000014,
+   "total_net": -1169.737,
+   "gross_mean": -9.941611764705883,
+   "p_win_at_1R": 0.3032920625075294,
+   "by_year": {
+    "2020": -244.9739999999999,
+    "2021": -307.3329999999996,
+    "2022": -301.97000000000094,
+    "2023": -111.83999999999978,
+    "2024": -203.61999999999983
+   },
+   "n_by_year": {
+    "2020": 11,
+    "2021": 33,
+    "2022": 23,
+    "2023": 10,
+    "2024": 8
+   },
+   "rule": "MBT (BTCUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.5 and |z[i-1]| < 2.5 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $114.6, and rv24[i] / median(rv24 over the previous 30 days ending at bar i-1) <= 0.7 (rv24 = st.dev. of 5-min log returns over the 288 bars ending at i). Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.0 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 292,
+   "reasons": {
+    "signal": 44,
+    "time": 33,
+    "flat": 8
+   },
+   "avg_hold_bars": 30.741176470588236,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 1.2989289153305697e-05,
+   "mean_net_by_side": {
+    "-1": -19.06441666666666,
+    "1": -6.882297297297308
+   },
+   "n_by_side": {
+    "-1": 48,
+    "1": 37
+   }
+  },
+  "BTC_utc0_k2.5_chop": {
+   "n": 901,
+   "trades_per_day": 0.7677435579891922,
+   "mean_net": -6.226421753607115,
+   "median_net": 1.6840000000000876,
+   "std_net": 56.06449465249556,
+   "win_rate": 0.5238623751387348,
+   "avg_win": 28.57439194915254,
+   "avg_loss": 44.51542890442893,
+   "t_stat": -3.333596399156421,
+   "ci95_low": -9.979627524972287,
+   "ci95_high": -2.6081825194228805,
+   "sharpe_per_trade": -0.11105819810203109,
+   "sharpe_annual": -1.5447527739411337,
+   "max_drawdown": 6065.692000000007,
+   "total_net": -5610.00600000001,
+   "gross_mean": -2.406421753607116,
+   "p_win_at_1R": 0.41481136934128887,
+   "by_year": {
+    "2020": -621.574,
+    "2021": -522.9080000000009,
+    "2022": -1578.3340000000057,
+    "2023": -1078.8600000000026,
+    "2024": -1808.330000000002
+   },
+   "n_by_year": {
+    "2020": 112,
+    "2021": 248,
+    "2022": 230,
+    "2023": 183,
+    "2024": 128
+   },
+   "rule": "MBT (BTCUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.5 and |z[i-1]| < 2.5 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $114.6, and session efficiency ratio |close - session open| / sum of |5-min close changes| since the session start <= 0.3. Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.0 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 1963,
+   "reasons": {
+    "signal": 453,
+    "time": 325,
+    "flat": 123
+   },
+   "avg_hold_bars": 30.62597114317425,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 1.1788288324697675e-07,
+   "mean_net_by_side": {
+    "-1": -8.718713973799131,
+    "1": -3.6497404063205607
+   },
+   "n_by_side": {
+    "-1": 458,
+    "1": 443
+   }
+  },
+  "BTC_utc0_k2.5_rvband": {
+   "n": 283,
+   "trades_per_day": 0.2411447579477707,
+   "mean_net": 0.35809187279151233,
+   "median_net": 1.0699999999997822,
+   "std_net": 65.3165779657947,
+   "win_rate": 0.5017667844522968,
+   "avg_win": 40.712204225352096,
+   "avg_loss": 40.282219858156026,
+   "t_stat": 0.0922283117450127,
+   "ci95_low": -7.146663957597174,
+   "ci95_high": 8.005396113074209,
+   "sharpe_per_trade": 0.005482404068673646,
+   "sharpe_annual": 0.0427376092798962,
+   "max_drawdown": 1376.2890000000016,
+   "total_net": 101.33999999999799,
+   "gross_mean": 4.178091872791511,
+   "p_win_at_1R": 0.5044211916665067,
+   "by_year": {
+    "2020": 19.968000000000565,
+    "2021": 672.489,
+    "2022": -678.8670000000001,
+    "2023": -79.81000000000178,
+    "2024": 167.55999999999918
+   },
+   "n_by_year": {
+    "2020": 59,
+    "2021": 68,
+    "2022": 65,
+    "2023": 58,
+    "2024": 33
+   },
+   "rule": "MBT (BTCUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = vwap * rv24 * sqrt(nbar/3), rv24 = st.dev. of 5-min log close returns over the 288 bars ending at bar i (>=200 obs), nbar = bars since session start; z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.5 and |z[i-1]| < 2.5 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $114.6. Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.0 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 543,
+   "reasons": {
+    "time": 135,
+    "signal": 110,
+    "flat": 38
+   },
+   "avg_hold_bars": 33.5547703180212,
+   "n_pos_years": 3,
+   "n_years": 5,
+   "dsr": 0.03933043551292732,
+   "mean_net_by_side": {
+    "-1": -3.788093167701865,
+    "1": 5.829696721311461
+   },
+   "n_by_side": {
+    "-1": 161,
+    "1": 122
+   }
+  },
+  "BTC_utc0_k2.5_day": {
+   "n": 355,
+   "trades_per_day": 0.3024960744574509,
+   "mean_net": -10.514087323943677,
+   "median_net": -2.968999999999978,
+   "std_net": 57.844802894950114,
+   "win_rate": 0.4563380281690141,
+   "avg_win": 31.372141975308644,
+   "avg_loss": 45.67247668393785,
+   "t_stat": -3.4246911435647247,
+   "ci95_low": -16.17738394366201,
+   "ci95_high": -4.317107323943655,
+   "sharpe_per_trade": -0.18176373326118747,
+   "sharpe_annual": -1.5869651002898768,
+   "max_drawdown": 4174.787000000001,
+   "total_net": -3732.5010000000057,
+   "gross_mean": -6.694087323943678,
+   "p_win_at_1R": 0.3635324892651431,
+   "by_year": {
+    "2020": -139.66500000000036,
+    "2021": 11.495999999999427,
+    "2022": -1595.202000000002,
+    "2023": -856.7500000000008,
+    "2024": -1152.3800000000015
+   },
+   "n_by_year": {
+    "2020": 41,
+    "2021": 62,
+    "2022": 97,
+    "2023": 102,
+    "2024": 53
+   },
+   "rule": "MBT (BTCUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.5 and |z[i-1]| < 2.5 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $114.6, and bar i opens between 08:30 and 15:00 CT. Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.0 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 785,
+   "reasons": {
+    "time": 139,
+    "flat": 119,
+    "signal": 97
+   },
+   "avg_hold_bars": 33.177464788732394,
+   "n_pos_years": 1,
+   "n_years": 5,
+   "dsr": 8.562458396178498e-08,
+   "mean_net_by_side": {
+    "-1": -9.17544252873565,
+    "1": -11.800961325966865
+   },
+   "n_by_side": {
+    "-1": 174,
+    "1": 181
+   }
+  },
+  "BTC_utc0_k2.5_nostop": {
+   "n": 931,
+   "trades_per_day": 0.7933066065348924,
+   "mean_net": -5.963834586466176,
+   "median_net": 1.990000000000037,
+   "std_net": 55.419378892618205,
+   "win_rate": 0.5295381310418904,
+   "avg_win": 28.07619878296146,
+   "avg_loss": 44.27830136986303,
+   "t_stat": -3.28351326891232,
+   "ci95_low": -9.320203893662748,
+   "ci95_high": -2.552134693877564,
+   "sharpe_per_trade": -0.10761280089446387,
+   "sharpe_annual": -1.5215447891977476,
+   "max_drawdown": 6204.965000000009,
+   "total_net": -5552.33000000001,
+   "gross_mean": -2.143834586466178,
+   "p_win_at_1R": 0.4175747939123401,
+   "by_year": {
+    "2020": -592.4169999999999,
+    "2021": -443.2700000000001,
+    "2022": -1628.3630000000053,
+    "2023": -1055.7800000000027,
+    "2024": -1832.500000000002
+   },
+   "n_by_year": {
+    "2020": 118,
+    "2021": 256,
+    "2022": 239,
+    "2023": 188,
+    "2024": 130
+   },
+   "rule": "MBT (BTCUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.5 and |z[i-1]| < 2.5 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $114.6. Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 2015,
+   "reasons": {
+    "signal": 472,
+    "time": 334,
+    "flat": 125
+   },
+   "avg_hold_bars": 30.471535982814178,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 1.5291496360036611e-07,
+   "mean_net_by_side": {
+    "-1": -8.494190274841444,
+    "1": -3.35060698689958
+   },
+   "n_by_side": {
+    "-1": 473,
+    "1": 458
+   }
+  },
+  "ETH_utc0_k2.0": {
+   "n": 1281,
+   "trades_per_day": 1.0915421729013932,
+   "mean_net": -1.2536752537080407,
+   "median_net": -0.510000000000009,
+   "std_net": 5.784172787450463,
+   "win_rate": 0.44730679156908665,
+   "avg_win": 2.537998254799301,
+   "avg_loss": 4.3223601694915255,
+   "t_stat": -7.757438841557661,
+   "ci95_low": -1.5946901444184232,
+   "ci95_high": -0.9360541569086649,
+   "sharpe_per_trade": -0.2167423588085157,
+   "sharpe_annual": -3.5947138568446126,
+   "max_drawdown": 1615.0379999999946,
+   "total_net": -1605.958,
+   "gross_mean": -0.33367525370804074,
+   "p_win_at_1R": 0.31725805327181045,
+   "by_year": {
+    "2020": -1.6849999999999974,
+    "2021": -778.2070000000003,
+    "2022": -441.7919999999999,
+    "2023": -97.0959999999998,
+    "2024": -287.1780000000001
+   },
+   "n_by_year": {
+    "2020": 4,
+    "2021": 572,
+    "2022": 369,
+    "2023": 120,
+    "2024": 216
+   },
+   "rule": "MET (ETHUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.0 and |z[i-1]| < 2.0 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $27.6. Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 3.5 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "ETHUSDT",
+   "n_signals": 3623,
+   "reasons": {
+    "signal": 596,
+    "time": 486,
+    "flat": 199
+   },
+   "avg_hold_bars": 31.373145979703356,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 1.0835654876995588e-21,
+   "mean_net_by_side": {
+    "-1": -1.2438248847926276,
+    "1": -1.2638539682539676
+   },
+   "n_by_side": {
+    "-1": 651,
+    "1": 630
+   }
+  },
+  "ETH_utc0_k2.5": {
+   "n": 540,
+   "trades_per_day": 0.4601348738226014,
+   "mean_net": -1.4137611111111121,
+   "median_net": -0.9429999999999903,
+   "std_net": 5.969837570655184,
+   "win_rate": 0.37777777777777777,
+   "avg_win": 3.238044117647058,
+   "avg_loss": 4.238071428571429,
+   "t_stat": -5.503137906897627,
+   "ci95_low": -1.8935017129629632,
+   "ci95_high": -0.8765456481481491,
+   "sharpe_per_trade": -0.23681734961441392,
+   "sharpe_annual": -2.5500950112652876,
+   "max_drawdown": 768.4070000000012,
+   "total_net": -763.4310000000005,
+   "gross_mean": -0.4937611111111119,
+   "p_win_at_1R": 0.3108963000409738,
+   "by_year": {
+    "2020": -0.21999999999999043,
+    "2021": -316.31100000000015,
+    "2022": -248.18999999999988,
+    "2023": -89.30100000000007,
+    "2024": -109.40900000000025
+   },
+   "n_by_year": {
+    "2020": 3,
+    "2021": 232,
+    "2022": 146,
+    "2023": 71,
+    "2024": 88
+   },
+   "rule": "MET (ETHUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.5 and |z[i-1]| < 2.5 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $27.6. Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.0 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "ETHUSDT",
+   "n_signals": 1226,
+   "reasons": {
+    "time": 225,
+    "signal": 211,
+    "flat": 104
+   },
+   "avg_hold_bars": 32.96666666666667,
+   "n_pos_years": 0,
+   "n_years": 5,
+   "dsr": 2.0953889143791702e-13,
+   "mean_net_by_side": {
+    "-1": -2.063633802816902,
+    "1": -0.6928085937500007
+   },
+   "n_by_side": {
+    "-1": 284,
+    "1": 256
+   }
+  },
+  "ETH_utc0_k2.5_lowvol": {
+   "n": 233,
+   "trades_per_day": 0.19853967703827058,
+   "mean_net": -2.2231587982832623,
+   "median_net": -1.3860000000000308,
+   "std_net": 4.789800484976519,
+   "win_rate": 0.33047210300429186,
+   "avg_win": 2.254922077922078,
+   "avg_loss": 4.433493589743589,
+   "t_stat": -7.084855907775709,
+   "ci95_low": -2.82167381974249,
+   "ci95_high": -1.599813733905579,
+   "sharpe_per_trade": -0.4641443428085003,
+   "sharpe_annual": -3.283046147781797,
+   "max_drawdown": 520.8130000000002,
+   "total_net": -517.9960000000001,
+   "gross_mean": -1.3031587982832622,
+   "p_win_at_1R": 0.167610551026179,
+   "by_year": {
+    "2021": -266.26800000000003,
+    "2022": -145.834,
+    "2023": -27.846999999999955,
+    "2024": -78.04700000000011
+   },
+   "n_by_year": {
+    "2021": 121,
+    "2022": 64,
+    "2023": 16,
+    "2024": 32
+   },
+   "rule": "MET (ETHUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.5 and |z[i-1]| < 2.5 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $27.6, and rv24[i] / median(rv24 over the previous 30 days ending at bar i-1) <= 1.0 (rv24 = st.dev. of 5-min log returns over the 288 bars ending at i). Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.0 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "ETHUSDT",
+   "n_signals": 559,
+   "reasons": {
+    "time": 107,
+    "signal": 83,
+    "flat": 43
+   },
+   "avg_hold_bars": 34.09871244635193,
+   "n_pos_years": 0,
+   "n_years": 4,
+   "dsr": 1.1778152767855721e-17,
+   "mean_net_by_side": {
+    "-1": -2.7326890756302533,
+    "1": -1.6912807017543847
+   },
+   "n_by_side": {
+    "-1": 119,
+    "1": 114
+   }
+  },
+  "PH_BTC_utc0_k2.5_hivol": {
+   "n": 521,
+   "trades_per_day": 0.4439449430769913,
+   "mean_net": -0.4986506717850341,
+   "median_net": 5.439999999999854,
+   "std_net": 55.40740951201003,
+   "win_rate": 0.5796545105566219,
+   "avg_win": 30.165976821192046,
+   "avg_loss": 42.78503196347033,
+   "t_stat": -0.20542222279596628,
+   "ci95_low": -5.294373656429953,
+   "ci95_high": 4.086513771593076,
+   "sharpe_per_trade": -0.008999710980477211,
+   "sharpe_annual": -0.09519045214157393,
+   "max_drawdown": 2216.509999999997,
+   "total_net": -259.79700000000275,
+   "gross_mean": 3.3213493282149646,
+   "p_win_at_1R": 0.4931645815446232,
+   "by_year": {
+    "2020": 72.51699999999951,
+    "2021": 1538.9979999999991,
+    "2022": -238.90200000000078,
+    "2023": -481.32,
+    "2024": -1151.0900000000006
+   },
+   "n_by_year": {
+    "2020": 79,
+    "2021": 129,
+    "2022": 125,
+    "2023": 131,
+    "2024": 57
+   },
+   "rule": "MBT (BTCUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.5 and |z[i-1]| < 2.5 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $114.6, and rv24[i] / median(rv24 over the previous 30 days ending at bar i-1) >= 1.0 (high-vol regime; rv24 = st.dev. of 5-min log returns over the 288 bars ending at i). Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.0 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 991,
+   "reasons": {
+    "signal": 267,
+    "time": 179,
+    "flat": 75
+   },
+   "avg_hold_bars": 30.19193857965451,
+   "n_pos_years": 2,
+   "n_years": 5,
+   "dsr": 0.01983015658226022,
+   "mean_net_by_side": {
+    "-1": -2.8075261324041776,
+    "1": 2.3331752136751964
+   },
+   "n_by_side": {
+    "-1": 287,
+    "1": 234
+   }
+  },
+  "PH_BTC_utc0_k2.5_hivol_long": {
+   "n": 234,
+   "trades_per_day": 0.19939177865646057,
+   "mean_net": 2.333175213675197,
+   "median_net": 6.569500000000044,
+   "std_net": 53.96789275822392,
+   "win_rate": 0.6153846153846154,
+   "avg_win": 30.748347222222215,
+   "avg_loss": 43.13110000000003,
+   "t_stat": 0.6613324331445902,
+   "ci95_low": -4.747897435897448,
+   "ci95_high": 8.963557799145292,
+   "sharpe_per_trade": 0.0432326536099495,
+   "sharpe_annual": 0.30645434787962444,
+   "max_drawdown": 1188.1000000000022,
+   "total_net": 545.9629999999961,
+   "gross_mean": 6.153175213675198,
+   "p_win_at_1R": 0.5315808428649612,
+   "by_year": {
+    "2020": 156.59599999999975,
+    "2021": 1327.5269999999996,
+    "2022": -225.9000000000007,
+    "2023": -23.12000000000053,
+    "2024": -689.1400000000021
+   },
+   "n_by_year": {
+    "2020": 29,
+    "2021": 56,
+    "2022": 68,
+    "2023": 59,
+    "2024": 22
+   },
+   "rule": "MBT (BTCUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.5 and |z[i-1]| < 2.5 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $114.6, and rv24[i] / median(rv24 over the previous 30 days ending at bar i-1) >= 1.0 (high-vol regime; rv24 = st.dev. of 5-min log returns over the 288 bars ending at i), and only down excursions (z <= -2.5, i.e. long trades only). Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.0 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 468,
+   "reasons": {
+    "signal": 130,
+    "time": 74,
+    "flat": 30
+   },
+   "avg_hold_bars": 30.042735042735043,
+   "n_pos_years": 2,
+   "n_years": 5,
+   "dsr": 0.11713580717507516,
+   "mean_net_by_side": {
+    "1": 2.3331752136751964
+   },
+   "n_by_side": {
+    "1": 234
+   }
+  },
+  "PH_BTC_ct17_k3.0": {
+   "n": 162,
+   "trades_per_day": 0.1380404621467804,
+   "mean_net": -1.894487654321003,
+   "median_net": 2.7000000000000735,
+   "std_net": 73.25114573120769,
+   "win_rate": 0.5370370370370371,
+   "avg_win": 36.26599999999999,
+   "avg_loss": 46.16065333333336,
+   "t_stat": -0.32918107928145907,
+   "ci95_low": -12.305637037037071,
+   "ci95_high": 9.856920524691345,
+   "sharpe_per_trade": -0.02586290815535847,
+   "sharpe_annual": -0.15253897726720875,
+   "max_drawdown": 1143.3280000000013,
+   "total_net": -306.9070000000025,
+   "gross_mean": 1.925512345678998,
+   "p_win_at_1R": 0.4770160794147532,
+   "by_year": {
+    "2020": 93.93800000000014,
+    "2021": 313.31200000000086,
+    "2022": -194.66700000000094,
+    "2023": -93.73999999999998,
+    "2024": -425.75000000000256
+   },
+   "n_by_year": {
+    "2020": 18,
+    "2021": 53,
+    "2022": 43,
+    "2023": 32,
+    "2024": 16
+   },
+   "rule": "MBT (BTCUSDT perp as proxy), 5-min bars. Session = day anchored at 17:00 CT. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 3.0 and |z[i-1]| < 3.0 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $114.6. Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.5 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 294,
+   "reasons": {
+    "signal": 63,
+    "time": 62,
+    "flat": 37
+   },
+   "avg_hold_bars": 32.32098765432099,
+   "n_pos_years": 2,
+   "n_years": 5,
+   "dsr": 0.014780055255599138,
+   "mean_net_by_side": {
+    "-1": -7.1384799999999915,
+    "1": 6.563564516128981
+   },
+   "n_by_side": {
+    "-1": 100,
+    "1": 62
+   }
+  },
+  "PH_BTC_ct17_k3.0_long": {
+   "n": 62,
+   "trades_per_day": 0.052830300327780154,
+   "mean_net": 6.563564516128982,
+   "median_net": 4.926500000000015,
+   "std_net": 91.3519301928251,
+   "win_rate": 0.5483870967741935,
+   "avg_win": 48.14579411764706,
+   "avg_loss": 43.92914285714296,
+   "t_stat": 0.5657412883613406,
+   "ci95_low": -13.326168548387189,
+   "ci95_high": 31.46419032258061,
+   "sharpe_per_trade": 0.07184921547114166,
+   "sharpe_annual": 0.2621584378811914,
+   "max_drawdown": 559.7470000000027,
+   "total_net": 406.94099999999685,
+   "gross_mean": 10.383564516128981,
+   "p_win_at_1R": 0.5712850286058417,
+   "by_year": {
+    "2020": 75.59700000000001,
+    "2021": 884.6869999999993,
+    "2022": -373.2330000000008,
+    "2023": -38.26000000000014,
+    "2024": -141.8500000000016
+   },
+   "n_by_year": {
+    "2020": 6,
+    "2021": 16,
+    "2022": 21,
+    "2023": 11,
+    "2024": 8
+   },
+   "rule": "MBT (BTCUSDT perp as proxy), 5-min bars. Session = day anchored at 17:00 CT. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 3.0 and |z[i-1]| < 3.0 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $114.6, and only down excursions (z <= -3.0, i.e. long trades only). Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.5 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "BTCUSDT",
+   "n_signals": 114,
+   "reasons": {
+    "time": 23,
+    "signal": 22,
+    "flat": 17
+   },
+   "avg_hold_bars": 32.66129032258065,
+   "n_pos_years": 2,
+   "n_years": 5,
+   "dsr": 0.10096914683520819,
+   "mean_net_by_side": {
+    "1": 6.563564516128981
+   },
+   "n_by_side": {
+    "1": 62
+   }
+  },
+  "PH_ETH_utc0_k2.5_hivol_long": {
+   "n": 147,
+   "trades_per_day": 0.12525893787393036,
+   "mean_net": 0.057312925170066156,
+   "median_net": -0.07199999999999807,
+   "std_net": 8.117379141113538,
+   "win_rate": 0.4897959183673469,
+   "avg_win": 4.483152777777774,
+   "avg_loss": 4.191493333333335,
+   "t_stat": 0.0856042666228487,
+   "ci95_low": -1.080374829931972,
+   "ci95_high": 1.48746989795918,
+   "sharpe_per_trade": 0.007060520911211743,
+   "sharpe_annual": 0.03966809790180513,
+   "max_drawdown": 115.67900000000029,
+   "total_net": 8.424999999999725,
+   "gross_mean": 0.9773129251700661,
+   "p_win_at_1R": 0.5066069467775355,
+   "by_year": {
+    "2020": 1.3030000000000022,
+    "2021": 65.56699999999988,
+    "2022": -68.99000000000004,
+    "2023": -15.305000000000065,
+    "2024": 25.84999999999993
+   },
+   "n_by_year": {
+    "2020": 1,
+    "2021": 54,
+    "2022": 44,
+    "2023": 24,
+    "2024": 24
+   },
+   "rule": "MET (ETHUSDT perp as proxy), 5-min bars. Session = day anchored at 00:00 UTC. tp = (high+low+close)/3; vwap = cumulative sum(volume*tp)/sum(volume) within the session; sd = volume-weighted st.dev. of tp around VWAP within the session (sqrt(sum(v*tp^2)/sum(v) - vwap^2)); z = (close - vwap)/sd. Signal at the close of bar i when |z[i]| >= 2.5 and |z[i-1]| < 2.5 (fresh crossing), at least 12 bars into the session, and |close - vwap| >= 3 x round-trip cost / 0.1 = $27.6, and rv24[i] / median(rv24 over the previous 30 days ending at bar i-1) >= 1.0 (high-vol regime; rv24 = st.dev. of 5-min log returns over the 288 bars ending at i), and only down excursions (z <= -2.5, i.e. long trades only). Enter at the open of bar i+1, side = -sign(z) (long below VWAP, short above). Exit at the open of bar j+1 when at the close of bar j: |z[j]| <= 0.2 or z changed sign (back at VWAP), or |z[j]| >= 4.0 (soft stop), or bar j is the last bar of the session; otherwise exit at the open of the bar 48 bars (240 min) after entry, or at the 15:10 CT Topstep flat if earlier. No fixed stop/target. One position at a time; entries only when the next bar is inside Topstep hours (not 15:08-17:00 CT, no weekend).",
+   "symbol": "ETHUSDT",
+   "n_signals": 316,
+   "reasons": {
+    "signal": 69,
+    "time": 49,
+    "flat": 29
+   },
+   "avg_hold_bars": 30.346938775510203,
+   "n_pos_years": 3,
+   "n_years": 5,
+   "dsr": 0.0390164774513875,
+   "mean_net_by_side": {
+    "1": 0.057312925170066184
+   },
+   "n_by_side": {
+    "1": 147
+   }
+  }
+ },
+ "diagnostics": {
+  "BTCUSDT": {
+   "UTC0_k2.0": {
+    "n_events": 9261,
+    "median_dist_bp": 92.94945524354716,
+    "toward_bp_H6": 1.9676917477509714,
+    "t_H6": 2.391370571945732,
+    "frac_recovered_H6": 0.002003619992766707,
+    "toward_bp_H12": 1.5726048986897518,
+    "t_H12": 1.6186831546026377,
+    "frac_recovered_H12": -0.009663148859971223,
+    "toward_bp_H24": 1.9697003468141323,
+    "t_H24": 1.5662674452246228,
+    "frac_recovered_H24": -0.012436006816249201,
+    "toward_bp_H48": 2.362902072189138,
+    "t_H48": 1.4527530822721637,
+    "frac_recovered_H48": -0.022197031296676894
+   },
+   "UTC0_k2.5": {
+    "n_events": 2449,
+    "median_dist_bp": 120.11335299473195,
+    "toward_bp_H6": 4.6606376581071345,
+    "t_H6": 2.0203421488675497,
+    "frac_recovered_H6": 0.002481428865325441,
+    "toward_bp_H12": 4.452725859233019,
+    "t_H12": 1.7683731922568342,
+    "frac_recovered_H12": -0.009344480553792065,
+    "toward_bp_H24": 5.982850320624424,
+    "t_H24": 1.9854950438621906,
+    "frac_recovered_H24": -0.01022143474856124,
+    "toward_bp_H48": 9.570161196496732,
+    "t_H48": 2.5602052081301445,
+    "frac_recovered_H48": -0.0015236165377559446,
+    "H24_rv<=1": {
+     "n": 1307,
+     "toward_bp": -9.641159383943645,
+     "t": -3.3275711686351586
+    },
+    "H24_rv>1": {
+     "n": 1142,
+     "toward_bp": 23.864269483383147,
+     "t": 4.3386695791551695
+    },
+    "H24_rv<=0.7": {
+     "n": 446,
+     "toward_bp": -11.66254074212156,
+     "t": -2.4605340549950734
+    },
+    "H24_er<=0.3": {
+     "n": 2370,
+     "toward_bp": 2.4378107264944777,
+     "t": 0.9633808874089987
+    },
+    "H24_er>0.3": {
+     "n": 79,
+     "toward_bp": 112.33403814452276,
+     "t": 2.1042971639675327
+    },
+    "H24_down_exc": {
+     "n": 1158,
+     "toward_bp": 18.483621829397485,
+     "t": 3.6777333691985814
+    },
+    "H24_up_exc": {
+     "n": 1291,
+     "toward_bp": -5.230080281357919,
+     "t": -1.4998767586022985
+    }
+   },
+   "UTC0_k3.0": {
+    "n_events": 359,
+    "median_dist_bp": 150.55018294967942,
+    "toward_bp_H6": 15.517408124044623,
+    "t_H6": 1.9953189864860428,
+    "frac_recovered_H6": 0.011348905049345541,
+    "toward_bp_H12": 14.317391147124617,
+    "t_H12": 1.6653131592868002,
+    "frac_recovered_H12": -0.018788665054620783,
+    "toward_bp_H24": 20.007484008057766,
+    "t_H24": 1.8179511615661976,
+    "frac_recovered_H24": -0.011756479150158506,
+    "toward_bp_H48": 32.24088744972098,
+    "t_H48": 2.288893403168533,
+    "frac_recovered_H48": 0.028324464521973028
+   },
+   "CT17_k2.0": {
+    "n_events": 9962,
+    "median_dist_bp": 87.81287304659105,
+    "toward_bp_H6": 2.085137287257432,
+    "t_H6": 2.607170294973377,
+    "frac_recovered_H6": 0.007933764453779102,
+    "toward_bp_H12": 2.4257004068978336,
+    "t_H12": 2.5674139994619174,
+    "frac_recovered_H12": -2.7151164198180773e-05,
+    "toward_bp_H24": 3.9382081722079962,
+    "t_H24": 3.29574039030916,
+    "frac_recovered_H24": 0.021565322019305652,
+    "toward_bp_H48": 5.018552504949897,
+    "t_H48": 3.2296962867679735,
+    "frac_recovered_H48": 0.01955003439673665
+   },
+   "CT17_k2.5": {
+    "n_events": 2655,
+    "median_dist_bp": 106.98435770299562,
+    "toward_bp_H6": 5.277604241226696,
+    "t_H6": 3.4265184970179985,
+    "frac_recovered_H6": 0.020935411445586485,
+    "toward_bp_H12": 5.30983478065013,
+    "t_H12": 2.701218921656118,
+    "frac_recovered_H12": 0.024622725332291828,
+    "toward_bp_H24": 5.647487245602712,
+    "t_H24": 2.3702452398795884,
+    "frac_recovered_H24": 0.04627896937790376,
+    "toward_bp_H48": 7.787383663690426,
+    "t_H48": 2.3940712492339378,
+    "frac_recovered_H48": 0.044633179125640306,
+    "H24_rv<=1": {
+     "n": 1412,
+     "toward_bp": -3.8459729874086617,
+     "t": -1.5086578318690915
+    },
+    "H24_rv>1": {
+     "n": 1243,
+     "toward_bp": 16.431691468460365,
+     "t": 3.945004331014524
+    },
+    "H24_rv<=0.7": {
+     "n": 477,
+     "toward_bp": -3.6281790005145145,
+     "t": -0.9245899730697384
+    },
+    "H24_er<=0.3": {
+     "n": 2525,
+     "toward_bp": 4.879923175211973,
+     "t": 2.056967852529563
+    },
+    "H24_er>0.3": {
+     "n": 130,
+     "toward_bp": 20.55594322819207,
+     "t": 1.3141547134190459
+    },
+    "H24_down_exc": {
+     "n": 1284,
+     "toward_bp": 13.358580989206844,
+     "t": 3.648607797244793
+    },
+    "H24_up_exc": {
+     "n": 1371,
+     "toward_bp": -1.574281074446671,
+     "t": -0.5117935560520918
+    }
+   },
+   "CT17_k3.0": {
+    "n_events": 355,
+    "median_dist_bp": 124.87848117518566,
+    "toward_bp_H6": 16.361003650983044,
+    "t_H6": 2.1068409438251776,
+    "frac_recovered_H6": 0.07561077724143499,
+    "toward_bp_H12": 21.30496928944014,
+    "t_H12": 2.5319851720299353,
+    "frac_recovered_H12": 0.13634132676187039,
+    "toward_bp_H24": 29.61637341293353,
+    "t_H24": 2.8670828501026904,
+    "frac_recovered_H24": 0.19173235659095633,
+    "toward_bp_H48": 42.45821741326097,
+    "t_H48": 3.1157489870059694,
+    "frac_recovered_H48": 0.2656311945573805
+   }
+  },
+  "ETHUSDT": {
+   "UTC0_k2.0": {
+    "n_events": 9281,
+    "median_dist_bp": 125.38428758738718,
+    "toward_bp_H6": -0.5204505761979192,
+    "t_H6": -0.6013561891295826,
+    "frac_recovered_H6": -0.02928843245461495,
+    "toward_bp_H12": -0.1899772312216176,
+    "t_H12": -0.16914921620879914,
+    "frac_recovered_H12": -0.0416835874063115,
+    "toward_bp_H24": -0.6556982746110596,
+    "t_H24": -0.430009859054792,
+    "frac_recovered_H24": -0.04929636157866564,
+    "toward_bp_H48": 0.0480918639027452,
+    "t_H48": 0.02344872209853455,
+    "frac_recovered_H48": -0.07126336215933272
+   },
+   "UTC0_k2.5": {
+    "n_events": 2696,
+    "median_dist_bp": 155.82453109909295,
+    "toward_bp_H6": 6.752734637907101,
+    "t_H6": 2.2230829816919573,
+    "frac_recovered_H6": -0.02296947156681988,
+    "toward_bp_H12": 4.566587213446022,
+    "t_H12": 1.368294209144712,
+    "frac_recovered_H12": -0.04889574101705303,
+    "toward_bp_H24": 5.301720073613784,
+    "t_H24": 1.2605726473266123,
+    "frac_recovered_H24": -0.03996107586071314,
+    "toward_bp_H48": 7.387278449047925,
+    "t_H48": 1.4512017407097033,
+    "frac_recovered_H48": -0.043898734968248115,
+    "H24_rv<=1": {
+     "n": 1423,
+     "toward_bp": -11.096509191520147,
+     "t": -3.5850128825539516
+    },
+    "H24_rv>1": {
+     "n": 1273,
+     "toward_bp": 23.63218373762445,
+     "t": 2.8893309737455057
+    },
+    "H24_rv<=0.7": {
+     "n": 460,
+     "toward_bp": -8.524533173463976,
+     "t": -1.7988416746321514
+    },
+    "H24_er<=0.3": {
+     "n": 2609,
+     "toward_bp": -1.3112823198813515,
+     "t": -0.44115204433132205
+    },
+    "H24_er>0.3": {
+     "n": 87,
+     "toward_bp": 203.61578035670348,
+     "t": 2.186762683271742
+    },
+    "H24_down_exc": {
+     "n": 1262,
+     "toward_bp": 26.223167684924615,
+     "t": 3.2950763052145096
+    },
+    "H24_up_exc": {
+     "n": 1434,
+     "toward_bp": -13.110320990175804,
+     "t": -3.637507181431469
+    }
+   },
+   "UTC0_k3.0": {
+    "n_events": 438,
+    "median_dist_bp": 190.97353458004812,
+    "toward_bp_H6": 19.673545338582517,
+    "t_H6": 1.4147195350433812,
+    "frac_recovered_H6": -0.04176919077995288,
+    "toward_bp_H12": 21.71714646714355,
+    "t_H12": 1.4361208329418556,
+    "frac_recovered_H12": -0.07600959077586945,
+    "toward_bp_H24": 25.910573061240093,
+    "t_H24": 1.3836377868880865,
+    "frac_recovered_H24": -0.11101079315966403,
+    "toward_bp_H48": 37.59240283024572,
+    "t_H48": 1.6593651958810085,
+    "frac_recovered_H48": -0.09452051978798165
+   },
+   "CT17_k2.0": {
+    "n_events": 10004,
+    "median_dist_bp": 116.3477081148386,
+    "toward_bp_H6": 0.8943634803236004,
+    "t_H6": 0.9818392263330936,
+    "frac_recovered_H6": 0.0023334189031076853,
+    "toward_bp_H12": 0.9108014598961551,
+    "t_H12": 0.8188563785596087,
+    "frac_recovered_H12": -0.003862649871989699,
+    "toward_bp_H24": 1.2670410671260357,
+    "t_H24": 0.8644448499430024,
+    "frac_recovered_H24": 0.008335094476369152,
+    "toward_bp_H48": 2.848642392911164,
+    "t_H48": 1.4636246319782573,
+    "frac_recovered_H48": 0.006341155425248424
+   },
+   "CT17_k2.5": {
+    "n_events": 2833,
+    "median_dist_bp": 143.84042811253178,
+    "toward_bp_H6": 6.579036337662561,
+    "t_H6": 2.5692110865102418,
+    "frac_recovered_H6": 0.008484620979239388,
+    "toward_bp_H12": 5.54669743144823,
+    "t_H12": 1.867819844448526,
+    "frac_recovered_H12": -0.004046521393971854,
+    "toward_bp_H24": 6.435658761226279,
+    "t_H24": 1.7390757218211899,
+    "frac_recovered_H24": 0.033008735330703934,
+    "toward_bp_H48": 9.256254075380314,
+    "t_H48": 1.934252925522954,
+    "frac_recovered_H48": 0.025004119564909208,
+    "H24_rv<=1": {
+     "n": 1435,
+     "toward_bp": -9.806176202861211,
+     "t": -3.2355630690141908
+    },
+    "H24_rv>1": {
+     "n": 1398,
+     "toward_bp": 23.107356310200206,
+     "t": 3.4000866768754094
+    },
+    "H24_rv<=0.7": {
+     "n": 436,
+     "toward_bp": -8.640716239101085,
+     "t": -1.8196411582969
+    },
+    "H24_er<=0.3": {
+     "n": 2688,
+     "toward_bp": 2.627147873813245,
+     "t": 0.9461775480416698
+    },
+    "H24_er>0.3": {
+     "n": 145,
+     "toward_bp": 77.03757093616582,
+     "t": 1.5229427338203572
+    },
+    "H24_down_exc": {
+     "n": 1315,
+     "toward_bp": 19.72276515071943,
+     "t": 2.8575548684774006
+    },
+    "H24_up_exc": {
+     "n": 1518,
+     "toward_bp": -5.074581622293811,
+     "t": -1.4785404754544096
+    }
+   },
+   "CT17_k3.0": {
+    "n_events": 394,
+    "median_dist_bp": 155.37976759520527,
+    "toward_bp_H6": 34.93693923425709,
+    "t_H6": 2.315087221239148,
+    "frac_recovered_H6": 0.07667803221930679,
+    "toward_bp_H12": 36.14341888698185,
+    "t_H12": 2.257623579205983,
+    "frac_recovered_H12": 0.044319253025723475,
+    "toward_bp_H24": 44.402808119183995,
+    "t_H24": 2.2732950735715094,
+    "frac_recovered_H24": 0.10327425413355122,
+    "toward_bp_H48": 51.98109829045584,
+    "t_H48": 2.120200687453436,
+    "frac_recovered_H48": 0.12418286637271969
+   }
+  }
+ },
+ "screen_passers": []
+}

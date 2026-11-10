@@ -1,0 +1,707 @@
+{
+ "n_variants": 15,
+ "variants": [
+  {
+   "name": "BTC_wexp_lasthour_fade_4h",
+   "symbol": "BTCUSDT",
+   "rule": "BTC/ETH 5-min bars. On every Friday (Deribit weekly options expiry 08:00 UTC): r = close(07:55 UTC bar) / open(07:00 UTC bar) - 1 on the expiry Friday; side = -sign(r). Enter 1 contract at the open of the 08:00 UTC bar; exit at the open of the bar 48 bars (4 h) later (earlier if the Topstep 15:10 CT flat comes first). No stop/target.",
+   "n": 235,
+   "trades_per_day": 0.2002438802746506,
+   "mean_net": 2.5285744680850875,
+   "t_stat": 0.5926728620962601,
+   "ci95_low": -5.54054734042554,
+   "ci95_high": 11.472956914893604,
+   "win_rate": 0.5106382978723404,
+   "avg_win": 35.24291666666663,
+   "avg_loss": 31.608130434782616,
+   "sharpe_per_trade": 0.03866171460823219,
+   "total_net": 594.2149999999956,
+   "gross_mean": 6.3485744680850855,
+   "max_drawdown": 793.2460000000007,
+   "by_year": {
+    "2020": -448.3,
+    "2021": 638.0,
+    "2022": -47.5,
+    "2023": 443.9,
+    "2024": 8.1
+   },
+   "n_by_year": {
+    "2020": 52,
+    "2021": 53,
+    "2022": 52,
+    "2023": 52,
+    "2024": 26
+   },
+   "reasons": {
+    "time": 235
+   },
+   "mean_hold_bars": 48.0,
+   "dsr": 0.11998629066861605
+  },
+  {
+   "name": "BTC_wexp_24h_follow_flat",
+   "symbol": "BTCUSDT",
+   "rule": "BTC/ETH 5-min bars. On every Friday (Deribit weekly options expiry 08:00 UTC): r = close(Fri 07:55 UTC bar) / open(Thu 08:00 UTC bar) - 1; side = +sign(r). Enter 1 contract at the open of the 08:00 UTC bar; exit at the 15:10 CT forced flat (earlier if the Topstep 15:10 CT flat comes first). No stop/target.",
+   "n": 235,
+   "trades_per_day": 0.2002438802746506,
+   "mean_net": -3.2353829787233837,
+   "t_stat": -0.4741470708669746,
+   "ci95_low": -17.044730212765934,
+   "ci95_high": 10.3162607446809,
+   "win_rate": 0.39148936170212767,
+   "avg_win": 79.67577173913047,
+   "avg_loss": 56.57682517482515,
+   "sharpe_per_trade": -0.030929944508258745,
+   "total_net": -760.3149999999952,
+   "gross_mean": 0.5846170212766163,
+   "max_drawdown": 2319.024999999997,
+   "by_year": {
+    "2020": -333.5,
+    "2021": -205.8,
+    "2022": 275.1,
+    "2023": -181.2,
+    "2024": -314.8
+   },
+   "n_by_year": {
+    "2020": 52,
+    "2021": 53,
+    "2022": 52,
+    "2023": 52,
+    "2024": 26
+   },
+   "reasons": {
+    "flat": 235
+   },
+   "mean_hold_bars": 150.23829787234044,
+   "dsr": 0.012561490155900268
+  },
+  {
+   "name": "BTC_mexp_lasthour_fade_4h",
+   "symbol": "BTCUSDT",
+   "rule": "BTC/ETH 5-min bars. On the last Friday of each month (Deribit monthly options expiry 08:00 UTC): r = close(07:55 UTC bar) / open(07:00 UTC bar) - 1 on the expiry Friday; side = -sign(r). Enter 1 contract at the open of the 08:00 UTC bar; exit at the open of the bar 48 bars (4 h) later (earlier if the Topstep 15:10 CT flat comes first). No stop/target.",
+   "n": 54,
+   "trades_per_day": 0.04601348738226013,
+   "mean_net": 18.909277777777735,
+   "t_stat": 1.3684699526332014,
+   "ci95_low": -7.02839444444451,
+   "ci95_high": 45.63506296296295,
+   "win_rate": 0.6666666666666666,
+   "avg_win": 52.52547222222219,
+   "avg_loss": 48.32311111111117,
+   "sharpe_per_trade": 0.186225172904556,
+   "total_net": 1021.1009999999977,
+   "gross_mean": 22.729277777777728,
+   "max_drawdown": 328.64600000000024,
+   "by_year": {
+    "2020": -157.2,
+    "2021": 724.8,
+    "2022": 142.2,
+    "2023": 90.5,
+    "2024": 220.8
+   },
+   "n_by_year": {
+    "2020": 12,
+    "2021": 12,
+    "2022": 12,
+    "2023": 12,
+    "2024": 6
+   },
+   "reasons": {
+    "time": 54
+   },
+   "mean_hold_bars": 48.0,
+   "dsr": 0.3464013719024719
+  },
+  {
+   "name": "BTC_mexp_24h_follow_flat",
+   "symbol": "BTCUSDT",
+   "rule": "BTC/ETH 5-min bars. On the last Friday of each month (Deribit monthly options expiry 08:00 UTC): r = close(Fri 07:55 UTC bar) / open(Thu 08:00 UTC bar) - 1; side = +sign(r). Enter 1 contract at the open of the 08:00 UTC bar; exit at the 15:10 CT forced flat (earlier if the Topstep 15:10 CT flat comes first). No stop/target.",
+   "n": 54,
+   "trades_per_day": 0.04601348738226013,
+   "mean_net": -7.519870370370301,
+   "t_stat": -0.5839239140347213,
+   "ci95_low": -33.76311388888879,
+   "ci95_high": 16.71145509259266,
+   "win_rate": 0.4444444444444444,
+   "avg_win": 60.58679166666675,
+   "avg_loss": 62.00519999999993,
+   "sharpe_per_trade": -0.07946197988854757,
+   "total_net": -406.0729999999962,
+   "gross_mean": -3.699870370370303,
+   "max_drawdown": 701.9739999999967,
+   "by_year": {
+    "2020": 62.5,
+    "2021": -105.8,
+    "2022": 73.2,
+    "2023": -21.6,
+    "2024": -414.5
+   },
+   "n_by_year": {
+    "2020": 12,
+    "2021": 12,
+    "2022": 12,
+    "2023": 12,
+    "2024": 6
+   },
+   "reasons": {
+    "flat": 54
+   },
+   "mean_hold_bars": 150.0,
+   "dsr": 0.009928927295053009
+  },
+  {
+   "name": "ETH_wexp_lasthour_fade_4h",
+   "symbol": "ETHUSDT",
+   "rule": "BTC/ETH 5-min bars. On every Friday (Deribit weekly options expiry 08:00 UTC): r = close(07:55 UTC bar) / open(07:00 UTC bar) - 1 on the expiry Friday; side = -sign(r). Enter 1 contract at the open of the 08:00 UTC bar; exit at the open of the bar 48 bars (4 h) later (earlier if the Topstep 15:10 CT flat comes first). No stop/target.",
+   "n": 235,
+   "trades_per_day": 0.2002438802746506,
+   "mean_net": -0.8414851063829798,
+   "t_stat": -2.7830431504468427,
+   "ci95_low": -1.4148226595744684,
+   "ci95_high": -0.26966670212766214,
+   "win_rate": 0.28936170212765955,
+   "avg_win": 3.029249999999999,
+   "avg_loss": 2.4175928143712584,
+   "sharpe_per_trade": -0.181545717555557,
+   "total_net": -197.74900000000025,
+   "gross_mean": 0.07851489361702013,
+   "max_drawdown": 206.66800000000012,
+   "by_year": {
+    "2020": -53.4,
+    "2021": -80.0,
+    "2022": -43.3,
+    "2023": -22.4,
+    "2024": 1.3
+   },
+   "n_by_year": {
+    "2020": 52,
+    "2021": 53,
+    "2022": 52,
+    "2023": 52,
+    "2024": 26
+   },
+   "reasons": {
+    "time": 235
+   },
+   "mean_hold_bars": 48.0,
+   "dsr": 3.2869834515677097e-06
+  },
+  {
+   "name": "BTC_cme_brr_fade",
+   "symbol": "BTCUSDT",
+   "rule": "BTC 5-min bars. On the last Friday of each month (CME BTC futures expiry): r = close(15:55 London bar) / open(15:00 London bar) - 1 (the CME CF BRR calculation window). side = -sign(r). Enter 1 contract at the open of the 16:00 London bar; exit at the 15:10 CT forced flat. No stop/target.",
+   "n": 54,
+   "trades_per_day": 0.04601348738226013,
+   "mean_net": 10.169296296296281,
+   "t_stat": 1.260709284121285,
+   "ci95_low": -5.188662500000026,
+   "ci95_high": 27.224728703703644,
+   "win_rate": 0.5185185185185185,
+   "avg_win": 44.20596428571428,
+   "avg_loss": 26.48557692307694,
+   "sharpe_per_trade": 0.17156080333814508,
+   "total_net": 549.1419999999991,
+   "gross_mean": 13.989296296296281,
+   "max_drawdown": 270.0900000000005,
+   "by_year": {
+    "2020": 51.9,
+    "2021": 547.2,
+    "2022": -94.1,
+    "2023": 5.2,
+    "2024": 39.0
+   },
+   "n_by_year": {
+    "2020": 12,
+    "2021": 12,
+    "2022": 12,
+    "2023": 12,
+    "2024": 6
+   },
+   "reasons": {
+    "flat": 54
+   },
+   "mean_hold_bars": 60.888888888888886,
+   "dsr": 0.30799346838902936
+  },
+  {
+   "name": "BTC_cme_brr_follow",
+   "symbol": "BTCUSDT",
+   "rule": "BTC 5-min bars. On the last Friday of each month (CME BTC futures expiry): r = close(15:55 London bar) / open(15:00 London bar) - 1 (the CME CF BRR calculation window). side = +sign(r). Enter 1 contract at the open of the 16:00 London bar; exit at the 15:10 CT forced flat. No stop/target.",
+   "n": 54,
+   "trades_per_day": 0.04601348738226013,
+   "mean_net": -17.80929629629628,
+   "t_stat": -2.207856328523422,
+   "ci95_low": -34.864728703703676,
+   "ci95_high": -2.451337499999972,
+   "win_rate": 0.2962962962962963,
+   "avg_win": 32.924125000000004,
+   "avg_loss": 39.17073684210524,
+   "sharpe_per_trade": -0.30045119056983605,
+   "total_net": -961.7019999999992,
+   "gross_mean": -13.989296296296281,
+   "max_drawdown": 1022.6779999999992,
+   "by_year": {
+    "2020": -143.5,
+    "2021": -638.9,
+    "2022": 2.4,
+    "2023": -96.9,
+    "2024": -84.8
+   },
+   "n_by_year": {
+    "2020": 12,
+    "2021": 12,
+    "2022": 12,
+    "2023": 12,
+    "2024": 6
+   },
+   "reasons": {
+    "flat": 54
+   },
+   "mean_hold_bars": 60.888888888888886,
+   "dsr": 5.775300176041083e-05
+  },
+  {
+   "name": "BTC_cpi_nfp_react_follow",
+   "symbol": "BTCUSDT",
+   "rule": "BTC 5-min bars. On CPI or NFP release days (07:30 CT): r = close/open - 1 of the 07:30 CT bar (the release bar). side = +sign(r). Enter 1 contract at the open of the 07:35 CT bar; exit at the 15:10 CT forced flat. No stop/target.",
+   "n": 108,
+   "trades_per_day": 0.09202697476452026,
+   "mean_net": -11.591851851851834,
+   "t_stat": -1.2826859876742278,
+   "ci95_low": -29.427731712962956,
+   "ci95_high": 5.591103240740765,
+   "win_rate": 0.37037037037037035,
+   "avg_win": 68.79522500000007,
+   "avg_loss": 58.87836764705882,
+   "sharpe_per_trade": -0.12342651671157942,
+   "total_net": -1251.919999999998,
+   "gross_mean": -7.771851851851827,
+   "max_drawdown": 1900.6629999999961,
+   "by_year": {
+    "2020": -133.4,
+    "2021": -289.9,
+    "2022": -391.6,
+    "2023": -715.8,
+    "2024": 278.7
+   },
+   "n_by_year": {
+    "2020": 24,
+    "2021": 24,
+    "2022": 24,
+    "2023": 24,
+    "2024": 12
+   },
+   "reasons": {
+    "flat": 108
+   },
+   "mean_hold_bars": 91.0,
+   "dsr": 0.001232176940569302
+  },
+  {
+   "name": "BTC_cpi_nfp_react_fade",
+   "symbol": "BTCUSDT",
+   "rule": "BTC 5-min bars. On CPI or NFP release days (07:30 CT): r = close/open - 1 of the 07:30 CT bar (the release bar). side = -sign(r). Enter 1 contract at the open of the 07:35 CT bar; exit at the 15:10 CT forced flat. No stop/target.",
+   "n": 108,
+   "trades_per_day": 0.09202697476452026,
+   "mean_net": 3.9518518518518313,
+   "t_stat": 0.4372886282984204,
+   "ci95_low": -13.231103240740765,
+   "ci95_high": 21.787731712962945,
+   "win_rate": 0.5277777777777778,
+   "avg_win": 61.85926315789473,
+   "avg_loss": 60.768196078431416,
+   "sharpe_per_trade": 0.04207811787694254,
+   "total_net": 426.7999999999978,
+   "gross_mean": 7.771851851851827,
+   "max_drawdown": 608.8799999999998,
+   "by_year": {
+    "2020": -50.0,
+    "2021": 106.6,
+    "2022": 208.2,
+    "2023": 532.4,
+    "2024": -370.4
+   },
+   "n_by_year": {
+    "2020": 24,
+    "2021": 24,
+    "2022": 24,
+    "2023": 24,
+    "2024": 12
+   },
+   "reasons": {
+    "flat": 108
+   },
+   "mean_hold_bars": 91.0,
+   "dsr": 0.09231834893921032
+  },
+  {
+   "name": "BTC_fomc_react_follow",
+   "symbol": "BTCUSDT",
+   "rule": "BTC 5-min bars. On scheduled FOMC statement days (13:00 CT): r = close/open - 1 of the 13:00 CT bar (the release bar). side = +sign(r). Enter 1 contract at the open of the 13:05 CT bar; exit at the 15:10 CT forced flat. No stop/target.",
+   "n": 35,
+   "trades_per_day": 0.029823556636650088,
+   "mean_net": -0.37068571428569774,
+   "t_stat": -0.024325522184429196,
+   "ci95_low": -30.10146500000004,
+   "ci95_high": 28.05588642857147,
+   "win_rate": 0.5142857142857142,
+   "avg_win": 65.98038888888891,
+   "avg_loss": 70.62476470588236,
+   "sharpe_per_trade": -0.00411176371453265,
+   "total_net": -12.973999999999421,
+   "gross_mean": 3.4493142857142973,
+   "max_drawdown": 633.8640000000009,
+   "by_year": {
+    "2020": -51.4,
+    "2021": 285.7,
+    "2022": -280.1,
+    "2023": -125.3,
+    "2024": 158.1
+   },
+   "n_by_year": {
+    "2020": 7,
+    "2021": 8,
+    "2022": 8,
+    "2023": 8,
+    "2024": 4
+   },
+   "reasons": {
+    "flat": 35
+   },
+   "mean_hold_bars": 25.0,
+   "dsr": 0.03843312143945975
+  },
+  {
+   "name": "BTC_fomc_react_fade",
+   "symbol": "BTCUSDT",
+   "rule": "BTC 5-min bars. On scheduled FOMC statement days (13:00 CT): r = close/open - 1 of the 13:00 CT bar (the release bar). side = -sign(r). Enter 1 contract at the open of the 13:05 CT bar; exit at the 15:10 CT forced flat. No stop/target.",
+   "n": 35,
+   "trades_per_day": 0.029823556636650088,
+   "mean_net": -7.269314285714294,
+   "t_stat": -0.477034477207944,
+   "ci95_low": -35.69588642857147,
+   "ci95_high": 22.461465000000047,
+   "win_rate": 0.45714285714285713,
+   "avg_win": 67.0215,
+   "avg_loss": 69.83000000000003,
+   "sharpe_per_trade": -0.08063354361289748,
+   "total_net": -254.42600000000027,
+   "gross_mean": -3.4493142857142973,
+   "max_drawdown": 454.3750000000002,
+   "by_year": {
+    "2020": -2.1,
+    "2021": -346.8,
+    "2022": 219.0,
+    "2023": 64.2,
+    "2024": -188.7
+   },
+   "n_by_year": {
+    "2020": 7,
+    "2021": 8,
+    "2022": 8,
+    "2023": 8,
+    "2024": 4
+   },
+   "reasons": {
+    "flat": 35
+   },
+   "mean_hold_bars": 25.0,
+   "dsr": 0.013491083466082486
+  },
+  {
+   "name": "BTC_pre_fomc_drift_long",
+   "symbol": "BTCUSDT",
+   "rule": "BTC 5-min bars. On the evening before a scheduled FOMC statement day, go long 1 contract at the open of the 17:00 CT bar (CME re-open); exit at the open of the 13:00 CT bar on the FOMC day (statement time). No stop/target.",
+   "n": 35,
+   "trades_per_day": 0.029823556636650088,
+   "mean_net": 13.397885714285751,
+   "t_stat": 0.7639093049977161,
+   "ci95_low": -21.282342857142797,
+   "ci95_high": 46.807793571428554,
+   "win_rate": 0.6,
+   "avg_win": 70.09361904761909,
+   "avg_loss": 71.64571428571425,
+   "sharpe_per_trade": 0.12912423986910476,
+   "total_net": 468.9260000000013,
+   "gross_mean": 17.21788571428575,
+   "max_drawdown": 534.2939999999992,
+   "by_year": {
+    "2020": 322.4,
+    "2021": -410.8,
+    "2022": 455.0,
+    "2023": 118.8,
+    "2024": -16.6
+   },
+   "n_by_year": {
+    "2020": 7,
+    "2021": 8,
+    "2022": 8,
+    "2023": 8,
+    "2024": 4
+   },
+   "reasons": {
+    "signal": 35
+   },
+   "mean_hold_bars": 240.0,
+   "dsr": 0.1615347127842916
+  },
+  {
+   "name": "BTC_turn_of_month_long",
+   "symbol": "BTCUSDT",
+   "rule": "BTC 5-min bars. On the last calendar day of the month (Chicago date), if that evening is a tradable Topstep session (Sun-Thu), go long 1 contract at the open of the 17:00 CT bar; hold through the 00:00 UTC month roll and exit at the next 15:10 CT forced flat. Skip if the last day is a Friday or Saturday. No stop/target.",
+   "n": 39,
+   "trades_per_day": 0.033231963109410095,
+   "mean_net": 7.786589743589753,
+   "t_stat": 0.3868345884658208,
+   "ci95_low": -29.97659999999996,
+   "ci95_high": 46.630871153846215,
+   "win_rate": 0.5128205128205128,
+   "avg_win": 86.76759999999999,
+   "avg_loss": 75.35131578947367,
+   "sharpe_per_trade": 0.06194310847898254,
+   "total_net": 303.67700000000036,
+   "gross_mean": 11.606589743589746,
+   "max_drawdown": 436.15999999999894,
+   "by_year": {
+    "2020": -55.3,
+    "2021": 607.9,
+    "2022": -70.4,
+    "2023": 103.2,
+    "2024": -281.8
+   },
+   "n_by_year": {
+    "2020": 8,
+    "2021": 9,
+    "2022": 9,
+    "2023": 9,
+    "2024": 4
+   },
+   "reasons": {
+    "flat": 39
+   },
+   "mean_hold_bars": 266.0,
+   "dsr": 0.08617737637965384
+  },
+  {
+   "name": "BTC_monthend_day_short",
+   "symbol": "BTCUSDT",
+   "rule": "BTC 5-min bars. On the last weekday of each month (Chicago date; if the month ends on a weekend, the preceding Friday), short 1 contract at the open of the 08:30 CT bar; exit at the 15:10 CT forced flat. No stop/target.",
+   "n": 54,
+   "trades_per_day": 0.04601348738226013,
+   "mean_net": 11.153185185185258,
+   "t_stat": 0.8716156464545525,
+   "ci95_low": -13.579712962962887,
+   "ci95_high": 36.559313888888916,
+   "win_rate": 0.46296296296296297,
+   "avg_win": 75.81748000000015,
+   "avg_loss": 44.59189655172411,
+   "sharpe_per_trade": 0.1186118658688753,
+   "total_net": 602.2720000000039,
+   "gross_mean": 14.973185185185255,
+   "max_drawdown": 587.7199999999988,
+   "by_year": {
+    "2020": -203.5,
+    "2021": 198.7,
+    "2022": -219.3,
+    "2023": 224.7,
+    "2024": 601.7
+   },
+   "n_by_year": {
+    "2020": 12,
+    "2021": 12,
+    "2022": 12,
+    "2023": 12,
+    "2024": 6
+   },
+   "reasons": {
+    "flat": 54
+   },
+   "mean_hold_bars": 80.0,
+   "dsr": 0.18738315300517444
+  },
+  {
+   "name": "BTC_friday_session_short",
+   "symbol": "BTCUSDT",
+   "rule": "BTC 5-min bars. Short 1 contract at the open of the Thursday 17:00 CT bar (start of the Friday CME session); exit at the Friday 15:10 CT forced flat. No stop/target.",
+   "n": 235,
+   "trades_per_day": 0.2002438802746506,
+   "mean_net": 1.6141617021276649,
+   "t_stat": 0.19893821729000666,
+   "ci95_low": -14.531337978723414,
+   "ci95_high": 17.33769340425536,
+   "win_rate": 0.4978723404255319,
+   "avg_win": 82.23413675213676,
+   "avg_loss": 78.322593220339,
+   "sharpe_per_trade": 0.012977298394147704,
+   "total_net": 379.3280000000012,
+   "gross_mean": 5.434161702127665,
+   "max_drawdown": 1616.2980000000007,
+   "by_year": {
+    "2020": -151.1,
+    "2021": -249.9,
+    "2022": 616.3,
+    "2023": -500.2,
+    "2024": 664.2
+   },
+   "n_by_year": {
+    "2020": 53,
+    "2021": 52,
+    "2022": 52,
+    "2023": 52,
+    "2024": 26
+   },
+   "reasons": {
+    "flat": 235
+   },
+   "mean_hold_bars": 266.0,
+   "dsr": 0.05840273010517803
+  }
+ ],
+ "diagnostics": {
+  "CPI 07:30-09:30 CT": {
+   "label": "CPI 07:30-09:30 CT",
+   "event_days": 54,
+   "range_pct_event": 2.9500552121348904,
+   "range_pct_other": 1.8753744570500237
+  },
+  "NFP 07:30-09:30 CT": {
+   "label": "NFP 07:30-09:30 CT",
+   "event_days": 54,
+   "range_pct_event": 2.2205775837920716,
+   "range_pct_other": 1.9105771308038322
+  },
+  "FOMC 13:00-15:10 CT": {
+   "label": "FOMC 13:00-15:10 CT",
+   "event_days": 35,
+   "range_pct_event": 3.8554256692086595,
+   "range_pct_other": 1.5761569424804551
+  },
+  "expiry_friday_0800_1200_UTC_range": {
+   "monthly_expiry_fridays": 54,
+   "range_pct_monthly": 2.398803421185849,
+   "range_pct_other_fridays": 1.885252643054151
+  },
+  "friday_mean_5min_ret_by_utc_hour_bp": {
+   "0": {
+    "mean": -0.405,
+    "count": 2820,
+    "t": -0.831
+   },
+   "1": {
+    "mean": -0.399,
+    "count": 2820,
+    "t": -0.796
+   },
+   "2": {
+    "mean": 0.033,
+    "count": 2820,
+    "t": 0.041
+   },
+   "3": {
+    "mean": 0.435,
+    "count": 2820,
+    "t": 0.926
+   },
+   "4": {
+    "mean": -0.763,
+    "count": 2820,
+    "t": -1.835
+   },
+   "5": {
+    "mean": -0.136,
+    "count": 2820,
+    "t": -0.34
+   },
+   "6": {
+    "mean": 0.351,
+    "count": 2820,
+    "t": 0.949
+   },
+   "7": {
+    "mean": -0.105,
+    "count": 2820,
+    "t": -0.276
+   },
+   "8": {
+    "mean": 0.665,
+    "count": 2820,
+    "t": 1.273
+   },
+   "9": {
+    "mean": 0.477,
+    "count": 2820,
+    "t": 1.145
+   },
+   "10": {
+    "mean": 0.339,
+    "count": 2820,
+    "t": 0.848
+   },
+   "11": {
+    "mean": 0.006,
+    "count": 2820,
+    "t": 0.014
+   },
+   "12": {
+    "mean": 0.398,
+    "count": 2820,
+    "t": 0.905
+   },
+   "13": {
+    "mean": -0.003,
+    "count": 2820,
+    "t": -0.005
+   },
+   "14": {
+    "mean": -0.877,
+    "count": 2820,
+    "t": -1.525
+   },
+   "15": {
+    "mean": -0.166,
+    "count": 2820,
+    "t": -0.297
+   },
+   "16": {
+    "mean": -0.534,
+    "count": 2820,
+    "t": -1.027
+   },
+   "17": {
+    "mean": -0.519,
+    "count": 2820,
+    "t": -1.422
+   },
+   "18": {
+    "mean": -0.014,
+    "count": 2820,
+    "t": -0.031
+   },
+   "19": {
+    "mean": 0.431,
+    "count": 2820,
+    "t": 0.975
+   },
+   "20": {
+    "mean": -0.015,
+    "count": 2820,
+    "t": -0.033
+   },
+   "21": {
+    "mean": 0.661,
+    "count": 2820,
+    "t": 1.486
+   },
+   "22": {
+    "mean": 0.007,
+    "count": 2820,
+    "t": 0.019
+   },
+   "23": {
+    "mean": 0.397,
+    "count": 2820,
+    "t": 1.035
+   }
+  }
+ }
+}

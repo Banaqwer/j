@@ -1,0 +1,53 @@
+BTC_wexp_lasthour_fade_4h    BTCUSDT  n= 235 mean_net=    2.53 t=  0.59 wr=0.511 tpd=0.200 by_year={'2020': -448.3, '2021': 638.0, '2022': -47.5, '2023': 443.9, '2024': 8.1}
+BTC_wexp_24h_follow_flat     BTCUSDT  n= 235 mean_net=   -3.24 t= -0.47 wr=0.391 tpd=0.200 by_year={'2020': -333.5, '2021': -205.8, '2022': 275.1, '2023': -181.2, '2024': -314.8}
+BTC_mexp_lasthour_fade_4h    BTCUSDT  n=  54 mean_net=   18.91 t=  1.37 wr=0.667 tpd=0.046 by_year={'2020': -157.2, '2021': 724.8, '2022': 142.2, '2023': 90.5, '2024': 220.8}
+BTC_mexp_24h_follow_flat     BTCUSDT  n=  54 mean_net=   -7.52 t= -0.58 wr=0.444 tpd=0.046 by_year={'2020': 62.5, '2021': -105.8, '2022': 73.2, '2023': -21.6, '2024': -414.5}
+ETH_wexp_lasthour_fade_4h    ETHUSDT  n= 235 mean_net=   -0.84 t= -2.78 wr=0.289 tpd=0.200 by_year={'2020': -53.4, '2021': -80.0, '2022': -43.3, '2023': -22.4, '2024': 1.3}
+BTC_cme_brr_fade             BTCUSDT  n=  54 mean_net=   10.17 t=  1.26 wr=0.519 tpd=0.046 by_year={'2020': 51.9, '2021': 547.2, '2022': -94.1, '2023': 5.2, '2024': 39.0}
+BTC_cme_brr_follow           BTCUSDT  n=  54 mean_net=  -17.81 t= -2.21 wr=0.296 tpd=0.046 by_year={'2020': -143.5, '2021': -638.9, '2022': 2.4, '2023': -96.9, '2024': -84.8}
+BTC_cpi_nfp_react_follow     BTCUSDT  n= 108 mean_net=  -11.59 t= -1.28 wr=0.370 tpd=0.092 by_year={'2020': -133.4, '2021': -289.9, '2022': -391.6, '2023': -715.8, '2024': 278.7}
+BTC_cpi_nfp_react_fade       BTCUSDT  n= 108 mean_net=    3.95 t=  0.44 wr=0.528 tpd=0.092 by_year={'2020': -50.0, '2021': 106.6, '2022': 208.2, '2023': 532.4, '2024': -370.4}
+BTC_fomc_react_follow        BTCUSDT  n=  35 mean_net=   -0.37 t= -0.02 wr=0.514 tpd=0.030 by_year={'2020': -51.4, '2021': 285.7, '2022': -280.1, '2023': -125.3, '2024': 158.1}
+BTC_fomc_react_fade          BTCUSDT  n=  35 mean_net=   -7.27 t= -0.48 wr=0.457 tpd=0.030 by_year={'2020': -2.1, '2021': -346.8, '2022': 219.0, '2023': 64.2, '2024': -188.7}
+BTC_pre_fomc_drift_long      BTCUSDT  n=  35 mean_net=   13.40 t=  0.76 wr=0.600 tpd=0.030 by_year={'2020': 322.4, '2021': -410.8, '2022': 455.0, '2023': 118.8, '2024': -16.6}
+BTC_turn_of_month_long       BTCUSDT  n=  39 mean_net=    7.79 t=  0.39 wr=0.513 tpd=0.033 by_year={'2020': -55.3, '2021': 607.9, '2022': -70.4, '2023': 103.2, '2024': -281.8}
+BTC_monthend_day_short       BTCUSDT  n=  54 mean_net=   11.15 t=  0.87 wr=0.463 tpd=0.046 by_year={'2020': -203.5, '2021': 198.7, '2022': -219.3, '2023': 224.7, '2024': 601.7}
+BTC_friday_session_short     BTCUSDT  n= 235 mean_net=    1.61 t=  0.20 wr=0.498 tpd=0.200 by_year={'2020': -151.1, '2021': -249.9, '2022': 616.3, '2023': -500.2, '2024': 664.2}
+
+CPI 07:30-09:30 CT: event days=54 mean range 2.95% vs other days 1.88%
+
+NFP 07:30-09:30 CT: event days=54 mean range 2.22% vs other days 1.91%
+
+FOMC 13:00-15:10 CT: event days=35 mean range 3.86% vs other days 1.58%
+
+Friday 08:00-12:00 UTC range: monthly-expiry Fridays 2.40% vs other Fridays 1.89%
+
+Friday mean 5-min log return by UTC hour (bp):
+     mean  count      t
+h                      
+0  -0.405   2820 -0.831
+1  -0.399   2820 -0.796
+2   0.033   2820  0.041
+3   0.435   2820  0.926
+4  -0.763   2820 -1.835
+5  -0.136   2820 -0.340
+6   0.351   2820  0.949
+7  -0.105   2820 -0.276
+8   0.665   2820  1.273
+9   0.477   2820  1.145
+10  0.339   2820  0.848
+11  0.006   2820  0.014
+12  0.398   2820  0.905
+13 -0.003   2820 -0.005
+14 -0.877   2820 -1.525
+15 -0.166   2820 -0.297
+16 -0.534   2820 -1.027
+17 -0.519   2820 -1.422
+18 -0.014   2820 -0.031
+19  0.431   2820  0.975
+20 -0.015   2820 -0.033
+21  0.661   2820  1.486
+22  0.007   2820  0.019
+23  0.397   2820  1.035
+
+wrote /home/user/j/research/hyp/calendar_events_results.json; n_variants=15
