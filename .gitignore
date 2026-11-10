@@ -21,3 +21,6 @@ sol_backtest*.csv
 
 # run logs of the topstep analysis (regenerated on every run)
 results/logs/
+
+# downloaded research data (untrusted, regenerable)
+data_research/
