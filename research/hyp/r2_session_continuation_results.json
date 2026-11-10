@@ -1,0 +1,387 @@
+{
+ "family": "session_continuation",
+ "symbol": "BTCUSDT",
+ "n_variants": 5,
+ "n_prior_trials": 196,
+ "dsr_N": 201,
+ "bar_size": "1min",
+ "variants": [
+  {
+   "name": "V1_overnight_reversal_z1",
+   "symbol": "BTCUSDT",
+   "window": "overnight",
+   "z_threshold": 1.0,
+   "side_mult": -1,
+   "rule": "1 MBT (0.1 BTC), no stop/target, Binance BTCUSDT perp 1-min bars as CME proxy, $3.82 round turn. Topstep day d = session opening 17:00 CT on date d (Sun-Thu) and ending 15:10 CT on d+1. At the 08:29 CT bar close on d+1 compute r = close(08:29 CT) / open(17:00 CT bar of day d) - 1 (the 08:29 close is the last price before the 08:30 open); z = r / sd, sd = sample std (ddof=1) of the same window return over the 60 Topstep days preceding the scored day (min 50 valid), no mean subtracted. If |z| >= 1.0: enter at the open of the 08:30 CT bar with side = -sign(r) (fade the overnight move); exit at the open of the 15:08 CT bar the same day. Forced flat 15:10 CT as backstop.",
+   "n": 260,
+   "trades_per_day": 0.22154604616641566,
+   "mean_net": 3.3733346153846067,
+   "median_net": -2.445999999999976,
+   "t_stat": 0.5672177430307329,
+   "ci95_low": -8.639681634615393,
+   "ci95_high": 15.29889644230769,
+   "win_rate": 0.4807692307692308,
+   "avg_win": 67.38288,
+   "avg_loss": 55.89476296296297,
+   "sharpe_per_trade": 0.0351773511055534,
+   "sharpe_annual": 0.2628423889294513,
+   "total_net": 877.0669999999977,
+   "gross_mean": 7.193334615384605,
+   "max_drawdown": 790.7200000000012,
+   "by_year": {
+    "2020": -389.6,
+    "2021": 1157.1,
+    "2022": 545.1,
+    "2023": -147.8,
+    "2024": -287.6
+   },
+   "n_by_year": {
+    "2020": 52,
+    "2021": 62,
+    "2022": 58,
+    "2023": 53,
+    "2024": 35
+   },
+   "reasons": {
+    "signal": 260
+   },
+   "n_long": 118,
+   "n_short": 142,
+   "mean_net_long": 5.611906779661014,
+   "mean_net_short": 1.5131126760563216,
+   "dsr": 0.014081177906142838,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_3": false,
+    "pos_years": 2
+   }
+  },
+  {
+   "name": "V2_overnight_reversal_z05",
+   "symbol": "BTCUSDT",
+   "window": "overnight",
+   "z_threshold": 0.5,
+   "side_mult": -1,
+   "rule": "1 MBT (0.1 BTC), no stop/target, Binance BTCUSDT perp 1-min bars as CME proxy, $3.82 round turn. Topstep day d = session opening 17:00 CT on date d (Sun-Thu) and ending 15:10 CT on d+1. At the 08:29 CT bar close on d+1 compute r = close(08:29 CT) / open(17:00 CT bar of day d) - 1 (the 08:29 close is the last price before the 08:30 open); z = r / sd, sd = sample std (ddof=1) of the same window return over the 60 Topstep days preceding the scored day (min 50 valid), no mean subtracted. If |z| >= 0.5: enter at the open of the 08:30 CT bar with side = -sign(r) (fade the overnight move); exit at the open of the 15:08 CT bar the same day. Forced flat 15:10 CT as backstop.",
+   "n": 528,
+   "trades_per_day": 0.4499088937533364,
+   "mean_net": 0.29068560606060556,
+   "median_net": -3.0800000000000365,
+   "t_stat": 0.07575367689741332,
+   "ci95_low": -7.722200142045461,
+   "ci95_high": 7.458157859848484,
+   "win_rate": 0.44696969696969696,
+   "avg_win": 63.229906779661036,
+   "avg_loss": 50.57800000000002,
+   "sharpe_per_trade": 0.0032967556260817526,
+   "sharpe_annual": 0.03510341072815677,
+   "total_net": 153.48199999999974,
+   "gross_mean": 4.1106856060606045,
+   "max_drawdown": 1896.7679999999964,
+   "by_year": {
+    "2020": -453.5,
+    "2021": 1285.4,
+    "2022": -7.6,
+    "2023": -940.6,
+    "2024": 269.7
+   },
+   "n_by_year": {
+    "2020": 99,
+    "2021": 135,
+    "2022": 118,
+    "2023": 104,
+    "2024": 72
+   },
+   "reasons": {
+    "signal": 528
+   },
+   "n_long": 241,
+   "n_short": 287,
+   "mean_net_long": 1.1274896265560257,
+   "mean_net_short": -0.4119965156794492,
+   "dsr": 0.0035850618481631366,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": true,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_3": false,
+    "pos_years": 2
+   }
+  },
+  {
+   "name": "V3_daysofar_continuation_z1",
+   "symbol": "BTCUSDT",
+   "window": "daysofar",
+   "z_threshold": 1.0,
+   "side_mult": 1,
+   "rule": "1 MBT (0.1 BTC), no stop/target, Binance BTCUSDT perp 1-min bars as CME proxy, $3.82 round turn. Topstep day d = session opening 17:00 CT on date d (Sun-Thu) and ending 15:10 CT on d+1. At the 11:59 CT bar close on d+1 compute r = close(11:59 CT) / open(17:00 CT bar of day d) - 1 (the 11:59 close is the last price before the 12:00 open); z = r / sd, sd = sample std (ddof=1) of the same window return over the 60 Topstep days preceding the scored day (min 50 valid), no mean subtracted. If |z| >= 1.0: enter at the open of the 12:00 CT bar with side = +sign(r) (continue the day-so-far move); exit at the open of the 15:08 CT bar the same day. Forced flat 15:10 CT as backstop.",
+   "n": 284,
+   "trades_per_day": 0.24199645042793094,
+   "mean_net": -3.6631091549295802,
+   "median_net": -4.998000000000111,
+   "t_stat": -1.0852773748710252,
+   "ci95_low": -10.330112676056336,
+   "ci95_high": 2.9469043133802875,
+   "win_rate": 0.39436619718309857,
+   "avg_win": 41.71167857142859,
+   "avg_loss": 33.20948255813955,
+   "sharpe_per_trade": -0.06439936412748536,
+   "sharpe_annual": -0.502905456268014,
+   "total_net": -1040.3230000000008,
+   "gross_mean": 0.1568908450704186,
+   "max_drawdown": 1464.932000000002,
+   "by_year": {
+    "2020": -345.0,
+    "2021": -831.3,
+    "2022": 185.0,
+    "2023": 50.7,
+    "2024": -99.6
+   },
+   "n_by_year": {
+    "2020": 49,
+    "2021": 73,
+    "2022": 60,
+    "2023": 63,
+    "2024": 39
+   },
+   "reasons": {
+    "signal": 284
+   },
+   "n_long": 153,
+   "n_short": 131,
+   "mean_net_long": -1.0609542483660233,
+   "mean_net_short": -6.702267175572513,
+   "dsr": 6.11033573286035e-05,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": false,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_3": false,
+    "pos_years": 2
+   }
+  },
+  {
+   "name": "V4_daysofar_continuation_z05",
+   "symbol": "BTCUSDT",
+   "window": "daysofar",
+   "z_threshold": 0.5,
+   "side_mult": 1,
+   "rule": "1 MBT (0.1 BTC), no stop/target, Binance BTCUSDT perp 1-min bars as CME proxy, $3.82 round turn. Topstep day d = session opening 17:00 CT on date d (Sun-Thu) and ending 15:10 CT on d+1. At the 11:59 CT bar close on d+1 compute r = close(11:59 CT) / open(17:00 CT bar of day d) - 1 (the 11:59 close is the last price before the 12:00 open); z = r / sd, sd = sample std (ddof=1) of the same window return over the 60 Topstep days preceding the scored day (min 50 valid), no mean subtracted. If |z| >= 0.5: enter at the open of the 12:00 CT bar with side = +sign(r) (continue the day-so-far move); exit at the open of the 15:08 CT bar the same day. Forced flat 15:10 CT as backstop.",
+   "n": 588,
+   "trades_per_day": 0.5010349044071246,
+   "mean_net": -4.557471088435362,
+   "median_net": -5.764999999999527,
+   "t_stat": -2.0082035191934335,
+   "ci95_low": -9.259881462585035,
+   "ci95_high": -0.1852728741496545,
+   "win_rate": 0.36904761904761907,
+   "avg_win": 41.50386635944704,
+   "avg_loss": 31.499008086253372,
+   "sharpe_per_trade": -0.08281691731384876,
+   "sharpe_annual": -0.930579159285456,
+   "total_net": -2679.792999999993,
+   "gross_mean": -0.7374710884353638,
+   "max_drawdown": 3117.8919999999953,
+   "by_year": {
+    "2020": -736.8,
+    "2021": -1179.4,
+    "2022": -896.7,
+    "2023": -212.3,
+    "2024": 345.4
+   },
+   "n_by_year": {
+    "2020": 105,
+    "2021": 151,
+    "2022": 131,
+    "2023": 126,
+    "2024": 75
+   },
+   "reasons": {
+    "signal": 588
+   },
+   "n_long": 314,
+   "n_short": 274,
+   "mean_net_long": -3.3594140127388368,
+   "mean_net_short": -5.930427007299263,
+   "dsr": 9.530663005351016e-07,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": false,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_3": false,
+    "pos_years": 1
+   }
+  },
+  {
+   "name": "V5_prevday_continuation_z1",
+   "symbol": "BTCUSDT",
+   "window": "prevday",
+   "z_threshold": 1.0,
+   "side_mult": 1,
+   "rule": "1 MBT (0.1 BTC), no stop/target, Binance BTCUSDT perp 1-min bars as CME proxy, $3.82 round turn. Topstep day d = session opening 17:00 CT on date d (Sun-Thu) and ending 15:10 CT on d+1. At 16:59 CT on date d (Sun-Thu) compute r = open(15:08 CT bar of the previous Topstep day's day session) / open(17:00 CT bar that opened the previous Topstep day) - 1 (for Sunday the previous Topstep day is Thu 17:00 -> Fri 15:08); z = r / sd, sd = sample std (ddof=1) of the same window return over the 60 Topstep days preceding the scored day (min 50 valid), no mean subtracted (the 60 Topstep days preceding that previous day). If |z| >= 1.0: enter at the open of the 17:00 CT bar of date d with side = +sign(r); hold overnight and exit at the open of the 15:08 CT bar on d+1. Forced flat 15:10 CT / weekend as backstop.",
+   "n": 283,
+   "trades_per_day": 0.24114435025036782,
+   "mean_net": -8.682455830388694,
+   "median_net": -6.8399999999997085,
+   "t_stat": -0.997877330773827,
+   "ci95_low": -25.93085256183745,
+   "ci95_high": 8.140277296819773,
+   "win_rate": 0.45936395759717313,
+   "avg_win": 97.42711538461536,
+   "avg_loss": 98.84091503267973,
+   "sharpe_per_trade": -0.059317650239515116,
+   "sharpe_annual": -0.46240524860472476,
+   "total_net": -2457.135,
+   "gross_mean": -4.862455830388697,
+   "max_drawdown": 2929.175000000002,
+   "by_year": {
+    "2020": -30.4,
+    "2021": -1069.1,
+    "2022": 269.6,
+    "2023": -59.5,
+    "2024": -1567.8
+   },
+   "n_by_year": {
+    "2020": 47,
+    "2021": 74,
+    "2022": 56,
+    "2023": 62,
+    "2024": 44
+   },
+   "reasons": {
+    "signal": 283
+   },
+   "n_long": 153,
+   "n_short": 130,
+   "mean_net_long": -1.2956405228758152,
+   "mean_net_short": -17.376169230769236,
+   "dsr": 8.66477319993217e-05,
+   "survivor": false,
+   "survivor_checks": {
+    "mean_net_pos": false,
+    "t_ge_2.5": false,
+    "n_ge_150": true,
+    "pos_years_ge_3": false,
+    "pos_years": 1
+   }
+  }
+ ],
+ "survivors": [],
+ "diagnostics": {
+  "D1_response_by_abs_z_bucket": {
+   "overnight_reversal": {
+    "|z| in [0.0,0.5)": {
+     "n": 594,
+     "mean_net": -6.541279461279451,
+     "t": -1.841626611890692
+    },
+    "|z| in [0.5,1.0)": {
+     "n": 268,
+     "mean_net": -2.699944029850736,
+     "t": -0.5522131326731461
+    },
+    "|z| in [1.0,2.0)": {
+     "n": 188,
+     "mean_net": -8.66436170212767,
+     "t": -1.4903632150304877
+    },
+    "|z| in [2.0,inf)": {
+     "n": 72,
+     "mean_net": 34.80509722222221,
+     "t": 2.3779354751517117
+    },
+    "all": {
+     "n": 1122,
+     "mean_net": -3.326237076648836,
+     "t": -1.2754546656457022
+    }
+   },
+   "daysofar_continuation": {
+    "|z| in [0.0,0.5)": {
+     "n": 534,
+     "mean_net": -5.055380149812721,
+     "t": -2.461075018487982
+    },
+    "|z| in [0.5,1.0)": {
+     "n": 304,
+     "mean_net": -5.392993421052606,
+     "t": -1.7633560279499911
+    },
+    "|z| in [1.0,2.0)": {
+     "n": 213,
+     "mean_net": -6.077779342722998,
+     "t": -1.5089809578435582
+    },
+    "|z| in [2.0,inf)": {
+     "n": 71,
+     "mean_net": 3.580901408450673,
+     "t": 0.5981595238115309
+    },
+    "all": {
+     "n": 1122,
+     "mean_net": -4.794443850267367,
+     "t": -3.1154842249522825
+    }
+   },
+   "prevday_continuation": {
+    "|z| in [0.0,0.5)": {
+     "n": 528,
+     "mean_net": -1.6154772727272808,
+     "t": -0.2924055882918549
+    },
+    "|z| in [0.5,1.0)": {
+     "n": 310,
+     "mean_net": -7.783141935483868,
+     "t": -1.1374771817716995
+    },
+    "|z| in [1.0,2.0)": {
+     "n": 206,
+     "mean_net": -9.001233009708741,
+     "t": -0.8767372510936082
+    },
+    "|z| in [2.0,inf)": {
+     "n": 77,
+     "mean_net": -7.829623376623379,
+     "t": -0.4749365907554848
+    },
+    "all": {
+     "n": 1121,
+     "mean_net": -5.105157002676185,
+     "t": -1.3112239198483475
+    }
+   }
+  },
+  "D2_literal_open_formula_sensitivity": {
+   "V1_literal_open0830": {
+    "n": 260,
+    "mean_net": 3.3733346153846067,
+    "t": 0.5672177430307329,
+    "n_same_days_as_variant": 260
+   },
+   "V2_literal_open0830": {
+    "n": 528,
+    "mean_net": 0.29068560606060556,
+    "t": 0.07575367689741332,
+    "n_same_days_as_variant": 528
+   },
+   "V3_literal_open1200": {
+    "n": 284,
+    "mean_net": -3.6631091549295802,
+    "t": -1.0852773748710252,
+    "n_same_days_as_variant": 284
+   },
+   "V4_literal_open1200": {
+    "n": 589,
+    "mean_net": -4.55432258064515,
+    "t": -2.010230079663866,
+    "n_same_days_as_variant": 588
+   }
+  }
+ }
+}

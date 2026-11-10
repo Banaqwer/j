@@ -1,0 +1,310 @@
+{
+ "family": "orb_long_hold",
+ "symbol": "BTCUSDT",
+ "n_variants": 4,
+ "n_prior_trials": 196,
+ "dsr_N": 200,
+ "variants": {
+  "V1_us_orb30_wide": {
+   "n": 552,
+   "trades_per_day": 0.4703600932408814,
+   "mean_net": 2.872614130434785,
+   "median_net": -5.978499999999867,
+   "std_net": 72.46302089118704,
+   "win_rate": 0.41847826086956524,
+   "avg_win": 61.182199134199166,
+   "avg_loss": 39.08848909657323,
+   "t_stat": 0.9313874807193496,
+   "ci95_low": -3.1387467844202948,
+   "ci95_high": 9.041946648550717,
+   "sharpe_per_trade": 0.03964248378146422,
+   "sharpe_annual": 0.431594956971799,
+   "max_drawdown": 883.6050000000012,
+   "total_net": 1585.6830000000014,
+   "gross_mean": 6.692614130434783,
+   "p_win_at_1R": 0.5286485929349909,
+   "by_year": {
+    "2020": -729.3010000000007,
+    "2021": 762.0450000000046,
+    "2022": 1071.1790000000005,
+    "2023": 158.95999999999734,
+    "2024": 322.7999999999996
+   },
+   "n_by_year": {
+    "2020": 123,
+    "2021": 130,
+    "2022": 112,
+    "2023": 123,
+    "2024": 64
+   },
+   "rule": "BTCUSDT 5-min bars (proxy for CME MBT), times America/Chicago, Mon-Fri. Opening range OR = [min low, max high] of the 6 bars with open times 08:30 to 09:00 CT exclusive (complete range required); OR open = open of the 08:30 bar. Width filter: trade only if (OR high - OR low)/OR open >= the median of that quantity over the previous 60 weekdays with a complete OR (strictly prior days; at least 30 required, else no trade). From the 09:00 bar onwards, the FIRST 5-min close above OR high -> long, first close below OR low -> short (one trade per day, whichever happens first, no re-entry). Fill at the open of the next bar; the fill bar must open before 15:08 CT. Stop = the opposite side of the OR (OR low for longs, OR high for shorts), checked on bar highs/lows from the fill bar on, filled at the stop price. No target. Exit at the 15:08 CT deadline = the open of the 15:10 CT bar (forced flat); no weekend positions. Cost $3.82 per round turn.",
+   "symbol": "BTCUSDT",
+   "n_eligible_sessions": 580,
+   "n_signal_bars": 553,
+   "skipped_entries": 0,
+   "reasons": {
+    "flat": 363,
+    "stop": 189
+   },
+   "avg_hold_bars": 49.41123188405797,
+   "share_long": 0.5018115942028986,
+   "by_side": {
+    "short": {
+     "n": 275,
+     "mean_net": 3.9617345454545516
+    },
+    "long": {
+     "n": 277,
+     "mean_net": 1.7913574007220217
+    }
+   },
+   "n_pos_years": 4,
+   "dsr": 0.03349436371307713
+  },
+  "V2_us_orb30_all": {
+   "n": 1144,
+   "trades_per_day": 0.9748042512093629,
+   "mean_net": 2.140361888111892,
+   "median_net": -7.841999999999935,
+   "std_net": 61.569058224593014,
+   "win_rate": 0.3741258741258741,
+   "avg_win": 56.20328738317758,
+   "avg_loss": 30.176582402234644,
+   "t_stat": 1.1758115199805343,
+   "ci95_low": -1.508047312062927,
+   "ci95_high": 5.751535139860141,
+   "sharpe_per_trade": 0.03476359635556274,
+   "sharpe_annual": 0.5448584320469936,
+   "max_drawdown": 1799.312999999998,
+   "total_net": 2448.5740000000046,
+   "gross_mean": 5.9603618881118905,
+   "p_win_at_1R": 0.5247784801416007,
+   "by_year": {
+    "2020": -1113.7480000000007,
+    "2021": -52.45999999999435,
+    "2022": 1632.5220000000006,
+    "2023": 552.2199999999967,
+    "2024": 1430.0400000000018
+   },
+   "n_by_year": {
+    "2020": 255,
+    "2021": 257,
+    "2022": 250,
+    "2023": 253,
+    "2024": 129
+   },
+   "rule": "BTCUSDT 5-min bars (proxy for CME MBT), times America/Chicago, Mon-Fri. Opening range OR = [min low, max high] of the 6 bars with open times 08:30 to 09:00 CT exclusive (complete range required); OR open = open of the 08:30 bar. No width filter. From the 09:00 bar onwards, the FIRST 5-min close above OR high -> long, first close below OR low -> short (one trade per day, whichever happens first, no re-entry). Fill at the open of the next bar; the fill bar must open before 15:08 CT. Stop = the opposite side of the OR (OR low for longs, OR high for shorts), checked on bar highs/lows from the fill bar on, filled at the stop price. No target. Exit at the 15:08 CT deadline = the open of the 15:10 CT bar (forced flat); no weekend positions. Cost $3.82 per round turn.",
+   "symbol": "BTCUSDT",
+   "n_eligible_sessions": 1173,
+   "n_signal_bars": 1145,
+   "skipped_entries": 0,
+   "reasons": {
+    "flat": 657,
+    "stop": 487
+   },
+   "avg_hold_bars": 46.64160839160839,
+   "share_long": 0.493006993006993,
+   "by_side": {
+    "short": {
+     "n": 580,
+     "mean_net": 2.868741379310357
+    },
+    "long": {
+     "n": 564,
+     "mean_net": 1.3913191489361665
+    }
+   },
+   "n_pos_years": 3,
+   "dsr": 0.05608299840658473
+  },
+  "V3_us_orb60_wide": {
+   "n": 505,
+   "trades_per_day": 0.4303113171859513,
+   "mean_net": 1.7587445544554414,
+   "median_net": -4.214999999999891,
+   "std_net": 66.31363871577466,
+   "win_rate": 0.44356435643564357,
+   "avg_win": 51.61311607142857,
+   "avg_loss": 37.98281850533809,
+   "t_stat": 0.595999089043449,
+   "ci95_low": -4.000993910891085,
+   "ci95_high": 7.557752673267322,
+   "sharpe_per_trade": 0.02652161136856862,
+   "sharpe_annual": 0.276179577797491,
+   "max_drawdown": 1190.3100000000009,
+   "total_net": 888.1659999999979,
+   "gross_mean": 5.578744554455439,
+   "p_win_at_1R": 0.5196297361343838,
+   "by_year": {
+    "2020": -627.0250000000008,
+    "2021": 600.2110000000011,
+    "2022": 462.8499999999977,
+    "2023": 652.3799999999977,
+    "2024": -200.2499999999984
+   },
+   "n_by_year": {
+    "2020": 110,
+    "2021": 123,
+    "2022": 94,
+    "2023": 113,
+    "2024": 65
+   },
+   "rule": "BTCUSDT 5-min bars (proxy for CME MBT), times America/Chicago, Mon-Fri. Opening range OR = [min low, max high] of the 12 bars with open times 08:30 to 09:30 CT exclusive (complete range required); OR open = open of the 08:30 bar. Width filter: trade only if (OR high - OR low)/OR open >= the median of that quantity over the previous 60 weekdays with a complete OR (strictly prior days; at least 30 required, else no trade). From the 09:30 bar onwards, the FIRST 5-min close above OR high -> long, first close below OR low -> short (one trade per day, whichever happens first, no re-entry). Fill at the open of the next bar; the fill bar must open before 15:08 CT. Stop = the opposite side of the OR (OR low for longs, OR high for shorts), checked on bar highs/lows from the fill bar on, filled at the stop price. No target. Exit at the 15:08 CT deadline = the open of the 15:10 CT bar (forced flat); no weekend positions. Cost $3.82 per round turn.",
+   "symbol": "BTCUSDT",
+   "n_eligible_sessions": 578,
+   "n_signal_bars": 507,
+   "skipped_entries": 0,
+   "reasons": {
+    "flat": 423,
+    "stop": 82
+   },
+   "avg_hold_bars": 48.62574257425742,
+   "share_long": 0.4792079207920792,
+   "by_side": {
+    "short": {
+     "n": 263,
+     "mean_net": 0.942304182509514
+    },
+    "long": {
+     "n": 242,
+     "mean_net": 2.6460330578512212
+    }
+   },
+   "n_pos_years": 3,
+   "dsr": 0.015117826065778803
+  },
+  "V4_evening_orb60": {
+   "n": 1140,
+   "trades_per_day": 0.9713958447366029,
+   "mean_net": -4.77531842105264,
+   "median_net": -17.45000000000011,
+   "std_net": 79.34576418447806,
+   "win_rate": 0.23421052631578948,
+   "avg_win": 95.91299625468163,
+   "avg_loss": 35.57002634593357,
+   "t_stat": -2.032034206153045,
+   "ci95_low": -9.551339429824568,
+   "ci95_high": -0.04096780701754789,
+   "sharpe_per_trade": -0.06018365907914222,
+   "sharpe_annual": -0.9416228303739828,
+   "max_drawdown": 6330.133000000008,
+   "total_net": -5443.86300000001,
+   "gross_mean": -0.9553184210526419,
+   "p_win_at_1R": 0.4636811024982453,
+   "by_year": {
+    "2020": -1023.0030000000013,
+    "2021": -3450.045,
+    "2022": 957.5749999999985,
+    "2023": -399.0600000000044,
+    "2024": -1529.3300000000024
+   },
+   "n_by_year": {
+    "2020": 254,
+    "2021": 258,
+    "2022": 251,
+    "2023": 250,
+    "2024": 127
+   },
+   "rule": "BTCUSDT 5-min bars (proxy for CME MBT), times America/Chicago. Sessions start 17:00 CT; only sessions starting Sunday-Thursday. Opening range OR = [min low, max high] of the 12 bars with open times 17:00 to 18:00 CT exclusive (complete range required). From the 18:00 CT bar until the 01:55 CT bar (signal bar open < 02:00 CT), the FIRST 5-min close above OR high -> long, first close below OR low -> short (one trade per session, whichever happens first, no re-entry). Fill at the open of the next bar. Stop = the opposite side of the OR (OR low for longs, OR high for shorts), checked on bar highs/lows from the fill bar on, filled at the stop price. No target. Exit at the 15:08 CT deadline the next day = the open of the 15:10 CT bar (forced flat). Cost $3.82 per round turn.",
+   "symbol": "BTCUSDT",
+   "n_eligible_sessions": 1174,
+   "n_signal_bars": 1141,
+   "skipped_entries": 0,
+   "reasons": {
+    "stop": 832,
+    "flat": 308
+   },
+   "avg_hold_bars": 112.85877192982456,
+   "share_long": 0.4850877192982456,
+   "by_side": {
+    "short": {
+     "n": 587,
+     "mean_net": -4.429850085178899
+    },
+    "long": {
+     "n": 553,
+     "mean_net": -5.1420271247739535
+    }
+   },
+   "n_pos_years": 1,
+   "dsr": 8.292982076645989e-07
+  }
+ },
+ "post_hoc_diagnostics": {
+  "D1_V2_by_entry_hour_CT": {
+   "09": {
+    "n": 900,
+    "mean_net": 2.801433333333341,
+    "t": 1.3404007782325746
+   },
+   "10": {
+    "n": 163,
+    "mean_net": -0.788981595092033,
+    "t": -0.16558559927232924
+   },
+   "11": {
+    "n": 44,
+    "mean_net": 7.536204545454556,
+    "t": 0.8748245647994985
+   },
+   "12-13": {
+    "n": 25,
+    "mean_net": -10.072680000000021,
+    "t": -1.1017497530144509
+   },
+   "14-15": {
+    "n": 12,
+    "mean_net": -1.9906666666667692,
+    "t": -0.5825552453942032
+   }
+  },
+  "D2_V2_by_width_ratio_quintile": {
+   "Q1": {
+    "n": 223,
+    "ratio_range": [
+     0.14334318482213257,
+     0.6329821320373678
+    ],
+    "mean_net": 0.6135695067264638,
+    "t": 0.19843966753705286
+   },
+   "Q2": {
+    "n": 223,
+    "ratio_range": [
+     0.6343197398084375,
+     0.8573339772212547
+    ],
+    "mean_net": 2.576430493273558,
+    "t": 0.7415099581171282
+   },
+   "Q3": {
+    "n": 222,
+    "ratio_range": [
+     0.8589965103486283,
+     1.1502119075842188
+    ],
+    "mean_net": 3.4235585585585446,
+    "t": 0.8579420295710973
+   },
+   "Q4": {
+    "n": 223,
+    "ratio_range": [
+     1.1539097124146949,
+     1.6372757086952907
+    ],
+    "mean_net": 1.979681614349774,
+    "t": 0.41716763276729796
+   },
+   "Q5": {
+    "n": 223,
+    "ratio_range": [
+     1.6420998844734906,
+     17.333171483875205
+    ],
+    "mean_net": 2.7076547085201916,
+    "t": 0.5163664788314393
+   }
+  }
+ },
+ "survivors": []
+}
